@@ -4,17 +4,20 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,10 +36,13 @@ public class ClassReply {
 	@SequenceGenerator(sequenceName = "reply_id",allocationSize = 1,name = "reply_id")
 	private Long replyId;
 	
-	@ManyToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "qna_id")
-	private int qnaId;
-	private String teacherId;
+	private ClassQna classQna;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacher_id")
+	private Teacher teacher;
 	
 	@Column(length = 3000)
 	private String replyContent;

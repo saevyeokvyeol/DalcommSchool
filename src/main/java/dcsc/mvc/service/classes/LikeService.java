@@ -2,14 +2,14 @@ package dcsc.mvc.service.classes;
 
 import java.util.List;
 
-import dcsc.mvc.domain.classes.Like;
+import dcsc.mvc.domain.classes.Likes;
 
 public interface LikeService {
 	/**
 	 * 클래스 찜 등록
 	 * @param Like(클래스ID, 학생ID);
 	 * */
-	void insert(Like like);
+	void insert(Likes like);
 	
 	/**
 	 * 클래스 찜 삭제
@@ -22,6 +22,6 @@ public interface LikeService {
 	 * @param String studentId;
 	 * @return List<Like>;
 	 * */
-	List<Like> selectByStudentId(String studentId);
+	List<Likes> selectByStudentId(String studentId);
 	
 }

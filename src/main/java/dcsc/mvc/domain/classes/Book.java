@@ -3,9 +3,11 @@ package dcsc.mvc.domain.classes;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -13,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.user.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,17 +39,22 @@ public class Book {
 	@NonNull
 	private Long bookId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "student_id")
 	private Student student;
 	
-	@ManyToOne
-	private Class Class;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "class_id")
+	private Classes classes;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "schedule_id")
 	private ClassSchedule ClassSchedule;
 	
-	@OneToOne
-	private int couponNo;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_id")
+	private Coupon coupon;
+	
 	private int bookStateId;
 	private int bookSeat;
 	private int totalPrice;

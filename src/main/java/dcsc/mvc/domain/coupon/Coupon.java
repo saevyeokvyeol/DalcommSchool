@@ -3,24 +3,25 @@ package dcsc.mvc.domain.coupon;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "coupon")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -33,13 +34,13 @@ public class Coupon {
 	@SequenceGenerator(sequenceName = "coupon_id",allocationSize = 1,name = "coupon_id")
 	private Long couponId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
-	private String teacherId;
+	private Teacher teacher;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
-	private int classId;
+	private Classes classes;
 	private int couponStateId;
 	private String couponName;
 	private int couponDc;

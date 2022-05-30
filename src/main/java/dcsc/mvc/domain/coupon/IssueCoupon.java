@@ -3,6 +3,7 @@ package dcsc.mvc.domain.coupon;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import dcsc.mvc.domain.user.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,6 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "issueCoupon")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -31,13 +32,13 @@ public class IssueCoupon {
 	@SequenceGenerator(sequenceName = "issue_no",allocationSize = 1,name = "issue_no")
 	private Long issueNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
-	private String studentId;
+	private Student student;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "coupon_id")
-	private int couponId;
+	private Coupon coupon;
 	
 	@CreationTimestamp
 	private LocalDateTime issueStartDate;

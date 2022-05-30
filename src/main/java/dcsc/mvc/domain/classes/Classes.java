@@ -3,6 +3,7 @@ package dcsc.mvc.domain.classes;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,21 +21,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Class {
+public class Classes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "class_id_seq")
 	@SequenceGenerator(sequenceName = "class_id_seq", allocationSize = 1 , name = "class_id_seq")
 	private Long classId;
-	
-	//private String teacherId;
-	
-	//private int classStateId;
 	
 	private String className;
 	
@@ -52,12 +49,12 @@ public class Class {
 	
 	private String classCategory;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 	
-	@OneToOne
-	@JoinColumn(name = "classstate_id")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "state_id")
 	private ClassState classState;
 	
 }

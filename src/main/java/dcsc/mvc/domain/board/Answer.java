@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +30,6 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "answer_no_seq")
 	@SequenceGenerator(sequenceName = "answer_no_seq" , allocationSize = 1 , name = "answer_no_seq")
 	private Long answerNo;
-	//private Long askNo;
 	
 	@Column(length = 500)
 	private String answerContent;
@@ -37,8 +37,8 @@ public class Answer {
 	@CreationTimestamp
 	private LocalDateTime answerInsertDate;
 	
-	@OneToOne // 문의 하나의 답글 하나 맞는지?
-	@JoinColumn(name = "ask_no")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ask_id")
 	private Ask ask;
 	
 }

@@ -3,6 +3,7 @@ package dcsc.mvc.domain.classes;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
-//@Table(name = "classschedule")
+@Entity
 @Setter
 @Getter
 @NoArgsConstructor
@@ -48,8 +48,8 @@ public class ClassSchedule {
 	private int leftSeat;
 	private int SchedulePrice;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
-	private Class classes;
+	private Classes classes;
 	
 }

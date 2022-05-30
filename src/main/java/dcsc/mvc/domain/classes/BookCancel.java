@@ -3,6 +3,7 @@ package dcsc.mvc.domain.classes;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,9 +36,9 @@ public class BookCancel {
 	@NonNull
 	private Long cancelId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id")
-	private int bookId;
+	private Book book;
 	private int cancelRate;
 	
 	@CreationTimestamp

@@ -1,6 +1,7 @@
 package dcsc.mvc.domain.user;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +28,9 @@ public class PlaceInfra {
 	@SequenceGenerator(sequenceName = "infra_id",allocationSize = 1,name = "infra_id")
 	private Long infraId; 
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
-	private Long placeId; 
+	private Place place; 
 	private String parking;
 	private String wifi;
 	private String elevator;

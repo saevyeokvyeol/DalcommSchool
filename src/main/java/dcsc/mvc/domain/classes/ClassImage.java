@@ -3,6 +3,7 @@ package dcsc.mvc.domain.classes;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
-//@Table(name = "classimage")
+@Entity
 @Setter
 @Getter
 @NoArgsConstructor
@@ -30,7 +30,6 @@ public class ClassImage {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "classimage_id_seq")
 	@SequenceGenerator(sequenceName = "classimage_id_seq", allocationSize = 1 , name = "classimage_id_seq")
 	private Long ImageId;
-	//private classId;
 	
 	private String thumbnailState;
 	
@@ -39,8 +38,8 @@ public class ClassImage {
 	@CreationTimestamp
 	private LocalDateTime ImageInsertDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
-	private Class classes;
+	private Classes classes;
 	
 }

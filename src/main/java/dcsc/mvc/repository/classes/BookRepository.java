@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import dcsc.mvc.domain.classes.Book;
 
-public interface BookReposiroty extends JpaRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
 }
