@@ -1,4 +1,4 @@
-package dcsc.mvc.repository;
+package dcsc.mvc.repository.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

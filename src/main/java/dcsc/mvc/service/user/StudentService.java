@@ -1,4 +1,4 @@
-package dcsc.mvc.service;
+package dcsc.mvc.service.user;
 
 import java.util.List;
 

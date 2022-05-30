@@ -1,4 +1,4 @@
-package dcsc.mvc.repository;
+package dcsc.mvc.repository.user;
 
 import java.util.List;
 

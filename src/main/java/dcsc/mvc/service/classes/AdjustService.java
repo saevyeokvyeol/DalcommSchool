@@ -1,4 +1,4 @@
-package dcsc.mvc.service.adjust;
+package dcsc.mvc.service.classes;
 
 import java.util.List;
 
