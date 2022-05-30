@@ -1,6 +1,12 @@
 package dcsc.mvc.domain.user;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -8,15 +14,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Table(name = "placeInfra")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceInfra {
-	private int infraId; 
-	private int placeId; 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "infra_id")
+	@SequenceGenerator(sequenceName = "infra_id",allocationSize = 1,name = "infra_id")
+	private Long infraId; 
+	
+	@ManyToOne
+	@JoinColumn(name = "place_id")
+	private Long placeId; 
 	private String parking;
 	private String wifi;
 	private String elevator;

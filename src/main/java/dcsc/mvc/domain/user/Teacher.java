@@ -3,6 +3,10 @@ package dcsc.mvc.domain.user;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Table(name = "teacher")
 @Setter
 @Getter
@@ -20,7 +24,12 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Teacher {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "teacher_id")
+	@SequenceGenerator(sequenceName = "teacher_id",allocationSize = 1,name = "teacher_id")
 	private String teacherId;
+	
 	private String teacherPwd;
 	private String teacherNickname;
 	private String teacherPhone;
