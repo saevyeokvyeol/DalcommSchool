@@ -22,7 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Likes {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "like_id_seq")
 	@SequenceGenerator(sequenceName = "like_id_seq" , allocationSize = 1 , name = "like_id_seq" )
@@ -35,5 +34,4 @@ public class Likes {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
 	private Student student;
-	
 }

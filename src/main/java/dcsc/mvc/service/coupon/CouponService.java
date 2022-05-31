@@ -30,15 +30,17 @@ public interface CouponService {
 	
 	
 	/**
-	 * 클래스 쿠폰 등록 기능 ; 선생님
-	 * @param Coupon(classId, couponName, couponDc, couponEndDate)
+	 * 클래스 쿠폰 등록 기능
+	 * 선생님ID와 클래스ID가 들어올 경우 해당 컬럼도 입력하고
+	 * 들어오지 않을 경우 입력하지 않도록 동적 쿼리로 제작
+	 * @param Coupon(teacherId, classId, couponName, couponDc, couponEndDate)
 	 * @return void
 	 * */
 	void insertCoupon(Coupon coupon);
 	
 	
 	/**
-	 * 클래스 쿠폰 수정 기능 ; 선생님
+	 * 클래스 쿠폰 수정 기능
 	 * @param Coupon(couponId, couponName, couponDc, couponEndDate)
 	 * @return void
 	 * */
@@ -73,27 +75,5 @@ public interface CouponService {
 	 * @return List<IssueCoupon>
 	 * */
 	List<IssueCoupon> selectByStudent(String studentId);
-	
-	/**
-	 * 이벤트 쿠폰 등록 기능 ; 관리자
-	 * @param Coupon(couponName, couponDc, couponEndDate)
-	 * @return void
-	 * */
-	void insertEventCoupon(Coupon coupon);
-	
-	/**
-	 * 이벤트 쿠폰 수정 기능 ; 관리자
-	 * @param Coupon(couponId, couponName, couponDc, couponEndDate)
-	 * @return void
-	 * */	
-	void updateEventCoupon(Coupon coupon);
-	
-	
-	/**
-	 * 이벤트 쿠폰 삭제 기능 ; 관리자
-	 * @param couponId
-	 * @return void
-	 * */
-	void deleteEventCoupon(String couponId);
 
 }

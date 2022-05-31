@@ -35,7 +35,7 @@ public interface ClassesService {
 	 *        boolean timeOut(내일까지 체험 가능한 클래스)
 	 * @return List<Class>
 	 * */
-	List<Classes> selectSearch(Classes classes, String keyword, String sort, String newClass, String timeOut);
+	List<Classes> selectByFilter(Classes classes, String keyword, String sort, String newClass, String timeOut);
 
 	/**
 	 * 클래스 상세 보기

@@ -29,17 +29,17 @@ public interface FAQService {
 	
 	/**
 	 * FAQ 게시판 카테고리보기 기능
-	 * 	faqCategory를 들고 들어와서 카테고리별로 출력한다
+	 * faqCategory를 들고 들어와서 카테고리별로 출력한다
 	 * @param String faqCategory
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> faqCategoryList(String faqCategoty);
+	List<FAQ> selectByCategory(String faqCategoty);
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> faqListAll();
+	List<FAQ> selectAll();
 	
 	/**
 	 * FAQ 게시판 검색 기능
@@ -47,5 +47,5 @@ public interface FAQService {
 	 * @param String keyword
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> selectFAQKeyword(String keyword);
+	List<FAQ> selectByeyword(String keyword);
 }
