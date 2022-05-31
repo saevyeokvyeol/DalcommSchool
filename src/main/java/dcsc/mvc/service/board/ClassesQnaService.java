@@ -2,10 +2,24 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReply;
 
 public interface ClassesQnaService {
+	
+	/**
+	 * 클래스 QnA 전체 보기
+	 * */
+	List<ClassQna> selectAllQna();
+	
+	/**
+	 * 클래스 QnA 전체 보기 -Page처리
+	 * */
+	Page<ClassQna> selectAllQna(Pageable Pageable);
+	
 	/**
 	 * 클래스 Q&A 등록
 	 * @param ClassQna(클래스ID, 학생ID, 제목, 내용, 비밀글 여부)
