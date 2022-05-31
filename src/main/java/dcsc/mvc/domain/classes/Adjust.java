@@ -20,7 +20,6 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "adjust")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -28,8 +27,8 @@ import lombok.Setter;
 
 public class Adjust {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "adjust_no")
-	@SequenceGenerator(sequenceName = "adjust_no", allocationSize = 1, name = "adjust_no")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "adjust_no_seq")
+	@SequenceGenerator(sequenceName = "adjust_no_seq", allocationSize = 1, name = "adjust_no_seq")
 	private Long adjustNo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

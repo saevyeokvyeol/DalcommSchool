@@ -21,8 +21,8 @@ import lombok.Setter;
 public class CouponState {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_state_id")
-	@SequenceGenerator(sequenceName = "coupon_state_id",allocationSize = 1,name = "coupon_state_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_state_id_seq")
+	@SequenceGenerator(sequenceName = "coupon_state_id_seq",allocationSize = 1,name = "coupon_state_id_seq")
 	private Long couponStateId;
 	private String couponStateName;
 }

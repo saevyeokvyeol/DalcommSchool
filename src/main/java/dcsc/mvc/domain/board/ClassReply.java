@@ -26,14 +26,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "classReply")
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassReply {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "reply_id")
-	@SequenceGenerator(sequenceName = "reply_id",allocationSize = 1,name = "reply_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "reply_id_seq")
+	@SequenceGenerator(sequenceName = "reply_id_seq",allocationSize = 1,name = "reply_id_seq")
 	private Long replyId;
 	
 	@OneToOne(fetch = FetchType.LAZY)

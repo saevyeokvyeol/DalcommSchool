@@ -2,7 +2,7 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
-import dcsc.mvc.domain.board.FAQ;
+import dcsc.mvc.domain.board.Faq;
 
 /**
  * FAQ(관리자)
@@ -13,12 +13,12 @@ public interface FAQService {
 	 * FAQ 등록 기능
 	 * @param FAQ( 제목, 카테고리, 내용, 이미지)
 	 * */
-	void insertFAQ(FAQ faq);
+	void insertFAQ(Faq faq);
 	/**
 	 * FAQ 수정 기능
 	 * @param FAQ( 제목, 카테고리, 내용, 이미지)
 	 * */
-	void updateFAQ(FAQ faq);
+	void updateFAQ(Faq faq);
 	
 	/**
 	 * FAQ 삭제 기능
@@ -33,13 +33,13 @@ public interface FAQService {
 	 * @param String faqCategory
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> selectByCategory(String faqCategoty);
+	List<Faq> selectByCategory(String faqCategoty);
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> selectAll();
+	List<Faq> selectAll();
 	
 	/**
 	 * FAQ 게시판 검색 기능
@@ -47,5 +47,5 @@ public interface FAQService {
 	 * @param String keyword
 	 * @return List<FAQ>
 	 * */
-	List<FAQ> selectByeyword(String keyword);
+	List<Faq> selectByeyword(String keyword);
 }

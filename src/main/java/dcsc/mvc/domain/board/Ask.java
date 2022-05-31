@@ -32,13 +32,9 @@ public class Ask {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "ask_no_seq")
 	@SequenceGenerator(sequenceName = "ask_no_seq" , allocationSize = 1 , name = "ask_no_seq" )
-	private Long askNo; 
-	//private String studentId;
-	//private String teacherId;
+	private Long askNo;
 	
 	private String askTitle;
-	
-	private String askCategory;
 	
 	@Column(length = 500)
 	private String askContent;
@@ -60,5 +56,8 @@ public class Ask {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ask_category_id")
+	private AskCategory askCategory;
 }

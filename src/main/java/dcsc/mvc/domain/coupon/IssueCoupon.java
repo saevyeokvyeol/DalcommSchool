@@ -28,8 +28,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class IssueCoupon {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "issue_no")
-	@SequenceGenerator(sequenceName = "issue_no",allocationSize = 1,name = "issue_no")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "issue_no_seq")
+	@SequenceGenerator(sequenceName = "issue_no_seq",allocationSize = 1,name = "issue_no_seq")
 	private Long issueNo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

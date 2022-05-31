@@ -45,9 +45,11 @@ public class Classes {
 	@UpdateTimestamp
 	private LocalDateTime classUpdateDate;
 	
-	private LocalDateTime classOpenDate; //String ? Date? 
-	
-	private String classCategory;
+	private LocalDateTime classOpenDate;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private ClassCategory classCategory;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")

@@ -33,8 +33,6 @@ public class ClassReview {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "classreview_id_seq")
 	@SequenceGenerator(sequenceName = "classreview_id_seq" , allocationSize = 1 , name = "classreview_id_seq" )
 	private Long reviewId;
-	//private Long classId;
-	//private String studentId;
 	
 	@Column(length = 500)
 	private String reviewContent;

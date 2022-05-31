@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bookCancel")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -31,8 +30,8 @@ import lombok.Setter;
 public class BookCancel {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "cancel_id")
-	@SequenceGenerator(sequenceName = "cancel_id",allocationSize = 1 , name = "cancel_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "cancel_id_seq")
+	@SequenceGenerator(sequenceName = "cancel_id_seq",allocationSize = 1 , name = "cancel_id_seq")
 	@NonNull
 	private Long cancelId;
 	

@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +25,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FAQ {
+public class Faq {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "faq_no_seq")
@@ -31,7 +34,9 @@ public class FAQ {
 	
 	private String faqTitle;
 	
-	private String faqCategory;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "faq_category_id")
+	private FaqCategory faqCategory;
 	
 	@Column(length = 500)
 	private String faqContent;

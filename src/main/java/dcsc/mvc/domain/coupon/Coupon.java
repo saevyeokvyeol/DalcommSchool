@@ -30,8 +30,8 @@ import lombok.Setter;
 public class Coupon {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_id")
-	@SequenceGenerator(sequenceName = "coupon_id",allocationSize = 1,name = "coupon_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_id_seq")
+	@SequenceGenerator(sequenceName = "coupon_id_seq",allocationSize = 1,name = "coupon_id_seq")
 	private Long couponId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

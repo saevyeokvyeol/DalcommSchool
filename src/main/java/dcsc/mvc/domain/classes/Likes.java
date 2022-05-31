@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Likes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "like_id_seq")
-	@SequenceGenerator(sequenceName = "like_id_seq" , allocationSize = 1 , name = "like_id_seq" )
+	@SequenceGenerator(sequenceName = "like_id_seq" , allocationSize = 1 , name = "like_id_seq")
 	private Long likeId;
 	
 	@OneToOne(fetch = FetchType.LAZY)

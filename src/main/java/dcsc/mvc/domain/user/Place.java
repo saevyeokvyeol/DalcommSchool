@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -22,8 +23,8 @@ import lombok.Setter;
 
 public class Place {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "place_id")
-	@SequenceGenerator(sequenceName = "place_id",allocationSize = 1,name = "place_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_id_seq")
+	@SequenceGenerator(sequenceName = "place_id_seq", allocationSize = 1, name = "place_id_seq")
 	private Long place_id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +32,11 @@ public class Place {
 	private Teacher teacher;
 	
 	private String place_name;
-	private String place_region;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "region_id")
+	private PlaceRegion placeRegion;
+	
 	private String place_addr;
 	private String detail_addr;
 	private String place_route;

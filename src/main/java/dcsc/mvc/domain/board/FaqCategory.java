@@ -1,11 +1,10 @@
-package dcsc.mvc.domain.classes;
+package dcsc.mvc.domain.board;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,11 +16,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class ClassState {
+public class FaqCategory {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "state_id_seq")
-	@SequenceGenerator(sequenceName = "state_id_seq",allocationSize = 1,name = "state_id_seq")
-	 private Long stateId;
-	 private String stateName;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "faq_category_id_seq")
+	@SequenceGenerator(sequenceName = "faq_category_id_seq" , allocationSize = 1 , name = "faq_category_id_seq")
+	private Long faqCategoryId;
+	
+	private String faqCategoryName;
+	
 }

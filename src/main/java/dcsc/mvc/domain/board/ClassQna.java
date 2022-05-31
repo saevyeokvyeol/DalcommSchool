@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "classQna")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -34,8 +33,8 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class ClassQna {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "qna_id")
-	@SequenceGenerator(sequenceName = "qna_id",allocationSize = 1 , name = "qna_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "qna_id_seq")
+	@SequenceGenerator(sequenceName = "qna_id_seq",allocationSize = 1 , name = "qna_id_seq")
 	@NonNull
 	private Long qnaId;
 	

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,7 +29,7 @@ public class PlaceInfra {
 	@SequenceGenerator(sequenceName = "infra_id",allocationSize = 1,name = "infra_id")
 	private Long infraId; 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
 	private Place place; 
 	private String parking;

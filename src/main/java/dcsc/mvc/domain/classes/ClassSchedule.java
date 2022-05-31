@@ -31,9 +31,7 @@ public class ClassSchedule {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "classschedule_id_seq")
 	@SequenceGenerator(sequenceName = "classschedule_id_seq" , allocationSize = 1 , name = "classschedule_id_seq")
 	private Long scheduleId;
-	//private Long classId;
 	
-	//작가가 정해서 등록하는것인데 string으로 받아야되는 것 아닌가?
 	private LocalDateTime scheduleDate;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
