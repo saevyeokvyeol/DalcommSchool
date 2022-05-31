@@ -5,7 +5,7 @@ import java.util.List;
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReview;
 
-public interface ClassesReviewService {
+public interface ClassReviewService {
 	/**
 	 * 클래스 후기 등록
 	 * @param ClassReview(클래스ID, 학생ID, 내용, 이미지, 별점)

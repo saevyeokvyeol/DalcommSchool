@@ -5,7 +5,7 @@ import java.util.List;
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReply;
 
-public interface ClassesQnaService {
+public interface ClassQnaService {
 	/**
 	 * 클래스 Q&A 등록
 	 * @param ClassQna(클래스ID, 학생ID, 제목, 내용, 비밀글 여부)

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import dcsc.mvc.domain.board.ClassQna;
 
-public interface ClassesQnaReposiroty extends JpaRepository<ClassQna, Long> {
+public interface ClassQnaReposiroty extends JpaRepository<ClassQna, Long> {
 
 }
