@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReply;
 
-public interface ClassesQnaService {
+public interface ClassQnaService {
 	
 	/**
 	 * 클래스 QnA 전체 보기
