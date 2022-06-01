@@ -23,8 +23,6 @@ import lombok.Setter;
 public class Student {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "student_id_seq")
-	@SequenceGenerator(sequenceName = "student_id_seq", allocationSize = 1 , name = "student_id_seq")
 	private String studentId;
 	
 	private String studentPwd;

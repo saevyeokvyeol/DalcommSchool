@@ -13,20 +13,20 @@ public interface TeacherService {
 	 * @param: Teacher teacher
 	 * @return:
 	 * */
-	void InsertTeacher (Teacher teacher);
+	void insertTeacher (Teacher teacher);
 	
 	/**
 	 * 아이디 찾기
-	 * @param: String teacherName, String teacherPhone
-	 * @return: String teacherId
+	 * @param: String userName, String userPhone
+	 * @return: String Id
 	 * */
-	String selectTeacherId (String teacherName, String teacherPhone);
+	String selectId (String userName, String userPhone);
 	
 	/**
 	 * 비밀번호 찾기
 	 * @param: String teacherId, String teacherName, String teacherPhone
 	 * */
-	void selectTeacherPwd(String teacherId, String teacherName, String teacherPhone);
+	void selectPwd(String userId, String userName, String userPhone);
 	
 	/**
 	 * 회원정보 수정
@@ -87,9 +87,16 @@ public interface TeacherService {
 	/**
 	 * 아이디로 강사 조회
 	 * @param String teacherId
+	 * @return Teacher
+	 * */
+	Teacher selectByTeacherId (String teacherId);
+	
+	/**
+	 * 키워드로 강사 조회
+	 * @param String keyword, String keyfield
 	 * @return List<Teacher>
 	 * */
-	List<Teacher> selectByTeacherId (String keyword, String keyfield);
+	List<Teacher> selectTeacherByKeyword (String keyword, String keyfield);
 	
 	/**
 	 * 공방 등록

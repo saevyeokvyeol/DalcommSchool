@@ -13,13 +13,10 @@ import dcsc.mvc.repository.classes.ClassesRepository;
 class DalcommSchoolApplicationTests {
 	
 	@Autowired
-//	private ClassesQnaReposiroty classesQnaReposiroty;
 	private ClassesRepository classesRepository;
 
 	@Test
 	void contextLoads() {
-//		List<ClassQna> list = classesQnaReposiroty.findAll();
-//		System.out.println(list);
 		List<Classes> list = classesRepository.findAll();
 		System.out.println(list);
 	}
