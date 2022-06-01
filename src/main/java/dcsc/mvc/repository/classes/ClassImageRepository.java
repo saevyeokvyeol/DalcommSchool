@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import dcsc.mvc.domain.classes.ClassImage;
 
-public interface ClassesImageRepository extends JpaRepository<ClassImage, Long> {
+public interface ClassImageRepository extends JpaRepository<ClassImage, Long> {
 
 }
