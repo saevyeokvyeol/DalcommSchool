@@ -134,97 +134,144 @@ $(function() {
 <!-- 형식 체크 (진행 중) -->
 <script type = "text/javascript">
 	
-	/*
-	아이디 형식 체크
-	*/
-	$("#teacherId").focusout(function(){
-		isValidId();
-	})
-	
-	function isValidId(){
-		var id = $("#teacherId").val();
+	$(function(){
+		/*
+		아이디 형식 체크
+		*/
+		$("#teacherId").focusout(function(){
+			isValidId();
+		})
 		
-		var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
-		var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
-		var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
-		var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
-		var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
-		var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
-		
-		if(id.length<6 || id.length>10){ //길이 체크
-			$("#notValidId").css("display", "inline-block");
-			return false;
-		}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
-			$("#notValidId").css("display", "inline-block");
-			return false;
-		}else if(isNum<0 || isUp!=-1 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
-			$("#notValidId").css("display", "inline-block");
-			return false;
-		}else{
-			$("#notValidId").css("display", "none");
-			return true;
+		function isValidId(){
+			var id = $("#teacherId").val();
+			
+			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
+			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
+			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
+			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
+			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
+			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
+			
+			if(id.length<6 || id.length>10){ //길이 체크
+				$("#notValidId").css("display", "inline-block");
+				return false;
+			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
+				$("#notValidId").css("display", "inline-block");
+				return false;
+			}else if(isNum<0 || isUp!=-1 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
+				$("#notValidId").css("display", "inline-block");
+				return false;
+			}else{
+				$("#notValidId").css("display", "none");
+				return true;
+			}
 		}
-	}
-	
-	/*
-	비밀번호 형식 체크
-	*/
-	$("#teacherPwd").focusout(function(){
-		isValidPwd();
-	})
-	
-	function isValidPwd(){
-		var id = $("#teacherPwd").val();
 		
-		var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
-		var isLow = id.search(/[a-z]/g); //영소문자 있는지 확인. index 리턴. -> -1이면 안됨.
-		var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
-		var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
-		var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
-		var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
+		/*
+		비밀번호 형식 체크
+		*/
+		$("#teacherPwd").focusout(function(){
+			isValidPwd();
+		})
 		
-		if(id.length>7){ //길이 체크
-			$("#notValidPwd").css("display", "inline-block");
-			return false;
-		}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
-			$("#notValidPwd").css("display", "inline-block");
-			return false;
-		}else{
-			$("#notValidPwd").css("display", "none");
-			return true;
+		function isValidPwd(){
+			var id = $("#teacherPwd").val();
+			
+			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
+			var isLow = id.search(/[a-z]/g); //영소문자 있는지 확인. index 리턴. -> -1이면 안됨.
+			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
+			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
+			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
+			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
+			
+			if(id.length>7){ //길이 체크
+				$("#notValidPwd").css("display", "inline-block");
+				return false;
+			}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
+				$("#notValidPwd").css("display", "inline-block");
+				return false;
+			}else{
+				$("#notValidPwd").css("display", "none");
+				return true;
+			}
 		}
-	}
-	
-	/*
-	핸드폰 번호 형식 체크
-	*/
-	$("#teacherPhone").focusout(function(){
-		isValidPhone();
-	})
-	
-	function isValidPhone(){
-		var phone = $("#teacherPhone").val();
-		far validNum = /^010?([0-9]{8})$/;
 		
-		if(!validNum.test(phone)){
-			$("#notValidPhone").css("display","inline-block");
-			return false;
-		}else{
-			return true;
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#teacherPhone").focusout(function(){
+			isValidPhone();
+		})
+		
+		function isValidPhone(){
+			var phone = $("#teacherPhone").val();
+			var validNum = /^010?([0-9]{8})$/;
+			
+			if(!validNum.test(phone)){
+				$("#notValidPhone").css("display","inline-block");
+				return false;
+			}else{
+				return true;
+			}
 		}
-	}
-	
-	/*
-	
-	*/
-
+		
+		/*
+		이메일 형식 체크
+		*/
+		$("#teacherEmail").focusout(function(){
+			isValidEmail();
+		})
+		
+		function isValidEmail(){
+			var email = $("#teacherEmail").val();
+			var validEmail = "\w+@\w+\.\w+(\.\w+)?";
+			
+			var result = email.match(validEmail);
+			
+			if(!result){
+				$("#notValidEmail").css("display","inline-block");
+				return false;
+			}else{
+				return true;
+			}
+		}
+	})
 </script>
 
 <!-- 중복 체크 (진행 중) -->
 <script type="text/javascript">
-	${"#idCheck"}.click(function(){
+
+	$(function(){
 		
-	})
+		/*
+		아이디 중복 체크
+		*/
+		${"#idCheck"}.click(function(){
+			
+		})
+		
+		/*
+		핸드폰 번호 중복 체크
+		*/
+		${"#phoneCheck"}.click(function(){
+			
+		})
+		
+		/*
+		닉네임 중복 체크
+		*/
+		${"#nickCheck"}.click(function(){
+			
+		})
+		
+		/*
+		아이디, 비밀번호, 핸드폰번호, 이메일 값 변경 시 중복 체크 리셋
+		*/
+		$("#teacherId").keyup(function(){
+			
+		})
+	})	
+	
 </script>
 
 </head>
@@ -284,10 +331,7 @@ $(function() {
 	      <tr>
 	          <th>*강사 이메일</th>
 	          <td><input type="text" id="teacherEmail" class="" required="required"/></td>
-	          <button id="emailCheck" class="">중복체크</button>
-	          <span id="notValidEmail">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
-	          <span id="emailCheck_success">사용가능한 번호입니다.</span></td>
-	          <span id="emailCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td>
+	          <span id="notValidEmail">올바른 이메일 주소가 아닙니다.</span>
 	      </tr>
 	      <tr>
 	          <th>강사 소개</th>
