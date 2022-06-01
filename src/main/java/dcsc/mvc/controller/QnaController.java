@@ -11,10 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.service.board.ClassQnaService;
-<<<<<<< HEAD
 
-=======
->>>>>>> 9e38053b0ad4e1e8890eee9bfefb968de99cc8f5
+
+
 
 @Controller
 @RequestMapping("/main/class/")
