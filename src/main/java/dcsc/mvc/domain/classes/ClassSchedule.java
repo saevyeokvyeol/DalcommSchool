@@ -33,8 +33,8 @@ public class ClassSchedule {
 	private Long scheduleId;
 	
 	private LocalDateTime scheduleDate;
-	private LocalDateTime startTime;
-	private LocalDateTime endTime;
+	private String startTime;
+	private String endTime;
 	
 	@CreationTimestamp
 	private LocalDateTime ScheduleInsertDate;
@@ -44,7 +44,6 @@ public class ClassSchedule {
 	
 	private int totalSeat;
 	private int leftSeat;
-	private int SchedulePrice;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
