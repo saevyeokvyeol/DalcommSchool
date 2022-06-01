@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.classes.Classes;
-import dcsc.mvc.repository.board.ClassesQnaReposiroty;
 import dcsc.mvc.repository.classes.ClassesRepository;
 
 @SpringBootTest

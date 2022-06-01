@@ -3,6 +3,7 @@ package dcsc.mvc.repository.user;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.ClassQna;
@@ -12,6 +13,5 @@ import dcsc.mvc.domain.user.Student;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
 
-	
 	
 }
