@@ -24,11 +24,11 @@ public interface AskAnswerService {
 	void updateAsk(Ask ask);
 	
 	/**
-	 * 1대1 문의 삭제하기(강사&회원)
-	 * @param Long askNo
+	 * 1대1 문의 삭제하기(강사&회원) 
+	 * @param Long askNo 
 	 * */
 	void deleteAsk(Long askNo);
-	
+	 
 	/**
 	 * 1대1 문의 답변하는 기능(관리자)
 	 * @param Answer(답변글번호, 글번호, 답변내용, 등록일자)
