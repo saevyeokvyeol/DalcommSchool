@@ -1,6 +1,7 @@
 package dcsc.mvc.service.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.ClassQna;
@@ -15,38 +16,6 @@ public interface StudentService {
 	 * @param: Student student
 	 * */
 	void insertStudent (Student student);
-	
-	/**
-	 * 아이디 찾기
-	 * @param: String studentName, String studentPhone
-	 * @return: String studentId
-	 * */
-	String selectStudentId (String studentName, String studentPhone);
-	
-	/**
-	 * 비밀번호 찾기
-	 * @param:String studentId, String studentName, String studentPhone
-	 * */
-	void selectStudentPwd (String studentId, String studentName, String studentPhone);
-	
-	/**
-	 * 회원정보 수정
-	 * @param: Student student
-	 * */
-	void updateStudent (Student student);
-	
-	/**
-	 * 비밀번호 수정
-	 *  : 새로운 비밀번호와 기존 비밀번호 일치/불일치 여부 확인
-	 * @param: String studentPwd
-	 * */
-	void updateStudentPwd (String studentOldPwd, String studentNewPwd);
-	
-	/**
-	 * 회원 탈퇴하기(학생)
-	 * @param: String studentId
-	 * */
-	void deleteStudent (String studentId);
 	
 	/**
 	 * 학생 아이디 중복체크
@@ -68,7 +37,14 @@ public interface StudentService {
 	 * @return: boolean
 	 * */
 	boolean studentEmailCheck (String studentEmail);
+
+	/**
+	 * 회원 탈퇴하기(학생)
+	 * @param: String studentId
+	 * */
+	void deleteStudent (String studentId);
 	
+
 	/**
 	 * 학생 조회하기
 	 * @param: 
@@ -76,9 +52,16 @@ public interface StudentService {
 	 * */
 	List<Student> selectAllStudent ();
 	
+	
 	/**
-	 * 아이디로 학생 조회하기
-	 * @param: String keyword, String keyfield
+	 * 학생 상세 정보 조회
+	 * */
+	Optional<Student> selectStudent(String studentId);
+	
+	
+	/**
+	 * 아이디, 이름 등등으로 학생 조회하기
+	 * @param: String keyword(검색어), String keyfield(컬럼명)
 	 * @return: List<Student>
 	 * */
 	List<Student> selectByStudentId (String keyword, String keyfield);
