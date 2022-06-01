@@ -23,7 +23,7 @@ public class UserController {
 	}
 	
 	//회원 가입하기 :: redirect 방식으로
-	@RequestMapping(value="/insertStudent", method = RequestMethod.POST)
+	@RequestMapping(value="/join", method = RequestMethod.POST)
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
 		studentService.insertStudent(student);
@@ -54,27 +54,31 @@ public class UserController {
 		System.out.println("modifyPwd 호출...");
 	}
 	
-	
+	//내가 남긴 일대일문의 조회
 	@RequestMapping("/mypage/askList")
 	public void askList() {
 		System.out.println("askList 호출...");
 	}
 	
+	//내 예약 조회
 	@RequestMapping("/mypage/bookList")
 	public void bookList() {
 		System.out.println("bookList 호출...");
 	}
 	
+	//내 쿠폰 조회
 	@RequestMapping("/mypage/couponList")
 	public void couponList() {
 		System.out.println("couponList 호출...");
 	}
 	
+	//내 클래스 문의 조회
 	@RequestMapping("/mypage/faqList")
 	public void faqList() {
 		System.out.println("faqList 호출...");
 	}
 	
+	//내 리뷰 조회
 	@RequestMapping("/mypage/reviewList")
 	public void reviewList() {
 		System.out.println("reviewList 호출...");
