@@ -36,5 +36,37 @@ public class QnaController {
 		return new ModelAndView("main/class/qnaRead", "qna", classQna);
 	}
 	
+	/**
+	 * Q&A 등록 폼
+	 * */
+	@RequestMapping("qnaWrite")
+	public void qnaWrite() {
+		
+	}
+	
+	/**
+	 * Q&A 등록
+	 * */
+	@RequestMapping("qnaInsert")
+	public String qnaInsert(ClassQna classQna) {
+		classQnaService.insertQuestion(classQna);
+		
+		return "redirect:/main/class/qnaList";
+	}
+	
+	/**
+	 * Q&A 수정폼
+	 * */
+	@RequestMapping("qnaUpdateForm")
+	public ModelAndView qnaUpdateForm(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		return new ModelAndView("", "", classQna);
+	}
+	
+	/**
+	 * Q&A 수정
+	 * */
+	//@RequestMapping("qnaUpdate")
 	
 }
