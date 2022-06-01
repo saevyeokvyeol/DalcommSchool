@@ -29,6 +29,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	}
 
+	/**
+	 * 아이디 찾기
+	 * */
 	@Override
 	public String selectId(String userName, String userPhone) {
 		String teacherId = teacherRep.selectTeacherId(userName, userPhone);
@@ -43,7 +46,10 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		
 	}
-
+	
+	/**
+	 * 패스워드 찾기
+	 * */
 	@Override
 	public void selectPwd(String userId, String userName, String userPhone) {
 		
@@ -68,9 +74,13 @@ public class TeacherServiceImpl implements TeacherService {
 
 	}
 
+	/**
+	 * 아이디 중복체크
+	 * */
 	@Override
-	public boolean teacherIdCheck(String teacherId) {
-		// TODO Auto-generated method stub
+	public boolean userIdCheck(String userId) {
+		List<Teacher> listTeacher = teacherRep.findByTeacherId(userId);
+//		List<Student> listStudent = studentRep.findbyStudentId(userId);
 		return false;
 	}
 
@@ -81,13 +91,7 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public boolean teacherPhoneCheck(String teacherPhone) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean teacherEmailCheck(String teacherEmail) {
+	public boolean userPhoneCheck(String teacherPhone) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -98,6 +102,9 @@ public class TeacherServiceImpl implements TeacherService {
 		return null;
 	}
 
+	/**
+	 * 선생님 아이디로 정보 불러오기
+	 * */
 	@Override
 	public Teacher selectByTeacherId(String teacherId) {
 		Teacher teacher = teacherRep.getById(teacherId);
