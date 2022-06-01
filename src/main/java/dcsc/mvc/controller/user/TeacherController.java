@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +18,7 @@ public class TeacherController {
 	 * 강사 회원가입 폼
 	 * */
 	@RequestMapping("/joinTeacher")
-	public void joinTeacher() {
-		
-	}
+	public void joinTeacher() {}
 	
 	/**
 	 * 강사 회원가입
@@ -35,10 +33,18 @@ public class TeacherController {
 	/**
 	 * 회원(강사,학생) 아이디 찾기
 	 * */
+	@RequestMapping("/findId")
+	public void findId(String userName, String userPhone) {
+		teacherService.selectId(userName, userPhone);
+	}
 	
 	/**
 	 * 회원(강사,학생) 비밀번호 찾기
 	 * */
+	@RequestMapping("/findPwd")
+	public void findPwd(String userId, String userName, String userPhone) {
+		teacherService.selectPwd(userId, userName, userPhone);
+	}
 	
 	@RequestMapping("/mypage")
 	public void teacherMypage(){}

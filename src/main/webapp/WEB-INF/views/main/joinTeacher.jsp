@@ -247,7 +247,18 @@ $(function() {
 		아이디 중복 체크
 		*/
 		${"#idCheck"}.click(function(){
+			if(!isValidId()){
+				alert("먼저 조건에 맞는 ID를 입력해주세요.")
+				return;
+			}
+			if(("#teacherId").val()==""){
+				alert("ID를 입력해주세요");
+				return;
+			}
 			
+			$.ajax({
+				url: "{pageContext.request.contextPath}"
+			})
 		})
 		
 		/*
