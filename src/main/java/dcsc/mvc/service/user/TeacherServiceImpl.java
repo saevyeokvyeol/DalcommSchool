@@ -32,16 +32,16 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public String selectId(String userName, String userPhone) {
 		String teacherId = teacherRep.selectTeacherId(userName, userPhone);
-//		String studentId = studentRep.selectStudentId(userName, userPhone);
+		String studentId = studentRep.selectStudentId(userName, userPhone);
 		
-//		if(teacherId==null && studentId==null) {
-//			throw new RuntimeException("해당 정보에 일치하는 아이디가 없습니다.");
-//		}else if(teacherId != null) {
-//			return teacherId;
-//		}else {
-//			return studentId;
-//		}
-		return null;
+		if(teacherId==null && studentId==null) {
+			throw new RuntimeException("해당 정보에 일치하는 아이디가 없습니다.");
+		}else if(teacherId != null) {
+			return teacherId;
+		}else {
+			return studentId;
+		}
+		
 	}
 
 	@Override
