@@ -29,7 +29,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	
 	//아이디 찾기
-	@Query(value = "select student_id from Student s where student_name = ?1 and student_phone = ?2", nativeQuery = true)
+	@Query("select s.student_id from Student s where s.student_name = ?1 and s.student_phone = ?2")
 	String selectStudentId(String studentName, String studentPhone);
 	
 	
