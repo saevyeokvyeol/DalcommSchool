@@ -17,17 +17,14 @@
 				클래스가 존재하지 않습니다.
 			</c:when>
 			<c:otherwise>
-			<c:forEach items="${list}" var="classes">
+			<c:forEach items="${list}" var="classes"><p>
 					${classes.classId}
 					 | ${classes.className}
 					 | ${classes.classInfo}
-					 | ${classes.classInsertDate}
-					 | ${classes.classUpdateDate}
 					 | ${classes.classOpenDate}
-					 | ${classes.classCategory}
-					 | ${classes.teacher.teacherId}
-					 | ${classes.classState.stateId}
-					 | ${classes.className}<br>
+					 | ${classes.classCategory.categoryName}
+					 | ${classes.teacher.teacherNickname}
+					 | ${classes.classState.stateName}
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
