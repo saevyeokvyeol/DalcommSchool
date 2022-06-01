@@ -32,6 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/Wallet_dalcommschool/**
-src/main/resources/Wallet_dalcommschool/**
 src/main/resources/application-oauth.properties
+src/test/java/dcsc/mvc/DalcommSchoolApplicationTests.java
 .tern-project

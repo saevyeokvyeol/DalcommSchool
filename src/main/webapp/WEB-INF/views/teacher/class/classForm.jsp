@@ -14,16 +14,15 @@
 			$(function() {
 				function selectAllCategory() {
 					$.ajax({
-						url : "/teacher/class/selectAllCategory",
+						url : "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
 						type : "post",
-						dateType : "text",
+		    			dataType: "json",
 						success : function(result) {
-							alert(result);
-							text = "<select name='categoryId' >"
+							text = ""
 							$.each(result, function(index, item) {
-								text += `<option value='\${item.categoryId}'>${item.categoryName}</option>`;
+								text += `<option value='\${item.categoryId}'>\${item.categoryName}</option>`;
 							})
-							text += "</select>"
+							$("#categoryId").append(text);
 						},
 						error : function(error) {
 							alert("카테고리 정보를 가져올 수 없습니다.");
@@ -36,12 +35,13 @@
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/teacher/class/insert" enctype="multipart">
+		<form action="${pageContext.request.contextPath}/teacher/class/insert"
+			enctype="multipart/form-data" method="post">
 			<table>
 				<tr>
 					<td>
 						<label class="form-label">선생님ID</label>
-						<input type="text" placeholder="선생님ID" name="teacherId">
+						<input type="text" placeholder="선생님ID" name="teacherId" value="Tkim1234">
 					</td>
 				</tr>
 				<tr>
@@ -65,19 +65,21 @@
 				<tr>
 					<td>
 						<label class="form-label">대표 이미지</label>
-						<input type="file" placeholder="클래스명" name="">
+						<input type="file" placeholder="클래스명" name="file">
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<label class="form-label">추가 이미지</label>
-						<input type="file" multiple="multiple" placeholder="클래스명" name="">
+						<input type="file" multiple="multiple" placeholder="클래스명" name="files">
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<label class="form-label">카테고리</label>
-						<input type="email" placeholder="클래스명" name="stateId">
+						<select name='categoryId' id="categoryId">
+							<option value='0'>클래스 카테고리 선택</option>
+						</select>
 					</td>
 				</tr>
 				<tr>
