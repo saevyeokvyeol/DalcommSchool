@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
