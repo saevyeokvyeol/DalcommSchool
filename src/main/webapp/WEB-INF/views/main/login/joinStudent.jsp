@@ -93,7 +93,7 @@
 <body>
 	<h2>회원 가입</h2>
 	모든 항목을 필수로 입력해주세요.<br>
-	<form name="join" method="post" action="${pageContext.request.contextPath}/insertStudent" id="joinForm">
+	<form name="join" method="post" action="${pageContext.request.contextPath}/join" id="joinForm">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		
 		이름&nbsp;<input type="text" id="studentName" name="name"

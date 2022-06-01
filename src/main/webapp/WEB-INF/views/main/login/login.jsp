@@ -230,7 +230,7 @@ body{margin-top:20px;}
                     <div class="or">OR</div>
                 </div>
                 <!-- 로그인 폼 -->
-                <form name="login" method="post" action="${pageContext.request.contextPath}/main/login">
+                <form name="login" method="post" action="${pageContext.request.contextPath}/login">
 	                <div class="loginbox-textbox">
 	                    아이디<br><input type="text" class="form-control">
 	                </div>
