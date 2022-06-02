@@ -242,12 +242,44 @@ $(function() {
 <script type="text/javascript">
 
 	$(function(){
+		isIdChecked = false;
+		isPhoneChecked = false;
+		isNickChecked = false;
 		
 		/*
 		아이디 중복 체크
 		*/
 		${"#idCheck"}.click(function(){
+			if(!isValidId()){
+				alert("먼저 조건에 맞는 ID를 입력해주세요.")
+				return;
+			}
+			if(("#teacherId").val()==""){
+				alert("ID를 입력해주세요");
+				return;
+			}
 			
+			$.ajax({
+				url: "/main/login/checkId",
+				
+				data: {
+					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+				},
+				dataType: "text",
+				success: function(data){
+					if(){
+						alert("이미 존재하는 아이디입니다.");
+					}else{
+						alert("사용 가능한 아이디입니다.");
+						isIdChecked = true;
+						return;
+					}
+				}, //success 끝
+				error: function(err){
+					alert(err + "에러 발생");
+				}
+				
+			})
 		})
 		
 		/*
@@ -284,7 +316,7 @@ $(function() {
 	    <table>
 	      <tr>
 	          <th>* 강사 ID</th>
-	          <td class=""><input type="text" id="teacherId" class="" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required="required"/>
+	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required="required"/>
 	          <button type="button" class="" id="idCheck">중복체크</button>
 	          <span id="notValidId">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
 	          <span id="idCheck_success">사용가능한 ID입니다^^</span></td>

@@ -50,11 +50,11 @@ public interface TeacherService {
 	void deleteTeacher (String teacherId);
 	
 	/**
-	 * 강사 아이디 중복체크
+	 * 아이디 중복체크
 	 * @param: String teacherId
 	 * @return: boolean
 	 * */
-	boolean teacherIdCheck (String teacherId);
+	boolean userIdCheck (String userId);
 	
 	/**
 	 * 강사 닉네임 중복체크
@@ -64,18 +64,12 @@ public interface TeacherService {
 	boolean teacherNickCheck (String teacherNickname);
 	
 	/**
-	 * 강사 핸드폰 번호 중복체크
+	 * 핸드폰 번호 중복체크
 	 * @param: String teacherPhone
 	 * @return: boolean
 	 * */
-	boolean teacherPhoneCheck (String teacherPhone);
-	
-	/**
-	 * 강사 이메일 주소 중복체크
-	 * @param: String teacherEmail
-	 * @return: boolean
-	 * */
-	boolean teacherEmailCheck (String teacherEmail);
+	boolean userPhoneCheck (String userPhone);
+
 	
 	/**
 	 * 강사 조회

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>하하</h1>
+<h2>관리자용 회원 조회 페이지 입니다</h2>
+
 </body>
 </html>
