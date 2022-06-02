@@ -17,12 +17,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Student {
 
 	@Id
@@ -41,9 +43,7 @@ public class Student {
 	
 	private String studentQuit;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="author_id")
-	private Authority authority;
+	private String role = "STUDENT"; //STUDENT
 	
 	
 }

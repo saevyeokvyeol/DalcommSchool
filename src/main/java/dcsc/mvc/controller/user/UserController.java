@@ -23,7 +23,7 @@ public class UserController {
 	}
 	
 	//회원 가입하기 :: redirect 방식으로
-	@RequestMapping(value="/join", method = RequestMethod.POST)
+	@RequestMapping(value="/login/join", method = RequestMethod.POST)
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
 		studentService.insertStudent(student);
