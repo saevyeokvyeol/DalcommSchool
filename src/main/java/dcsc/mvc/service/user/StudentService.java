@@ -18,27 +18,6 @@ public interface StudentService {
 	void insertStudent (Student student);
 	
 	/**
-	 * 학생 아이디 중복체크
-	 * @param: String studentId
-	 * @return: boolean
-	 * */
-	boolean studentIdCheck (String studentId);
-	
-	/**
-	 * 학생 핸드폰 번호 중복체크
-	 * @param: String studentPhone
-	 * @return: boolean
-	 * */
-	boolean studentPhoneCheck (String studentPhone);
-	
-	/**
-	 * 학생 이메일 주소 중복체크
-	 * @param: String studentEmail
-	 * @return: boolean
-	 * */
-	boolean studentEmailCheck (String studentEmail);
-
-	/**
 	 * 회원 탈퇴하기(학생)
 	 * @param: String studentId
 	 * */

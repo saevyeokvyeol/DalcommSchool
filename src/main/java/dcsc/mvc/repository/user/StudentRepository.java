@@ -14,13 +14,13 @@ import dcsc.mvc.domain.user.Student;
 public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	/**
-	 * 아이디, 휴대폰, 이메일 중복체크
+	 * 아이디, 휴대폰 중복체크
 	 * */
-	boolean findByStudentId(String studentId);
+	List<Student> findByStudentId(String studentId);
 	
-	boolean findByStudentPhone(String studentPhone);
+	List<Student> findByStudentPhone(String studentPhone);
 	
-	boolean findByStudentEmail(String studentEmail);
+	
 	
 	/**
 	 * 아이디, 이름, 핸드폰, 이메일 등등으로 학생 조회하기

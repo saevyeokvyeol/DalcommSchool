@@ -29,37 +29,6 @@ public class StudentServiceImpl implements StudentService {
 			new RuntimeException("회원가입에 실패했습니다.");
 		}
 	}
-	
-	/**
-	 * 아이디 중복체크
-	 * */
-	@Override
-	public boolean studentIdCheck(String studentId) { //아이디 중복체크
-		boolean idCheck = studentRepository.findByStudentId(studentId);
-		if(idCheck) new RuntimeException("이미 사용중인 아이디입니다.");
-		
-		return idCheck;
-	}
-	
-	/**
-	 * 휴대폰 번호 중복체크
-	 * */
-	@Override
-	public boolean studentPhoneCheck(String studentPhone) { 
-		boolean phoneCheck = studentRepository.findByStudentPhone(studentPhone);
-		if(phoneCheck) new RuntimeException("이미 사용중인 휴대폰 번호 입니다.");
-		return phoneCheck;
-	}
-	
-	/**
-	 * 이메일 중복체크
-	 * */
-	@Override
-	public boolean studentEmailCheck(String studentEmail) {
-		boolean emailCheck = studentRepository.findByStudentEmail(studentEmail);
-		if(emailCheck) new RuntimeException("이미 사용중인 이메일주소입니다.");
-		return emailCheck;
-	}
 
 	/**
 	 * 회원 탈퇴

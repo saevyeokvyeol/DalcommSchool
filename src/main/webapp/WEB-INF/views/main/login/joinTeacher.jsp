@@ -150,7 +150,7 @@ $(function() {
 			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
-			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
+			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
 			
 			if(id.length<6 || id.length>10){ //길이 체크
 				$("#notValidId").css("display", "inline-block");
@@ -182,7 +182,7 @@ $(function() {
 			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
-			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣/gi]); // -1리턴해야함.
+			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
 			
 			if(id.length>7){ //길이 체크
 				$("#notValidPwd").css("display", "inline-block");
@@ -235,13 +235,13 @@ $(function() {
 				return true;
 			}
 		}
-	})
-</script>
+	
+
 
 <!-- 중복 체크 (진행 중) -->
-<script type="text/javascript">
 
-	$(function(){
+
+	
 		isIdChecked = false;
 		isPhoneChecked = false;
 		isNickChecked = false;
@@ -249,25 +249,19 @@ $(function() {
 		/*
 		아이디 중복 체크
 		*/
-		${"#idCheck"}.click(function(){
+		$("#idCheck").click(function(){
 			if(!isValidId()){
 				alert("먼저 조건에 맞는 ID를 입력해주세요.")
 				return;
 			}
-			if(("#teacherId").val()==""){
-				alert("ID를 입력해주세요");
-				return;
-			}
-			
 			$.ajax({
 				url: "/main/login/checkId",
-				
 				data: {
-					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+					userId : $('#teacherId').val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
 				},
 				dataType: "text",
 				success: function(data){
-					if(){
+					if(data=="true"){
 						alert("이미 존재하는 아이디입니다.");
 					}else{
 						alert("사용 가능한 아이디입니다.");
@@ -276,32 +270,58 @@ $(function() {
 					}
 				}, //success 끝
 				error: function(err){
+					console.log(data);
 					alert(err + "에러 발생");
 				}
-				
-			})
-		})
+			})//ajax 끝
+		}) //function 끝
 		
 		/*
 		핸드폰 번호 중복 체크
 		*/
-		${"#phoneCheck"}.click(function(){
-			
-		})
+// 		${"#phoneCheck"}.click(function(){
+// 			if(!isValidPhone()){
+// 				alert("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
+// 				return;
+// 			}
+// 			if(("#teacherPhone").val()==""){
+// 				alert("핸드폰 번호를 입력해주세요.");
+// 				return;
+// 			}
+// 			$.ajax({
+// 				url: "/main/login/checkId",
+// 				data: {
+// 					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+// 				},
+// 				dataType: "text",
+// 				success: function(data){
+// 					if(){
+// 						alert("이미 존재하는 아이디입니다.");
+// 					}else{
+// 						alert("사용 가능한 아이디입니다.");
+// 						isIdChecked = true;
+// 						return;
+// 					}
+// 				}, //success 끝
+// 				error: function(err){
+// 					alert(err + "에러 발생");
+// 				}
+// 			})
+// 		})
 		
-		/*
-		닉네임 중복 체크
-		*/
-		${"#nickCheck"}.click(function(){
+// 		/*
+// 		닉네임 중복 체크
+// 		*/
+// 		${"#nickCheck"}.click(function(){
 			
-		})
+// 		})
 		
-		/*
-		아이디, 비밀번호, 핸드폰번호, 이메일 값 변경 시 중복 체크 리셋
-		*/
-		$("#teacherId").keyup(function(){
+// 		/*
+// 		아이디, 비밀번호, 핸드폰번호, 이메일 값 변경 시 중복 체크 리셋
+// 		*/
+// 		$("#teacherId").keyup(function(){
 			
-		})
+// 		})
 	})	
 	
 </script>

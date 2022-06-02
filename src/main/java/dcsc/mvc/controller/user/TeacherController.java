@@ -59,6 +59,10 @@ public class TeacherController {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * */
+	
 //	@RequestMapping("/mypage")
 //	public void teacherMypage(){}
 //	
