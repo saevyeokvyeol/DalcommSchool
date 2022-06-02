@@ -51,28 +51,6 @@
 //		//회원 정보있으면 인수 전달된 평문과 디비에 저장된 암호화 비번을 비교한다
 //		String pass = authentication.getCredentials().toString(); //사용자가 친 비번 가져옴
 //		
-////		boolean result1 = passwordEncoder.matches(pass, student.getStudentPwd());
-////		boolean result2 = passwordEncoder.matches(pass, teacher.getTeacherPwd());
-////				
-////		if(result1==false && result2 ==false) {
-////			throw new UsernameNotFoundException("비밀번호가 틀렸습니다");
-////		}else if(result1){
-////			List<Student> studentList = str.findByStudentId(id);
-////			List<SimpleGrantedAuthority> simpleGrantedList = new ArrayList<SimpleGrantedAuthority>();
-////			
-////			for(Student s : studentList) {
-////				simpleGrantedList.add(new SimpleGrantedAuthority(s.getRole()));
-////			}
-////			UsernamePasswordAuthenticationToken Token = new UsernamePasswordAuthenticationToken(student, null, simpleGrantedList);
-////		}else if(result2) {
-////			List<Teacher> teacherList = tcr.findByTeacherId(id);
-////			List<SimpleGrantedAuthority> simpleGrantedList = new ArrayList<SimpleGrantedAuthority>();
-////		
-////			for(Teacher t : teacherList) {
-////				simpleGrantedList.add(new SimpleGrantedAuthority(t.getRole()));
-////			}
-////			UsernamePasswordAuthenticationToken Token = new UsernamePasswordAuthenticationToken(teacher, null ,simpleGrantedList);
-////		}
 //			if(student!=null || teacher!=null) { //학생정보가 있다면 학생 정보와 비교
 //		
 //				if(student!=null) { 

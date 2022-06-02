@@ -66,9 +66,21 @@ public class TeacherController {
 	 * */
 	@RequestMapping("/checkPhone")
 	public boolean checkPhone(String userPhone) {
-//		boolean result = teacherService
-		return false;
+		boolean result = teacherService.userPhoneCheck(userPhone);
+		
+		return result;
 	}
+	
+	/**
+	 * 선생님 닉네임 중복 체크
+	 * */
+	@RequestMapping("/checkNick")
+	public boolean checkNick(String teacherNick) {
+		boolean result = teacherService.teacherNickCheck(teacherNick);
+		
+		return result;
+	}
+	
 	
 //	@RequestMapping("/mypage")
 //	public void teacherMypage(){}
