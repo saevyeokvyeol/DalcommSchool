@@ -21,14 +21,14 @@ public interface AskAnswerService {
 	 *  상세보기 페이지로 이동한다.
 	 *  @param Ask(글번호, (강사&회원)ID, 제목, 카테고리, 문의내용, 이미지)
 	 * */
-	void updateAsk(Ask ask);
+	Ask updateAsk(Ask ask);
 	
 	/**
-	 * 1대1 문의 삭제하기(강사&회원)
-	 * @param Long askNo
+	 * 1대1 문의 삭제하기(강사&회원) 
+	 * @param Long askNo 
 	 * */
 	void deleteAsk(Long askNo);
-	
+	 
 	/**
 	 * 1대1 문의 답변하는 기능(관리자)
 	 * @param Answer(답변글번호, 글번호, 답변내용, 등록일자)

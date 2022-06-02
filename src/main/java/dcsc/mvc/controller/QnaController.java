@@ -14,6 +14,9 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.ClassQnaService;
 
+
+
+
 @Controller
 @RequestMapping("/main/class/")
 public class QnaController {

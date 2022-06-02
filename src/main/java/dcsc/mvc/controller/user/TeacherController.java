@@ -18,7 +18,7 @@ public class TeacherController {
 	/**
 	 * 강사 회원가입 폼
 	 * */
-	@RequestMapping("/login/joinTeacher")
+	@RequestMapping("/joinTeacher")
 	public void joinTeacher() {}
 	
 	/**
