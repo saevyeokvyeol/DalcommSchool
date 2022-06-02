@@ -232,11 +232,11 @@ body{margin-top:20px;}
                 <!-- 로그인 폼 -->
                 <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-	                <div class="loginbox-textbox">
-	                    아이디<br><input type="text" name="id" class="form-control">
+	                <div class="loginbox-textbox"> 
+	                    아이디<br><input type="text" name="username" class="form-control">
 	                </div>
 	                <div class="loginbox-textbox">
-	                    비밀번호<br><input type="password" name="pwd" class="form-control">
+	                    비밀번호<br><input type="password" name="password" class="form-control">
 	                </div>
 	                <div class="loginbox-forgot">
 	                    <a href="">아이디</a>&nbsp;/&nbsp;

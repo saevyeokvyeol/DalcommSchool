@@ -20,7 +20,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	List<Student> findByStudentPhone(String studentPhone);
 	
-	
+	Student selectStudentById(String studentId);
+	Student selectRoleById(String studentId);
 	
 	/**
 	 * 아이디, 이름, 핸드폰, 이메일 등등으로 학생 조회하기
