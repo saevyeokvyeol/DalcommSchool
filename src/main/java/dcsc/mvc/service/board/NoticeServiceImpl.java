@@ -37,12 +37,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void deleteNotice(Long NoticeNo) {
-		Notice dbNotice = noRepository.findById(NoticeNo).orElse(null);
+	public void deleteNotice(Long noticeNo) {
+		Notice dbNotice = noRepository.findById(noticeNo).orElse(null);
 		if(dbNotice==null) {
 			throw new RuntimeException("글번호 오류로 삭제할수 없습니다.");
 		}
-		noRepository.deleteById(NoticeNo);
+		noRepository.deleteById(noticeNo);
 	}
 
 	@Override

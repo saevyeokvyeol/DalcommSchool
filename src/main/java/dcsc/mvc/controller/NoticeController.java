@@ -61,7 +61,7 @@ public class NoticeController {
 	 * 수정폼
 	 * */
 	@RequestMapping("/updateForm")
-	public ModelAndView updateForm(Long noticeNo) {
+	public ModelAndView updateForm(Long noticeNo, boolean state) {
 		Notice notice = noticeService.selectBy(noticeNo, false);
 		
 		return new ModelAndView("admin/board/Notice/noticeUpdate","notice",notice);
@@ -83,9 +83,9 @@ public class NoticeController {
 	 * 삭제하기
 	 * */
 	@RequestMapping("/deleteNotice")
-	public String deleteNotice(Long NoticeNo) {
-		
-		return "redirect:admin/board/Notice/noticeList";
+	public String deleteNotice(Long noticeNo) {
+		noticeService.deleteNotice(noticeNo);
+		return "redirect:/admin/board/Notice/noticeList";
 	}
 	
 }

@@ -10,6 +10,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <meta charset="UTF-8">
+	
+<script type="text/javascript">
+	$(function(){
+	alert(1)
+		
+	 $("input[value=수정하기]").click(function(){
+		   //document.requestForm.action="${pageContext.request.contextPath}/board/updateForm";
+		   
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath/admin/board/Notice/updateForm");
+		   $("#requestForm").submit();
+	   })
+	
+	   $("input[value=삭제하기]").click(function(){
+		
+			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/Notice/deleteNotice");
+			   $("#requestForm").submit();
+		  	alert("삭제되었습니다.")
+	   })
+	   
+	})
+</script>
 <title>Insert title here</title>
 
 <head>
@@ -61,7 +82,7 @@
         <td height="20" colspan="2" align="center" valign="middle">
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 			<form name="requestForm" method="post" id="requestForm">
-				<input type=hidden name="bno" value="${notice.noticeNo}">
+				<input type=hidden name="noticeNo" value="${notice.noticeNo}">
 				<input type=button value="수정하기" >
 				<input type=button value="삭제하기" >
 			</form>
