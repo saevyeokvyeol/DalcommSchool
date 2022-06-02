@@ -16,10 +16,10 @@
 	alert(1)
 		
 	 $("input[value=수정하기]").click(function(){
-		   //document.requestForm.action="${pageContext.request.contextPath}/board/updateForm";
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath/admin/board/Notice/updateForm");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/Notice/updateForm");
 		   $("#requestForm").submit();
+		   
 	   })
 	
 	   $("input[value=삭제하기]").click(function(){

@@ -14,7 +14,7 @@
 
 <head>
 
-<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/Notice/noticeUpdate" >
+<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/Notice/noticeUpdate">
     <input type='hidden' name='noticeNo' value="${notice.noticeNo}">
 	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>
@@ -27,7 +27,7 @@
             <p align="right"><b><span style="font-size:9pt;">제목</span></b></p>
         </td>
         <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type=text name="subject" size="30"
+		<input type=text name="noticeTitle" size="30"
 		 value="${requestScope.notice.noticeTitle}"></span></b></td>
     </tr>
     
@@ -36,11 +36,11 @@
             <p align="right"><b><span style="font-size:9pt;">내 용</span></b></p>
         </td>
         <td width="450" height="20" ><b><span style="font-size:9pt;">
-		<textarea name="content" cols="50" rows="10">${requestScope.notice.noticeContent}</textarea></span></b></td>
+		<textarea name="noticeContent" cols="50" rows="10">${requestScope.notice.noticeContent}</textarea></span></b></td>
     </tr>
     <tr>
         <td width="450" height="20" colspan="2" align="center"><b><span style="font-size:9pt;">
-		<input type="submit" value="수정하기"> <input type="reset" value="다시쓰기"></span></b></td>
+		<input type="submit" value="수정하기" name="update"> <input type="reset" value="다시쓰기"></span></b></td>
     </tr>
 </table>
 </form>

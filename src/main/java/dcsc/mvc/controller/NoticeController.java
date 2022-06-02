@@ -65,7 +65,6 @@ public class NoticeController {
 		Notice notice = noticeService.selectBy(noticeNo, false);
 		
 		return new ModelAndView("admin/board/Notice/noticeUpdate","notice",notice);
-		
 	}
 	
 	/**
@@ -74,6 +73,7 @@ public class NoticeController {
 	
 	@RequestMapping("/noticeUpdate")
 	public ModelAndView updateNotice(Notice notice) {
+		System.out.println("컨트롤러 :"+notice.getNoticeNo());
 		noticeService.updateNotice(notice);
 		
 		return new ModelAndView("admin/board/Notice/noticeRead","notice",notice);
