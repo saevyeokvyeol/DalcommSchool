@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassQna;
+import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.ClassQnaService;
 
 @Controller
@@ -45,8 +47,13 @@ public class QnaController {
 	 * Q&A 등록
 	 * */
 	@RequestMapping("qnaInsert")
-	public String qnaInsert(ClassQna classQna) {
+	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
+		classQna.setClasses(classes);
+		classQna.setStudent(student);
+		classQna.setBlindState(classQna.getBlindState());
+		classQna.setQnaComplete(classQna.getQnaComplete());
 		classQnaService.insertQuestion(classQna);
+		//System.out.println("classQna = "+classQna );
 		
 		return "redirect:/main/class/qnaList";
 	}
@@ -58,12 +65,26 @@ public class QnaController {
 	public ModelAndView qnaUpdateForm(Long qnaId) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
-		return new ModelAndView("", "", classQna);
+		return new ModelAndView("main/class/qnaUpdate", "qna", classQna);
 	}
 	
 	/**
-	 * Q&A 수정
+	 * Q&A 수정하기
 	 * */
-	//@RequestMapping("qnaUpdate")
+	@RequestMapping("qnaUpdate")
+	public String qnaUpdate(ClassQna classQna) {
+		classQnaService.updateQuestion(classQna);
 	
+		return "redirect:/main/class/qnaList";
+	}
+	
+	/**
+	 * Q&A 삭제하기
+	 * */
+	@RequestMapping("qnaDelete")
+	public String qnaDelete(Long qnaId) {
+		classQnaService.deleteQuestion(qnaId);
+		
+		return "redirect:/main/class/qnaList";
+	}
 }
