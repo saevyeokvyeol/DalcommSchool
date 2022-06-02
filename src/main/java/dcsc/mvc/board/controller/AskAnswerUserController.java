@@ -1,4 +1,4 @@
-package dcsc.mvc.controller.askanswer;
+package dcsc.mvc.board.controller;
 
 import java.util.List;
 
