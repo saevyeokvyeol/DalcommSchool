@@ -18,7 +18,7 @@ public interface NoticeService {
 	 * 공지사항 수정 기능(관리자)
 	 * @param Notice( 제목, 내용, 이미지)
 	 * */
-	void updateNotice(Notice notice);
+	Notice updateNotice(Notice notice);
 	
 	/**
 	 * 공지사항 삭제 기능
@@ -33,7 +33,7 @@ public interface NoticeService {
 	 *  @param Long noticeNo
 	 *  @return Notice
 	 * */
-	Notice selectBy(Long noticeNo);
+	Notice selectBy(Long noticeNo, boolean state);
 	
 	/**
 	 * 공지사항 게시판 조회 기능(강사&회원)
