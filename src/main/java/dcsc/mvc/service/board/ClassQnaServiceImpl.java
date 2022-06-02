@@ -39,22 +39,42 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		return null;
 	}
 
+	/**
+	 * Q&A 등록하기
+	 * */
 	@Override
 	public void insertQuestion(ClassQna classQna) {
-		// TODO Auto-generated method stub
+		ClassQna saveQna = classQnaRep.save(classQna);
+		//System.out.println("saveQna.getQnaId = " + saveQna.getQnaId());
+		//System.out.println("saveQna.getQnaTitle = " + saveQna.getQnaTitle());
+		//System.out.println("saveQna.getClasses().getClassId() = " + saveQna.getClasses().getClassId());
+		//System.out.println("saveQna.getStudent().getStudentId() = " + saveQna.getStudent().getStudentId());
+		
 
 	}
 
 	@Override
 	public void updateQuestion(ClassQna classQna) {
-		// TODO Auto-generated method stub
+		ClassQna dbQna = classQnaRep.findById(classQna.getQnaId()).orElse(null);
+		if(dbQna==null) {
+			throw new RuntimeException("Q&A 문의글 번호 오류로 수정되지 않았습니다.");
+		}
+		
+		dbQna.setQnaTitle(classQna.getQnaTitle());
+		dbQna.setQnaContent(classQna.getQnaContent());
+		dbQna.setBlindState(classQna.getBlindState());
 
 	}
 
 	@Override
 	public void deleteQuestion(Long qnaId) {
-		// TODO Auto-generated method stub
-
+		ClassQna dbQna = classQnaRep.findById(qnaId).orElse(null);
+		
+		if(dbQna==null) {
+			throw new RuntimeException("글번호 오류로 삭제되지 않았습니다.");
+		}
+		
+		classQnaRep.deleteById(qnaId);
 	}
 
 	@Override
@@ -75,6 +95,9 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	@Override
 	public ClassQna selectByQnaId(Long qnaId) {
 		ClassQna classQna = classQnaRep.findById(qnaId).orElse(null);
+		if(classQna==null) {
+			new RuntimeException("Q&A 상세보기에 오류가 발생했습니다.");
+		}
 		return classQna;
 	}
 
