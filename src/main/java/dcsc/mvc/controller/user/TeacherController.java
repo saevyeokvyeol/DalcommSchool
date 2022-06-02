@@ -56,6 +56,8 @@ public class TeacherController {
 	@RequestMapping("/checkId")
 	public boolean checkId(String userId) {
 		boolean result = teacherService.userIdCheck(userId);
+		System.out.println(result);
+		
 		return result;
 	}
 	

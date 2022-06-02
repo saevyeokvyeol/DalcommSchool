@@ -146,8 +146,8 @@ $(function() {
 			var id = $("#teacherId").val();
 			
 			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
-			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
-			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
+// 			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
+// 			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
 			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
@@ -155,10 +155,10 @@ $(function() {
 			if(id.length<6 || id.length>10){ //길이 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
-			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
-				$("#notValidId").css("display", "inline-block");
-				return false;
-			}else if(isNum<0 || isUp!=-1 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
+// 			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
+// 				$("#notValidId").css("display", "inline-block");
+// 				return false;
+			}else if(isNum<0 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
 			}else{
@@ -256,8 +256,9 @@ $(function() {
 			}
 			$.ajax({
 				url: "/main/login/checkId",
+				type: "post",
 				data: {userId : $("#teacherId").val()},//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
-				dataType: "json",
+				dataType: "text",
 				success: function(data){
 					console.log(data);
 					if(data=="true"){
@@ -269,7 +270,7 @@ $(function() {
 					}
 				}, //success 끝
 				error: function(err){
-					console.log(err);
+					console.log("에러 = ", err);
 					alert(err + "에러 발생");
 				}
 			})//ajax 끝
@@ -312,15 +313,68 @@ $(function() {
 // 		닉네임 중복 체크
 // 		*/
 // 		${"#nickCheck"}.click(function(){
-			
+// 			
+// 			if(("#teacherNick").val()==""){
+// 				alert("닉네임을 입력해주세요.");
+// 				return;
+// 			}
+// 			$.ajax({
+// 				url: "/main/login/checkId",
+// 				data: {
+// 					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+// 				},
+// 				dataType: "text",
+// 				success: function(data){
+// 					if(){
+// 						alert("이미 존재하는 아이디입니다.");
+// 					}else{
+// 						alert("사용 가능한 아이디입니다.");
+// 						isIdChecked = true;
+// 						return;
+// 					}
+// 				}, //success 끝
+// 				error: function(err){
+// 					alert(err + "에러 발생");
+// 				}
+// 			})			
 // 		})
 		
+			
 // 		/*
-// 		아이디, 비밀번호, 핸드폰번호, 이메일 값 변경 시 중복 체크 리셋
+// 		아이디, 핸드폰번호, 닉네임 값 변경 시 중복 체크 리셋
 // 		*/
 // 		$("#teacherId").keyup(function(){
-			
+			isIdChecked = false;
 // 		})
+// 		$("#teacherPhone").keyup(function(){
+// 			isPhoneChecked = false;
+//  	})
+//  	$("#teacherNick").keyup(function(){
+//  		isNickChecked = false;
+//  	})
+
+		/*
+		비밀번호 일치 여부 체크
+		*/
+		$("#teacherPwd").focusout(function(){
+			let pwd1 = $("#teacherPwd").val();
+			let pwd2 = $("#teacherPwd2").val();
+			
+			if(pwd1!="" && pwd2!=""){
+				if(pwd1 == pwd2){
+					$("#pwdCheck_success").css("display", "inline-block");
+					return true;
+				}else{
+					$("#pwdCheck_Fail").css("display", "inline-block");
+					return false;
+				}
+			}else{
+				$("#pwdCheck_Fail").css("display", "inline-block");
+				return false;
+			}
+		})
+		
+		
 	})	
 	
 </script>
@@ -350,7 +404,7 @@ $(function() {
 	      	  <th>* 강사 비밀번호 확인</th>
 	      	  <td><input type="password" id="teacherPwd2" class="" placeholder="비밀번호를 한번 더 입력해주세요." required="required"/>
 	      	  <span id="pwdCheck_success">비밀번호가 일치합니다.</span>
-	      	  <span id="pwdCheck_Fail">비밀번호가 일치하지 않습니다.</span></td>
+	      	  <span id="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td>
 	      </tr>
 	      <tr>
 	          <th>* 강사 이름</th>
