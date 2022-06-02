@@ -93,26 +93,28 @@
 <body>
 	<h2>회원 가입</h2>
 	모든 항목을 필수로 입력해주세요.<br>
-	<form name="join" method="post" action="${pageContext.request.contextPath}/join" id="joinForm">
+	<form name="join" method="post" action="${pageContext.request.contextPath}/main/login/join" id="joinForm">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		
-		이름&nbsp;<input type="text" id="studentName" name="name"
-		placeholder="이름" onKeyDown="if(event.keyCode == 13) joinCheck()"/><br>
 		
 		아이디&nbsp; 영문과 숫자를 조합하여 최소 6자리 이상 <br>
-		<input type="text" id="studentId" name="id"
+		<input type="text" id="studentId" name="studentId"
 		placeholder="영문과 숫자만 입력가능합니다" onkeyup="chkCharCode(event)" onKeyDown="if(event.keyCode == 13) joinCheck()"/><span></span><br>
 		
-		비밀번호&nbsp; 영문 대소문자, 숫자 조합하여 8자리 이상 <input type="password"id="studentPwd" name="pwd"
+		비밀번호&nbsp; 영문 대소문자, 숫자 조합하여 8자리 이상 <input type="password" id="studentPwd" name="studentPwd"
 		onKeyDown="if(event.keyCode == 13) joinCheck()"/><br>
 		
-		비밀번호 확인&nbsp; 영문 대소문자, 숫자 조합하여 8자리 이상 <input type="password"id="studentPwd" name="pwdCk"
-		onKeyDown="if(event.keyCode == 13) joinCheck()"/><br>
+		<!--비밀번호 확인&nbsp; 영문 대소문자, 숫자 조합하여 8자리 이상 <input type="password"id="studentPwd" name="pwdCk"
+		onKeyDown="if(event.keyCode == 13) joinCheck()"/><br> -->
 		
-		휴대폰번호 <input type="text" id="studentPhone" name="phone"
+		이름&nbsp;<input type="text" id="studentName" name="studentName"
+		placeholder="이름" onKeyDown="if(event.keyCode == 13) joinCheck()"/><br>
+		
+		
+		휴대폰번호 <input type="text" id="studentPhone" name="studentPhone"
 		placeholder="ex)01012345678" onkeyup="chkPhCode(event)" onKeyDown="if(event.keyCode == 13) joinCheck()"/><br>
 		
-		이메일 주소 <input type="text" id="studentEmail" name="email"placeholder="이메일주소를 입력하세요"/><br>
+		이메일 주소 <input type="text" id="studentEmail" name="studentEmail"placeholder="이메일주소를 입력하세요"/><br>
 		<input type="submit" class="btn btn-default" value="가입">
 	</form>
 

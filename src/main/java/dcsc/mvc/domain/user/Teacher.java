@@ -24,7 +24,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Teacher {
 
 	@Id
@@ -45,10 +44,8 @@ public class Teacher {
 	private LocalDateTime teacherInsertDate;
 	
 	private String teacherQuit;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "author_id")
-	private Authority authority;
+
+	private String role = "TEACHER";
 	
 	
 }

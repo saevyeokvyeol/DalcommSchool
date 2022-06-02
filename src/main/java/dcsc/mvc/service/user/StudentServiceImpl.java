@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.user.Student;
@@ -19,11 +20,22 @@ public class StudentServiceImpl implements StudentService {
 
 	private final StudentRepository studentRepository;
 	
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
 	/**
 	 * 회원가입
 	 * */
 	@Override
 	public void insertStudent(Student student) { 
+		System.out.println(student);
+		student.setRole("STUDENT");
+		student.setStudentQuit("F");
+		//인수로 들어오는 비밀번호 암호화
+		//String rawPassword = student.getStudentPwd();
+		String encPassword = bCryptPasswordEncoder.encode(student.getStudentPwd()); 
+		student.setStudentPwd(encPassword);
+		
 		Student stu = studentRepository.save(student);
 		if(stu==null) {
 			new RuntimeException("회원가입에 실패했습니다.");
