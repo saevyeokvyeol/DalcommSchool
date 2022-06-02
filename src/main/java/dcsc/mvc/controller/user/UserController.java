@@ -26,7 +26,7 @@ public class UserController {
 	@RequestMapping(value="/login/join", method = RequestMethod.POST)
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
-		studentService.insertStudent(student);
+		//studentService.insertStudent(student);
 		return "redirect:/";
 	}
 	
