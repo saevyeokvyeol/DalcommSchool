@@ -11,7 +11,7 @@
 <body>
 
 <c:choose> 
-    <c:when test="${empty requestScope.askList}">
+    <c:when test="${empty requestScope.askSelectByIdList}">
 	<tr>
         <td colspan="5">
             <span style="font-size:9pt;">등록된 문의가 없습니다.</span></p>
@@ -19,7 +19,7 @@
     </tr>
     </c:when>
     <c:otherwise>
-	<c:forEach items="${requestScope.askList}" var="askList">
+	<c:forEach items="${requestScope.askSelectByIdList}" var="askList">
 		     <tr>  
 		        <td>
 		           글 번호 : ${askList.askNo}<p>
@@ -31,7 +31,7 @@
 		        	문의제목 : ${askList.askTitle}<p>
 		        </td>
 		        <td>
-				    카테고리 : ${askList.askCategoryId}<p>
+				    카테고리 : ${askList.askCategory.askCategoryName}<p>
 		        </td>
 		        <td>
 		            문의 내용 : ${askList.askContent}<p>

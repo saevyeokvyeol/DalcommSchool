@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.askanswer;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class AskAnswerAdminController {
 	
 	private final AskAnswerService askAnswerService;
-	
+	 
 	/**
 	 * 1대1 문의 전체 리스트 조회하는 기능
 	 * */
@@ -25,10 +25,10 @@ public class AskAnswerAdminController {
 		List<Ask> askList = askAnswerService.selectAll();
 		model.addAttribute("askList", askList); 
 		  
-		return "/admin/board"; 
+		return "/admin/board";  
 	}
 	
-	/**
+	/** 
 	 * 1대1 문의 답변하는 기능
 	 * */
 }

@@ -10,15 +10,15 @@
 </head>
 <body>
 
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/insert" >
+<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert" >
 	 <select name="askCategoryId">
 		  <option value="">카테고리 종류</option>
-		  <option value="first">클래스</option>
-		  <option value="two">결제</option>
-		  <option value="three">환불</option>
-		  <option value="four">후기</option>
-		  <option value="five">탈퇴</option>
-	</select>
+		  <option value="1">클래스</option>
+		  <option value="2">결제</option>
+		  <option value="3">환불</option>
+		  <option value="4">후기</option>
+		  <option value="5">탈퇴</option>
+	</select> 
 <table>
     <tr>
         <td>

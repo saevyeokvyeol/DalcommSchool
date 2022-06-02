@@ -31,7 +31,7 @@
 		        	문의제목 : ${askList.askTitle}<p>
 		        </td>
 		        <td>
-				    카테고리 : ${askList.askCategoryId}<p>
+				    카테고리 : ${askList.askCategory.askCategoryId}<p>
 		        </td>
 		        <td>
 		            문의 내용 : ${askList.askContent}<p>

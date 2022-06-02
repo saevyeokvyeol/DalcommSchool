@@ -21,7 +21,7 @@ public interface AskAnswerService {
 	 *  상세보기 페이지로 이동한다.
 	 *  @param Ask(글번호, (강사&회원)ID, 제목, 카테고리, 문의내용, 이미지)
 	 * */
-	void updateAsk(Ask ask);
+	Ask updateAsk(Ask ask);
 	
 	/**
 	 * 1대1 문의 삭제하기(강사&회원) 
