@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReply;
+import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.repository.board.ClassQnaReposiroty;
+import dcsc.mvc.repository.classes.ClassesRepository;
+import dcsc.mvc.repository.user.StudentRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,6 +23,9 @@ import lombok.RequiredArgsConstructor;
 public class ClassQnaServiceImpl implements ClassQnaService {
 	
 	private final ClassQnaReposiroty classQnaRep;
+	private final ClassesRepository classesRepository;
+	private final StudentRepository studentRepository;
+	
 	
 	/**
 	 * 전체검색
@@ -79,14 +86,16 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 
 	@Override
 	public List<ClassQna> selectByClassId(Long classId) {
-		// TODO Auto-generated method stub
-		return null;
+		Classes classes = classesRepository.findById(classId).orElse(null);
+		List<ClassQna> list = classes.getQnaList();
+		return list;
 	}
 
 	@Override
 	public List<ClassQna> selectByTeacherId(String teacherId) {
-		// TODO Auto-generated method stub
-		return null;
+		Student student = studentRepository.findById(teacherId).orElse(null);
+		List<ClassQna> list = student.getQnaList();
+		return list;
 	}
 
 	/**
@@ -101,10 +110,18 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		return classQna;
 	}
 
+	/**
+	 * 블라인드처리
+	 * */
 	@Override
-	public void updateBlind(Long qnaId) {
-		// TODO Auto-generated method stub
+	public void updateBlind(Long qnaId ,String blindState) {
+		ClassQna dbQna = classQnaRep.findById(qnaId).orElse(null);
+		//ClassQna dbQna = classQnaRep.updateBlind(blindState , qnaId);
+		if(dbQna==null) {
+			throw new RuntimeException("블라인드 처리를 하는 도중 오류가 발생했습니다.");
+		}
 
+		dbQna.setBlindState(blindState);
 	}
 
 	@Override
