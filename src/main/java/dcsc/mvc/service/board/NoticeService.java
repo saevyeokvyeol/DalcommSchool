@@ -25,7 +25,7 @@ public interface NoticeService {
 	 * 글번호(시퀀스)를 받고 공지사항을 삭제한다.(관리자)
 	 * @param Long NoticeNo
 	 * */
-	void deleteNotice(Long NoticeNo);
+	void deleteNotice(Long noticeNo);
 	
 	/**
 	 * 공지사항 게시판 상세보기 기능(강사&회원)
@@ -48,6 +48,7 @@ public interface NoticeService {
 	 * @return List<Notice>
 	 * */
 	List<Notice> selectByKeyword(String keyword);
+
 	
 	
 }

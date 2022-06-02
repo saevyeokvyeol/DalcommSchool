@@ -27,7 +27,7 @@ public class UserController {
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
 		studentService.insertStudent(student);
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	
 	//로그인폼
