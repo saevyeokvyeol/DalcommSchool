@@ -15,7 +15,7 @@ public interface StudentService {
 	 * 회원가입
 	 * @param: Student student
 	 * */
-	void insertStudent (Student student);
+//	void insertStudent (Student student);
 	
 	/**
 	 * 회원 탈퇴하기(학생)

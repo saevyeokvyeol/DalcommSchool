@@ -22,8 +22,8 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	
 	List<Teacher> findByTeacherPhone(String teacherPhone);
 	
-	Teacher selectTeacherById(String teacherId);
-	Teacher selectRoleById(String teacherId);
+//	Teacher selectTeacherById(String teacherId);
+//	Teacher selectRoleById(String teacherId);
 	
 	/**
 	 * 선생님 아이디 찾기
