@@ -10,7 +10,7 @@ import dcsc.mvc.service.user.StudentService;
 
 @Controller
 @RequestMapping("/main")
-public class UserController {
+public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
@@ -26,11 +26,7 @@ public class UserController {
 	@RequestMapping(value="/login/join", method = RequestMethod.POST)
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
-<<<<<<< HEAD
-//		studentService.insertStudent(student);
-=======
 		//studentService.insertStudent(student);
->>>>>>> ee476c9c681b9cfce5fde27697687cc2828f7f0e
 		return "redirect:/";
 	}
 	
