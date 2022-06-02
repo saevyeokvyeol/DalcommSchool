@@ -10,7 +10,7 @@ import dcsc.mvc.service.user.StudentService;
 
 @Controller
 @RequestMapping("/main")
-public class UserController {
+public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;

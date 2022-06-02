@@ -62,8 +62,25 @@ public class TeacherController {
 	}
 	
 	/**
-	 * 
+	 * 핸드폰 번호 중복 체크
 	 * */
+	@RequestMapping("/checkPhone")
+	public boolean checkPhone(String userPhone) {
+		boolean result = teacherService.userPhoneCheck(userPhone);
+		
+		return result;
+	}
+	
+	/**
+	 * 선생님 닉네임 중복 체크
+	 * */
+	@RequestMapping("/checkNick")
+	public boolean checkNick(String teacherNick) {
+		boolean result = teacherService.teacherNickCheck(teacherNick);
+		
+		return result;
+	}
+	
 	
 //	@RequestMapping("/mypage")
 //	public void teacherMypage(){}
@@ -71,8 +88,7 @@ public class TeacherController {
 //	@RequestMapping("/updateProfile")
 //	public void updateProfile() {}
 //	
-//	@RequestMapping("/updatePwd")
-//	public void updatePwd() {}
+
 	
 	
 }

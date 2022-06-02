@@ -1,9 +1,13 @@
 //package dcsc.mvc.config.security;
 //
+//import java.util.ArrayList;
+//import java.util.List;
+//
 //import org.springframework.security.authentication.AuthenticationProvider;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.AuthenticationException;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Service;
@@ -31,38 +35,63 @@
 //	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 //		System.out.println("MemberAutenticationProvider authenticate 호출됨...");
 //		
-//		Student student = null;
-//		Teacher teacher = null;
+//		//Student student = null;
+//		//Teacher teacher = null;
 //		
 //		//1. username = id를 꺼내서 Member테이블에 사용자 정보를 가져온다.
 //		String id = authentication.getName();
-//		student = str.selectStudentById(id);
+//		Student student = str.selectStudentById(id);
+//		Teacher teacher = tcr.selectTeacherById(id);
 //		
 //		//회원 테이블에 사용자 정보 없으면 강사 테이블에서 찾는다. 없다면 예외 발생
-//		if(student==null) { //일반회원정보 없음
-//			teacher = tcr.selectTeacherById(id);
-//			if(teacher==null) { //강사정보 없음
+//		if(student==null && teacher==null) { //일반회원정보 없음
 //				throw new UsernameNotFoundException(id + "에 해당하는 회원 정보가 없습니다.");
 //			}
-//		}
 //		
 //		//회원 정보있으면 인수 전달된 평문과 디비에 저장된 암호화 비번을 비교한다
 //		String pass = authentication.getCredentials().toString(); //사용자가 친 비번 가져옴
-//			if(student!=null) { //학생정보가 있다면 학생 정보와 비교
-//				passwordEncoder.matches(pass, student.getStudentPwd());
-//			} else if(teacher!=null) { //학생정보가 없다면 강사정보와 비교
-//				passwordEncoder.matches(pass, teacher.getTeacherPwd());
+//		
+//			if(student!=null || teacher!=null) { //학생정보가 있다면 학생 정보와 비교
+//		
+//				if(student!=null) { 
+//					boolean result = passwordEncoder.matches(pass, student.getStudentPwd());
+//						if(result==false) { //예외 던짐
+//							throw new UsernameNotFoundException("비밀번호가 틀렸습니다");
+//						} else { //학생 구현체
+//							
+//							List<Student> studentList = str.findByStudentId(id);
+//							List<SimpleGrantedAuthority> simpleGrantedList = new ArrayList<SimpleGrantedAuthority>();
+//							
+//							for(Student s : studentList) {
+//								simpleGrantedList.add(new SimpleGrantedAuthority(s.getRole()));
+//							}
+//						 
+//							return new UsernamePasswordAuthenticationToken(student, null, simpleGrantedList);
+//					}
+//				}else if(teacher!=null) {
+//					boolean result = passwordEncoder.matches(pass, teacher.getTeacherPwd());
+//						if(result) { //강사 구현체
+//							List<Teacher> teacherList = tcr.findByTeacherId(id);
+//							List<SimpleGrantedAuthority> simpleGrantedList = new ArrayList<SimpleGrantedAuthority>();
+//						
+//							for(Teacher t : teacherList) {
+//								simpleGrantedList.add(new SimpleGrantedAuthority(t.getRole()));
+//							}
+//							return new UsernamePasswordAuthenticationToken(teacher, null ,simpleGrantedList);
+//						}
+//				}
 //			}
-//			
-//		//일치하지 않으면 예외
-//		
-//		//일치하면 Authentication 구현체 생성, 객체안에 사용자 정보, 권한 저장
-//		
-//		//생성된 Authentication객체 리턴
-//		
-//		
-//		return new UsernamePasswordAuthenticationToken(id, null, null);
+//			return authentication;
 //	}
+//			
+////			else { //학생정보, 선생정보 둘 다 없으면
+////				throw new UsernameNotFoundException("일치하는 회원 정보가 없습니다");
+////			}
+//			
+//			
+////			return authentication;			
+////	}
+//	
 //
 //	/**
 //	 * 인수로 전달 된 인증정보가 인증을 할 수 있는 유효한 객체인지 판단해주는 메소드
@@ -75,3 +104,4 @@
 //	}
 //
 //}
+//

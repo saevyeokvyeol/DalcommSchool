@@ -21,8 +21,12 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	List<Student> findByStudentPhone(String studentPhone);
 	
-//	Student selectStudentById(String studentId);
-//	Student selectRoleById(String studentId);
+	//Student selectStudentById(String studentId);
+	
+	//@Query("select s.role from Student s where s.studentId = ?1")
+	//String selectStudentRoleById(String studentId);
+	
+	
 	
 	/**
 	 * 아이디, 이름, 핸드폰, 이메일 등등으로 학생 조회하기
@@ -39,4 +43,5 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	 * */
 	@Query("select s from Student s where s.studentId = ?1")
 	Student checkStudentId(String userId);
+	
 }

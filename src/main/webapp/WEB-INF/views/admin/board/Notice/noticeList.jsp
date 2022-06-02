@@ -24,7 +24,7 @@
 				</td>
 				<td>
 				<a href="${pageContext.request.contextPath}/admin/board/Notice/noticeRead/${notice.noticeNo}">
-					${notice.noticeTitle}<p>
+					${notice.noticeTitle} <p>
 				</a>
 				</td>
 			</tr>		

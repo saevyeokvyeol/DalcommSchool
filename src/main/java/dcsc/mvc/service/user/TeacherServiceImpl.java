@@ -96,9 +96,15 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public boolean userPhoneCheck(String teacherPhone) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean userPhoneCheck(String userPhone) {
+		List<Teacher> listTeacher = teacherRep.findByTeacherPhone(userPhone);
+		List<Student> listStudent = studentRep.findByStudentPhone(userPhone);
+		
+		if(listTeacher != null || listStudent != null) { //아이디가 이미 있다면
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
