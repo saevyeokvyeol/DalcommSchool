@@ -256,11 +256,10 @@ $(function() {
 			}
 			$.ajax({
 				url: "/main/login/checkId",
-				data: {
-					userId : $('#teacherId').val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
-				},
-				dataType: "text",
+				data: {userId : $("#teacherId").val()},//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+				dataType: "json",
 				success: function(data){
+					console.log(data);
 					if(data=="true"){
 						alert("이미 존재하는 아이디입니다.");
 					}else{
@@ -270,7 +269,7 @@ $(function() {
 					}
 				}, //success 끝
 				error: function(err){
-					console.log(data);
+					console.log(err);
 					alert(err + "에러 발생");
 				}
 			})//ajax 끝

@@ -36,4 +36,10 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	 * */
 	@Query("select t.teacherId from Teacher t where t.teacherId=?1 and t.teacherName=?2 and t.teacherPhone=?3")
 	String selectTeacherPwd(String teacherId, String teacherName, String teacherPhone);
+	
+	/**
+	 * 아이디 중복 체크
+	 * */
+	@Query("select t from Teacher t where t.teacherId = ?1")
+	Teacher checkTeacherId(String userId);
 }

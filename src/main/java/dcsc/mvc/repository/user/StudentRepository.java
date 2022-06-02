@@ -10,6 +10,7 @@ import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
 	
@@ -33,5 +34,9 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	@Query("select s.studentId from Student s where s.studentName = ?1 and s.studentPhone = ?2")
 	String selectStudentId(String studentName, String studentPhone);
 	
-	
+	/**
+	 * 아이디 중복 체크
+	 * */
+	@Query("select s from Student s where s.studentId = ?1")
+	Student checkStudentId(String userId);
 }

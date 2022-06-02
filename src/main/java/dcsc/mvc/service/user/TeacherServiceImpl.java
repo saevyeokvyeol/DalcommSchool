@@ -79,10 +79,10 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean userIdCheck(String userId) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherId(userId);
-		List<Student> listStudent = studentRep.findByStudentId(userId);
+		Teacher teacher = teacherRep.checkTeacherId(userId);
+		Student student = studentRep.checkStudentId(userId);
 		
-		if(listTeacher != null || listStudent != null) { //아이디가 이미 있다면
+		if(teacher != null || student != null) { //아이디가 이미 있다면
 			return true;
 		}else {
 			return false;
