@@ -22,7 +22,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	
 	List<Teacher> findByTeacherPhone(String teacherPhone);
 	
-//	Teacher selectTeacherById(String teacherId);
+	//Teacher selectTeacherById(String teacherId);
 //	Teacher selectRoleById(String teacherId);
 	
 	/**
@@ -42,4 +42,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	 * */
 	@Query("select t from Teacher t where t.teacherId = ?1")
 	Teacher checkTeacherId(String userId);
+
 }
