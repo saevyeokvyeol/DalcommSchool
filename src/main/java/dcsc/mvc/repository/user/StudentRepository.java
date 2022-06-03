@@ -43,10 +43,10 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	String selectStudentId(String studentName, String studentPhone);
 	
 	/**
-	 * 아이디 중복 체크
+	 * 비밀번호 찾기
 	 * */
-	@Query("select s from Student s where s.studentId = ?1")
-	Student checkStudentId(String userId);
+	@Query("select s.studentPwd from Student s where s.studentId = ?1 and s.studentName=?2 and s.studentPhone=?3")
+	String selectStudentPwd(String studentId, String studentName, String studentPhone);
 	
 	
 	

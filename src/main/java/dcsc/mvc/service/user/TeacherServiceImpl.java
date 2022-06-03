@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+//import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.user.Place;
@@ -21,6 +22,9 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	private final TeacherRepository teacherRep;
 	private final StudentRepository studentRep;
+	
+//	private final Student student;
+//	private final Teacher teacher;
 	
 	@Override
 	public void insertTeacher(Teacher teacher) {
@@ -51,9 +55,15 @@ public class TeacherServiceImpl implements TeacherService {
 	 * 패스워드 찾기
 	 * */
 	@Override
-	public void selectPwd(String userId, String userName, String userPhone) {
+	public boolean selectPwd(String userId, String userName, String userPhone) {
+		String teacherPwd = teacherRep.selectTeacherPwd(userId, userName, userPhone);
+		String studentPwd = studentRep.selectStudentPwd(userId, userName, userPhone);
 		
-
+		if(teacherPwd==null && studentPwd==null) {
+			throw new RuntimeException("해당 정보에 일치하는 아이디가 없습니다.");
+		}else{
+			return true;
+		}
 	}
 
 	@Override
@@ -64,13 +74,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public void updateTeacherPwd(String teacherPwd) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteTeacher(String teacherId) {
-		// TODO Auto-generated method stub
+//		if(!passwordEncoder.matches(password, vo.getPassword())){
+//			throw new BadCredentialsException("패스워드 오류입니다."); 이런 방식으로~~
 
 	}
 
@@ -79,28 +84,40 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean userIdCheck(String userId) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherId(userId);
-		List<Student> listStudent = studentRep.findByStudentId(userId);
+		Teacher teacher = teacherRep.findById(userId).orElse(null); //없으면 null
+		Student student = studentRep.findById(userId).orElse(null);
 		
-		if(listTeacher != null || listStudent != null) { //아이디가 이미 있다면
+		if(teacher == null && student == null) { //검색 결과 없다면
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	/**
+	 * 선생님 닉네임 중복체크
+	 * */
+	@Override
+	public boolean teacherNickCheck(String teacherNickname) {
+		List<Teacher> list = teacherRep.findByTeacherNicknameEquals(teacherNickname);
+		
+		if(list != null) {
 			return true;
 		}else {
 			return false;
 		}
+		
 	}
 
-	@Override
-	public boolean teacherNickCheck(String teacherNickname) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	/**
+	 * 휴대폰 중복체크
+	 * */
 	@Override
 	public boolean userPhoneCheck(String userPhone) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherPhone(userPhone);
-		List<Student> listStudent = studentRep.findByStudentPhone(userPhone);
+		List<Teacher> listTeacher = teacherRep.findByTeacherPhoneEquals(userPhone);
+		List<Student> listStudent = studentRep.findByStudentPhoneEquals(userPhone);
 		
-		if(listTeacher != null || listStudent != null) { //아이디가 이미 있다면
+		if(listTeacher != null || listStudent != null) { //번호가 이미 있다면
 			return true;
 		}else {
 			return false;

@@ -44,9 +44,6 @@
 //		Teacher teacher = tcr.selectTeacherById(id);
 //		
 //		//회원 테이블에 사용자 정보 없으면 강사 테이블에서 찾는다. 없다면 예외 발생
-//		if(student==null && teacher==null) { //일반회원정보 없음
-//				throw new UsernameNotFoundException(id + "에 해당하는 회원 정보가 없습니다.");
-//			}
 //		
 //		//회원 정보있으면 인수 전달된 평문과 디비에 저장된 암호화 비번을 비교한다
 //		String pass = authentication.getCredentials().toString(); //사용자가 친 비번 가져옴

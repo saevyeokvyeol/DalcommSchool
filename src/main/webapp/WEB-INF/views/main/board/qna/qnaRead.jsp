@@ -19,13 +19,13 @@
 		//alert(1);
 		$("input[value=수정하기]").click(function(){
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/class/qnaUpdateForm");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaUpdateForm");
 		   $("#requestForm").submit();
 	   })
 	   
 	    $("input[value=삭제하기]").click(function(){
 		   
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/class/qnaDelete");
+			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaDelete");
 			   $("#requestForm").submit();
 		   
 	   })
@@ -79,7 +79,7 @@
     
     <hr>
     
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/main/class/qnaList">목록으로 돌아가기</a>&gt;</span></div>
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/main/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
 
 
 </body>

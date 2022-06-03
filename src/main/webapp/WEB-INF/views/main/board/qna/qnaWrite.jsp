@@ -12,30 +12,32 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
-<title>QnA : 수정하기</title>
+<title>QnA: 등록폼</title>
 </head>
 <body>
 
-<form name=updateForm method=post action="${pageContext.request.contextPath}/main/class/qnaUpdate" >
-    <input type='hidden' name='qnaId' value="${qna.qnaId}">
-    <input type="hidden" name="classId" value="${qna.classes.classId}">
+<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/qna/qnaInsert" >
+	<%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
 	<input type="hidden" name="studentId" value="${qna.student.studentId}">
 	<input type="hidden" name="blindState" value="${qna.blindState}">
-	<input type="hidden" name="qnaComplete" value="${qna.qnaComplete}">
-	<table>
+	<input type="hidden" name="qnaComplete" value="${qna.qnaComplete}"> --%>
+	<input type="hidden" name="classId" value="2">
+	<input type="hidden" name="studentId" value="lee1234">
+	<input type="hidden" name="blindState" value="F">
+	<input type="hidden" name="qnaComplete" value="F">
+<table >
+
     <tr>
-        <th>${qna.qnaId}번 Q&A 글 수정하기</th>
+        <th>문의사항 등록</th>
     </tr>
     <tr>
         <th>제목</th>
-        <td><input type=text name="qnaTitle" size="30" value="${requestScope.qna.qnaTitle}"></td>
+        <td><input type=text name="qnaTitle" size="30"></td>
     </tr>
-    
     <tr>
-        <th>내 용</th>
-        <td><textarea name="qnaContent" cols="30" rows="10">${requestScope.qna.qnaContent}</textarea></td>
+        <th>내용</th>
+        <td><textarea name="qnaContent"  rows="10" cols="30"></textarea></td>
     </tr>
-    
     <tr>
         <th>비밀글 체크</th>
         <td>
@@ -45,15 +47,15 @@
     </tr>
     
     <tr>
-        <td><input type="submit" value="수정하기"> <input type="reset" value="다시쓰기"></td>
+        <td colspan="2"><span><input type=submit value=등록하기> 
+        <input type=reset value=다시쓰기></span></td>
     </tr>
-    
 </table>
+
 </form>
+
 <hr>
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/main/class/qnaList">목록으로 돌아가기</a>&gt;</span></div>
-
-
+<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/main/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
 
 </body>
 </html>
