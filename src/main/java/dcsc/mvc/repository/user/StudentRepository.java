@@ -17,7 +17,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	/**
 	 * 아이디, 휴대폰 중복체크
 	 * */
-	List<Student> findByStudentPhoneEquals(String studentPhone);
+	Student findByStudentPhoneEquals(String studentPhone);
 	
 	//Student selectStudentById(String studentId);
 	

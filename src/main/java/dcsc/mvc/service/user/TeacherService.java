@@ -53,10 +53,10 @@ public interface TeacherService {
 	
 	/**
 	 * 강사 닉네임 중복체크
-	 * @param: String teacherNickname
+	 * @param: String teacherNick
 	 * @return: boolean
 	 * */
-	boolean teacherNickCheck (String teacherNickname);
+	boolean teacherNickCheck (String teacherNick);
 	
 	/**
 	 * 핸드폰 번호 중복체크

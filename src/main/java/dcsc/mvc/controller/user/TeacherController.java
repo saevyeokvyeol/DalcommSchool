@@ -75,6 +75,7 @@ public class TeacherController {
 	public boolean checkPhone(String userPhone) {
 		boolean result = teacherService.userPhoneCheck(userPhone);
 		
+		System.out.println(result);
 		return result;
 	}
 	

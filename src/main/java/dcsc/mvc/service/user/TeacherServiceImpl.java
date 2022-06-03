@@ -73,9 +73,13 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public void updateTeacherPwd(String teacherPwd) {
+	public void updateTeacherPwd(String teacherPwd) { //인수 하나 더 필요
 //		if(!passwordEncoder.matches(password, vo.getPassword())){
 //			throw new BadCredentialsException("패스워드 오류입니다."); 이런 방식으로~~
+		//현재 비밀번호를 입력 받아 DB와 일치하면 새로운 비밀번호 입력하게 해준다.
+		//(session에서 로그인된 사람의 정보를 가져와 그 사람의 패스워드 정보를 가져온다.)
+		
+		//가져온 패스워드를 입력한 비밀번호로 바꾼다.(암호화)
 
 	}
 
@@ -98,10 +102,10 @@ public class TeacherServiceImpl implements TeacherService {
 	 * 선생님 닉네임 중복체크
 	 * */
 	@Override
-	public boolean teacherNickCheck(String teacherNickname) {
-		List<Teacher> list = teacherRep.findByTeacherNicknameEquals(teacherNickname);
+	public boolean teacherNickCheck(String teacherNick) {
+		Teacher teacher = teacherRep.findByTeacherNicknameEquals(teacherNick);
 		
-		if(list != null) {
+		if(teacher != null) {
 			return true;
 		}else {
 			return false;
@@ -114,13 +118,13 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean userPhoneCheck(String userPhone) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherPhoneEquals(userPhone);
-		List<Student> listStudent = studentRep.findByStudentPhoneEquals(userPhone);
+		Teacher teacher = teacherRep.findByTeacherPhoneEquals(userPhone);
+		Student student = studentRep.findByStudentPhoneEquals(userPhone);
 		
-		if(listTeacher != null || listStudent != null) { //번호가 이미 있다면
-			return true;
-		}else {
+		if(teacher == null && student == null) { 
 			return false;
+		}else {
+			return true;
 		}
 	}
 
