@@ -22,7 +22,7 @@
      	  <input type="submit" id="search" value="검색">
     </form>
     
-    <hr>
+    <hr><!-- 구분선 -->
     
   <table>
         <thead>
@@ -40,26 +40,25 @@
                 <c:when test ="${empty teacherList}">
                     <tr>
                         <th colspan="6">
-                            <span> 조회할 강사 정보가 없습니다.</span>
+                            <span> 조회할 회원 정보가 없습니다.</span>
                         </th>
                     </tr>
                 </c:when>
-                <c:otherwise>
-                    <c:forEach items="${teacherList}" var="teacherList">
-                        <tr>
-                            <td><span>${teacherList.teacherId}</span></td>
-                            <td><span>${teacherList.teacherName}</span></td>
-                            <td><span>${teacherList.teacherPhone}</span></td>
-                            <td><span>${teacherList.teacherEmail}</span></td>
-                            <td><span>${teacherList.teacherInsertDate}</span></td>
-                            <td><span>${teacherList.teacherQuit}</span></td>
-                        </tr>
-                    </c:forEach>
-                </c:otherwise>
+                
+                 <c:when test ="${not empty teacherList}">
+		              <c:forEach items="${teacherList}" var="teacher">
+		                        <tr>
+		                            <td><span>${teacher.teacherId}</span></td>
+		                            <td><span>${teacher.teacherName}</span></td>
+		                            <td><span>${teacher.teacherPhone}</span></td>
+		                            <td><span>${teacher.teacherEmail}</span></td>
+		                            <td><span>${teacher.teacherInsertDate}</span></td>
+		                            <td><span>${teacher.teacherQuit}</span></td>
+		                        </tr>
+                    	</c:forEach>
+                </c:when>
             </c:choose>
         </tbody>
     </table>
-
-
 </body>
 </html>

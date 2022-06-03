@@ -22,7 +22,7 @@
      	  <input type="submit" id="search" value="검색">
     </form>
     
-    <hr>
+    <hr><!-- 구분선 -->
     
   <table>
         <thead>
@@ -44,18 +44,19 @@
                         </th>
                     </tr>
                 </c:when>
-                <c:otherwise>
-                    <c:forEach items="${studentList}" var="studentList">
-                        <tr>
-                            <td><span>${studentList.studentId}</span></td>
-                            <td><span>${studentList.studentName}</span></td>
-                            <td><span>${studentList.studentPhone}</span></td>
-                            <td><span>${studentList.studentEmail}</span></td>
-                            <td><span>${studentList.studentInsertDate}</span></td>
-                            <td><span>${studentList.studentQuit}</span></td>
-                        </tr>
-                    </c:forEach>
-                </c:otherwise>
+                
+                 <c:when test ="${not empty studentList}">
+		              <c:forEach items="${studentList}" var="student">
+		                        <tr>
+		                            <td><span>${student.studentId}</span></td>
+		                            <td><span>${student.studentName}</span></td>
+		                            <td><span>${student.studentPhone}</span></td>
+		                            <td><span>${student.studentEmail}</span></td>
+		                            <td><span>${student.studentInsertDate}</span></td>
+		                            <td><span>${student.studentQuit}</span></td>
+		                        </tr>
+                    	</c:forEach>
+                </c:when>
             </c:choose>
         </tbody>
     </table>
