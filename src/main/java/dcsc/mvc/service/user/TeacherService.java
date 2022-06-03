@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import dcsc.mvc.domain.user.Place;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
 public interface TeacherService {
@@ -99,5 +100,14 @@ public interface TeacherService {
 	 * @return
 	 * */
 	void updatePlace (Place place);
+	
+	
+	/**
+	 * 아이디, 이름 등등으로 강사 조회하기
+	 * @param: String keyword(검색어), String keyfield(컬럼명)
+	 * @return: List<Teacher>
+	 * */
+	List<Teacher> selectByTeacherId (String keyfield, String keyword);
+	
 	
 }

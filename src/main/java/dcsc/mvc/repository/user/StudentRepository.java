@@ -31,10 +31,10 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	 * keyword(검색어), key field(컬럼명)
 	 * 컬럼명에따라 다른 메소드 호출..!
 	 * */
-	Student findByStudentIdIsLike(String studentId);
-	Student findByStudentNameIsLike(String studentName);
-	Student findByStudentPhoneIsLike(String studentPhone);
-	Student findByStudentEmailIsLike(String studentEmail);
+	List<Student> findByStudentIdIsLike(String studentId);
+	List<Student> findByStudentNameIsLike(String studentName);
+	List<Student> findByStudentPhoneIsLike(String studentPhone);
+	List<Student> findByStudentEmailIsLike(String studentEmail);
 	
 	
 	
