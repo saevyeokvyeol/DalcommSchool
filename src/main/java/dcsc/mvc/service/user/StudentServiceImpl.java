@@ -71,7 +71,13 @@ public class StudentServiceImpl implements StudentService {
 	 * */
 	@Override
 	public List<Student> selectAllStudent() { 
-		return studentRep.findAll();
+		List<Student> stuList = studentRep.findAll();
+		
+		if(stuList==null) {
+			throw new RuntimeException("조회 가능한 회원 데이터가 없습니다.");
+		}
+		
+		return stuList;
 	}
 	
 	/**
