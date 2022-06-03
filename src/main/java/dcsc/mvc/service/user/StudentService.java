@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import dcsc.mvc.domain.board.Ask;
-import dcsc.mvc.domain.board.ClassQna;
-import dcsc.mvc.domain.board.ClassReview;
-import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
 
 public interface StudentService {
@@ -15,13 +12,20 @@ public interface StudentService {
 	 * 회원가입
 	 * @param: Student student
 	 * */
-//	void insertStudent (Student student);
+	void insertStudent (Student student);
+	
+	/**
+	 * 로그인
+	 * */
+	void login (String userId, String userPwd);
+	
+	
 	
 	/**
 	 * 회원 탈퇴하기(학생)
 	 * @param: String studentId
 	 * */
-	void deleteStudent (String studentId);
+	void deleteStudent (String userId, String userPwd);
 	
 
 	/**
@@ -34,8 +38,9 @@ public interface StudentService {
 	
 	/**
 	 * 학생 상세 정보 조회
+	 * 아이디 클릭시 해당 상세 정보 모달창으로 띄움
 	 * */
-	Optional<Student> selectStudent(String studentId);
+	Student selectStudent(String studentId);
 	
 	
 	/**
@@ -43,6 +48,7 @@ public interface StudentService {
 	 * @param: String keyword(검색어), String keyfield(컬럼명)
 	 * @return: List<Student>
 	 * */
-	List<Student> selectByStudentId (String keyword, String keyfield);
-		
+	List<Student> selectByStudentId (String keyfield, String keyword);
+	
+	
 }

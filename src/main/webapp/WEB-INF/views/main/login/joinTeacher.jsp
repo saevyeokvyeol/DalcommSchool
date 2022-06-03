@@ -8,7 +8,6 @@
 <title> 강사 회원가입 페이지입니다.</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
       <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
       <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -21,34 +20,10 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
-<!-- datepicker css (진행 중) -->
 <style type="text/css">
-/*** Date Picker ***/
-.bootstrap-datetimepicker-widget.bottom {
-    top: auto !important;
-}
 
-.bootstrap-datetimepicker-widget .table * {
-    border-bottom-width: 0px;
-}
-
-.bootstrap-datetimepicker-widget .table th {
-    font-weight: 500;
-}
-
-.bootstrap-datetimepicker-widget.dropdown-menu {
-    padding: 10px;
-    border-radius: 2px;
-}
-
-.bootstrap-datetimepicker-widget table td.active,
-.bootstrap-datetimepicker-widget table td.active:hover {
-    background: var(--primary);
-}
-
-.bootstrap-datetimepicker-widget table td.today::before {
-    border-bottom-color: var(--primary);
-}
+	.message{display: none}
+	
 </style>
 
 <!-- 주소 API -->
@@ -101,8 +76,9 @@ function sample6_execDaumPostcode() {
     }).open();
 }</script>
 
-<!-- 캘린더 jQuery (스크롤 문제 있음. css 적용해봐야함)-->
+<!-- 캘린더 jQuery (스크롤 문제 있음. css 적용해봐야함. 주석처리함)-->
 <script type="text/javascript">
+/*
 $(function() {
 	alert("ㅎㅇ")
 	//datepicker 설정
@@ -128,7 +104,7 @@ $(function() {
 		maxDate: "-1"
 	});
 })
-
+*/
 </script>
 
 <!-- 형식 체크 (진행 중) -->
@@ -146,8 +122,7 @@ $(function() {
 			var id = $("#teacherId").val();
 			
 			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
-// 			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
-// 			var isUp = id.search(/[A-Z]/g); //영대문자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1 리턴해야함.
+			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
 			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
@@ -155,9 +130,9 @@ $(function() {
 			if(id.length<6 || id.length>10){ //길이 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
-// 			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
-// 				$("#notValidId").css("display", "inline-block");
-// 				return false;
+			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
+				$("#notValidId").css("display", "inline-block");
+				return false;
 			}else if(isNum<0 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
@@ -184,7 +159,7 @@ $(function() {
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
 			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
 			
-			if(id.length>7){ //길이 체크
+			if(id.length<8){ //길이 체크
 				$("#notValidPwd").css("display", "inline-block");
 				return false;
 			}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
@@ -211,6 +186,7 @@ $(function() {
 				$("#notValidPhone").css("display","inline-block");
 				return false;
 			}else{
+				$("#notValidPhone").css("display","none");
 				return true;
 			}
 		}
@@ -224,7 +200,7 @@ $(function() {
 		
 		function isValidEmail(){
 			var email = $("#teacherEmail").val();
-			var validEmail = "\w+@\w+\.\w+(\.\w+)?";
+			var validEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			
 			var result = email.match(validEmail);
 			
@@ -232,13 +208,14 @@ $(function() {
 				$("#notValidEmail").css("display","inline-block");
 				return false;
 			}else{
+				$("#notValidEmail").css("display","none");
 				return true;
 			}
 		}
 	
 
 
-<!-- 중복 체크 (진행 중) -->
+<!-- 중복 체크 -->
 
 
 	
@@ -256,13 +233,13 @@ $(function() {
 			}
 			$.ajax({
 				url: "/main/login/checkId",
-				type: "post",
 				data: {userId : $("#teacherId").val()},//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
 				dataType: "text",
 				success: function(data){
 					console.log(data);
 					if(data=="true"){
 						alert("이미 존재하는 아이디입니다.");
+						return;
 					}else{
 						alert("사용 가능한 아이디입니다.");
 						isIdChecked = true;
@@ -279,187 +256,223 @@ $(function() {
 		/*
 		핸드폰 번호 중복 체크
 		*/
-// 		${"#phoneCheck"}.click(function(){
-// 			if(!isValidPhone()){
-// 				alert("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
-// 				return;
-// 			}
-// 			if(("#teacherPhone").val()==""){
-// 				alert("핸드폰 번호를 입력해주세요.");
-// 				return;
-// 			}
-// 			$.ajax({
-// 				url: "/main/login/checkId",
-// 				data: {
-// 					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
-// 				},
-// 				dataType: "text",
-// 				success: function(data){
-// 					if(){
-// 						alert("이미 존재하는 아이디입니다.");
-// 					}else{
-// 						alert("사용 가능한 아이디입니다.");
-// 						isIdChecked = true;
-// 						return;
-// 					}
-// 				}, //success 끝
-// 				error: function(err){
-// 					alert(err + "에러 발생");
-// 				}
-// 			})
-// 		})
+		$("#phoneCheck").click(function(){
+			if(!isValidPhone()){
+				alert("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
+				return;
+			}
+			$.ajax({
+				url: "/main/login/checkPhone",
+				data: {	userPhone : $("#teacherPhone").val()},	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+				dataType: "text",
+				success: function(data){
+					if(data=="true"){
+						alert("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
+						return;
+					}else{
+						alert("사용 가능한 번호입니다.");
+						isPhoneChecked = true;
+						return;
+					}
+				}, //success 끝
+				error: function(err){
+					alert(err + "에러 발생");
+				}
+			})
+		})
 		
-// 		/*
-// 		닉네임 중복 체크
-// 		*/
-// 		${"#nickCheck"}.click(function(){
-// 			
-// 			if(("#teacherNick").val()==""){
-// 				alert("닉네임을 입력해주세요.");
-// 				return;
-// 			}
-// 			$.ajax({
-// 				url: "/main/login/checkId",
-// 				data: {
-// 					userId : $("#teacherId").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
-// 				},
-// 				dataType: "text",
-// 				success: function(data){
-// 					if(){
-// 						alert("이미 존재하는 아이디입니다.");
-// 					}else{
-// 						alert("사용 가능한 아이디입니다.");
-// 						isIdChecked = true;
-// 						return;
-// 					}
-// 				}, //success 끝
-// 				error: function(err){
-// 					alert(err + "에러 발생");
-// 				}
-// 			})			
-// 		})
+ 		/*
+ 		닉네임 중복 체크
+ 		*/
+		$("#nickCheck").click(function(){
+			
+			
+			if($("#teacherNick").val()==""){
+				alert("닉네임을 입력해주세요.");
+				return;
+			}
+			$.ajax({
+				url: "/main/login/checkNick",
+				data: {
+					teacherNick : $("#teacherNick").val()	//컨트롤러에서 요구하는 항목. 밑에 있는 항목이 아님.	
+				},
+				dataType: "text",
+				success: function(data){
+					if(data=="true"){
+						alert("사용 중인 닉네임입니다.");
+						return;
+					}else{
+						alert("사용 가능한 닉네임입니다.");
+						isNickChecked = true;
+						return;
+					}
+				}, //success 끝
+				error: function(err){
+					alert(err + "에러 발생");
+				}
+			})			
+		})
 		
 			
-// 		/*
-// 		아이디, 핸드폰번호, 닉네임 값 변경 시 중복 체크 리셋
-// 		*/
-// 		$("#teacherId").keyup(function(){
+		/*
+		아이디, 핸드폰번호, 닉네임 값 변경 시 중복 체크 리셋
+		*/
+		$("#teacherId").keyup(function(){
 			isIdChecked = false;
-// 		})
-// 		$("#teacherPhone").keyup(function(){
-// 			isPhoneChecked = false;
-//  	})
-//  	$("#teacherNick").keyup(function(){
-//  		isNickChecked = false;
-//  	})
+		})
+		$("#teacherPhone").keyup(function(){
+			isPhoneChecked = false;
+ 		})
+ 		$("#teacherNick").keyup(function(){
+ 			isNickChecked = false;
+ 		})
 
 		/*
 		비밀번호 일치 여부 체크
 		*/
-		$("#teacherPwd").focusout(function(){
+		isSamePwd = false;
+		
+		$("#teacherPwd2").focusout(function(){
 			let pwd1 = $("#teacherPwd").val();
 			let pwd2 = $("#teacherPwd2").val();
 			
 			if(pwd1!="" && pwd2!=""){
 				if(pwd1 == pwd2){
+					$("#pwdCheck_Fail").css("display", "none");
 					$("#pwdCheck_success").css("display", "inline-block");
-					return true;
+					isSamePwd = true;
 				}else{
+					$("#pwdCheck_success").css("display", "none");
 					$("#pwdCheck_Fail").css("display", "inline-block");
-					return false;
+					isSamePwd = false;
 				}
+			}else if(pwd1 != "" && pwd2 == ""){
+				$("#pwdCheck_success").css("display", "none");
+				$("#pwdCheck_Fail").css("display", "none");
+				isSamePwd = false;
 			}else{
-				$("#pwdCheck_Fail").css("display", "inline-block");
-				return false;
+				$("#pwdCheck_success").css("display", "none");
+				$("#pwdCheck_Fail").css("display", "none");
+				isSamePwd = false;
 			}
 		})
 		
-		
+		$("#teacherPwd2").focusout(function(){
+			let pwd1 = $("#teacherPwd").val();
+			let pwd2 = $("#teacherPwd2").val();
+			
+			if(pwd1=="" && pwd2!=""){
+				$("#pwdCheck_Fail").css("display", "inline-block");
+				isSamePwd = false;
+			}
+			
+		})
 	})	
 	
+	$(function(){
+		$("#insertForm").submit(function(){			
+			/*
+			중복체크 여부
+			*/
+			if(!isIdChecked){
+				alert("ID 중복체크를 진행해주세요.")
+				return false;
+			}else if(!isNickChecked){
+				alert("닉네임 중복체크를 진행해주세요")
+				return false;
+			}else if(!isPhoneChecked){
+				alert("핸드폰 번호 중복체크를 진행해주세요")
+				return false;
+			}else if(!isSamePwd){
+				alert("비밀번호 일치 여부를 확인해주세요.")
+				return false;
+			}
+			
+			isValidId();
+			isValidPwd();
+			isValidPhone();
+			isValidEmail();
+		})
+		
+	})
 </script>
 
 </head>
 <body>
-<h1>강사 회원가입 페이지입니다.</h1>
+<h1> 강사 회원가입 </h1>
   <section>
-	<form name="insertForm" method="post" action="${pageContext.request.contextPath}/main/insert">
-	  <h1> 강사 회원가입 </h1>
+	<form id="insertForm" name="insertForm" method="post" action="${pageContext.request.contextPath}/main/login/insert">
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
 	      <tr>
 	          <th>* 강사 ID</th>
-	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required="required"/>
+	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>
 	          <button type="button" class="" id="idCheck">중복체크</button>
-	          <span id="notValidId">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
-	          <span id="idCheck_success">사용가능한 ID입니다^^</span></td>
-	          <span id="idCheck_fail">이미 존재하는 ID입니다.</span></td>
+	          <span id="notValidId" class="message">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
+	          <span id="idCheck_success" class="message">사용가능한 ID입니다^^</span></td>
+	          <span id="idCheck_fail" class="message">이미 존재하는 ID입니다.</span></td>
 	      </tr>
 	      <tr>
 	          <th>* 강사 비밀번호</th>
-	          <td class=""><input type="password" id="teacherPwd" class="" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required="required"/>
-	          <span id="notValidPwd">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
+	          <td class=""><input type="password" id="teacherPwd" name="teacherPwd" class="" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required/>
+	          <span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
 	      </tr>
 	      <tr>
 	      	  <th>* 강사 비밀번호 확인</th>
 	      	  <td><input type="password" id="teacherPwd2" class="" placeholder="비밀번호를 한번 더 입력해주세요." required="required"/>
-	      	  <span id="pwdCheck_success">비밀번호가 일치합니다.</span>
-	      	  <span id="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td>
+	      	  <span id="pwdCheck_success" class="message">비밀번호가 일치합니다.</span>
+	      	  <span id="pwdCheck_Fail" class="message">비밀번호 일치 여부를 확인해주세요.</span></td>
 	      </tr>
 	      <tr>
 	          <th>* 강사 이름</th>
-	          <td><input type="text" id="teacherName" class="" placeholder="" required="required"/>
+	          <td><input type="text" id="teacherName" name="teacherName" class="" placeholder="" required="required"/>
 	      </tr>
 	      <tr>
 	          <th>* 강사 닉네임</th>
-	          <td><input type="text" id="teacherNick" class="" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
-	          <button id="nickCheck" class="">중복체크</button>
-	          <span id="nickCheck_success">사용가능한 닉네임입니다^^</span></td>
-	          <span id="nickCheck_fail">이미 존재하는 닉네임입니다.</span></td>
+	          <td><input type="text" id="teacherNick" name="teacherNickname" class="" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
+	          <button type="button" id="nickCheck" class="">중복체크</button>
+	          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
+	          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
 	      </tr>
 	      <tr>
 	          <th>* 강사 핸드폰 번호</th>
-	          <td><input type="text" id="teacherPhone" class="" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
-	          <button id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
-	          <span id="phoneCheck_success">사용가능한 번호입니다.</span></td>
-	          <span id="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td>
+	          <td><input type="text" id="teacherPhone" name="teacherPhone" class="" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+	          <button type="button" id="phoneCheck" class="">중복체크</button>
+	          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
+	          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
+	          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
 	      </tr>
 	      <tr>
 	          <th>강사 공개 연락처</th>
-	          <td><input type="text" id="teacherNick" class="" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td>
-	      </tr>
-	      <tr>
-	          <th>*강사 생년월일</th>
-	          <td><input type="text" id="datepicker" class="datepicker form-control" readonly="readonly" required="required"/></td>
+	          <td><input type="text" id="teacherNick" class="" name="teacherTel" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td>
 	      </tr>
 	      <tr>
 	          <th>*강사 이메일</th>
-	          <td><input type="text" id="teacherEmail" class="" required="required"/></td>
-	          <span id="notValidEmail">올바른 이메일 주소가 아닙니다.</span>
+	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required="required"/>
+	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
 	      </tr>
-	      <tr>
-	          <th>강사 소개</th>
-	          <td><textarea rows=""10 cols="50" id="teacherInfo" placeholder="강사님의 소개를 자유롭게 적어주세요^^"></textarea> </td>
-	      </tr>
-	      <tr>
-	          <th>공방 이름</th>
-	          <td><input type="text" id="placeName" class="" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td>
-	      </tr>
-	      <tr>
-	          <th>공방 위치</th>
-	          <td></td>
-	      </tr>
-	      <tr>
-	          <th>공방 주소</th>
-	          <td>
-				<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" >
-				<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색">
-				<input type="text" id="sample6_address" name="addrAddr" class="form-control">
-				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)">
-				<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)">
-			  </td>
-	      </tr>
+<!-- 	      <tr> -->
+<!-- 	          <th>강사 소개</th> -->
+<!-- 	          <td><textarea rows=""10 cols="50" id="teacherInfo" placeholder="강사님의 소개를 자유롭게 적어주세요^^"></textarea> </td> -->
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>공방 이름</th> -->
+<!-- 	          <td><input type="text" id="placeName" class="" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td> -->
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>공방 위치</th> -->
+<!-- 	          <td></td> -->
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>공방 주소</th> -->
+<!-- 	          <td> -->
+<!-- 				<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" > -->
+<!-- 				<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색"> -->
+<!-- 				<input type="text" id="sample6_address" name="addrAddr" class="form-control"> -->
+<!-- 				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)"> -->
+<!-- 				<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)"> -->
+<!-- 			  </td> -->
+<!-- 	      </tr> -->
 	  	</table>
 	  	<div>
 	  	<input type="submit" id="joinBtn" value="회원가입">

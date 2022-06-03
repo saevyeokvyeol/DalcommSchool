@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공방 상세보기 입니다.</title>
 </head>
 <body>
-		
+
+
 </body>
 </html>

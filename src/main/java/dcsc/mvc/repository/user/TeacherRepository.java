@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
@@ -16,14 +17,26 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	 * 닉네임, 핸드폰 번호 중복체크
 	 * 규칙 필요(완전히 같은거)
 	 * */
-	List<Teacher> findByTeacherId(String teacherId);
 	
-	List<Teacher> findByTeacherNickname(String teacherNickname);
 	
-	List<Teacher> findByTeacherPhone(String teacherPhone);
+	Teacher findByTeacherNicknameEquals(String teacherNickname);
+	
+	Teacher findByTeacherPhoneEquals(String teacherPhone);
 	
 	//Teacher selectTeacherById(String teacherId);
 //	Teacher selectRoleById(String teacherId);
+	
+	/**
+	 * 아이디, 이름, 핸드폰, 이메일 등등으로 강사 조회하기
+	 * keyword(검색어), key field(컬럼명)
+	 * 컬럼명에따라 다른 메소드 호출..!
+	 * */
+	List<Teacher> findByTeacherIdIsLike(String teacherId);
+	List<Teacher> findByTeacherNameIsLike(String teacherName);
+	List<Teacher> findByTeacherPhoneIsLike(String teacherPhone);
+	List<Teacher> findByTeacherEmailIsLike(String teacherEmail);
+	
+	
 	
 	/**
 	 * 선생님 아이디 찾기
