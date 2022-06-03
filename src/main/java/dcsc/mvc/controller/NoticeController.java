@@ -37,8 +37,11 @@ public class NoticeController {
 			return "admin/board/Notice/noticeWrite";
 		}
 	 
+		/**
+		 * 등록 하기
+		 * */
 	 @RequestMapping("/noticeWrite")
-	 private String insertNotice(Notice notice) {
+	 public String insertNotice(Notice notice) {
 		 noticeService.insertNotice(notice);
 		 
 		 return "redirect:/admin/board/Notice/noticeList";
@@ -73,7 +76,6 @@ public class NoticeController {
 	
 	@RequestMapping("/noticeUpdate")
 	public ModelAndView updateNotice(Notice notice) {
-		System.out.println("컨트롤러 :"+notice.getNoticeNo());
 		noticeService.updateNotice(notice);
 		
 		return new ModelAndView("admin/board/Notice/noticeRead","notice",notice);

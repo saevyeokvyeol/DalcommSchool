@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import dcsc.mvc.domain.user.Place;
+import dcsc.mvc.domain.user.PlaceInfra;
+import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
@@ -73,19 +75,6 @@ public interface TeacherService {
 	 * */
 	List<Teacher> selectAllTeacher ();
 	
-	/**
-	 * 아이디로 강사 조회
-	 * @param String teacherId
-	 * @return Teacher
-	 * */
-	Teacher selectByTeacherId (String teacherId);
-	
-	/**
-	 * 키워드로 강사 조회
-	 * @param String keyword, String keyfield
-	 * @return List<Teacher>
-	 * */
-	List<Teacher> selectTeacherByKeyword (String keyword, String keyfield);
 	
 	/**
 	 * 공방 등록
@@ -99,8 +88,23 @@ public interface TeacherService {
 	 * @param Place place //Place 안에 PlaceInfra 있음 (JPA) 트랜잭션으로 인프라까지 수정
 	 * @return
 	 * */
-	void updatePlace (Place place);
+	Place updatePlace (Place place);
 	
+	/**
+	 * 공방 조회하기
+	 * */
+	Place selectByPlaceId(Long placeId);
+	
+	/**
+	 * 공방 인프라 가져오기
+	 * @return PlaceInfra
+	 * */
+	List<PlaceInfra> selectPlaceInfra(Long placeId);
+	
+	/**
+	 * 공방 지역 가져오기
+	 * */
+	List<PlaceRegion> selectPlaceRegion();
 	
 	/**
 	 * 아이디, 이름 등등으로 강사 조회하기
