@@ -1,6 +1,7 @@
 package dcsc.mvc.domain.classes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,12 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
@@ -63,5 +66,8 @@ public class Classes {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id")
 	private PlaceRegion placeRegion;
+	
+	@OneToMany(mappedBy = "classes")
+	private List<ClassQna> QnaList;
 	
 }
