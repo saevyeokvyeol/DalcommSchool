@@ -399,10 +399,9 @@ $(function() {
 
 </head>
 <body>
-<h1>강사 회원가입 페이지입니다.</h1>
+<h1> 강사 회원가입 </h1>
   <section>
 	<form id="insertForm" name="insertForm" method="post" action="${pageContext.request.contextPath}/main/login/insert">
-	  <h1> 강사 회원가입 </h1>
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
 	      <tr>

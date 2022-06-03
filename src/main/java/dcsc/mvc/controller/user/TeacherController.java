@@ -41,7 +41,7 @@ public class TeacherController {
 	public ModelAndView findId(String userName, String userPhone) {
 		String userId = teacherService.selectId(userName, userPhone);
 		
-		return new ModelAndView("", "userId", userId); //(가지고 갈 경로, "가서 쓰는 쓸 이름", 가져갈 데이터);
+		return new ModelAndView("main/login/findId", "userId", userId); //(가지고 갈 경로, "가서 쓰는 쓸 이름", 가져갈 데이터);
 	}
 	
 	/**

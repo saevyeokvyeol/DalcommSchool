@@ -9,8 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.user.Place;
+import dcsc.mvc.domain.user.PlaceInfra;
+import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.repository.user.PlaceRegionRepository;
+import dcsc.mvc.repository.user.PlaceRepository;
 import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.repository.user.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,8 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	private final TeacherRepository teacherRep;
 	private final StudentRepository studentRep;
+	private final PlaceRepository placeRep;
+	private final PlaceRegionRepository regionRep;
 	
 //	private final Student student;
 //	private final Teacher teacher;
@@ -133,33 +139,57 @@ public class TeacherServiceImpl implements TeacherService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	/**
-	 * 선생님 아이디로 정보 불러오기
+	 * 공방 등록하기
 	 * */
 	@Override
-	public Teacher selectByTeacherId(String teacherId) {
-		Teacher teacher = teacherRep.getById(teacherId);
-		if(teacher==null) {throw new RuntimeException("해당 ID에 대한 정보가 없습니다.");};
-		return teacher;
+	public void insertPlace(Place place) {
+		placeRep.save(place);
 	}
 	
+	/**
+	 * 공방 수정하기
+	 * */
 	@Override
-	public List<Teacher> selectTeacherByKeyword(String keyword, String keyfield) {
-		// TODO Auto-generated method stub
+	public Place updatePlace(Place place) {
+		Place place2 = placeRep.findById(place.getPlaceId()).orElse(null);
+		
+		place2.setDetailAddr(place.getDetailAddr());
+		place2.setPlace_name(place.getPlace_name());
+		place2.setPlaceAddr(place.getPlaceAddr());
+		place2.setPlaceRoute(place.getPlaceRoute());
+		
+		place2.setPlaceRegion(place.getPlaceRegion());
+		
+		return place2;
+	}
+	
+	/**
+	 * 공방 인프라 정보 가져오기
+	 * */
+	@Override
+	public List<PlaceInfra> selectPlaceInfra(Long placeId) {
+		
 		return null;
 	}
-
+	
+	/**
+	 * 공방 상세 정보 가져오기
+	 * */
 	@Override
-	public void insertPlace(Place place) {
-		// TODO Auto-generated method stub
-
+	public Place selectByPlaceId(Long placeId) {
+		
+		return null;
 	}
-
+	
+	/**
+	 * 공방 지역 가져오기
+	 * */
 	@Override
-	public void updatePlace(Place place) {
-		// TODO Auto-generated method stub
-
+	public List<PlaceRegion> selectPlaceRegion() {
+		List<PlaceRegion> list = regionRep.findAll();
+		return list;
 	}
 	
 	/**
