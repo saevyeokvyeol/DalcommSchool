@@ -13,17 +13,16 @@
 	
 <script type="text/javascript">
 	$(function(){
-		
 	 $("input[value=수정하기]").click(function(){
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/Notice/updateForm");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/updateForm");
 		   $("#requestForm").submit();
 		   
 	   })
 	
 	   $("input[value=삭제하기]").click(function(){
 		
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/Notice/deleteNotice");
+			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/deleteFAQ");
 			   $("#requestForm").submit();
 		  	alert("삭제되었습니다.")
 	   })
@@ -48,7 +47,15 @@
             <p align="right"><b><span style="font-size:9pt;">번호</span></b></p>
         </td>
         <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${notice.noticeNo}</b></span>
+        	<span style="font-size:9pt;"><b>${faq.faqNo}</b></span>
+        </td>
+    </tr>
+     <tr>
+        <td width="100" height="20" >
+            <p align="right"><b><span style="font-size:9pt;">카테고리</span></b></p>
+        </td>
+        <td width="450" height="20" colspan="3">
+        	<span style="font-size:9pt;"><b>${faq.}</b></span>
         </td>
     </tr>
     <tr>
@@ -65,7 +72,7 @@
             <p align="right"><b><span style="font-size:9pt;">제목</span></b></p>
         </td>
         <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${requestScope.notice.noticeTitle}</b></span>
+        	<span style="font-size:9pt;"><b>${requestScope.faq.faqTitle}</b></span>
         </td>
     </tr>
     <tr>
@@ -74,14 +81,14 @@
         </td>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
         <td width="450" height="200" valign="top" colspan="3">
-        <span style="font-size:9pt;"><b><pre>${requestScope.notice.noticeContent}</pre></b></span></td>
+        <span style="font-size:9pt;"><b><pre>${requestScope.faq.faqContent}</pre></b></span></td>
     </tr>
     
       <tr>
         <td height="20" colspan="2" align="center" valign="middle">
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 			<form name="requestForm" method="post" id="requestForm">
-				<input type=hidden name="noticeNo" value="${notice.noticeNo}">
+				<input type=hidden name="faqNo" value="${faq.faqNo}">
 				<input type=button value="수정하기" >
 				<input type=button value="삭제하기" >
 			</form>
