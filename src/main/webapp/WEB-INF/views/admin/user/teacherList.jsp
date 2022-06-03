@@ -8,15 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>관리자용 회원 조회 페이지 입니다</h2>
+<h2>관리자용 강사 조회 페이지 입니다</h2>
 	
 	
-	<form action="${pageContext.request.contextPath}/admin/user/userSearch" method="post">
+	<form action="${pageContext.request.contextPath}/admin/user/teacherSearch" method="post">
 	       <select name = "keyfield">
-	          <option value = "studentID" selected>아이디</option>
-	          <option value = "studentName">이름</option>
-	          <option value = "studentPhone">연락처</option>
-	          <option value = "studentEmail">이메일</option>
+	          <option value = "teacherID" selected>아이디</option>
+	          <option value = "teacherName">이름</option>
+	          <option value = "teacherPhone">연락처</option>
+	          <option value = "teacherEmail">이메일</option>
 	       </select>
 	       <input type="text" id="keyword" name="keyword">
      	  <input type="submit" id="search" value="검색">
@@ -37,22 +37,22 @@
         </thead>
         <tbody>
             <c:choose>
-                <c:when test ="${empty studentList}">
+                <c:when test ="${empty teacherList}">
                     <tr>
                         <th colspan="6">
-                            <span> 조회할 회원 정보가 없습니다.</span>
+                            <span> 조회할 강사 정보가 없습니다.</span>
                         </th>
                     </tr>
                 </c:when>
                 <c:otherwise>
-                    <c:forEach items="${studentList}" var="studentList">
+                    <c:forEach items="${teacherList}" var="teacherList">
                         <tr>
-                            <td><span>${studentList.studentId}</span></td>
-                            <td><span>${studentList.studentName}</span></td>
-                            <td><span>${studentList.studentPhone}</span></td>
-                            <td><span>${studentList.studentEmail}</span></td>
-                            <td><span>${studentList.studentInsertDate}</span></td>
-                            <td><span>${studentList.studentQuit}</span></td>
+                            <td><span>${teacherList.teacherId}</span></td>
+                            <td><span>${teacherList.teacherName}</span></td>
+                            <td><span>${teacherList.teacherPhone}</span></td>
+                            <td><span>${teacherList.teacherEmail}</span></td>
+                            <td><span>${teacherList.teacherInsertDate}</span></td>
+                            <td><span>${teacherList.teacherQuit}</span></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>

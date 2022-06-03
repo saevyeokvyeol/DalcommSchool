@@ -47,7 +47,7 @@ public interface StudentService {
 	 * @param: String keyword(검색어), String keyfield(컬럼명)
 	 * @return: List<Student>
 	 * */
-	List<Student> selectByStudentId (String keyword, String keyfield);
+	List<Student> selectByStudentId (String keyfield, String keyword);
 	
 	
 }

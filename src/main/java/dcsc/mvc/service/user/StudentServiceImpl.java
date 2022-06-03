@@ -24,8 +24,8 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentRepository studentRep;
 	private final TeacherRepository teacherRep;
 	
-	private final Student student;
-	private final Teacher teacher;
+	//private final Student student;
+	//private final Teacher teacher;
 	
 //	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -92,12 +92,30 @@ public class StudentServiceImpl implements StudentService {
 	 * keyword(검색어), key field(컬럼명)
 	 * */
 	@Override
-	public List<Student> selectByStudentId(String keyword, String keyfield) { 
-		/*if() {	
-			studentRep.findByStudentIdIsLike(keyword);
-		}*/
-
-		return null;
+	public List<Student> selectByStudentId(String keyfield, String keyword) { 
+		List<Student> list = null;
+		switch(keyfield) {
+				case "studentID" :
+					System.out.println("studentID...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;
+					
+				case "studentName" :
+					System.out.println("studentName...");
+					list = studentRep.findByStudentNameIsLike(keyword);
+					break;	
+					
+				case "studentPhone" :
+					System.out.println("studentPhone...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;	
+					
+				case "studentEmail" :
+					System.out.println("studentEmail...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;	
+		}
+		return list;
 	}
 
 

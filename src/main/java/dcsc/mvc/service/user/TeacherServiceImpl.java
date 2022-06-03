@@ -157,7 +157,39 @@ public class TeacherServiceImpl implements TeacherService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	/**
+	 * 강사 정보로 강사 검색하기
+	 * */
+	@Override
+	public List<Teacher> selectByTeacherId(String keyfield, String keyword) {
+		List<Teacher> list = null;
+		switch(keyfield) {
+				case "teacherID" :
+					System.out.println("teacherID...");
+					list = teacherRep.findByTeacherIdIsLike(keyword);
+					break;
+					
+				case "teacherName" :
+					System.out.println("teacherName...");
+					list = teacherRep.findByTeacherNameIsLike(keyword);
+					break;	
+					
+				case "teacherPhone" :
+					System.out.println("teacherPhone...");
+					list = teacherRep.findByTeacherIdIsLike(keyword);
+					break;	
+					
+				case "teacherEmail" :
+					System.out.println("teacherEmail...");
+					list = teacherRep.findByTeacherIdIsLike(keyword);
+					break;	
+		}
+		return list;
+	}
 
+	
+	
 	
 
 }
