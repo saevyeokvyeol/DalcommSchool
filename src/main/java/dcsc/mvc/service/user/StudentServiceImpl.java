@@ -24,8 +24,8 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentRepository studentRep;
 	private final TeacherRepository teacherRep;
 	
-	private final Student student;
-	private final Teacher teacher;
+//	private final Student student;
+//	private final Teacher teacher;
 	
 //	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
