@@ -145,7 +145,7 @@ function sample6_execDaumPostcode() {
       <div id="googleMap"></div>
       <tr>
         <legend>공방 편의 시설</legend>
-        <input type="checkbox" name="
+        <input type="checkbox" name="">
       </tr>
     </table>
   </form>
