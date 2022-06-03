@@ -31,10 +31,17 @@ public class StudentController {
 	}
 	
 	//로그인폼
-	@RequestMapping("/login/login")
-	public void login() {
+	@RequestMapping("/login/loginForm")
+	public void loginForm() {
 		System.out.println("login 호출...");
 	}
+	
+	//로그인
+	@RequestMapping("/login/login")
+	public void login(String userId, String userPwd) {
+		System.out.println("login 호출...");
+	}
+	
 	
 	//마이페이지
 	@RequestMapping("/mypage/myPage")
@@ -54,7 +61,7 @@ public class StudentController {
 		System.out.println("modifyPwd 호출...");
 	}
 	
-	//내가 남긴 일대일문의 조회
+	//내가 남긴 일대일문의 조회; 학생, 선생님
 	@RequestMapping("/mypage/askList")
 	public void askList() {
 		System.out.println("askList 호출...");
