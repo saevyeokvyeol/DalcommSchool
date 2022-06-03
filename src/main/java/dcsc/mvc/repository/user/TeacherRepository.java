@@ -16,11 +16,11 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	 * 닉네임, 핸드폰 번호 중복체크
 	 * 규칙 필요(완전히 같은거)
 	 * */
-	List<Teacher> findByTeacherId(String teacherId);
 	
-	List<Teacher> findByTeacherNickname(String teacherNickname);
 	
-	List<Teacher> findByTeacherPhone(String teacherPhone);
+	List<Teacher> findByTeacherNicknameEquals(String teacherNickname);
+	
+	List<Teacher> findByTeacherPhoneEquals(String teacherPhone);
 	
 	//Teacher selectTeacherById(String teacherId);
 //	Teacher selectRoleById(String teacherId);

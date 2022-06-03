@@ -17,9 +17,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	/**
 	 * 아이디, 휴대폰 중복체크
 	 * */
-	List<Student> findByStudentId(String studentId);
 	
-	List<Student> findByStudentPhone(String studentPhone);
+	List<Student> findByStudentPhoneEquals(String studentPhone);
 	
 	//Student selectStudentById(String studentId);
 	
@@ -39,7 +38,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	String selectStudentId(String studentName, String studentPhone);
 	
 	/**
-	 * 비밀번호 중복 체크
+	 * 비밀번호 찾기
 	 * */
 	@Query("select s.studentPwd from Student s where s.studentId = ?1 and s.studentName=?2 and s.studentPhone=?3")
 	String selectStudentPwd(String studentId, String studentName, String studentPhone);

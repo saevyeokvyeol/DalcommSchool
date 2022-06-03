@@ -23,8 +23,8 @@ public class TeacherServiceImpl implements TeacherService {
 	private final TeacherRepository teacherRep;
 	private final StudentRepository studentRep;
 	
-	private final Student student;
-	private final Teacher teacher;
+//	private final Student student;
+//	private final Teacher teacher;
 	
 	@Override
 	public void insertTeacher(Teacher teacher) {
@@ -84,13 +84,13 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean userIdCheck(String userId) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherId(userId);
-		List<Student> listStudent = studentRep.findByStudentId(userId);
+		Teacher teacher = teacherRep.findById(userId).orElse(null); //없으면 null
+		Student student = studentRep.findById(userId).orElse(null);
 		
-		if(listTeacher != null || listStudent != null) { //아이디가 이미 있다면
-			return true;
-		}else {
+		if(teacher == null && student == null) { //검색 결과 없다면
 			return false;
+		}else {
+			return true;
 		}
 	}
 
@@ -99,7 +99,7 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean teacherNickCheck(String teacherNickname) {
-		List<Teacher> list = teacherRep.findByTeacherNickname(teacherNickname);
+		List<Teacher> list = teacherRep.findByTeacherNicknameEquals(teacherNickname);
 		
 		if(list != null) {
 			return true;
@@ -114,8 +114,8 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public boolean userPhoneCheck(String userPhone) {
-		List<Teacher> listTeacher = teacherRep.findByTeacherPhone(userPhone);
-		List<Student> listStudent = studentRep.findByStudentPhone(userPhone);
+		List<Teacher> listTeacher = teacherRep.findByTeacherPhoneEquals(userPhone);
+		List<Student> listStudent = studentRep.findByStudentPhoneEquals(userPhone);
 		
 		if(listTeacher != null || listStudent != null) { //번호가 이미 있다면
 			return true;

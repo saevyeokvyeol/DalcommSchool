@@ -2,6 +2,7 @@ package dcsc.mvc.controller.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.user.Teacher;
@@ -56,6 +57,7 @@ public class TeacherController {
 	 * 아이디 중복 체크
 	 * */
 	@RequestMapping("/checkId")
+	@ResponseBody
 	public boolean checkId(String userId) {
 		boolean result = teacherService.userIdCheck(userId);
 		System.out.println(result);
@@ -67,6 +69,7 @@ public class TeacherController {
 	 * 핸드폰 번호 중복 체크
 	 * */
 	@RequestMapping("/checkPhone")
+	@ResponseBody
 	public boolean checkPhone(String userPhone) {
 		boolean result = teacherService.userPhoneCheck(userPhone);
 		
@@ -77,6 +80,7 @@ public class TeacherController {
 	 * 선생님 닉네임 중복 체크
 	 * */
 	@RequestMapping("/checkNick")
+	@ResponseBody
 	public boolean checkNick(String teacherNick) {
 		boolean result = teacherService.teacherNickCheck(teacherNick);
 		
