@@ -26,7 +26,7 @@ public interface TeacherService {
 	 * 비밀번호 찾기
 	 * @param: String teacherId, String teacherName, String teacherPhone
 	 * */
-	void selectPwd(String userId, String userName, String userPhone);
+	boolean selectPwd(String userId, String userName, String userPhone);
 	
 	/**
 	 * 회원정보 수정
@@ -42,12 +42,6 @@ public interface TeacherService {
 	 * */
 	void updateTeacherPwd (String teacherPwd);
 	
-	/**
-	 * 강사 탈퇴하기
-	 * @param: String teacherId
-	 * @return: 
-	 * */
-	void deleteTeacher (String teacherId);
 	
 	/**
 	 * 아이디 중복체크

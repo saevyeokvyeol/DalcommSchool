@@ -45,8 +45,10 @@ public class TeacherController {
 	 * 회원(강사,학생) 비밀번호 찾기
 	 * */
 	@RequestMapping("/findPwd")
-	public void findPwd(String userId, String userName, String userPhone) {
+	public ModelAndView findPwd(String userId, String userName, String userPhone) {
 		teacherService.selectPwd(userId, userName, userPhone);
+		
+		return new ModelAndView("/updatePwd");
 		
 	}
 	
