@@ -1,5 +1,7 @@
 package dcsc.mvc.repository.board;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import dcsc.mvc.domain.board.ClassQna;
@@ -7,9 +9,14 @@ import dcsc.mvc.domain.board.ClassQna;
 public interface ClassQnaReposiroty extends JpaRepository<ClassQna, Long> {
 
 	/**
-	 * 블라인드 처리
+	 * 클래스ID로 클래스 Q&A 검색
 	 * */
-	//@Query("update ClassQna q set q.blindState = ?1 where qnaId = ?2")
-	//ClassQna updateBlind(String blindState , Long qnaId);
+	List<ClassQna> findByClassesClassIdEquals(Long classId);
+	
+	/**
+	 * 강사ID로 클래스 Q&A 검색
+	 * */
+	List<ClassQna> findByClassesTeacherTeacherIdEquals(String teacherId);
+	
 	
 }

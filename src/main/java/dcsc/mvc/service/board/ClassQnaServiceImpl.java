@@ -13,6 +13,7 @@ import dcsc.mvc.domain.board.ClassReply;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.repository.board.ClassQnaReposiroty;
+import dcsc.mvc.repository.board.ClassReplyReposiroty;
 import dcsc.mvc.repository.classes.ClassesRepository;
 import dcsc.mvc.repository.user.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ClassQnaServiceImpl implements ClassQnaService {
 	
 	private final ClassQnaReposiroty classQnaRep;
-	private final ClassesRepository classesRepository;
-	private final StudentRepository studentRepository;
+	private final ClassReplyReposiroty classReplyRep;
 	
 	
 	/**
@@ -60,6 +60,9 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 
 	}
 
+	/**
+	 * Q&A 수정하기
+	 * */
 	@Override
 	public void updateQuestion(ClassQna classQna) {
 		ClassQna dbQna = classQnaRep.findById(classQna.getQnaId()).orElse(null);
@@ -73,6 +76,9 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 
 	}
 
+	/**
+	 * Q&A 삭제하기
+	 * */
 	@Override
 	public void deleteQuestion(Long qnaId) {
 		ClassQna dbQna = classQnaRep.findById(qnaId).orElse(null);
@@ -84,17 +90,25 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		classQnaRep.deleteById(qnaId);
 	}
 
+	/**
+	 * classId 로 Q&A 전체조회
+	 * */
 	@Override
 	public List<ClassQna> selectByClassId(Long classId) {
-		Classes classes = classesRepository.findById(classId).orElse(null);
-		List<ClassQna> list = classes.getQnaList();
+		List<ClassQna> list = classQnaRep.findByClassesClassIdEquals(classId);
 		return list;
 	}
 
+	/**
+	 * 강사ID 로 Q&A 전체조회
+	 * */
 	@Override
 	public List<ClassQna> selectByTeacherId(String teacherId) {
-		Student student = studentRepository.findById(teacherId).orElse(null);
+		/*Student student = studentRepository.findById(teacherId).orElse(null);
 		List<ClassQna> list = student.getQnaList();
+		return list;*/
+		
+		List<ClassQna> list = classQnaRep.findByClassesTeacherTeacherIdEquals(teacherId);
 		return list;
 	}
 
@@ -124,22 +138,44 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		dbQna.setBlindState(blindState);
 	}
 
+	/**
+	 * Q&A 댓글 등록
+	 * */
 	@Override
 	public void insertReply(ClassReply classReply) {
-		// TODO Auto-generated method stub
+		classReplyRep.save(classReply);
+		ClassQna dbQna = classQnaRep.findById(classReply.getClassQna().getQnaId()).orElse(null);
+		dbQna.setQnaComplete("T");
+		
 
 	}
 
+	/**
+	 * Q&A 댓글 수정
+	 * */
 	@Override
 	public void updateReply(ClassReply classReply) {
-		// TODO Auto-generated method stub
-
+		ClassReply dbReply = classReplyRep.findById(classReply.getReplyId()).orElse(classReply);
+		if(dbReply==null) {
+			throw new RuntimeException("Q&A 답변글 번호 오류로 수정되지 않았습니다.");
+		}
+		dbReply.setReplyContent(classReply.getReplyContent());
+		
 	}
 
 	@Override
 	public void deleteReply(Long replyId) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * qnaId로 답글 조회
+	 * */
+	@Override
+	public ClassReply selectByReplyQnaId(Long qnaId) {
+		ClassReply classReply = classReplyRep.findByClassQnaQnaIdEquals(qnaId);
+		return classReply;
 	}
 
 	

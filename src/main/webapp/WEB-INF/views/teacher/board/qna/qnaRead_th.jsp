@@ -12,23 +12,19 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
-<title>QnA :상세보기</title>
+<title>선생님 : Q&A 상세보기</title>
 
 <script type="text/javascript">
 	$(function() {
 		//alert(1);
-		$("input[value=수정하기]").click(function(){
+		
+		$("input[value=답변하기]").click(function(){
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaUpdateForm");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/qnaReplyWriteForm");
 		   $("#requestForm").submit();
 	   })
-	   
-	    $("input[value=삭제하기]").click(function(){
-		   
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaDelete");
-			   $("#requestForm").submit();
-		   
-	   })
+		
+		
 	   
 		
 	});
@@ -41,11 +37,11 @@
             
         	<tr>
                 <th>작성자</th>
-                <td>${qna.student.studentId.substring(0,4)}****</td>
+                <td>${qna.student.studentId}</td>
                 <th>등록일자</th>
                 <td>${qna.qnaInsertDate}</td>
-                <th>수정일자</th>
-                <td>${qna.qnaUpdateDate}</td>
+                <th>클래스 아이디</th>
+                <td>${qna.classes.classId}</td>
             </tr>
             <tr>
                 <th>제목</th>
@@ -57,24 +53,20 @@
                 <th>내용</th>
                 <td>${qna.qnaContent}</td>
             </tr>
-            
-		    <tr>
+            <tr>
 		        <td height="20" colspan="3" align="center" valign="middle">
-					<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
+					<!-- 답변시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 					<form name="requestForm" method="post" id="requestForm">
 						<input type=hidden name="qnaId" value="${qna.qnaId}">
 						<input type=hidden name="classId" value="${qna.classes.classId}" id="classId">
 						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
-						<input type=hidden name="blindState" value="${qna.blindState}" id="blindState">
 						<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
 						<c:choose>
 							<c:when test="${qna.qnaComplete eq 'T'}">
-								<input type=hidden value="수정하기" >
-								<input type=hidden value="삭제하기" >
+								<input type=hidden value="답변하기" >
 							</c:when>
 							<c:otherwise>
-								<input type=button value="수정하기" >
-								<input type=button value="삭제하기" >
+								<input type=button value="답변하기" >
 							</c:otherwise>
 						</c:choose>
 						
@@ -84,7 +76,8 @@
             
         </table>
     </div>
-        <hr>
+    
+    <hr>
     <div>
         <table>
             <c:choose>
@@ -100,6 +93,7 @@
 		            <tr>
 		                <th>내용</th>
 		                <td>${qnaReply.replyContent}</td>
+		                <td><a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/teacher/board/qna/qnaReplyUpdateForm">답글 수정하기</a><td>
 		            </tr>
             	</c:when>
             </c:choose>
@@ -107,10 +101,10 @@
             
         </table>
     </div>
-    
     <hr>
     
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/main/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
+   
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList_th">목록으로 돌아가기</a>&gt;</span></div>
 
 
 </body>
