@@ -12,7 +12,7 @@ public interface StudentService {
 	 * 회원가입
 	 * @param: Student student
 	 * */
-//	void insertStudent (Student student);
+	void insertStudent (Student student);
 	
 	/**
 	 * 로그인
@@ -25,7 +25,7 @@ public interface StudentService {
 	 * 회원 탈퇴하기(학생)
 	 * @param: String studentId
 	 * */
-	void deleteStudent (String studentId);
+	void deleteStudent (String userId, String userPwd);
 	
 
 	/**
@@ -38,6 +38,7 @@ public interface StudentService {
 	
 	/**
 	 * 학생 상세 정보 조회
+	 * 아이디 클릭시 해당 상세 정보 모달창으로 띄움
 	 * */
 	Student selectStudent(String studentId);
 	

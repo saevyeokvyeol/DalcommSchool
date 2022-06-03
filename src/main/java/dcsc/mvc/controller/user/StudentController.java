@@ -29,7 +29,7 @@ public class StudentController {
 	@RequestMapping(value="/main/login/join", method = RequestMethod.POST)
 	public String insertStudent(Student student) {
 		System.out.println("student :" + student);
-		//studentService.insertStudent(student);
+		studentService.insertStudent(student);
 		return "redirect:/";
 	}
 	
@@ -44,6 +44,13 @@ public class StudentController {
 	public void login(String userId, String userPwd) {
 		System.out.println("login 호출...");
 	}
+	
+	//회원 목록 상세보기 - 관리자
+	@RequestMapping("/admin/user/studentDetail")
+	public void studentDetail(String studentId) {
+		System.out.println("studentDetail 호출...");
+	}
+	
 	
 	
 	//마이페이지
@@ -64,12 +71,14 @@ public class StudentController {
 		System.out.println("modifyPwd 호출...");
 	}
 	
-	//내가 남긴 일대일문의 조회; 학생, 선생님
-	@RequestMapping("/main/mypage/askList")
-	public void askList() {
-		System.out.println("askList 호출...");
+	//회원 탈퇴
+	@RequestMapping("/main/mypage/deleteUser")
+	public void withdrawal(String userId, String userPwd) {
+		System.out.println("deleteUser 호출...");
+		studentService.deleteStudent(userId, userPwd);
 	}
 	
+
 	//내 예약 조회
 	@RequestMapping("/main/mypage/bookList")
 	public void bookList() {

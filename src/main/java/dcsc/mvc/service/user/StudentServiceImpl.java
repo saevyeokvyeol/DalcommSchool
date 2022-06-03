@@ -30,24 +30,24 @@ public class StudentServiceImpl implements StudentService {
 //	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	
-//	/**
-//	 * 회원가입
-//	 * */
-//	@Override
-//	public void insertStudent(Student student) { 
-//		System.out.println(student);
-//		student.setRole("STUDENT");
-//		student.setStudentQuit("F");
-//		//인수로 들어오는 비밀번호 암호화
-//		//String rawPassword = student.getStudentPwd();
-//		String encPassword = bCryptPasswordEncoder.encode(student.getStudentPwd()); 
-//		student.setStudentPwd(encPassword);
-//		
-//		Student stu = studentRepository.save(student);
-//		if(stu==null) {
-//			new RuntimeException("회원가입에 실패했습니다.");
-//		}
-//	}
+	/**
+	 * 회원가입
+	 * */
+	@Override
+	public void insertStudent(Student student) { 
+		System.out.println(student);
+		//student.setRole("STUDENT");
+		//student.setStudentQuit("F");
+		//인수로 들어오는 비밀번호 암호화
+		//String rawPassword = student.getStudentPwd();
+		//String encPassword = bCryptPasswordEncoder.encode(student.getStudentPwd()); 
+		//student.setStudentPwd(encPassword);
+		
+		Student stu = studentRep.save(student);
+		if(stu==null) {
+			new RuntimeException("회원가입에 실패했습니다.");
+		}
+	}
 	
 	/**
 	 * 로그인
@@ -62,8 +62,9 @@ public class StudentServiceImpl implements StudentService {
 	 * 회원 탈퇴
 	 * */
 	@Override
-	public void deleteStudent(String studentId) { 
-		studentRep.deleteById(studentId);
+	public void deleteStudent(String userId, String userPwd) { 
+		//아이디 비밀번호 입력 받은 후 탈퇴	
+		studentRep.deleteById(userId);
 	}
 	
 	/**

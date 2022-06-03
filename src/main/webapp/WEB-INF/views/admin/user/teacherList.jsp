@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,9 +52,11 @@
 		                        <tr>
 		                            <td><span>${teacher.teacherId}</span></td>
 		                            <td><span>${teacher.teacherName}</span></td>
-		                            <td><span>${teacher.teacherPhone}</span></td>
+		                            <td><span><c:set var="phone" value="${teacher.teacherPhone}"/>
+		                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
+		                            </span></td>
 		                            <td><span>${teacher.teacherEmail}</span></td>
-		                            <td><span>${teacher.teacherInsertDate}</span></td>
+		                            <td><span><fmt:parseDate value="${teacher.teacherInsertDate}" pattern="yyyy-mm-dd"/></span></td>
 		                            <td><span>${teacher.teacherQuit}</span></td>
 		                        </tr>
                     	</c:forEach>
