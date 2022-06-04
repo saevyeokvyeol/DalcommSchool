@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.querydsl.core.BooleanBuilder;
-
 import dcsc.mvc.domain.classes.ClassCategory;
+import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
+import dcsc.mvc.domain.classes.ClassState;
 import dcsc.mvc.domain.classes.Classes;
-import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
 import dcsc.mvc.repository.classes.ClassImageRepository;
@@ -33,10 +33,20 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @param Class(선생님ID, 클래스명, 클래스 소개글, 클래스 금액, 카테고리);
 	 * */
 	@Override
-	public void insert(Classes classes) {
+	public void insert(Classes classes, ClassImage mainImage, ClassImage[] subImages) {
+		classes.setClassState(new ClassState(1L, null));
 		Classes dbClass = classesRepository.save(classes);
+		System.out.println(dbClass.getClassId());
 		
-		if(dbClass == null) throw new RuntimeException("클래스 등록을 실패했습니다.");
+		mainImage.setClasses(dbClass);
+		classImageRepository.save(mainImage);
+		
+		for(ClassImage subImage : subImages) {
+			if(subImage != null) {
+				subImage.setClasses(classes);
+				classImageRepository.save(subImage);
+			}
+		}
 	}
 
 	/**
@@ -61,7 +71,12 @@ public class ClassesServiceImpl implements ClassesService {
 	 * */
 	@Override
 	public void delete(Long classId) {
-		classesRepository.deleteById(classId);
+		Classes dbClass = classesRepository.findById(classId).orElse(null);
+		
+		if(dbClass == null) throw new RuntimeException("[" + classId + "] 클래스가 존재하지 않습니다");
+		
+		dbClass.setClassState(new ClassState(5L, null));
+
 	}
 
 	/**
@@ -82,12 +97,18 @@ public class ClassesServiceImpl implements ClassesService {
 	 * */
 	@Override
 	public List<Classes> selectByFilter(Search search) {
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-		
-		QClasses classes = QClasses.classes;
-		
-		if(search.getRegion() != null) booleanBuilder.and(classes.placeRegion.regionId.eq(search.getRegion()));
-		
+//		BooleanBuilder booleanBuilder = new BooleanBuilder();
+//		
+//		QClasses classes = QClasses.classes;
+//		
+//		if(search.getRegion() != null) booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getRegion()));
+//		if(search.getCategory() != null) booleanBuilder.and(classes.classCategory.categoryId.eq(search.getCategory()));
+//		
+//		LocalDate from = LocalDate.now();
+//		LocalDate to 
+////		if(search.getNewClass() == "T") booleanBuilder.and(classes.classSchedule.);
+//
+//		
 		return null;
 	}
 
@@ -137,14 +158,18 @@ public class ClassesServiceImpl implements ClassesService {
 		if(dbSchedule == null) throw new RuntimeException("해당 일정이 존재하지 않습니다");
 
 		dbSchedule.setScheduleDate(schedule.getScheduleDate());
-		dbSchedule.setStartTime(schedule.getStartTime());
-		dbSchedule.setEndTime(schedule.getEndTime());
-		dbSchedule.setTotalSeat(schedule.getTotalSeat());
+		
+		if(schedule.getTotalSeat() - dbSchedule.getLeftSeat() == 0) {
+			dbSchedule.setStartTime(schedule.getStartTime());
+			dbSchedule.setEndTime(schedule.getEndTime());
+		}
 		
 		int leftSeat = dbSchedule.getLeftSeat() - (dbSchedule.getTotalSeat() - schedule.getTotalSeat());
-		if(leftSeat < 0) throw new RuntimeException("변경할 예약 가능 인원이 예약한 인원보다 적습니다.");
+		if(leftSeat < 0) throw new RuntimeException("변경할 수강 가능 인원이 수강 신청자의 수보다 적어 변경할 수 없습니다.");
+		else if(schedule.getTotalSeat() < schedule.getLeftSeat()) throw new RuntimeException("수강 가능 인원은 남은 수강 인원보다 작을 수 없습니다.");
 		
-		dbSchedule.setLeftSeat(leftSeat);
+		dbSchedule.setLeftSeat(schedule.getLeftSeat());
+		dbSchedule.setTotalSeat(schedule.getTotalSeat());
 	}
 
 	/**
@@ -153,6 +178,10 @@ public class ClassesServiceImpl implements ClassesService {
 	 * */
 	@Override
 	public void deleteSchedule(Long scheduleId) {
+		ClassSchedule dbSchedule = classScheduleRepository.findById(scheduleId).orElse(null);
+		if(dbSchedule.getTotalSeat() != dbSchedule.getLeftSeat()) {
+			throw new RuntimeException("수강 신청자가 있을 경우 일정을 삭제할 수 없습니다.");
+		}
 		classScheduleRepository.deleteById(scheduleId);
 	}
 	

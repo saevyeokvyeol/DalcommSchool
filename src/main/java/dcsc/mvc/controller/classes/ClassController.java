@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
+import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
@@ -78,5 +80,15 @@ public class ClassController {
 
 		classesService.insert(classes, mainImage, subImages);
 		return "redirect:/main/class/classList";
+	}
+	
+	/**
+	 * 클래스 상세 페이지
+	 * */
+	@RequestMapping("/main/class/{classId}")
+	public String selectByClassId(@PathVariable Long classId, Model model) {
+		Classes classes = classesService.selectByClassId(classId);
+		model.addAttribute("classes", classes);
+		return "/main/class/classDetail";
 	}
 }

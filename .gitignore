@@ -34,4 +34,5 @@ build/
 src/main/resources/Wallet_dalcommschool/**
 src/main/resources/application-oauth.properties
 src/test/java/dcsc/mvc/DalcommSchoolApplicationTests.java
+src/main/java/dcsc/mvc/util/Link.java
 .tern-project

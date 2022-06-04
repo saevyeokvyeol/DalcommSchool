@@ -3,6 +3,7 @@ package dcsc.mvc.service.classes;
 import java.util.List;
 
 import dcsc.mvc.domain.classes.ClassCategory;
+import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Search;
@@ -12,7 +13,7 @@ public interface ClassesService {
 	 * 클래스 등록
 	 * @param Classes(선생님ID, 클래스명, 클래스 소개글, 클래스 금액, 카테고리);
 	 * */
-	void insert(Classes classes);
+	void insert(Classes classes, ClassImage mainImage, ClassImage[] subImages);
 
 	/**
 	 * 클래스 수정
