@@ -39,11 +39,11 @@ public class StudentController {
 		System.out.println("login 호출...");
 	}
 	
-	//로그인
-	@RequestMapping("/main/login/login")
-	public void login(String userId, String userPwd) {
-		System.out.println("login 호출...");
-	}
+//	//로그인
+//	@RequestMapping("/main/login/login")
+//	public void login(String userId, String userPwd) {
+//		System.out.println("login 호출...");
+//	}
 	
 	//회원 목록 상세보기 - 관리자
 	@RequestMapping("/admin/user/studentDetail")

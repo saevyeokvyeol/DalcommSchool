@@ -5,10 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import dcsc.mvc.domain.board.Ask;
-import dcsc.mvc.domain.board.ClassQna;
-import dcsc.mvc.domain.board.ClassReview;
-import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
@@ -19,10 +15,11 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	 * */
 	Student findByStudentPhoneEquals(String studentPhone);
 	
-	//Student selectStudentById(String studentId);
+	@Query("select s from Student s where s.studentId=?1")
+	Student selectStudentById(String studentId);
 	
-	//@Query("select s.role from Student s where s.studentId = ?1")
-	//String selectStudentRoleById(String studentId);
+	@Query("select s.role from Student s where s.studentId = ?1")
+	String selectStudentRoleById(String studentId);
 	
 	
 	
@@ -37,6 +34,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	List<Student> findByStudentEmailIsLike(String studentEmail);
 	
 	
+
 	
 	//아이디 찾기
 	@Query("select s.studentId from Student s where s.studentName = ?1 and s.studentPhone = ?2")
