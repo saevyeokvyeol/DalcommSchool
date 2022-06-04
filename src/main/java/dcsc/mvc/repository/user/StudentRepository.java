@@ -46,6 +46,11 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	@Query("select s.studentPwd from Student s where s.studentId = ?1 and s.studentName=?2 and s.studentPhone=?3")
 	String selectStudentPwd(String studentId, String studentName, String studentPhone);
 	
+	/**
+	 * 로그인 
+	 * */
+	@Query("select s from Student s where s.studentId = ?1 and s.studentPwd = ?2 ")
+	Student selectStudentIdPwd(String userId, String userPwd);
 	
 	
 }

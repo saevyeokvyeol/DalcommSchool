@@ -3,6 +3,8 @@ package dcsc.mvc.service.user;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.user.Student;
 
@@ -17,8 +19,13 @@ public interface StudentService {
 	/**
 	 * 로그인
 	 * */
-	void login (String userId, String userPwd);
+	Student login (String userId, String userPwd);
 	
+	
+	/**
+	 * 학생 회원 정보 수정
+	 * */
+	void updateStudent(Student student);
 	
 	
 	/**

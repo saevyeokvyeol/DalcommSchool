@@ -45,6 +45,15 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 
 	}
+	
+	/**
+	 * 로그인
+	 * */
+	public Teacher login (String userId, String userPwd) {
+		Teacher teacher = teacherRep.selectTeacherIdPwd(userId, userPwd);
+		
+		return teacher;
+	}
 
 	/**
 	 * 아이디 찾기

@@ -237,6 +237,10 @@ body{margin-top:20px;}
 	                </div>
 	                <div class="loginbox-textbox">
 	                    비밀번호<br><input type="password" name="pwd" class="form-control">
+	                    아이디<br><input type="text" name="userId" class="form-control">
+	                </div>
+	                <div class="loginbox-textbox">
+	                    비밀번호<br><input type="password" name="userPwd" class="form-control">
 	                </div>
 	                <div class="loginbox-forgot">
 	                    <a href="">아이디</a>&nbsp;/&nbsp;
@@ -246,8 +250,8 @@ body{margin-top:20px;}
 	                    <input type="submit" class="btn btn-primary btn-block" value="로그인">
 	                </div>
 	                <div class="loginbox-signup">
-	                    <a href="${pageContext.request.contextPath}/joinStudent">일반 회원가입</a>&nbsp;or&nbsp;
-	                    <a href="${pageContext.request.contextPath}/joinTeacher">강사 회원가입</a>
+	                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&nbsp;or&nbsp;
+	                    <a href="${pageContext.request.contextPath}/main/login/joinTeacher">강사 회원가입</a>
 	                </div>
                 </form>
             </div>

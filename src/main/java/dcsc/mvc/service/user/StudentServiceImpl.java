@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,10 +54,24 @@ public class StudentServiceImpl implements StudentService {
 	 * 로그인
 	 * */
 	@Override
-	public void login(String userId, String userPwd) {
-		
-		
+	public Student login(String userId, String userPwd) {
+		Student student = studentRep.selectStudentIdPwd(userId, userPwd);
+
+		return student;
 	}
+	
+	/**
+	 * 학생 회원 정보 수정
+	 * */
+	@Override
+	public void updateStudent(Student student) {
+		Student stu = studentRep.save(student);
+		if(stu==null) {
+			new RuntimeException("회원 정보 수정에 실패했습니다.");
+		}
+	}
+	
+	
 
 	/**
 	 * 회원 탈퇴
@@ -124,6 +139,5 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return list;
 	}
-
 
 }
