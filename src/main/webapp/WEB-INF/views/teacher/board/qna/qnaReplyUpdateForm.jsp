@@ -18,7 +18,7 @@
 	$(function() {
 		//alert(1);
 		
-		/*$("input[value=답변등록하기]").click(function(){
+		/*$("input[value=답변수정하기]").click(function(){
 		   
 		   $("#reply-teacher-insert").attr("action", "${pageContext.request.contextPath}/qnaReplyInsert");
 		   $("#reply-teacher-insert").submit();
@@ -34,14 +34,13 @@
     <!--답변하기-->
     <div class="card">
         <div class="card-body">
-         	<form name="reply-teacher-insert" method="post" id="reply-teacher-insert" action="${pageContext.request.contextPath}/qnaReplyInsert">
-         		<b>${qnaId}번 Q&A글에  답변 수정 </b>
+         	<form name="reply-teacher-insert" method="post" id="reply-teacher-insert" action="${pageContext.request.contextPath}/qnaReplyUpdate">
+         		<b>${qnaReply.replyId}번 답글 수정 </b>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="replyContent"></textarea>
                 <%-- <input type=hidden name="qnaId" value="${classQna.qnaId}" id="qnaId">
 				<input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId">
                 <input type="hidden" name="replyId" value="${replyId}"> --%>
-                <input type=hidden name="replyId" value="${replyId}" id="replyId">
-                
+                <input type=hidden name="replyId" value="${qnaReply.replyId}" id="replyId">
                 <input type="submit" class="btn btn-dark mt-3" id="reply-insert-btn" value="답변수정하기">
          	 </form>
          </div>

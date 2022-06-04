@@ -39,6 +39,9 @@ INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_con
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'goo1234' , 'Tgoo1234', '확정된 클래스 일정을 알고 싶어요', '클래스', '원하는 클래스의 일정이 계속 안올라와서요 정확한 일정을 알고 싶습니다.' , null, systimestamp, systimestamp, 'F');
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'ann1234' , 'Tann1234', '클래스 공개취소를 원합니다.', '환불', '올렸던 클래스를 급하게 비공개로 바꾸고 싶어요' , null, systimestamp, systimestamp, 'F');
 
+alter table class_schedule add schedule_finished varchar2(255 char) default 'F'
+
+update set schedule_finished = 'F'
 
 create SEQUENCE ask_no_seq noCACHE;
 

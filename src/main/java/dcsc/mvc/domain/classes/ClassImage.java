@@ -28,7 +28,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassImage {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "classimage_id_seq")
 	@SequenceGenerator(sequenceName = "classimage_id_seq", allocationSize = 1 , name = "classimage_id_seq")

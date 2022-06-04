@@ -116,7 +116,7 @@ public class StudentController {
 	public void bookList() {
 		System.out.println("bookList 호출...");
 	}
-	
+
 	
 	//내 클래스 문의 조회
 	@RequestMapping("/main/mypage/faqList")

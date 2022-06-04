@@ -210,16 +210,31 @@ public class QnaController {
 	/**
 	 * 선생님 Q&A 답변 수정폼
 	 * */
-	@RequestMapping("teacher/board/qna/qnaReplyUpdateForm")
-	public void qnaReplyUpdateForm(Long replyId){
+	@RequestMapping("qnaReplyUpdateForm/{replyId}")
+	public ModelAndView qnaReplyUpdateForm(@PathVariable Long replyId){
+		ClassReply classReply= classQnaService.selectByReplyId(replyId);
 		
+		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
 	}
 	
 	/**
 	 * 선생님 Q&A 답변 수정하기
 	 * */
-	//@RequestMapping("")
+	@RequestMapping("qnaReplyUpdate")
+	public String qnaReplyUpdate(ClassReply classReply) {
+		classQnaService.updateReply(classReply);
+		
+		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+	}
 
-	
+	/**
+	 * 선생님 Q&A 답변 삭제하기
+	 * */
+	@RequestMapping("qnaReplyDelete/{replyId}")
+	public String qnaReplyDelete(@PathVariable Long replyId) {
+		classQnaService.deleteReply(replyId);
+		
+		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+	}
 	
 }

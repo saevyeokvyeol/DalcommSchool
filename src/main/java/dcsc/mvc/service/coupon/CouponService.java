@@ -18,7 +18,7 @@ public interface CouponService {
 	 * @param classId (검색 기준)
 	 * @return List<Coupon>
 	 * */
-	List<Coupon> selectByClassId(String classId);
+	List<Coupon> selectByClassId(Long classId);
 	
 	
 	/**
