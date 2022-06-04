@@ -1,6 +1,5 @@
 package dcsc.mvc.service.user;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.transaction.Transactional;

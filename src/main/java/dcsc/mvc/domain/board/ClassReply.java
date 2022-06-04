@@ -29,7 +29,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassReply {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "reply_id_seq")
 	@SequenceGenerator(sequenceName = "reply_id_seq",allocationSize = 1,name = "reply_id_seq")

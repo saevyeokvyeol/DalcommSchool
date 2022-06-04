@@ -5,10 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import dcsc.mvc.domain.board.Ask;
-import dcsc.mvc.domain.board.ClassQna;
-import dcsc.mvc.domain.board.ClassReview;
-import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 

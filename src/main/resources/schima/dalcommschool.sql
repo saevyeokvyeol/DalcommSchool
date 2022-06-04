@@ -71,7 +71,7 @@ CREATE SEQUENCE  category_id_seq
         START WITH 1
         INCREMENT BY 1;
 
-
+Alter table class_qna rename column qnacontent to qna_content;
 commit;
 --클래스 Q&A 안됌
 insert into class_qna values ( qna_id_seq.nextval , false, true, systimestamp, '수업 문의 드립니다.', null, '빵 만들고 집에 가져가고 싶은데 혹시 포장지도 제공이 되나요?', false, class_id_seq.currval, 'Lee12345');
@@ -147,6 +147,8 @@ insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimest
 insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimestamp,'15:00',4,systimestamp,'14:00',5,2);
 insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimestamp,'16:00',4,systimestamp,'15:00',5,2);
 
+alter table class_schedule rename column id to schedule_id;
+
 alter table Class_Schedule modify (end_time VARCHAR2(255 CHAR));
 alter table Class_Schedule modify (start_time VARCHAR2(255 CHAR));
 --클래스 상세 이미지 안됌
@@ -185,6 +187,13 @@ INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_con
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'ann1234' , "Tann1234", "클래스 공개취소를 원합니다.", "환불", "올렸던 클래스를 급하게 비공개로 바꾸고 싶어요" , null, systimestamp, systimestamp, 'F')
 
 commit;
+
+-- 1대1 문의 카테고리
+insert into ask_category values(ask_category_id_seq.nextval, '클래스');
+insert into ask_category values(ask_category_id_seq.nextval, '결제');
+insert into ask_category values(ask_category_id_seq.nextval, '환불');
+insert into ask_category values(ask_category_id_seq.nextval, '후기');
+insert into ask_category values(ask_category_id_seq.nextval, '탈퇴');
 
 --학생
 INSERT INTO STUDENT(student_id, student_pwd, student_name, student_phone, student_email, student_insert_date, student_quit) VALUES ('lee1234', 'Lee12345', '이나영', '01011111111', 'lee@naver.com', systimestamp, 'F');
