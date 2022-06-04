@@ -31,7 +31,7 @@ public class TeacherController {
 	public String insert(Teacher teacher) {
 		teacherService.insertTeacher(teacher);
 		
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class TeacherController {
 	@ResponseBody
 	public boolean checkId(String userId) {
 		boolean result = teacherService.userIdCheck(userId);
-		System.out.println(result);
+//		System.out.println(result);
 		
 		return result;
 	}
@@ -75,7 +75,7 @@ public class TeacherController {
 	public boolean checkPhone(String userPhone) {
 		boolean result = teacherService.userPhoneCheck(userPhone);
 		
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 	

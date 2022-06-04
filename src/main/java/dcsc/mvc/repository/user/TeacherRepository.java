@@ -20,8 +20,11 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 	
 	Teacher findByTeacherPhoneEquals(String teacherPhone);
 	
-	//Teacher selectTeacherById(String teacherId);
-//	Teacher selectRoleById(String teacherId);
+	@Query("select t from Teacher t where t.teacherId=?1")
+	Teacher selectTeacherById(String teacherId);
+	
+	@Query("select t.role from Teacher t where t.teacherId = ?1")
+	Teacher selectRoleById(String teacherId);
 	
 	/**
 	 * 아이디, 이름, 핸드폰, 이메일 등등으로 강사 조회하기

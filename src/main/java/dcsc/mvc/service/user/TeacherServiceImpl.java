@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,20 @@ public class TeacherServiceImpl implements TeacherService {
 	private final PlaceRepository placeRep;
 	private final PlaceRegionRepository regionRep;
 	
+	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 //	private final Student student;
 //	private final Teacher teacher;
 	
 	@Override
 	public void insertTeacher(Teacher teacher) {
+		String rawPassword = teacher.getTeacherPwd();
+		String encPassword = getBCryptPasswordEncoder.encode(rawPassword); 
+		teacher.setTeacherPwd(encPassword);
 		
-		Teacher saveTeacher = teacherRep.save(teacher);
+		Teacher tea = teacherRep.save(teacher);
+		if(tea==null) {
+			new RuntimeException("회원가입에 실패했습니다.");
+		}
 
 	}
 

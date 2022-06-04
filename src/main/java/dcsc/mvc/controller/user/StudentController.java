@@ -39,11 +39,11 @@ public class StudentController {
 		System.out.println("login 호출...");
 	}
 	
-	//로그인
-	@RequestMapping("/main/login/login")
-	public void login(String userId, String userPwd) {
-		System.out.println("login 호출...");
-	}
+//	//로그인
+//	@RequestMapping("/main/login/login")
+//	public void login(String userId, String userPwd) {
+//		System.out.println("login 호출...");
+//	}
 	
 	//회원 목록 상세보기 - 관리자
 	@RequestMapping("/admin/user/studentDetail")
@@ -85,11 +85,7 @@ public class StudentController {
 		System.out.println("bookList 호출...");
 	}
 	
-	//내 쿠폰 조회
-	@RequestMapping("/main/mypage/couponList")
-	public void couponList() {
-		System.out.println("couponList 호출...");
-	}
+	
 	
 	//내 클래스 문의 조회
 	@RequestMapping("/main/mypage/faqList")

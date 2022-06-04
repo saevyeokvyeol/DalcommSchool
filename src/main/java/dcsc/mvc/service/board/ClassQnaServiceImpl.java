@@ -163,10 +163,22 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		
 	}
 
+	/**
+	 * Q&A 댓글 삭제
+	 * */
 	@Override
 	public void deleteReply(Long replyId) {
-		// TODO Auto-generated method stub
-
+		ClassReply dbReply = classReplyRep.findById(replyId).orElse(null);
+		
+		if(dbReply==null) {
+			throw new RuntimeException("글번호 오류로 삭제되지 않았습니다.");
+		}
+		
+		classReplyRep.deleteById(replyId);
+		
+		ClassQna dbQna = classQnaRep.findById(replyId).orElse(null);
+		dbQna.setQnaComplete("F");
+		
 	}
 
 	/**
@@ -175,6 +187,19 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	@Override
 	public ClassReply selectByReplyQnaId(Long qnaId) {
 		ClassReply classReply = classReplyRep.findByClassQnaQnaIdEquals(qnaId);
+		return classReply;
+	}
+
+	/**
+	 * 클래스 Q&A 댓글 상세조회(댓글 id 로 조회)
+	 * */
+	@Override
+	public ClassReply selectByReplyId(Long replyId) {
+		ClassReply classReply = classReplyRep.findById(replyId).orElse(null);
+		
+		if(classReply==null) {
+			new RuntimeException("댓글 상세보기에 오류가 발생했습니다.");
+		}
 		return classReply;
 	}
 

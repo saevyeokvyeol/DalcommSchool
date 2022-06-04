@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.management.RuntimeErrorException;
 import javax.transaction.Transactional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
 	//private final Student student;
 	//private final Teacher teacher;
 	
-//	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 	
 	
 	/**
@@ -36,12 +37,11 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void insertStudent(Student student) { 
 		System.out.println(student);
-		//student.setRole("STUDENT");
-		//student.setStudentQuit("F");
-		//인수로 들어오는 비밀번호 암호화
-		//String rawPassword = student.getStudentPwd();
-		//String encPassword = bCryptPasswordEncoder.encode(student.getStudentPwd()); 
-		//student.setStudentPwd(encPassword);
+		
+//		인수로 들어오는 비밀번호 암호화
+		String rawPassword = student.getStudentPwd();
+		String encPassword = getBCryptPasswordEncoder.encode(rawPassword); 
+		student.setStudentPwd(encPassword);
 		
 		Student stu = studentRep.save(student);
 		if(stu==null) {
