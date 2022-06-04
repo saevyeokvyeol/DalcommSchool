@@ -18,14 +18,14 @@ public interface NoticeService {
 	 * 공지사항 수정 기능(관리자)
 	 * @param Notice( 제목, 내용, 이미지)
 	 * */
-	void updateNotice(Notice notice);
+	Notice updateNotice(Notice notice);
 	
 	/**
 	 * 공지사항 삭제 기능
 	 * 글번호(시퀀스)를 받고 공지사항을 삭제한다.(관리자)
 	 * @param Long NoticeNo
 	 * */
-	void deleteNotice(Long NoticeNo);
+	void deleteNotice(Long noticeNo);
 	
 	/**
 	 * 공지사항 게시판 상세보기 기능(강사&회원)
@@ -33,7 +33,7 @@ public interface NoticeService {
 	 *  @param Long noticeNo
 	 *  @return Notice
 	 * */
-	Notice selectBy(Long noticeNo);
+	Notice selectBy(Long noticeNo, boolean state);
 	
 	/**
 	 * 공지사항 게시판 조회 기능(강사&회원)
@@ -48,6 +48,7 @@ public interface NoticeService {
 	 * @return List<Notice>
 	 * */
 	List<Notice> selectByKeyword(String keyword);
+
 	
 	
 }

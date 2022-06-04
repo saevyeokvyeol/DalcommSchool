@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notice {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "notice_no_seq")
 	@SequenceGenerator(sequenceName = "notice_no_seq" , allocationSize = 1 , name = "notice_no_seq")

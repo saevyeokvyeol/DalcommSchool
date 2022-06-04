@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Entity
 @Setter
-@Getter
+@Getter 
 @NoArgsConstructor
 @AllArgsConstructor
 public class AskCategory {

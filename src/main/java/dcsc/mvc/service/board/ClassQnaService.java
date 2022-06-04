@@ -63,7 +63,7 @@ public interface ClassQnaService {
 	 * 클래스 Q&A 블라인드
 	 * @param Long qnaId
 	 * */
-	void updateBlind(Long qnaId);
+	void updateBlind(Long qnaId ,String blindState);
 	
 	/**
 	 * 클래스 Q&A 답글 등록
@@ -82,4 +82,10 @@ public interface ClassQnaService {
 	 * @param Long replyId
 	 * */
 	void deleteReply(Long replyId);
+	
+	/**
+	 * 클래스 Q&A 답글 조회(문의글 id로 조회)
+	 * @param Long qnaId
+	 * */
+	ClassReply selectByReplyQnaId(Long qnaId);
 }

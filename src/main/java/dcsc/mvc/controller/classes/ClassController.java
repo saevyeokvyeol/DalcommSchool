@@ -43,11 +43,11 @@ public class ClassController {
 	@RequestMapping("/main/class/classList")
 	public void selectByStateOpen(Model model) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null);
+//		Student student = new Student("kim1234", null, null, null, null, null, null);
+//		
+//		List<Classes> list = classesService.selectByStateOpen(student);
 		
-		List<Classes> list = classesService.selectAll();
-		
-		model.addAttribute("list", list);
+//		model.addAttribute("list", list);
 	}
 	
 	/**

@@ -3,18 +3,16 @@ package dcsc.mvc.domain.user;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -22,10 +20,11 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@RequiredArgsConstructor
 public class Teacher {
 
 	@Id
+	@NonNull
 	private String teacherId;
 	
 	private String teacherPwd;
@@ -43,6 +42,8 @@ public class Teacher {
 	private LocalDateTime teacherInsertDate;
 	
 	private String teacherQuit;
+
+	private String role = "TEACHER";
 	
 	@OneToOne(mappedBy = "teacher")
 	private Place place;

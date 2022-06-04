@@ -1,25 +1,33 @@
 package dcsc.mvc.domain.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import dcsc.mvc.domain.board.ClassQna;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Student {
 
 	@Id
@@ -38,5 +46,8 @@ public class Student {
 	
 	private String studentQuit;
 	
+	private String role = "STUDENT"; //STUDENT
 	
+	@OneToMany(mappedBy = "student")
+	private List<ClassQna> QnaList;
 }

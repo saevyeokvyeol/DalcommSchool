@@ -48,7 +48,7 @@ public class ClassQna {
 	private String qnaTitle;
 	
 	@Column(length = 3000)
-	private String qnacontent;
+	private String qnaContent;
 	private String secretState;
 	private String blindState;
 	

@@ -3,13 +3,17 @@ package dcsc.mvc.service.user;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.user.StudentRepository;
+import dcsc.mvc.repository.user.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service //생성
@@ -17,56 +21,50 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class StudentServiceImpl implements StudentService {
 
-	private final StudentRepository studentRepository;
+	private final StudentRepository studentRep;
+	private final TeacherRepository teacherRep;
+	
+	//private final Student student;
+	//private final Teacher teacher;
+	
+//	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	
 	/**
 	 * 회원가입
 	 * */
 	@Override
 	public void insertStudent(Student student) { 
-		Student stu = studentRepository.save(student);
+		System.out.println(student);
+		//student.setRole("STUDENT");
+		//student.setStudentQuit("F");
+		//인수로 들어오는 비밀번호 암호화
+		//String rawPassword = student.getStudentPwd();
+		//String encPassword = bCryptPasswordEncoder.encode(student.getStudentPwd()); 
+		//student.setStudentPwd(encPassword);
+		
+		Student stu = studentRep.save(student);
 		if(stu==null) {
 			new RuntimeException("회원가입에 실패했습니다.");
 		}
 	}
 	
 	/**
-	 * 아이디 중복체크
+	 * 로그인
 	 * */
 	@Override
-	public boolean studentIdCheck(String studentId) { //아이디 중복체크
-		boolean idCheck = studentRepository.findByStudentId(studentId);
-		if(idCheck) new RuntimeException("이미 사용중인 아이디입니다.");
+	public void login(String userId, String userPwd) {
 		
-		return idCheck;
-	}
-	
-	/**
-	 * 휴대폰 번호 중복체크
-	 * */
-	@Override
-	public boolean studentPhoneCheck(String studentPhone) { 
-		boolean phoneCheck = studentRepository.findByStudentPhone(studentPhone);
-		if(phoneCheck) new RuntimeException("이미 사용중인 휴대폰 번호 입니다.");
-		return phoneCheck;
-	}
-	
-	/**
-	 * 이메일 중복체크
-	 * */
-	@Override
-	public boolean studentEmailCheck(String studentEmail) {
-		boolean emailCheck = studentRepository.findByStudentEmail(studentEmail);
-		if(emailCheck) new RuntimeException("이미 사용중인 이메일주소입니다.");
-		return emailCheck;
+		
 	}
 
 	/**
 	 * 회원 탈퇴
 	 * */
 	@Override
-	public void deleteStudent(String studentId) { 
-		studentRepository.deleteById(studentId);
+	public void deleteStudent(String userId, String userPwd) { 
+		//아이디 비밀번호 입력 받은 후 탈퇴	
+		studentRep.deleteById(userId);
 	}
 	
 	/**
@@ -74,15 +72,25 @@ public class StudentServiceImpl implements StudentService {
 	 * */
 	@Override
 	public List<Student> selectAllStudent() { 
-		return studentRepository.findAll();
+		List<Student> stuList = studentRep.findAll();
+		
+		if(stuList==null) {
+			throw new RuntimeException("조회 가능한 회원 데이터가 없습니다.");
+		}
+		
+		return stuList;
 	}
 	
 	/**
 	 * 학생 상세 정보 조회 (아이디로 검색)
 	 * */
 	@Override
-	public Optional<Student> selectStudent(String studentId) {
-		return studentRepository.findById(studentId);
+	public Student selectStudent(String studentId) {
+		Student s = studentRep.findById(studentId).orElse(null);
+			if(s==null) {
+				throw new RuntimeException("해당하는 학생 상세정보가 없습니다.");
+			}
+		return s;
 	}
 	
 	
@@ -91,9 +99,30 @@ public class StudentServiceImpl implements StudentService {
 	 * keyword(검색어), key field(컬럼명)
 	 * */
 	@Override
-	public List<Student> selectByStudentId(String keyword, String keyfield) { 
-		// TODO Auto-generated method stub
-		return null;
+	public List<Student> selectByStudentId(String keyfield, String keyword) { 
+		List<Student> list = null;
+		switch(keyfield) {
+				case "studentID" :
+					System.out.println("studentID...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;
+					
+				case "studentName" :
+					System.out.println("studentName...");
+					list = studentRep.findByStudentNameIsLike(keyword);
+					break;	
+					
+				case "studentPhone" :
+					System.out.println("studentPhone...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;	
+					
+				case "studentEmail" :
+					System.out.println("studentEmail...");
+					list = studentRep.findByStudentIdIsLike(keyword);
+					break;	
+		}
+		return list;
 	}
 
 

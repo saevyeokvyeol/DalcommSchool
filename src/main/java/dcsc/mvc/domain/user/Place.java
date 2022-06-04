@@ -13,6 +13,8 @@ import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -20,12 +22,14 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@RequiredArgsConstructor
 public class Place {
+	
 	@Id
+	@NonNull
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_id_seq")
 	@SequenceGenerator(sequenceName = "place_id_seq", allocationSize = 1, name = "place_id_seq")
-	private Long place_id;
+	private Long placeId;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
@@ -37,7 +41,11 @@ public class Place {
 	@JoinColumn(name = "region_id")
 	private PlaceRegion placeRegion;
 	
-	private String place_addr;
-	private String detail_addr;
-	private String place_route;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "place_id")
+	private PlaceInfra placeInfra;
+	
+	private String placeAddr;
+	private String detailAddr;
+	private String placeRoute;
 }

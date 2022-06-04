@@ -16,9 +16,8 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -77,5 +76,8 @@ public class Classes {
 	@OneToMany(mappedBy = "classes")
 	@JsonIgnore
 	private List<Likes> Likes;
+	
+	@OneToMany(mappedBy = "classes")
+	private List<ClassQna> QnaList;
 	
 }
