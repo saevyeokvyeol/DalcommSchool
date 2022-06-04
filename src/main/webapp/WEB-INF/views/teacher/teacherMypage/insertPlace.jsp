@@ -7,15 +7,24 @@
 <meta charset="UTF-8">
 <title>공방 등록 폼입니다.</title>
 <style type="text/css">
-	div{width: 600px; height:auto; border: 1px}
+	#map {
+  height: 400px;
+  
+  width: 800px;
+  
+}
+
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiCAAmADa4iRAdiHejCCqQbkk0T2oT0x0&callback=myMap"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 
-<!-- 주소 API -->
 <script type="text/javascript">
+
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -64,23 +73,11 @@ function sample6_execDaumPostcode() {
     }).open();
 }
 </script>
-
+	
 <script type="text/javascript">
 
-	/*
-	지도 API
-	*/
-	 function myMap(){
-	      var mapOptions = { 
-	            center:new google.maps.LatLng(51.508742, -0.120850),
-	            zoom:5
-	      };
-	 
-	      var map = new google.maps.Map( 
-	             document.getElementById("googleMap") 
-	            , mapOptions );
-	 }
 
+	
 	/*
 	공방 지역 정보 가져오기
 	*/
@@ -91,7 +88,7 @@ function sample6_execDaumPostcode() {
 				type: "post",
 				dataType: "json",
 				success: function(result){
-					alert(result);
+// 					alert(result);
 					text = ""
 					$.each(result, function(index, item){
 						text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;
@@ -106,11 +103,48 @@ function sample6_execDaumPostcode() {
 		}
 		selectPlaceRegion();
 	})
+	 
+	
+	var geocoder;
+	  var map;
+	  function initialize() {
+	    geocoder = new google.maps.Geocoder();
+	    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+	    var mapOptions = {
+	      zoom: 14,
+	      center: latlng
+	    }
+	    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	  }
+	  
+	$(function(){
+		  $("#sample6_detailAddress").focusout(function(){
+			  codeAddress();
+		  })
+		  
+	})	  
+	  function codeAddress() {
+			    var address = document.getElementById('sample6_address').value;
+			    geocoder.geocode( { 'address': address}, function(results, status) {
+			      if (status == 'OK') {
+			        map.setCenter(results[0].geometry.location);
+			        var marker = new google.maps.Marker({
+			            map: map,
+			            position: results[0].geometry.location
+			        });
+			      } else {
+			        alert('Geocode was not successful for the following reason: ' + status);
+			      }
+			    });
+			  }
+	
+	
+	
 	
 	/*
-	
+	위도 경도 자동 전환
 	*/
-	 
+	
 	
 </script>
 </head>
@@ -133,24 +167,35 @@ function sample6_execDaumPostcode() {
         </td>
       </tr>
       <tr>
-        <th>공방 주소</th>
-        <td>
-		  <input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" >
-		  <input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색">
-		  <input type="text" id="sample6_address" name="addrAddr" class="form-control">
-		  <input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)">
-		  <input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)">
+		<th>공방 주소</th>
+		<td>
+			<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" required>
+			<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색">
+			<input type="text" id="sample6_address" name="addrAddr" class="form-control" readonly="readonly" required>
+			<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)">
+			<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)">
+			<div id="map"></div>
+      	   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly" defer></script>
 		</td>
-      </tr>
-      <div id="googleMap"></div>
+	  </tr>     
       <tr>
-        <legend>공방 편의 시설</legend>
-        <input type="checkbox" name="">
+        <th>공방 편의 시설</th>
+          <td>
+            <fieldset>
+              <input type="checkbox" name="parking" value="T">주차공간 &nbsp;
+              <input type="checkbox" name="wifi" value="T">와이파이 &nbsp;
+              <input type="checkbox" name="elevator" value="T">엘레베이터 &nbsp;
+              <input type="checkbox" name="genderToilet" value="T">남녀 화장실 분리 &nbsp;
+              <input type="checkbox" name="kidsfriendly" value="T">어린이 동반 가능 <br>
+              <input type="text" name="etc" placeholder="기타, 추가시설을 입력해주세요.">
+            </fieldset>
+          </td>
       </tr>
     </table>
   </form>
 
 </section>
+
 
 
 </body>

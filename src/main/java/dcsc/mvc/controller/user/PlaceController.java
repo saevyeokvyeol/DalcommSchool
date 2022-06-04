@@ -72,7 +72,7 @@ public class PlaceController {
 	}
 	
 	/**
-	 * 공방 인프라 가져오기
+	 * 공방 인프라 리스트 가져오기
 	 * */
 	@RequestMapping("/selectPlaceInfra")
 	public List<PlaceInfra> selectPlaceInfra(Long placeId) {

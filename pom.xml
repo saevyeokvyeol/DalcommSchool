@@ -24,10 +24,10 @@
 		</dependency>
 	 
 	 <!-- 스프링 시큐리티 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
 
 	
 	
@@ -58,13 +58,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	<!--
+	
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	 -->
+	 
 	 
 	 	<!-- SpringBoot 프로젝트에서 jsp 파일을 사용하기 위해 필요한 dependency -->
 		<dependency>
