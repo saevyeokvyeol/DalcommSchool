@@ -31,7 +31,7 @@ public class Coupon {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_id_seq")
-	@SequenceGenerator(sequenceName = "coupon_id_seq",allocationSize = 1,name = "coupon_id_seq")
+	@SequenceGenerator(sequenceName = "coupon_id_seq", allocationSize = 1, name = "coupon_id_seq")
 	private Long couponId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,10 @@ public class Coupon {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
 	private Classes classes;
-	private int couponStateId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_state_id")
+	private CouponState couponState;
 	private String couponName;
 	private int couponDc;
 	

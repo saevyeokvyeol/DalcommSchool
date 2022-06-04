@@ -10,10 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Search {
-	private Long region;
-	private Long category;
+	private Long placeRegion;
+	private Long classCategory;
 	private String keyword;
-	private String newClass;
-	private String timeOut;
 	private String sort;
 }

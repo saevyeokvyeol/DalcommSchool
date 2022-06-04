@@ -18,6 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dcsc.mvc.domain.board.ClassQna;
+import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -78,6 +79,10 @@ public class Classes {
 	private List<Likes> Likes;
 	
 	@OneToMany(mappedBy = "classes")
-	private List<ClassQna> QnaList;
+	@JsonIgnore
+	private List<ClassReview> classReviews;
+	
+	@OneToMany(mappedBy = "classes")
+	private List<ClassQna> classQnas;
 	
 }
