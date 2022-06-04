@@ -1,14 +1,8 @@
 package dcsc.mvc.repository.user;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import dcsc.mvc.domain.board.Ask;
-import dcsc.mvc.domain.board.ClassQna;
-import dcsc.mvc.domain.board.ClassReview;
-import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
@@ -29,7 +23,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	
 	//아이디 찾기
-	@Query("select s.student_id from Student s where s.student_name = ?1 and s.student_phone = ?2")
+	@Query("select s.studentId from Student s where s.studentName = ?1 and s.studentPhone = ?2")
 	String selectStudentId(String studentName, String studentPhone);
 	
 	

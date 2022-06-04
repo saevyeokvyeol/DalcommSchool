@@ -28,6 +28,18 @@ public interface ClassesService {
 	void delete(Long classId);
 
 	/**
+	 * 클래스 공개 수락
+	 * @param Long classId;
+	 * */
+	void updateStateOpen(Long classId);
+
+	/**
+	 * 클래스 상태 변경
+	 * @param Long classId, Long stateId(변경할 stateId);
+	 * */
+	void updateState(Long classId, Long stateId);
+
+	/**
 	 * 클래스 전체 보기
 	 * @return List<Classes> 클래스 전체 목록 반환
 	 * */

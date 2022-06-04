@@ -16,6 +16,7 @@ import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.util.Link;
@@ -29,8 +30,21 @@ public class ClassController {
 	/**
 	 * 클래스 전체 리스트창으로 이동
 	 * */
-	@RequestMapping("/main/class/classList")
+	@RequestMapping("/teacher/class/classList")
 	public void selectAllClass(Model model) {
+		List<Classes> list = classesService.selectAll();
+		
+		model.addAttribute("list", list);
+	}
+	
+	/**
+	 * 공개된 클래스 리스트
+	 * */
+	@RequestMapping("/main/class/classList")
+	public void selectByStateOpen(Model model) {
+		// 로그인 했을 경우
+		Student student = new Student("kim1234", null, null, null, null, null, null);
+		
 		List<Classes> list = classesService.selectAll();
 		
 		model.addAttribute("list", list);
@@ -40,9 +54,7 @@ public class ClassController {
 	 * 클래스 등록폼으로 이동
 	 * */
 	@RequestMapping("/teacher/class/classForm")
-	public void insertClass() {
-		
-	}
+	public void insertClass() {}
 	
 	/**
 	 * 클래스 등록하기

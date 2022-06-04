@@ -10,26 +10,41 @@
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 		<script type="text/javascript">
-			$(function() {
-				$(".delete").on("click", function() {
-					alert($(this).val());
-					$.ajax({
-						url : "${pageContext.request.contextPath}/teacher/class/delete",
-						type : "post",
-						data : {"classId" : $(this).val()},
-						success : function(result) {
-							location.reload();
-						},
-						error : function(error) {
-							alert("클래스를 삭제할 수 없습니다.");
-						}
-					}); // 아작스 종료
-				})
-			})
+			
 		</script>
 	</head>
 	<body>
+		<form action="${pageContext.request.contextPath}/main/class/classSearch">
+			<input type="text" name="keyword"><br>
+			
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+				<input type="radio" class="btn-check" name="placeRegion" id="btnradio1" autocomplete="off" checked>
+				<label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+				
+				<input type="radio" class="btn-check" name="placeRegion" id="btnradio2" autocomplete="off">
+				<label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+				
+				<input type="radio" class="btn-check" name="placeRegion" id="btnradio3" autocomplete="off">
+				<label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+			</div>
+			
+			<select name="classCategory">
+				<option></option>
+			</select>
+			<br>
+			
+			<input type="radio" class="btn-check" id="review" name="sort" value="review">
+			<label class="btn btn-outline-primary" for="review">후기 많은 순</label>
+			<input type="radio" class="btn-check" id="likes" name="sort" value="likes">
+			<label class="btn btn-outline-primary" for="likes">찜 많은 순</label>
+			<input type="radio" class="btn-check" id="rate" name="sort" value="rate">
+			<label class="btn btn-outline-primary" for="rate">별점 순</label>
+			
+			<input type="submit" value="검색">
+		</form>
+	
 		<c:choose>
 			<c:when test="${empty list}">
 				클래스가 존재하지 않습니다.
@@ -43,30 +58,14 @@
 					 | ${classes.classCategory.categoryName}
 					 | ${classes.teacher.teacherNickname}
 					 | ${classes.classState.stateName}
-					 <c:choose>
-					 	<c:when test="${classes.classState.stateId == 1}">
-					 		<button class="state_update" value="${classes.classId}">클래스 공개 신청</button>
-					 	</c:when>
-					 	<c:when test="${classes.classState.stateId == 2}">
-					 		<button class="state_update" value="${classes.classId}">클래스 공개 신청 취소</button>
-					 	</c:when>
-					 	<c:when test="${classes.classState.stateId == 3}">
-					 		<button class="state_update" value="${classes.classId}">클래스 비공개</button>
-					 	</c:when>
-					 	<c:when test="${classes.classState.stateId == 4}">
-					 		<button class="state_update" value="${classes.classId}">클래스 공개</button>
-					 	</c:when>
-					 </c:choose>
-					 <c:if test="${classes.classImages != null}">
-					 	<c:forEach items="${classes.classImages}" var="classImage">
-					 		<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-					 	</c:forEach>
-					 </c:if>
-					 <c:choose>
-					 	<c:when test="${classes.classState.stateId != 3}">
-							<button class="delete" value="${classes.classId}">클래스 삭제</button>
-					 	</c:when>
-					 </c:choose>
+					<div class="like_box">
+						<i class="fa-solid fa-heart"></i>
+					</div>
+					<c:if test="${classes.classImages != null}">
+						<c:forEach items="${classes.classImages}" var="classImage">
+							<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
+						</c:forEach>
+					</c:if>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>

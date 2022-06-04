@@ -38,6 +38,22 @@ public class AjaxClassController {
 	}
 	
 	/**
+	 * 클래스 공개 수락
+	 * */
+	@RequestMapping("/admin/class/updateStateOpen")
+	public void updateStateOpen(Long classId) {
+		classesService.updateStateOpen(classId);
+	}
+	
+	/**
+	 * 클래스 상태 변경
+	 * */
+	@RequestMapping("/teacher/class/updateState")
+	public void updateState(Long classId, Long stateId) {
+		classesService.updateState(classId, stateId);
+	}
+	
+	/**
 	 * 클래스 일정 가져오기
 	 * */
 	@RequestMapping("/main/class/classSchedule")
@@ -88,4 +104,16 @@ public class AjaxClassController {
 		System.out.println(schedule.getScheduleDate());
 		return schedule;
 	}
+	
+	/**
+	 * 클래스 찜 등록
+	 * */
+	
+	/**
+	 * 클래스 찜 삭제
+	 * */
+	
+	/**
+	 * 회원 아이디로 찜목록 조회
+	 * */
 }

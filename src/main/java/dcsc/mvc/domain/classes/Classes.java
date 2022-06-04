@@ -74,4 +74,8 @@ public class Classes {
 	@JsonIgnore
 	private List<ClassImage> classImages;
 	
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<Likes> Likes;
+	
 }

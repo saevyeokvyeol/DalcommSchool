@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -56,4 +57,6 @@ public class ClassSchedule {
 	@JsonIgnore
 	private Classes classes;
 	
+	@ColumnDefault("F")
+	private String scheduleFinished;
 }

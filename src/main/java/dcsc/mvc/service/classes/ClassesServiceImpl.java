@@ -1,5 +1,8 @@
 package dcsc.mvc.service.classes;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,6 +21,7 @@ import dcsc.mvc.repository.classes.ClassImageRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
 import dcsc.mvc.repository.classes.ClassesRepository;
 import lombok.RequiredArgsConstructor;
+import oracle.sql.TIMESTAMP;
 
 @Service
 @Transactional
@@ -73,10 +77,48 @@ public class ClassesServiceImpl implements ClassesService {
 	public void delete(Long classId) {
 		Classes dbClass = classesRepository.findById(classId).orElse(null);
 		
-		if(dbClass == null) throw new RuntimeException("[" + classId + "] 클래스가 존재하지 않습니다");
+		if(dbClass == null) throw new RuntimeException("존재하지 않는 클래스입니다.");
+		if(dbClass.getClassState().getStateId() == 3) throw new RuntimeException("공개 클래스는 삭제할 수 없습니다.");
 		
 		dbClass.setClassState(new ClassState(5L, null));
 
+	}
+
+	/**
+	 * 클래스 공개 수락
+	 * @param Long classId;
+	 * */
+	@Override
+	public void updateStateOpen(Long classId) {
+		Classes dbClass = classesRepository.findById(classId).orElse(null);
+		
+		if(dbClass == null) throw new RuntimeException("존재하지 않는 클래스입니다.");
+		if(dbClass.getClassState().getStateId() != 2) throw new RuntimeException("공개 신청된 클래스가 아닙니다.");
+		
+		dbClass.setClassOpenDate(LocalDateTime.now());
+		dbClass.setClassState(new ClassState(3L, null));
+	}
+
+	/**
+	 * 클래스 상태 변경
+	 * @param Long classId, Long stateId(변경한 stateId);
+	 * */
+	@Override
+	public void updateState(Long classId, Long stateId) {
+		Classes dbClass = classesRepository.findById(classId).orElse(null);
+		
+		if(stateId == 1 && dbClass.getClassState().getStateId() != 2) throw new RuntimeException("공개 신청된 클래스가 아닙니다.");
+		else if(stateId == 2 && dbClass.getClassState().getStateId() != 1) throw new RuntimeException("공개 신청할 수 있는 클래스가 아닙니다.");
+		else if(stateId == 3 && dbClass.getClassState().getStateId() != 4) throw new RuntimeException("비공개된 클래스가 아닙니다.");
+		else if(stateId == 4 && dbClass.getClassState().getStateId() != 3) throw new RuntimeException("공개된 클래스가 아닙니다.");
+		else if(stateId == 4) {
+			for(ClassSchedule schedule : selectScheduleByClassId(classId)) {
+				if(schedule.getScheduleFinished().equals("T")) continue;
+				if(schedule.getTotalSeat() == schedule.getLeftSeat()) continue;
+				throw new RuntimeException("수강 신청된 일정이 있어 클래스를 비공개할 수 없습니다.");
+			}
+		}
+		dbClass.setClassState(new ClassState(stateId, null));
 	}
 
 	/**
