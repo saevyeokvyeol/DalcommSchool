@@ -70,9 +70,9 @@
 							</c:otherwise>
 						</c:choose>
 						
-					</form>
-				</td>
-		    </tr>
+					 </form>
+				 </td>
+		     </tr>
             
         </table>
     </div>
@@ -81,7 +81,7 @@
     <div>
         <table>
             <c:choose>
-            	<c:when test="${qna.qnaComplete eq 'T'}">
+            	<c:when test="${qna.qnaComplete eq 'T' }">
             		<tr>
 		                <th>작성자</th>
 		                <td>${qnaReply.teacher.teacherId}</td>
@@ -93,7 +93,12 @@
 		            <tr>
 		                <th>내용</th>
 		                <td>${qnaReply.replyContent}</td>
-		                <td><a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/teacher/board/qna/qnaReplyUpdateForm">답글 수정하기</a><td>
+		            </tr>
+		            <tr>
+		            	<td>
+		            		<a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/qnaReplyUpdateForm/${qnaReply.replyId}">답글 수정하기</a>
+		            		<a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/qnaReplyDelete/${qnaReply.replyId}">답글 삭제하기</a>
+		            	<td>
 		            </tr>
             	</c:when>
             </c:choose>

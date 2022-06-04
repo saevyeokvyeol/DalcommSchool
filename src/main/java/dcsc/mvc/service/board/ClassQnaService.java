@@ -88,4 +88,9 @@ public interface ClassQnaService {
 	 * @param Long qnaId
 	 * */
 	ClassReply selectByReplyQnaId(Long qnaId);
+	
+	/**
+	 * 클래스 Q&A 댓글 상세조회(댓글 id 로 조회)
+	 * */
+	ClassReply selectByReplyId(Long replyId);
 }

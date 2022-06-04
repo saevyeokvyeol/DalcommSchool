@@ -85,11 +85,7 @@ public class StudentController {
 		System.out.println("bookList 호출...");
 	}
 	
-	//내 쿠폰 조회
-	@RequestMapping("/main/mypage/couponList")
-	public void couponList() {
-		System.out.println("couponList 호출...");
-	}
+	
 	
 	//내 클래스 문의 조회
 	@RequestMapping("/main/mypage/faqList")
