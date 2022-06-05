@@ -224,7 +224,7 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @return List<Classes>
 	 * */
 	@Override
-	public List<ClassSchedule> selectSpeedyClass() {
+	public List<ClassSchedule> selectNearClass() {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClassSchedule schedule = QClassSchedule.classSchedule;
@@ -234,10 +234,11 @@ public class ClassesServiceImpl implements ClassesService {
 		LocalDateTime to = from.plusDays(1L);
 		
 		booleanBuilder.and(schedule.scheduleDate.between(Timestamp.valueOf(from), Timestamp.valueOf(to)));
+		booleanBuilder.and(schedule.leftSeat.gt(0));
 		
 		JPQLQuery<ClassSchedule> jpqlQuery = jpaQueryFactory.selectFrom(schedule)
-				.where(booleanBuilder)
-				.groupBy(schedule.classes.classId);
+				.distinct()
+				.where(booleanBuilder);
 		
 		List<ClassSchedule> list = jpqlQuery.fetch();
 		

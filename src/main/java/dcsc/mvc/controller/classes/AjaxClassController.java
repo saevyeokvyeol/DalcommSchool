@@ -106,7 +106,7 @@ public class AjaxClassController {
 			c.getScheduleDate().setMinutes(Integer.parseInt(c.getEndTime().substring(3, 5)));
 			Date end = c.getScheduleDate();
 			
-			list.add(new FullCalendar(c.getScheduleId(), classId, c.getLeftSeat() + "명", start.toString(), end.toString()));
+			list.add(new FullCalendar(c.getScheduleId(), classId, c.getTotalSeat() + "명", start.toString(), end.toString()));
 		}
 		return list;
 	}

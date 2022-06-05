@@ -76,7 +76,7 @@ public interface ClassesService {
 	 * 이틀 이내 체험 가능한 클래스 검색
 	 * @return List<Classes>
 	 * */
-	List<ClassSchedule> selectSpeedyClass();
+	List<ClassSchedule> selectNearClass();
 	
 	/**
 	 * 클래스 카테고리 조회

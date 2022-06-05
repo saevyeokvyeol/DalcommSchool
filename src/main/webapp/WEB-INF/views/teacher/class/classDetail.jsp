@@ -170,9 +170,9 @@
 							"totalSeat" : $("#scheduleInsertForm .totalSeat").val(),
 							"leftSeat" : $("#scheduleInsertForm .leftSeat").val()
 						},
-						success : function() {
-							location.reload();
-						},
+						success : function(result) {
+/* 							location.reload();
+ */						},
 						error : function(error) {
 							alert("일정을 등록할 수 없습니다.");
 						}

@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.classes.Book;
+import dcsc.mvc.domain.classes.ClassSchedule;
+import dcsc.mvc.domain.coupon.Coupon;
+import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.repository.classes.BookRepository;
+import dcsc.mvc.repository.classes.ClassScheduleRepository;
+import dcsc.mvc.repository.coupon.CouponRepository;
+import dcsc.mvc.repository.coupon.IssueCouponRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 	private final BookRepository bookRepository;
+	private final ClassScheduleRepository classScheduleRepository;
+	private final IssueCouponRepository issueCouponRepository;
 
 	/**
 	 * 클래스 예약 등록
@@ -22,8 +30,15 @@ public class BookServiceImpl implements BookService {
 	 * */
 	@Override
 	public void insert(Book book) {
-		// TODO Auto-generated method stub
-
+		bookRepository.save(book);
+		
+		ClassSchedule schedule = classScheduleRepository.findById(book.getClassSchedule().getScheduleId()).orElse(null);
+		schedule.setLeftSeat(schedule.getLeftSeat() - book.getBookSeat());
+		
+		if(book.getIssueCoupon() != null && book.getIssueCoupon().getIssueNo() > 0L) {
+			IssueCoupon issueCoupon = issueCouponRepository.findById(book.getIssueCoupon().getIssueNo()).orElse(null);
+			issueCoupon.setIssueUsable("T");
+		}
 	}
 
 	/**

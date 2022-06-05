@@ -101,20 +101,20 @@
 				클래스가 존재하지 않습니다.
 			</c:when>
 			<c:otherwise>
-			<c:forEach items="${list}" var="classes"><p>
-					${classes.classId}
-					 | <a href="${pageContext.request.contextPath}/main/class/${classes.classId}">${classes.className}</a>
-					 | ${classes.classInfo}
-					 | ${classes.classPrice}
-					 | ${classes.classOpenDate}
-					 | ${classes.classCategory.categoryName}
-					 | ${classes.teacher.teacherNickname}
-					 | ${classes.classState.stateName}
+			<c:forEach items="${list}" var="schedule"><p>
+					${schedule.classes.classId}
+					 | <a href="${pageContext.request.contextPath}/main/class/${schedule.classes.classId}">${schedule.classes.className}</a>
+					 | ${schedule.classes.classInfo}
+					 | ${schedule.classes.classPrice}
+					 | ${schedule.classes.classOpenDate}
+					 | ${schedule.classes.classCategory.categoryName}
+					 | ${schedule.classes.teacher.teacherNickname}
+					 | ${schedule.classes.classState.stateName}
 					<div class="like_box">
 						<i class="fa-solid fa-heart"></i>
 					</div>
-					<c:if test="${classes.classImages != null}">
-						<c:forEach items="${classes.classImages}" var="classImage">
+					<c:if test="${schedule.classes.classImages != null}">
+						<c:forEach items="${schedule.classes.classImages}" var="classImage">
 							<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
 						</c:forEach>
 					</c:if>
