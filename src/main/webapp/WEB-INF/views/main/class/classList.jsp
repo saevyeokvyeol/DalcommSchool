@@ -17,7 +17,7 @@
 					$.ajax({
 						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
 						type: "post",
-						data: {"${_csrf.parameterName}" : "${_csrf.token}"},
+						data: {"${_csrf.parameterName}": "${_csrf.token}"},
 						dataType: "json",
 						success: function(result){
 							text = ""
@@ -63,8 +63,8 @@
 					$("[value="+param.get('sort')+"]").prop("checked", true)
 				}
 
-				selectPlaceRegion();
 				selectClassCategory();
+				selectPlaceRegion();
 			})
 		
 			

@@ -59,6 +59,12 @@ public interface ClassesService {
 	 * @return Classes
 	 * */
 	Classes selectByClassId(Long ClassId);
+
+	/**
+	 * 신규 클래스 검색
+	 * @return List<Classes>
+	 * */
+	List<Classes> selectNewClass();
 	
 	/**
 	 * 클래스 카테고리 조회

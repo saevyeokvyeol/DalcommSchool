@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
@@ -36,14 +38,17 @@ public class Coupon {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
+	@JsonIgnore
 	private Classes classes;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "coupon_state_id")
+	@JsonIgnore
 	private CouponState couponState;
 	private String couponName;
 	private int couponDc;

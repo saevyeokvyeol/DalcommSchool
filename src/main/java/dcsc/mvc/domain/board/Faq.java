@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,7 @@ public class Faq {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "faq_category_id")
+	@JsonIgnore
 	private FaqCategory faqCategory;
 	
 	@Column(length = 500)

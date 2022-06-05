@@ -192,6 +192,15 @@ public class ClassesServiceImpl implements ClassesService {
 		
 		return list;
 	}
+	
+	/**
+	 * 신규 클래스 검색
+	 * @return List<Classes>
+	 * */
+	@Override
+	public List<Classes> selectNewClass() {
+		return null;
+	}
 
 	/**
 	 * 클래스 상세 보기

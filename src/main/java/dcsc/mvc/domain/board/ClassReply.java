@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,10 +38,12 @@ public class ClassReply {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "qna_id")
+	@JsonIgnore
 	private ClassQna classQna;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
 	@Column(length = 3000)

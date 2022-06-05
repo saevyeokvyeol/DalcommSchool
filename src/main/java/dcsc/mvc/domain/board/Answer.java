@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +41,7 @@ public class Answer {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ask_id")
+	@JsonIgnore
 	private Ask ask;
 	
 }

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ public class PlaceRegion {
 	private Long regionId; 
 	
 	@OneToMany(mappedBy = "placeRegion")
+	@JsonIgnore
 	private List<Place> place;
 	
 	private String regionName;
