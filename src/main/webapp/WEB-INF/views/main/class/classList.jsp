@@ -12,36 +12,87 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 		<script type="text/javascript">
+			$(function() {
+				function selectPlaceRegion(){
+					$.ajax({
+						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
+						type: "post",
+						data: {"${_csrf.parameterName}": "${_csrf.token}"},
+						dataType: "json",
+						success: function(result){
+							text = ""
+							$.each(result, function(index, item){
+								text += `<input type="radio" class="btn-check" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary" for="\${item.regionName}">\${item.regionName}</label>`;
+							})
+							$("#placeRegion").append(text);
+						},
+						error: function(err){
+							alert("지역정보를 가져올 수 없습니다.")
+						}
+					})
+				}
+				
+				function selectClassCategory(){
+					$.ajax({
+						url: "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}"},
+						dataType: "json",
+						success: function(result){
+							text = ""
+							$.each(result, function(index, item){
+								text += `<input type="radio" class="btn-check" name="classCategory" id="\${item.categoryName}" value="\${item.categoryId}"><label class="btn btn-outline-primary" for="\${item.categoryName}">\${item.categoryName}</label>`;
+								
+							})
+							text += ""
+							$("#classCategory").append(text);
+							search();
+						},
+						error: function(err){
+							alert("클래스 카테고리를 가져올 수 없습니다.")
+						}
+					})
+				}
+				
+				function search() {
+					var query = window.location.search;
+					var param = new URLSearchParams(query);
+					$("#keyword").val(param.get('keyword'));
+					$("[value="+param.get('placeRegion')+"]").prop("checked", true)
+					$("[value="+param.get('classCategory')+"]").prop("checked", true)
+					$("[value="+param.get('sort')+"]").prop("checked", true)
+				}
+
+				selectClassCategory();
+				selectPlaceRegion();
+			})
+		
 			
 		</script>
 	</head>
 	<body>
 		<form action="${pageContext.request.contextPath}/main/class/classSearch">
-			<input type="text" name="keyword"><br>
+			<input type="text" name="keyword" id="keyword"><br>
 			
-			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-				<input type="radio" class="btn-check" name="placeRegion" id="btnradio1" autocomplete="off" checked>
-				<label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
-				
-				<input type="radio" class="btn-check" name="placeRegion" id="btnradio2" autocomplete="off">
-				<label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
-				
-				<input type="radio" class="btn-check" name="placeRegion" id="btnradio3" autocomplete="off">
-				<label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
-			</div>
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="placeRegion">
+			</div><br>
 			
-			<select name="classCategory">
-				<option></option>
-			</select>
-			<br>
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="classCategory">
+			</div><br>
 			
-			<input type="radio" class="btn-check" id="review" name="sort" value="review">
-			<label class="btn btn-outline-primary" for="review">후기 많은 순</label>
-			<input type="radio" class="btn-check" id="likes" name="sort" value="likes">
-			<label class="btn btn-outline-primary" for="likes">찜 많은 순</label>
-			<input type="radio" class="btn-check" id="rate" name="sort" value="rate">
-			<label class="btn btn-outline-primary" for="rate">별점 순</label>
-			
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="sort">
+				<input type="radio" class="btn-check" name="sort" id="new" value="new">
+				<label class="btn btn-outline-primary" for="new">최근 등록</label>
+				<input type="radio" class="btn-check" name="sort" id="review" value="review">
+				<label class="btn btn-outline-primary" for="review">후기 많은 순</label>
+				<input type="radio" class="btn-check" name="sort" id="likes" value="likes">
+				<label class="btn btn-outline-primary" for="likes">인기순</label>
+				<input type="radio" class="btn-check" name="sort" id="low" value="low">
+				<label class="btn btn-outline-primary" for="low">낮은 가격순</label>
+				<input type="radio" class="btn-check" name="sort" id="high" value="high">
+				<label class="btn btn-outline-primary" for="high">높은 가격순</label>
+			</div><br>
+			<input type="reset" value="초기화">
 			<input type="submit" value="검색">
 		</form>
 	
@@ -54,6 +105,7 @@
 					${classes.classId}
 					 | <a href="${pageContext.request.contextPath}/main/class/${classes.classId}">${classes.className}</a>
 					 | ${classes.classInfo}
+					 | ${classes.classPrice}
 					 | ${classes.classOpenDate}
 					 | ${classes.classCategory.categoryName}
 					 | ${classes.teacher.teacherNickname}

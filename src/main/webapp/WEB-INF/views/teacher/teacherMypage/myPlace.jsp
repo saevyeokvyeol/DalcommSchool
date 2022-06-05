@@ -8,7 +8,7 @@
 <title>공방 상세보기 입니다.</title>
 </head>
 <body>
-
+<h1>공방 상세보기~</h1>
 
 </body>
 </html>

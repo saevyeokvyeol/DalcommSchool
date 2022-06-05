@@ -246,8 +246,8 @@ body{margin-top:20px;}
 	                    <input type="submit" class="btn btn-primary btn-block" value="로그인">
 	                </div>
 	                <div class="loginbox-signup">
-	                    <a href="${pageContext.request.contextPath}/joinStudent">일반 회원가입</a>&nbsp;or&nbsp;
-	                    <a href="${pageContext.request.contextPath}/joinTeacher">강사 회원가입</a>
+	                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&nbsp;or&nbsp;
+	                    <a href="${pageContext.request.contextPath}/main/login/joinTeacher">강사 회원가입</a>
 	                </div>
                 </form>
             </div>

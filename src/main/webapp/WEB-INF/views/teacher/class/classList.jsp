@@ -19,7 +19,7 @@
 					$.ajax({
 						url : "${pageContext.request.contextPath}/teacher/class/delete",
 						type : "post",
-						data : {"classId" : $(this).attr("name")},
+						data : {"classId" : $(this).attr("name"), "${_csrf.parameterName}" : "${_csrf.token}"},
 						success : function() {
 							location.reload();
 						},
@@ -32,11 +32,10 @@
 				
 				// 클래스 공개 수락
 				$(".class_open").on("click", function() {
-					alert($(this).attr("name"))
 					$.ajax({
 						url : "${pageContext.request.contextPath}/admin/class/updateStateOpen",
 						type : "post",
-						data : {"classId" : $(this).attr("name")},
+						data : {"classId" : $(this).attr("name"), "${_csrf.parameterName}" : "${_csrf.token}"},
 						success : function() {
 							location.reload();
 						},
@@ -52,7 +51,7 @@
 					$.ajax({
 						url : "${pageContext.request.contextPath}/teacher/class/updateState",
 						type : "post",
-						data : {"classId" : $(this).attr("name"), "stateId" : $(this).val()},
+						data : {"classId" : $(this).attr("name"), "stateId" : $(this).val(), "${_csrf.parameterName}" : "${_csrf.token}"},
 						success : function() {
 							location.reload()
 						},
@@ -73,7 +72,7 @@
 			<c:otherwise>
 			<c:forEach items="${list}" var="classes"><p>
 					${classes.classId}
-					 | <a href="${pageContext.request.contextPath}/main/class/${classes.classId}">${classes.className}</a>
+					 | <a href="${pageContext.request.contextPath}/teacher/class/${classes.classId}">${classes.className}</a>
 					 | ${classes.classInfo}
 					 | ${classes.classOpenDate}
 					 | ${classes.classCategory.categoryName}
@@ -109,5 +108,7 @@
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+		<p>
+		<a href="${pageContext.request.contextPath}/teacher/class/createClass">클래스 만들기</a>
 	</body>
 </html>

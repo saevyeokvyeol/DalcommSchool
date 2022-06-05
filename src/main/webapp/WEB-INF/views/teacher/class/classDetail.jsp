@@ -50,14 +50,13 @@
 					eventClick: function(obj) {
 						
 						$.ajax({
-							url : "${pageContext.request.contextPath}/teacher/class/selectByScheduleId",
+							url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
 							type : "post",
-							data: {"scheduleId" : obj.event.id},
+							data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
 							dateType: "json",
 							success : function(result) {
 								$("#scheduleUpdateForm .scheduleId").val(obj.event.id)
 								var date = new Date(`\${result.scheduleDate}`)
-								console.log(date)
 								$("#scheduleUpdateForm .scheduleDate").val(date.toLocaleDateString())
 								$("#scheduleUpdateForm .startTime").val(`\${result.startTime}`)
 								$("#scheduleUpdateForm .endTime").val(`\${result.endTime}`)
@@ -81,13 +80,6 @@
 						
 						$("#updateModal").modal("show");
 					},
-					eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
-						console.log(obj);
-					},
-					eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
-					},
-					eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
-					},
 					select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 						var now = new Date();
 						var constraint = new Date(now.setDate(now.getDate() + 7));
@@ -108,9 +100,9 @@
 			        },
 					events: function(info, successCallback, failureCallback){
 						$.ajax({
-							url : "${pageContext.request.contextPath}/main/class/classSchedule",
+							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
 							type : "post",
-							data : {"classId": ${classes.classId}},
+							data : {"${_csrf.parameterName}":"${_csrf.token}", "classId": ${classes.classId}},
 							dataType : "json",
 							success : function(result) {
 								successCallback(result);
@@ -169,6 +161,7 @@
 						url : "${pageContext.request.contextPath}/teacher/class/insertSchedule",
 						type : "post",
 						data: {
+							"${_csrf.parameterName}":"${_csrf.token}",
 							"classId" : ${classes.classId},
 							"scheduleId" : $("#scheduleInsertForm .scheduleId").val(),
 							"scheduleDate" : $("#scheduleInsertForm .scheduleDate").val(),
@@ -211,6 +204,7 @@
 						url : "${pageContext.request.contextPath}/teacher/class/updateSchedule",
 						type : "post",
 						data: {
+							"${_csrf.parameterName}":"${_csrf.token}",
 							"scheduleId" : $("#scheduleUpdateForm .scheduleId").val(),
 							"scheduleDate" : $("#scheduleUpdateForm .scheduleDate").val(),
 							"startTime" : $("#scheduleUpdateForm .startTime").val(),
@@ -239,7 +233,8 @@
 						url : "${pageContext.request.contextPath}/teacher/class/deleteSchedule",
 						type : "post",
 						data: {
-							"scheduleId" : $(this).val(),
+							"${_csrf.parameterName}":"${_csrf.token}",
+							"scheduleId" : $(this).val()
 						},
 						success : function() {
 							location.reload();

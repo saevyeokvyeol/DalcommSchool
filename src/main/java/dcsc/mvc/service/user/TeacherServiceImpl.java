@@ -13,6 +13,7 @@ import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.repository.user.PlaceInfraRepository;
 import dcsc.mvc.repository.user.PlaceRegionRepository;
 import dcsc.mvc.repository.user.PlaceRepository;
 import dcsc.mvc.repository.user.StudentRepository;
@@ -28,6 +29,7 @@ public class TeacherServiceImpl implements TeacherService {
 	private final StudentRepository studentRep;
 	private final PlaceRepository placeRep;
 	private final PlaceRegionRepository regionRep;
+	private final PlaceInfraRepository infraRep;
 	
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 //	private final Student student;
@@ -44,6 +46,15 @@ public class TeacherServiceImpl implements TeacherService {
 			new RuntimeException("회원가입에 실패했습니다.");
 		}
 
+	}
+	
+	/**
+	 * 로그인
+	 * */
+	public Teacher login (String userId, String userPwd) {
+		Teacher teacher = teacherRep.selectTeacherIdPwd(userId, userPwd);
+		
+		return teacher;
 	}
 
 	/**
@@ -153,6 +164,7 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public void insertPlace(Place place) {
 		placeRep.save(place);
+		infraRep.save(place.getPlaceInfra());
 	}
 	
 	/**
@@ -163,7 +175,7 @@ public class TeacherServiceImpl implements TeacherService {
 		Place place2 = placeRep.findById(place.getPlaceId()).orElse(null);
 		
 		place2.setDetailAddr(place.getDetailAddr());
-		place2.setPlace_name(place.getPlace_name());
+		place2.setPlaceName(place.getPlaceName());
 		place2.setPlaceAddr(place.getPlaceAddr());
 		place2.setPlaceRoute(place.getPlaceRoute());
 		
@@ -196,6 +208,7 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = regionRep.findAll();
+		System.out.println(list.size());
 		return list;
 	}
 	

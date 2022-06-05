@@ -17,6 +17,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassImage {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "classimage_id_seq")
 	@SequenceGenerator(sequenceName = "classimage_id_seq", allocationSize = 1 , name = "classimage_id_seq")
@@ -44,5 +45,6 @@ public class ClassImage {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
+	@JsonIgnore
 	private Classes classes;
 }

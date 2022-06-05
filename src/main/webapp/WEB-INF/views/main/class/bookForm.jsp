@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
-		
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-{SDK-최신버전}.js"></script>
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
 			    z-index: 1050!important;
@@ -23,90 +23,8 @@
 			#bookForm {display: none;}
 		</style>
 		<script>
-			// 풀캘린더 API 사용
 			$(function() {
-				var insertModal = document.getElementById('insertModal')
 				
-				// calendar element 취득
-				var calendarEl = $('#calendar')[0];
-				// full-calendar 생성하기
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					height: '700px', // calendar 높이 설정
-					slotMinTime: '09:00', // Day 캘린더에서 시작 시간
-					slotMaxTime: '22:00', // Day 캘린더에서 종료 시간
-					// 해더에 표시할 툴바
-					headerToolbar: {
-						left: 'prev',
-						center: 'title',
-						right: 'next'
-					},
-					initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-					navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-					editable: false, // 수정 가능?
-					selectable: false, // 달력 일자 드래그 설정가능
-					nowIndicator: true, // 현재 시간 마크
-					dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-					navLinks: false,
-					locale: 'ko', // 한국어 설정
-					eventClick: function(obj) {
-						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
-							type : "post",
-							data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
-							dataType : "json",
-							success : function(result) {
-								var date = new Date(`\${result.scheduleDate}`)
-								$("#scheduleDate").val(date.toLocaleDateString())
-								$("#scheduleTime").val(`\${result.startTime} ~ \${result.endTime}`)
-								$("#leftSeat").val(`\${result.leftSeat}명`)
-								$("#bookSeat").attr("max", `\${result.leftSeat}`)
-								calTotalPrice()
-								$("#bookForm").css("display", "block");
-							}
-						})
-					},
-					events: function(info, successCallback, failureCallback){
-						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
-							type : "post",
-							data : {"${_csrf.parameterName}":"${_csrf.token}", "classId": ${classes.classId}},
-							dataType : "json",
-							success : function(result) {
-								successCallback(result);
-							}
-						})
-					}
-				});
-				
-				// 캘린더 랜더링
-				calendar.render();
-				
-				function calTotalPrice() {
-					classPrice = $("#classPrice").val();
-					bookSeat = $("#bookSeat").val();
-					
-					$("#totalPrice").val(classPrice * bookSeat);
-		    	}
-				
-				// 수량 감소
-				$(document).on("click", "button[name=minus]", function() {
-					let updateNum = parseInt($(this).next().val()) - 1;
-					if(updateNum <= 0){
-						updateNum = 1;
-					}
-					$(this).next().val(updateNum);
-					calTotalPrice();
-				}); // 수량 감소 종료
-				
-				// 수량 증가
-				$(document).on("click", "button[name=plus]", function() {
-					let updateNum = parseInt($(this).prev().val()) + 1;
-					if(updateNum > parseInt($("#leftSeat").val())){
-						updateNum = parseInt($("#leftSeat").val());
-					}
-					$(this).prev().val(updateNum);
-					calTotalPrice();
-				}); // 수량 증가 종료
 			});
 
 		</script>
@@ -139,7 +57,7 @@
 		
 		<div id='calendar'></div>
 		
-		<form action="${pageContext.request.contextPath}/main/class/bookForm" id="bookForm" method="post">
+		<form action="${pageContext.request.contextPath}/selectScheduleByClassId" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
 			<input type="hidden" name="scheduleId">
@@ -199,7 +117,7 @@
 					</tr>
 				</tfoot>
 			</table>
-			<button type="submit" class="form-control btn btn-dark shadow-none btn-lg" id="order">주문하기</button>
+			<button type="submit" class="form-control btn btn-dark shadow-none btn-lg" id="order">결제</button>
 		</form>
 	</body>
 </html>

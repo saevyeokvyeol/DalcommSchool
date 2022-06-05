@@ -19,6 +19,11 @@ public interface TeacherService {
 	void insertTeacher (Teacher teacher);
 	
 	/**
+	 * 로그인
+	 * */
+	Teacher login (String userId, String userPwd);
+	
+	/**
 	 * 아이디 찾기
 	 * @param: String userName, String userPhone
 	 * @return: String Id

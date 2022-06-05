@@ -1,27 +1,33 @@
 package dcsc.mvc.service.classes;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.ClassState;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
 import dcsc.mvc.repository.classes.ClassImageRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
 import dcsc.mvc.repository.classes.ClassesRepository;
 import lombok.RequiredArgsConstructor;
-import oracle.sql.TIMESTAMP;
 
 @Service
 @Transactional
@@ -31,6 +37,7 @@ public class ClassesServiceImpl implements ClassesService {
 	private final ClassImageRepository classImageRepository;
 	private final ClassScheduleRepository classScheduleRepository;
 	private final ClassCategoryRepository classCategoryRepository;
+	private final JPAQueryFactory jpaQueryFactory;
 
 	/**
 	 * 클래스 등록
@@ -139,18 +146,59 @@ public class ClassesServiceImpl implements ClassesService {
 	 * */
 	@Override
 	public List<Classes> selectByFilter(Search search) {
-//		BooleanBuilder booleanBuilder = new BooleanBuilder();
-//		
-//		QClasses classes = QClasses.classes;
-//		
-//		if(search.getRegion() != null) booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getRegion()));
-//		if(search.getCategory() != null) booleanBuilder.and(classes.classCategory.categoryId.eq(search.getCategory()));
-//		
-//		LocalDate from = LocalDate.now();
-//		LocalDate to 
-////		if(search.getNewClass() == "T") booleanBuilder.and(classes.classSchedule.);
-//
-//		
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QClasses classes = QClasses.classes;
+		
+		// 지역으로 검색
+		if(search.getPlaceRegion() != null) booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getPlaceRegion()));
+		
+		// 카테고리로 검색
+		if(search.getClassCategory() != null) booleanBuilder.and(classes.classCategory.categoryId.eq(search.getClassCategory()));
+		
+		// 키워드로 검색
+		if(search.getKeyword() != null && !search.getKeyword().equals("")) {
+			booleanBuilder.and(classes.className.like("%" + search.getKeyword() + "%"));
+			booleanBuilder.or(classes.teacher.teacherNickname.like("%" + search.getKeyword() + "%"));
+		}
+		
+
+		JPQLQuery<Classes> jpqlQuery = jpaQueryFactory.selectFrom(classes)
+									.where(booleanBuilder);
+
+		// 정렬하기
+		jpqlQuery.orderBy(classes.classId.desc());
+		if(search.getSort() != null) {
+			switch (search.getSort()) {
+				case "review":
+					jpqlQuery.orderBy(classes.classReviews.size().desc());
+					break;
+				case "likes":
+					jpqlQuery.orderBy(classes.Likes.size().desc());
+					break;
+				case "low":
+					jpqlQuery.orderBy(classes.classPrice.asc());
+					break;
+				case "high":
+					jpqlQuery.orderBy(classes.classPrice.desc());
+					break;
+				default:
+					jpqlQuery.orderBy(classes.classId.desc());
+					break;
+			}
+		}
+		
+		List<Classes> list = jpqlQuery.fetch();
+		
+		return list;
+	}
+	
+	/**
+	 * 신규 클래스 검색
+	 * @return List<Classes>
+	 * */
+	@Override
+	public List<Classes> selectNewClass() {
 		return null;
 	}
 
@@ -185,7 +233,6 @@ public class ClassesServiceImpl implements ClassesService {
 	@Override
 	public void insertSchedule(ClassSchedule schedule) {
 		ClassSchedule dbSchedule = classScheduleRepository.save(schedule);
-		
 		if(dbSchedule == null) throw new RuntimeException("클래스 등록을 실패했습니다.");
 	}
 

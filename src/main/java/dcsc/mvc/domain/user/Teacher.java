@@ -8,6 +8,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,5 +48,6 @@ public class Teacher {
 	private String role = "TEACHER";
 	
 	@OneToOne(mappedBy = "teacher")
+	@JsonIgnore
 	private Place place;
 }
