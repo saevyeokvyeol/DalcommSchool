@@ -17,13 +17,13 @@
 					$.ajax({
 						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
 						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}"},
 						dataType: "json",
 						success: function(result){
 							text = ""
 							$.each(result, function(index, item){
 								text += `<input type="radio" class="btn-check" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary" for="\${item.regionName}">\${item.regionName}</label>`;
 							})
-							text += ""
 							$("#placeRegion").append(text);
 						},
 						error: function(err){
@@ -36,6 +36,7 @@
 					$.ajax({
 						url: "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
 						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}"},
 						dataType: "json",
 						success: function(result){
 							text = ""
@@ -48,7 +49,7 @@
 							search();
 						},
 						error: function(err){
-							alert("지역정보를 가져올 수 없습니다.")
+							alert("클래스 카테고리를 가져올 수 없습니다.")
 						}
 					})
 				}
@@ -91,6 +92,7 @@
 				<input type="radio" class="btn-check" name="sort" id="high" value="high">
 				<label class="btn btn-outline-primary" for="high">높은 가격순</label>
 			</div><br>
+			<input type="reset" value="초기화">
 			<input type="submit" value="검색">
 		</form>
 	

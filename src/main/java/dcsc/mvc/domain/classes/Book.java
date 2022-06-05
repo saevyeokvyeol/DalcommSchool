@@ -56,11 +56,12 @@ public class Book {
 	@JoinColumn(name = "coupon_id")
 	private Coupon coupon;
 	
+	@ColumnDefault("")
 	private int bookStateId;
-	private int bookSeat;
-	private int totalPrice;
-	private String bookName;
-	private String bookPhone;
+	private int bookSeat; //
+	private int totalPrice; //
+	private String bookName; //
+	private String bookPhone; //
 	
 	@CreationTimestamp
 	private LocalDateTime bookInsertDate;

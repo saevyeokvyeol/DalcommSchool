@@ -237,10 +237,6 @@ body{margin-top:20px;}
 	                </div>
 	                <div class="loginbox-textbox">
 	                    비밀번호<br><input type="password" name="pwd" class="form-control">
-	                    아이디<br><input type="text" name="userId" class="form-control">
-	                </div>
-	                <div class="loginbox-textbox">
-	                    비밀번호<br><input type="password" name="userPwd" class="form-control">
 	                </div>
 	                <div class="loginbox-forgot">
 	                    <a href="">아이디</a>&nbsp;/&nbsp;

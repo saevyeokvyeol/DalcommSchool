@@ -54,10 +54,10 @@ public class AjaxClassController {
 	}
 	
 	/**
-	 * 클래스 일정 가져오기
+	 * 강사의 모든 클래스 일정 가져오기
 	 * */
-	@RequestMapping("/main/class/classSchedule")
-	public List<FullCalendar> selectScheduleByClassId(Long classId){
+	@RequestMapping("/selectScheduleByTeacherId")
+	public List<FullCalendar> selectScheduleByTeacherId(Long classId){
 		List<ClassSchedule> schedules = classesService.selectScheduleByClassId(classId);
 		List<FullCalendar> list = new ArrayList<FullCalendar>();
 		for(ClassSchedule c : schedules) {
@@ -72,6 +72,29 @@ public class AjaxClassController {
 			Date end = c.getScheduleDate();
 			
 			list.add(new FullCalendar(c.getScheduleId(), classId, c.getClasses().getClassName(), start.toString(), end.toString()));
+		}
+		return list;
+	}
+	
+	/**
+	 * 클래스 ID로 클래스 일정 가져오기
+	 * */
+	@RequestMapping("/selectScheduleByClassId")
+	public List<FullCalendar> selectScheduleByClassId(Long classId){
+		List<ClassSchedule> schedules = classesService.selectScheduleByClassId(classId);
+		List<FullCalendar> list = new ArrayList<FullCalendar>();
+		for(ClassSchedule c : schedules) {
+			c.getScheduleDate().setHours(Integer.parseInt(c.getStartTime().substring(0, 2)));
+			c.getScheduleDate().setMinutes(Integer.parseInt(c.getStartTime().substring(3, 5)));
+			Date start = c.getScheduleDate();
+			System.out.println(start);
+			System.out.println(start.toString());
+			
+			c.getScheduleDate().setHours(Integer.parseInt(c.getEndTime().substring(0, 2)));
+			c.getScheduleDate().setMinutes(Integer.parseInt(c.getEndTime().substring(3, 5)));
+			Date end = c.getScheduleDate();
+			
+			list.add(new FullCalendar(c.getScheduleId(), classId, c.getLeftSeat() + "명", start.toString(), end.toString()));
 		}
 		return list;
 	}
@@ -96,12 +119,11 @@ public class AjaxClassController {
 	
 	
 	/**
-	 * 특정 일정 가져오기
+	 * 일정ID로 일정 가져오기
 	 * */
-	@RequestMapping("/teacher/class/selectByScheduleId")
+	@RequestMapping("/selectScheduleByScheduleId")
 	public ClassSchedule selectScheduleByScheduleId(Long scheduleId) {
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
-		System.out.println(schedule.getScheduleDate());
 		return schedule;
 	}
 	

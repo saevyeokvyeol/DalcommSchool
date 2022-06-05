@@ -26,13 +26,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class ClassController {
+@RequestMapping("/teacher/class")
+public class TeacherClassController {
 	private final ClassesService classesService;
 	
 	/**
 	 * 클래스 전체 리스트창으로 이동
 	 * */
-	@RequestMapping("/teacher/class/classList")
+	@RequestMapping("/classList")
 	public void selectAllClass(Model model) {
 		List<Classes> list = classesService.selectAll();
 		
@@ -40,35 +41,10 @@ public class ClassController {
 	}
 	
 	/**
-	 * 공개된 클래스 리스트
-	 * */
-	@RequestMapping("/main/class/classList")
-	public void selectByStateOpen(Model model) {
-		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
-		
-		List<Classes> list = classesService.selectAll();
-		
-		model.addAttribute("list", list);
-	}
-	
-	/**
-	 * 클래스 검색
-	 * */
-	@RequestMapping("main/class/classSearch")
-	public ModelAndView classSearch(Search search) {
-		List<Classes> list = classesService.selectByFilter(search);
-		
-		ModelAndView modelAndView = new ModelAndView("/main/class/classList");
-		modelAndView.addObject("list", list);
-		return modelAndView;
-	}
-	
-	/**
 	 * 클래스 등록폼으로 이동
 	 * */
-	@RequestMapping("/teacher/class/classForm")
-	public void insertClass() {}
+	@RequestMapping("/createClass")
+	public void createClass() {}
 	
 	/**
 	 * 클래스 등록하기
@@ -88,7 +64,7 @@ public class ClassController {
 			mainImage.setThumbnailState("T");
 		}
 		
-		ClassImage[] subImages = new ClassImage[8];
+		ClassImage[] subImages = new ClassImage[3];
 		int index = 0;
 		
 		if(files.size() != 0) {
@@ -105,16 +81,16 @@ public class ClassController {
 		}
 
 		classesService.insert(classes, mainImage, subImages);
-		return "redirect:/main/class/classList";
+		return "redirect:/teacher/class/classList";
 	}
 	
 	/**
 	 * 클래스 상세 페이지
 	 * */
-	@RequestMapping("/main/class/{classId}")
+	@RequestMapping("/{classId}")
 	public String selectByClassId(@PathVariable Long classId, Model model) {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
-		return "/main/class/classDetail";
+		return "/teacher/class/classDetail";
 	}
 }
