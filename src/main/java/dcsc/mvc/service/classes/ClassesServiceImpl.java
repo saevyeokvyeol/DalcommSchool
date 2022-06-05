@@ -1,5 +1,6 @@
 package dcsc.mvc.service.classes;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,18 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.ClassState;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.classes.QClassSchedule;
 import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
@@ -139,6 +137,16 @@ public class ClassesServiceImpl implements ClassesService {
 	}
 
 	/**
+	 * 강사ID로 클래스 조회
+	 * @return List<Classes> 클래스 전체 목록 반환
+	 * */
+	@Override
+	public List<Classes> selectByTeacherId(String teacherId) {
+		List<Classes> list = classesRepository.findByTeacherTeacherIdEquals(teacherId);
+		return list;
+	}
+
+	/**
 	 * 클래스 검색 및 필터링
 	 * @param Search(공방 지역, 카테고리, 검색 키워드, 새로운 클래스 여부, 이틀 이내 체험 가능 여부, 정렬 기준)
 	 *        boolean timeOut(내일까지 체험 가능한 클래스)
@@ -182,9 +190,6 @@ public class ClassesServiceImpl implements ClassesService {
 				case "high":
 					jpqlQuery.orderBy(classes.classPrice.desc());
 					break;
-				default:
-					jpqlQuery.orderBy(classes.classId.desc());
-					break;
 			}
 		}
 		
@@ -199,7 +204,44 @@ public class ClassesServiceImpl implements ClassesService {
 	 * */
 	@Override
 	public List<Classes> selectNewClass() {
-		return null;
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QClasses classes = QClasses.classes;
+		
+		LocalDateTime to = LocalDateTime.now();
+		LocalDateTime from = to.minusDays(7L);
+		
+		booleanBuilder.and(classes.classOpenDate.between(from, to));
+		
+		Iterable<Classes> iterable = classesRepository.findAll(booleanBuilder);
+		List<Classes> list = Lists.newArrayList(iterable);
+		
+		return list;
+	}
+	
+	/**
+	 * 이틀 이내 체험 가능한 클래스 검색
+	 * @return List<Classes>
+	 * */
+	@Override
+	public List<ClassSchedule> selectSpeedyClass() {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QClassSchedule schedule = QClassSchedule.classSchedule;
+		
+		LocalDateTime from = LocalDateTime.now();
+		
+		LocalDateTime to = from.plusDays(1L);
+		
+		booleanBuilder.and(schedule.scheduleDate.between(Timestamp.valueOf(from), Timestamp.valueOf(to)));
+		
+		JPQLQuery<ClassSchedule> jpqlQuery = jpaQueryFactory.selectFrom(schedule)
+				.where(booleanBuilder)
+				.groupBy(schedule.classes.classId);
+		
+		List<ClassSchedule> list = jpqlQuery.fetch();
+		
+		return list;
 	}
 
 	/**
