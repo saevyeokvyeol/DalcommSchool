@@ -17,7 +17,33 @@
 <script type="text/javascript">
 	$(function() {
 		//alert(1);
-		   
+		
+		//선생님이 보유한 클래스명 가져오기
+		$(function(){
+		function selectPlaceRegion(){
+			$.ajax({
+				url: "/",
+				type: "post",
+				data: {"${_csrf.parameterName}": "${_csrf.token}"},
+				dataType: "json",
+				success: function(result){
+// 					alert(result);
+					text = ""
+					$.each(result, function(index, item){
+						text += `<option value='\${item.classId}'>\${item.className}</option>`;
+					})
+					text += ""
+					$("select[name = select_classId]").append(text);
+				},
+				error: function(err){
+					
+					alert("클래스명을 가져올 수 없습니다.")
+				}
+			})
+		}
+		selectPlaceRegion();
+	})
+		
 		
 	});
 </script>
@@ -40,12 +66,23 @@
 	         				<%-- <td><input type=hidden name="teacherId" value="${teacher.teacherId} id="teacherId"></td> --%>
 	         			</tr>
 	         			<tr>
-	         				<th>클래스ID</th>
-	         				<td><input class="form-control" type=text name="classId" id="classId"></td>
+	         				<th>클래스명</th>
+	         				<td>
+								<select name="select_classId" id="select_classId">
+						        	<option name="classId" value="0">-클래스 선택-</option>          
+						        </select>
+							</td>
 	         			</tr>
 	         			<tr>
-	         				<th>쿠폰상태ID</th>
-	         				<td><input class="form-control" type=text name="classId" id="classId"></td>
+	         				<th>쿠폰상태</th>
+	         				<td>
+								<select name="select_couponStateId" id="select_couponStateId">
+						        	<option name="couponStateId" value="0">-쿠폰상태 선택-</option>
+						        	<option name="couponStateId" value="1">발급</option>
+						        	<option name="couponStateId" value="2">발급중지</option>
+						        	<option name="couponStateId" value="3">삭제</option>          
+						        </select>
+							</td>
 	         			</tr>
 	         			<tr>
 	         				<th>쿠폰명</th>

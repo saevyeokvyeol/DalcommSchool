@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.coupon.Coupon;
+import dcsc.mvc.domain.coupon.CouponState;
 import dcsc.mvc.domain.coupon.IssueCoupon;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.coupon.CouponRepository;
 import dcsc.mvc.repository.coupon.IssueCouponRepository;
 import dcsc.mvc.service.coupon.CouponService;
@@ -69,9 +71,19 @@ public class CouponController {
 	/**
 	 * 클래스 쿠폰 등록하기
 	 * */
-	/*@RequestMapping("couponInsert")
+	@RequestMapping("couponInsert")
 	public String couponInsert(Coupon coupon, Classes classes, Teacher teacher, CouponState couponState ) {
+		coupon.setClasses(classes);
+		coupon.setTeacher(teacher);
+		coupon.setCouponState(couponState);
+		couponService.insertCoupon(coupon);
 		
-	}*/
+		return "redirect:/teacher/coupon/couponAllList_th";
+	}
+	
+	
+	
+	
+	
 	
 }
