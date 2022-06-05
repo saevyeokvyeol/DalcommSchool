@@ -54,6 +54,18 @@ public class AjaxClassController {
 	}
 	
 	/**
+	 * 강사ID로 클래스 검색
+	 * */
+	@RequestMapping("/teacher/selectByTeacherId")
+	public List<Classes> selectByTeacherId(){
+		String teacherId = "Tkim1234";
+		
+		List<Classes> list = classesService.selectByTeacherId(teacherId);
+		
+		return list;
+	}
+	
+	/**
 	 * 강사의 모든 클래스 일정 가져오기
 	 * */
 	@RequestMapping("/selectScheduleByTeacherId")
@@ -138,4 +150,6 @@ public class AjaxClassController {
 	/**
 	 * 회원 아이디로 찜목록 조회
 	 * */
+	
+	
 }
