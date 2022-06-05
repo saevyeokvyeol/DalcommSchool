@@ -59,6 +59,18 @@ public class MainClassController {
 	}
 	
 	/**
+	 * 신규 클래스 검색
+	 * */
+	@RequestMapping("/newClass")
+	public ModelAndView selectNewClass() {
+		List<Classes> list = classesService.selectNewClass();
+
+		ModelAndView modelAndView = new ModelAndView("/main/class/classList");
+		modelAndView.addObject("list", list);
+		return modelAndView;
+	}
+	
+	/**
 	 * 클래스 상세 페이지
 	 * */
 	@RequestMapping("/{classId}")
