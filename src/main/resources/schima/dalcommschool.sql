@@ -243,3 +243,7 @@ insert into place_region values(region_id_seq.nextval, '제주');
 insert into place_region values(region_id_seq.nextval, '세종');
 commit;
 alter table place drop column place_region;
+
+
+
+create table class_schedule (schedule_id number(19,0) not null, schedule_insert_date timestamp, schedule_update_date timestamp, end_time varchar2(255 char), left_seat number(10,0) not null, schedule_date timestamp, schedule_finished varchar2(255 char) default 'F', start_time varchar2(255 char), total_seat number(10,0) not null, class_id number(19,0), primary key (schedule_id))

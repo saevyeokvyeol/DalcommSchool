@@ -14,6 +14,11 @@
   
 }
 
+	#placeRoute{ height: 100px; width: 800px;}
+	#etc{height: 50px; width: 800px;}
+	
+	.textbox{resize:none;}
+
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -86,6 +91,7 @@ function sample6_execDaumPostcode() {
 			$.ajax({
 				url: "/place/selectPlaceRegion",
 				type: "post",
+				data: {"${_csrf.parameterName}": "${_csrf.token}"},
 				dataType: "json",
 				success: function(result){
 // 					alert(result);
@@ -97,6 +103,7 @@ function sample6_execDaumPostcode() {
 					$("select[name = placeRegion]").append(text);
 				},
 				error: function(err){
+					
 					alert("지역정보를 가져올 수 없습니다.")
 				}
 			})
@@ -138,14 +145,6 @@ function sample6_execDaumPostcode() {
 			    });
 			  }
 	
-	
-	
-	
-	/*
-	위도 경도 자동 전환
-	*/
-	
-	
 </script>
 </head>
 <body>
@@ -153,10 +152,11 @@ function sample6_execDaumPostcode() {
 
 <section>
   <form id="insertForm" method="post" action="${pageContext.request.contextPath}/place/insert">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <table>
       <tr>
         <th>공방 이름</th>
-        <td><input type="text" id="placeName" class="" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td>
+        <td><input type="text" id="placeName" class="" name="placeName" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td>
       </tr>
       <tr>
         <th>공방 지역</th>
@@ -169,14 +169,20 @@ function sample6_execDaumPostcode() {
       <tr>
 		<th>공방 주소</th>
 		<td>
-			<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" required>
-			<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색">
-			<input type="text" id="sample6_address" name="addrAddr" class="form-control" readonly="readonly" required>
-			<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)">
-			<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)">
+			<input type="text" id="sample6_postcode" class="form-control" readonly="readonly" required hidden>
+			<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="주소 검색">
+			<input type="text" id="sample6_address" name="placeAddr" class="form-control" readonly="readonly" required>
+			<input type="text" id="sample6_detailAddress" name="detailAddr" class="form-control" placeholder="상세주소1(선택)">
+			<input type="text" id="sample6_extraAddress" class="form-control" placeholder="상세주소2(선택)" hidden>
 			<div id="map"></div>
       	   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly" defer></script>
 		</td>
+	  </tr>
+	  <tr>
+	    <th>찾아가는 방법</th>
+	    <td>
+	      <textarea id="placeRoute" name="placeRoute" class="textbox" placeholder="공방을 찾아오는 방법을 간단하게 설명해주세요.&#13;&#10; ex)강동역에 내려서 341번 버스를 타고 길동사거리 앞에서 내리시면 됩니다^^"></textarea>
+	    </td>
 	  </tr>     
       <tr>
         <th>공방 편의 시설</th>
@@ -187,9 +193,15 @@ function sample6_execDaumPostcode() {
               <input type="checkbox" name="elevator" value="T">엘레베이터 &nbsp;
               <input type="checkbox" name="genderToilet" value="T">남녀 화장실 분리 &nbsp;
               <input type="checkbox" name="kidsfriendly" value="T">어린이 동반 가능 <br>
-              <input type="text" name="etc" placeholder="기타, 추가시설을 입력해주세요.">
+              <textarea id="etc" name="etc" class="textbox" placeholder="기타, 추가시설을 입력해주세요."></textarea>
             </fieldset>
           </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="submit" value="등록">
+          <input type="reset" value="취소">
+        </td>
       </tr>
     </table>
   </form>

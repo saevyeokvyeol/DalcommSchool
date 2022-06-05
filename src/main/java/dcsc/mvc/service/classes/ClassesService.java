@@ -46,6 +46,12 @@ public interface ClassesService {
 	List<Classes> selectAll();
 
 	/**
+	 * 강사ID로 클래스 조회
+	 * @return List<Classes> 클래스 전체 목록 반환
+	 * */
+	List<Classes> selectByTeacherId(String teacherId);
+
+	/**
 	 * 클래스 검색 및 필터링
 	 * @param Class(공방 지역, 카테고리), String keyword(검색 키워드), String sort(정렬),
 	 *        boolean timeOut(내일까지 체험 가능한 클래스)
@@ -59,6 +65,18 @@ public interface ClassesService {
 	 * @return Classes
 	 * */
 	Classes selectByClassId(Long ClassId);
+
+	/**
+	 * 신규 클래스 검색
+	 * @return List<Classes>
+	 * */
+	List<Classes> selectNewClass();
+
+	/**
+	 * 이틀 이내 체험 가능한 클래스 검색
+	 * @return List<Classes>
+	 * */
+	List<ClassSchedule> selectNearClass();
 	
 	/**
 	 * 클래스 카테고리 조회

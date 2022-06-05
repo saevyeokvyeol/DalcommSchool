@@ -3,12 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>공방 상세보기 입니다.</title>
-</head>
-<body>
-<h1>공방 상세보기~</h1>
-
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h2>구매가 완료되었습니다</h2>
+	</body>
 </html>
