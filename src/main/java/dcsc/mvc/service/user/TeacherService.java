@@ -3,6 +3,8 @@ package dcsc.mvc.service.user;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
@@ -44,11 +46,16 @@ public interface TeacherService {
 	void updateTeacher (Teacher teahcer);
 	
 	/**
-	 * 비밀번호 수정
-	 * @param: String teacherPwd
+	 * 비밀번호 찾기 성공 후 수정
+	 * */
+	void updateUserPwd(String userId, String newUserPwd);
+	
+	/**
+	 * 비밀번호 수정(로그인 상태에서)
+	 * @param: String userPwd, String newUserPwd, HttpSession session
 	 * @return:
 	 * */
-	void updateTeacherPwd (String teacherPwd);
+	void updateUserPwd (String userPwd, String newUserPwd, HttpSession session);
 	
 	
 	/**

@@ -26,87 +26,6 @@
 	
 </style>
 
-<!-- 주소 API -->
-<script type="text/javascript">
-// function sample6_execDaumPostcode() {
-//     new daum.Postcode({
-//         oncomplete: function(data) {
-//             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-//             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-//             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-//             var addr = ''; // 주소 변수
-//             var extraAddr = ''; // 참고항목 변수
-
-//             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-//             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-//                 addr = data.roadAddress;
-//             } else { // 사용자가 지번 주소를 선택했을 경우(J)
-//                 addr = data.jibunAddress;
-//             }
-
-//             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-//             if(data.userSelectedType === 'R'){
-//                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-//                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-//                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-//                     extraAddr += data.bname;
-//                 }
-//                 // 건물명이 있고, 공동주택일 경우 추가한다.
-//                 if(data.buildingName !== '' && data.apartment === 'Y'){
-//                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-//                 }
-//                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-//                 if(extraAddr !== ''){
-//                     extraAddr = ' (' + extraAddr + ')';
-//                 }
-//                 // 조합된 참고항목을 해당 필드에 넣는다.
-//                 document.getElementById("sample6_extraAddress").value = extraAddr;
-            
-//             } else {
-//                 document.getElementById("sample6_extraAddress").value = '';
-//             }
-
-//             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-//             document.getElementById('sample6_postcode').value = data.zonecode;
-//             document.getElementById("sample6_address").value = addr;
-//             // 커서를 상세주소 필드로 이동한다.
-//             document.getElementById("sample6_detailAddress").focus();
-//         }
-//     }).open();
-// }
-</script>
-
-<!-- 캘린더 jQuery (스크롤 문제 있음. css 적용해봐야함. 주석처리함)-->
-<script type="text/javascript">
-/*
-$(function() {
-	alert("ㅎㅇ")
-	//datepicker 설정
-	 $.datepicker.setDefaults({
-		dateFormat: 'yy-mm-dd',
-		changeYear: true,
-        changeMonth: true, 
-		prevText: '이전 달',
-		nextText: '다음 달',
-		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-		showMonthAfterYear: true,
-		yearSuffix: '년'
-	});
-	
-	$(".datepicker").datepicker("getDate");
-	
-	$(".datepicker").datepicker({
-		minDate: "-50Y",
-		maxDate: "-1"
-	});
-})
-*/
-</script>
 
 <!-- 형식 체크 (진행 중) -->
 <script type = "text/javascript">
@@ -453,28 +372,6 @@ $(function() {
 	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required="required"/>
 	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
 	      </tr>
-<!-- 	      <tr> -->
-<!-- 	          <th>강사 소개</th> -->
-<!-- 	          <td><textarea rows=""10 cols="50" id="teacherInfo" placeholder="강사님의 소개를 자유롭게 적어주세요^^"></textarea> </td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 이름</th> -->
-<!-- 	          <td><input type="text" id="placeName" class="" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 위치</th> -->
-<!-- 	          <td></td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 주소</th> -->
-<!-- 	          <td> -->
-<!-- 				<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" > -->
-<!-- 				<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색"> -->
-<!-- 				<input type="text" id="sample6_address" name="addrAddr" class="form-control"> -->
-<!-- 				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)"> -->
-<!-- 				<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)"> -->
-<!-- 			  </td> -->
-<!-- 	      </tr> -->
 	  	</table>
 	  	<div>
 	  	<input type="submit" id="joinBtn" value="회원가입">
