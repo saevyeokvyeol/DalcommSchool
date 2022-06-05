@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,7 +42,11 @@ public class Coupon {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
 	private Classes classes;
-	private int couponStateId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_state_id")
+	private CouponState couponState;
+	
 	private String couponName;
 	private int couponDc;
 	
@@ -51,6 +56,6 @@ public class Coupon {
 	@UpdateTimestamp
 	private LocalDateTime couponUpdateDate;
 	
-	private String couponEndDate;
+	private int couponEndDate;
 	
 }
