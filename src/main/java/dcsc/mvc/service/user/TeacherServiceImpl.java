@@ -244,6 +244,7 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = regionRep.findAll();
+		System.out.println(list.size());
 		return list;
 	}
 	

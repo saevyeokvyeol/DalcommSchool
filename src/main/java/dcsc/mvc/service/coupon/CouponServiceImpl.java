@@ -6,8 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
+
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.IssueCoupon;
+import dcsc.mvc.domain.coupon.QCoupon;
 import dcsc.mvc.repository.coupon.CouponRepository;
 import dcsc.mvc.repository.coupon.IssueCouponRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +65,10 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void insertCoupon(Coupon coupon) {
-		// TODO Auto-generated method stub
+		
+		if(coupon.getTeacher().getTeacherId() !=null && coupon.getClasses().getClassId() !=null) {
+			couponRep.save(coupon);
+		}
 
 	}
 

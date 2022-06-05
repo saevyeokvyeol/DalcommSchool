@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.repository.coupon.CouponRepository;
@@ -56,5 +57,21 @@ public class CouponController {
 	}
 	
 	
+	/**
+	 * 클래스 쿠폰 등록 폼
+	 * */
+	@RequestMapping("teacher/coupon/couponForm")
+	public void couponForm() {
+		
+	}
+	
+	
+	/**
+	 * 클래스 쿠폰 등록하기
+	 * */
+	/*@RequestMapping("couponInsert")
+	public String couponInsert(Coupon coupon, Classes classes, Teacher teacher, CouponState couponState ) {
+		
+	}*/
 	
 }

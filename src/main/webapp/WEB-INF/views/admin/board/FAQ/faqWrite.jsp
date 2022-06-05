@@ -12,6 +12,33 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script type="text/javascript">
+/* 
+$(function() {
+	function selectfaqCategory() {
+		$.ajax({
+			url: "/admin/board/FAQ/faqCategory",
+			type: "post",
+			dataType: "json",
+			success: function(result) {
+				alert(result);
+				text = ""
+				$.each(result , function(index, item) {
+					text += `<option value='\${item.faqCategoryId}'>\${item.faqCategoryName}</option>`;
+				})
+					text += ""
+					$("select[name = placeRegion]").append(text);
+				},
+				error: function(err) {
+					alert("카테고리를 가져올 수 없습니다.")
+			}
+		})
+	}
+	selectfaqCategory();
+})
+ */
+
+</script>
 <head>
 </head>
 
@@ -37,9 +64,17 @@
         <td width="150" height="20" >
             <p align="right"><b><span style="font-size:9pt;">카테고리</span></b></p>
         </td>
+        
         <td width="450" height="20"><b>
+         <p>
+        <input type="button" value="Fill SELECT Dropdown List with JSON" id="bt" />
+   		 </p>
         <span style="font-size:9pt;">
-         
+          <select>
+          	<option>예약</option>
+          	<option>결제</option>
+          	<option>클래스</option>
+          </select>
 		</span>
 		
 		</b></td>

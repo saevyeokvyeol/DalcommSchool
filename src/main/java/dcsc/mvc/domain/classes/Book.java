@@ -16,7 +16,10 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.coupon.Coupon;
+import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.user.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,22 +45,28 @@ public class Book {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
-	private Student student;
+	@JsonIgnore
+	private Student student; //
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
-	private Classes classes;
+	@JsonIgnore
+	private Classes classes; //
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "schedule_id")
-	private ClassSchedule ClassSchedule;
+	@JsonIgnore
+	private ClassSchedule ClassSchedule; //
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "coupon_id")
-	private Coupon coupon;
+	@JoinColumn(name = "issue_no")
+	@JsonIgnore
+	private IssueCoupon issueCoupon;
 	
-	@ColumnDefault("")
-	private int bookStateId;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "book_state_id")
+	@JsonIgnore
+	private BookState bookState;
 	private int bookSeat; //
 	private int totalPrice; //
 	private String bookName; //

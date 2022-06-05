@@ -56,6 +56,7 @@
 							dataType : "json",
 							success : function(result) {
 								var date = new Date(`\${result.scheduleDate}`)
+								$("#scheduleId").val(`\${result.scheduleId}`)
 								$("#scheduleDate").val(date.toLocaleDateString())
 								$("#scheduleTime").val(`\${result.startTime} ~ \${result.endTime}`)
 								$("#leftSeat").val(`\${result.leftSeat}명`)
@@ -142,7 +143,7 @@
 		<form action="${pageContext.request.contextPath}/main/class/bookForm" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
-			<input type="hidden" name="scheduleId">
+			<input type="hidden" name="scheduleId" id="scheduleId">
 			<table class="table option-table table-borderless">
 				<tbody>
 					<tr>

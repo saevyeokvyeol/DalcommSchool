@@ -83,6 +83,7 @@ public class Classes {
 	private List<ClassReview> classReviews;
 	
 	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
 	private List<ClassQna> classQnas;
 	
 }
