@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -50,6 +51,7 @@ public class Coupon {
 	@JoinColumn(name = "coupon_state_id")
 	@JsonIgnore
 	private CouponState couponState;
+
 	private String couponName;
 	private int couponDc;
 	
@@ -59,6 +61,6 @@ public class Coupon {
 	@UpdateTimestamp
 	private LocalDateTime couponUpdateDate;
 	
-	private String couponEndDate;
+	private int couponEndDate;
 	
 }
