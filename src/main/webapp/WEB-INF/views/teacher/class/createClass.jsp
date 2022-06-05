@@ -17,6 +17,7 @@
 					$.ajax({
 						url : "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
 						type : "post",
+						data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 		    			dataType: "json",
 						success : function(result) {
 							text = ""
@@ -151,8 +152,9 @@
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/teacher/class/insert"
+		<form action="${pageContext.request.contextPath}/teacher/class/insert?${_csrf.parameterName}=${_csrf.token}"
 			enctype="multipart/form-data" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<table>
 				<tr>
 					<td>
