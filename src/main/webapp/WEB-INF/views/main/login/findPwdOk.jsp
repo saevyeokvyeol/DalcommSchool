@@ -5,18 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 수정 페이지입니다</title>
+<title>비밀번호 수정하기</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-
 <style type="text/css">
 
 .message{display: none}
 
 </style>
+
 <script type="text/javascript">
-
-
-
 $(function(){
 	
 	/*
@@ -84,7 +81,7 @@ $(function(){
 			isSamePwd = false;
 		}
 		
-	})
+	}) //focusout 끝
 	
 	/*
 	 비밀번호 일치 여부 확인
@@ -108,20 +105,16 @@ $(function(){
 	})
 	
 })
-
 </script>
 </head>
 <body>
-		
-<h3>비밀번호 수정 페이지입니다.</h3>
-<span id="notice">*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</span>
-<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
+
+<h3>비밀번호 찾기 후 성공하면 비밀번호 바꾸게끔하는 페이지. </h3>
+
+<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/findPwdOk">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
   <table>
-    <tr>
-      <th>기존 비밀번호</th>
-      <td><input type="password" id="userPwd" name="userPwd" required></td>
-    </tr>
+  	<input type="hidden" name="userId" value="${userId}">
     <tr>
       <th>새 비밀번호</th>
       <td><input type="password" id="newUserPwd" name="newUserPwd" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required>
@@ -135,11 +128,11 @@ $(function(){
     </tr>
   </table>
   <div>
-  <input type="submit" id="submitBtn" value="확인">
-  <input type="reset" id="cancelBtn" value="취소">
-</div>
+    <input type="submit" id="submitBtn" value="확인">
+    <input type="reset" id="cancelBtn" value="취소">
+  </div>
 </form>
 
-		
+
 </body>
 </html>

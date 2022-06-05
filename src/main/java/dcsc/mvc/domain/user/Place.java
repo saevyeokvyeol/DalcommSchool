@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,16 +35,19 @@ public class Place {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
 	private String placeName;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id")
+	@JsonIgnore
 	private PlaceRegion placeRegion;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
+	@JsonIgnore
 	private PlaceInfra placeInfra;
 	
 	private String placeAddr;
