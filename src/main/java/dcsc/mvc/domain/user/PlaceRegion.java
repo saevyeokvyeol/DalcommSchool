@@ -29,11 +29,8 @@ public class PlaceRegion {
 	@SequenceGenerator(sequenceName = "region_id_seq", allocationSize = 1, name = "region_id_seq")
 	private Long regionId; 
 	
-<<<<<<< HEAD
+
 	@OneToMany(mappedBy = "placeRegion" , cascade = CascadeType.ALL , orphanRemoval = true)
-=======
-	@OneToMany(mappedBy = "placeRegion")
->>>>>>> b8cd2c444e1ebea127a6044c8c5cbe073b73023d
 	@JsonIgnore
 	private List<Place> place;
 	
