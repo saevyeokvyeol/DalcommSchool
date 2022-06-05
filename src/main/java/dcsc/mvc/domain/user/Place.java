@@ -35,7 +35,7 @@ public class Place {
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 	
-	private String place_name;
+	private String placeName;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id")

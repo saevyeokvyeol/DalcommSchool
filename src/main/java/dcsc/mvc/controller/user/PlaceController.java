@@ -2,6 +2,8 @@ package dcsc.mvc.controller.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,10 +35,11 @@ public class PlaceController {
 	 * 공방 등록하기
 	 * */
 	@RequestMapping("/insert")
-	public String insertPlace(Place place, PlaceRegion placeRegion, PlaceInfra placeInfra) {
-		
+	public String insertPlace(Place place, PlaceRegion placeRegion, PlaceInfra placeInfra, HttpSession session) {
+		placeInfra.setPlace(place);
 		place.setPlaceInfra(placeInfra);
 		place.setPlaceRegion(placeRegion);
+		
 		teacherService.insertPlace(place);
 		
 		return "redirect:/teacher/teacherMypage/myPlace";

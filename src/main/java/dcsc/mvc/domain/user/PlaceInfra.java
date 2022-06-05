@@ -32,6 +32,7 @@ public class PlaceInfra {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
 	private Place place; 
+	
 	private String parking;
 	private String wifi;
 	private String elevator;
