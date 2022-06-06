@@ -35,15 +35,23 @@ $(function(){
 		
 		if(id.length<8){ //길이 체크
 			$("#notValidPwd").css("display", "inline-block");
+			alert("길이 땡")
 			return false;
 		}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 			$("#notValidPwd").css("display", "inline-block");
+			$("#pwdCheck_success").css("display", "none");
+			alert("다른거 땡")
 			return false;
 		}else{
 			$("#notValidPwd").css("display", "none");
+			alert("올바릅니다.")
 			return true;
 		}
 	}
+	
+	$("#newUserPwd").keyup(function(){
+		isSamePwd = false;
+		})
 	
 	isSamePwd = false;
 	
@@ -82,14 +90,14 @@ $(function(){
 		}
 		
 	}) //focusout 끝
-	
+
 	/*
 	 비밀번호 일치 여부 확인
 	 */
-	$("#updatePwdForm").submit(function(){	
+	$("#updatePwdForm").submit(function(event){	
 		if(!isSamePwd){
 			alert("비밀번호 일치 여부를 확인해주세요.")
-			return false;
+			event.preventDefault();
 		}
 		
 		let pwd = $("#userPwd").val();
@@ -97,10 +105,12 @@ $(function(){
 		
 		if(pwd==newPwd){
 			alert("새로운 비밀번호는 기존 비밀번호와 달라야합니다.")
-			return false;
+			event.preventDefault();
 		}
 		
-		isValidPwd();
+		if(!isValidPwd()){
+			alert("비밀번호를 형식에 맞게 입력해주세요.");
+			event.preventDefault();
 		
 	})
 	

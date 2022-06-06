@@ -21,7 +21,7 @@ import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
-import dcsc.mvc.util.Link;
+import dcsc.mvc.util.FileLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
