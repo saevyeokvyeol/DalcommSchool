@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강사 비밀번호 수정 페이지입니다.</title>
+<title>공방 상세보기 입니다.</title>
 </head>
 <body>
-<h1>강사 비밀번호 수정~</h1>
+<h1>공방 상세보기~</h1>
 
 </body>
 </html>

@@ -16,6 +16,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
@@ -57,13 +59,16 @@ public class Ask {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
+	@JsonIgnore
 	private Student student;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ask_category_id")
+	@JsonIgnore
 	private AskCategory askCategory;
 }

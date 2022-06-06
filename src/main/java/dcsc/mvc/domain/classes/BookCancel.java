@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +39,7 @@ public class BookCancel {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id")
+	@JsonIgnore
 	private Book book;
 	private int cancelRate;
 	

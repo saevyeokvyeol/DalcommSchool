@@ -3,6 +3,7 @@ package dcsc.mvc.service.classes;
 import java.util.List;
 
 import dcsc.mvc.domain.classes.ClassCategory;
+import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Search;
@@ -12,7 +13,7 @@ public interface ClassesService {
 	 * 클래스 등록
 	 * @param Classes(선생님ID, 클래스명, 클래스 소개글, 클래스 금액, 카테고리);
 	 * */
-	void insert(Classes classes);
+	void insert(Classes classes, ClassImage mainImage, ClassImage[] subImages);
 
 	/**
 	 * 클래스 수정
@@ -27,10 +28,28 @@ public interface ClassesService {
 	void delete(Long classId);
 
 	/**
+	 * 클래스 공개 수락
+	 * @param Long classId;
+	 * */
+	void updateStateOpen(Long classId);
+
+	/**
+	 * 클래스 상태 변경
+	 * @param Long classId, Long stateId(변경할 stateId);
+	 * */
+	void updateState(Long classId, Long stateId);
+
+	/**
 	 * 클래스 전체 보기
 	 * @return List<Classes> 클래스 전체 목록 반환
 	 * */
 	List<Classes> selectAll();
+
+	/**
+	 * 강사ID로 클래스 조회
+	 * @return List<Classes> 클래스 전체 목록 반환
+	 * */
+	List<Classes> selectByTeacherId(String teacherId);
 
 	/**
 	 * 클래스 검색 및 필터링
@@ -46,6 +65,18 @@ public interface ClassesService {
 	 * @return Classes
 	 * */
 	Classes selectByClassId(Long ClassId);
+
+	/**
+	 * 신규 클래스 검색
+	 * @return List<Classes>
+	 * */
+	List<Classes> selectNewClass();
+
+	/**
+	 * 이틀 이내 체험 가능한 클래스 검색
+	 * @return List<Classes>
+	 * */
+	List<ClassSchedule> selectNearClass();
 	
 	/**
 	 * 클래스 카테고리 조회

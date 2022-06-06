@@ -39,6 +39,9 @@ INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_con
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'goo1234' , 'Tgoo1234', '확정된 클래스 일정을 알고 싶어요', '클래스', '원하는 클래스의 일정이 계속 안올라와서요 정확한 일정을 알고 싶습니다.' , null, systimestamp, systimestamp, 'F');
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'ann1234' , 'Tann1234', '클래스 공개취소를 원합니다.', '환불', '올렸던 클래스를 급하게 비공개로 바꾸고 싶어요' , null, systimestamp, systimestamp, 'F');
 
+alter table class_schedule add schedule_finished varchar2(255 char) default 'F'
+
+update set schedule_finished = 'F'
 
 create SEQUENCE ask_no_seq noCACHE;
 
@@ -71,7 +74,7 @@ CREATE SEQUENCE  category_id_seq
         START WITH 1
         INCREMENT BY 1;
 
-
+Alter table class_qna rename column qnacontent to qna_content;
 commit;
 --클래스 Q&A 안됌
 insert into class_qna values ( qna_id_seq.nextval , false, true, systimestamp, '수업 문의 드립니다.', null, '빵 만들고 집에 가져가고 싶은데 혹시 포장지도 제공이 되나요?', false, class_id_seq.currval, 'Lee12345');
@@ -147,6 +150,8 @@ insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimest
 insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimestamp,'15:00',4,systimestamp,'14:00',5,2);
 insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimestamp,'16:00',4,systimestamp,'15:00',5,2);
 
+alter table class_schedule rename column id to schedule_id;
+
 alter table Class_Schedule modify (end_time VARCHAR2(255 CHAR));
 alter table Class_Schedule modify (start_time VARCHAR2(255 CHAR));
 --클래스 상세 이미지 안됌
@@ -185,6 +190,13 @@ INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_con
 INSERT INTO ASK(ask_no, student_id, teacher_id, ask_title, ask_category, ask_content, ask_img, ask_insert_date, ask_update_date, ask_complete) VALUES(ask_no_seq.NEXTVAL, 'ann1234' , "Tann1234", "클래스 공개취소를 원합니다.", "환불", "올렸던 클래스를 급하게 비공개로 바꾸고 싶어요" , null, systimestamp, systimestamp, 'F')
 
 commit;
+
+-- 1대1 문의 카테고리
+insert into ask_category values(ask_category_id_seq.nextval, '클래스');
+insert into ask_category values(ask_category_id_seq.nextval, '결제');
+insert into ask_category values(ask_category_id_seq.nextval, '환불');
+insert into ask_category values(ask_category_id_seq.nextval, '후기');
+insert into ask_category values(ask_category_id_seq.nextval, '탈퇴');
 
 --학생
 INSERT INTO STUDENT(student_id, student_pwd, student_name, student_phone, student_email, student_insert_date, student_quit) VALUES ('lee1234', 'Lee12345', '이나영', '01011111111', 'lee@naver.com', systimestamp, 'F');
@@ -231,3 +243,7 @@ insert into place_region values(region_id_seq.nextval, '제주');
 insert into place_region values(region_id_seq.nextval, '세종');
 commit;
 alter table place drop column place_region;
+
+
+
+create table class_schedule (schedule_id number(19,0) not null, schedule_insert_date timestamp, schedule_update_date timestamp, end_time varchar2(255 char), left_seat number(10,0) not null, schedule_date timestamp, schedule_finished varchar2(255 char) default 'F', start_time varchar2(255 char), total_seat number(10,0) not null, class_id number(19,0), primary key (schedule_id))

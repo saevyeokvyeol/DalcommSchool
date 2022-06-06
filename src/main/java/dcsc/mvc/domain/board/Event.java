@@ -27,21 +27,21 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "event_no_seq")
 	@SequenceGenerator(sequenceName = "event_no_seq" , allocationSize = 1 , name = "event_no_seq")
-	private Long event_no;
+	private Long eventNo;
 	
-	private String event_title;
+	private String eventTitle;
 	
 	@Column(length = 500)
-	private String event_content;
+	private String eventContent;
 	
-	private String event_img;
+	private String eventImg;
 	
 	@CreationTimestamp
-	private LocalDateTime event_insert_date;
+	private LocalDateTime eventInsertDate;
 	
 	@UpdateTimestamp
-	private LocalDateTime event_update_date;
+	private LocalDateTime eventUpdateDate;
 	
-	private int event_views;
+	private int eventViews;
 	
 }

@@ -97,17 +97,7 @@
         </table>
     </div>
     <hr>
-    
-    <div>
-       <form class="" action="${pageContext.request.contextPath}" method="post">
-            <select name="field" id="qna_search_sort_select">
-                <option name="qna_search_sort" value="classId">클래스ID</option>
-                <option name="qna_search_sort" value="studentId">학생ID</option>
-            </select>
-            <input class="qna-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn-search-submit" type="submit" >검색하기</button>
-        </form>  
-     </div>  
+     
 
 
 </body>

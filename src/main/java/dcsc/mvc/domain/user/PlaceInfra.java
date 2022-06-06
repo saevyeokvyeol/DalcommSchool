@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,9 @@ public class PlaceInfra {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
+	@JsonIgnore
 	private Place place; 
+	
 	private String parking;
 	private String wifi;
 	private String elevator;

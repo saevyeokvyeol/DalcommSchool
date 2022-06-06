@@ -25,7 +25,6 @@ public class NoticeServiceImpl implements NoticeService {
 		
 	@Override
 	public Notice updateNotice(Notice notice) {
-		System.out.println("확인확ㅇ니   : "+notice.getNoticeTitle());
 		
 		Notice dbNotice = noRepository.findById(notice.getNoticeNo()).orElse(null);
 		if(dbNotice==null) {

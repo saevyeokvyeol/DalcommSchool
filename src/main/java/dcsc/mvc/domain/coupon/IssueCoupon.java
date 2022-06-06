@@ -9,11 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.user.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,10 +38,12 @@ public class IssueCoupon {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
+	@JsonIgnore
 	private Student student;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "coupon_id")
+	@JsonIgnore
 	private Coupon coupon;
 	
 	@CreationTimestamp

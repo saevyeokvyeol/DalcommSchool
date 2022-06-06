@@ -3,20 +3,18 @@ package dcsc.mvc.domain.user;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -24,9 +22,11 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Teacher {
 
 	@Id
+	@NonNull
 	private String teacherId;
 	
 	private String teacherPwd;
@@ -47,5 +47,7 @@ public class Teacher {
 
 	private String role = "TEACHER";
 	
-	
+	@OneToOne(mappedBy = "teacher")
+	@JsonIgnore
+	private Place place;
 }

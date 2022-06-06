@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
 import lombok.AllArgsConstructor;
@@ -51,10 +53,12 @@ public class ClassReview {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
+	@JsonIgnore
 	private Classes classes;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
+	@JsonIgnore
 	private Student student;
 	
 }

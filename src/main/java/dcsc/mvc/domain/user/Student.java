@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.board.ClassQna;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +29,6 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Student {
 
 	@Id
@@ -49,5 +50,6 @@ public class Student {
 	private String role = "STUDENT"; //STUDENT
 	
 	@OneToMany(mappedBy = "student")
-	private List<ClassQna> QnaList;
+	@JsonIgnore
+	private List<ClassQna> qnaList;
 }

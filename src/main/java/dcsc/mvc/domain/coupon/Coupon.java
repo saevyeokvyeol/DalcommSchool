@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Teacher;
@@ -31,17 +34,24 @@ public class Coupon {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "coupon_id_seq")
-	@SequenceGenerator(sequenceName = "coupon_id_seq",allocationSize = 1,name = "coupon_id_seq")
+	@SequenceGenerator(sequenceName = "coupon_id_seq", allocationSize = 1, name = "coupon_id_seq")
 	private Long couponId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
+	@JsonIgnore
 	private Classes classes;
-	private int couponStateId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_state_id")
+	@JsonIgnore
+	private CouponState couponState;
+
 	private String couponName;
 	private int couponDc;
 	
@@ -51,6 +61,6 @@ public class Coupon {
 	@UpdateTimestamp
 	private LocalDateTime couponUpdateDate;
 	
-	private String couponEndDate;
+	private int couponEndDate;
 	
 }

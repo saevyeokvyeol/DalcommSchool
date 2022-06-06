@@ -13,7 +13,6 @@
 	
 <script type="text/javascript">
 	$(function(){
-	alert(1)
 		
 	 $("input[value=수정하기]").click(function(){
 		   

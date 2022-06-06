@@ -82,4 +82,15 @@ public interface ClassQnaService {
 	 * @param Long replyId
 	 * */
 	void deleteReply(Long replyId);
+	
+	/**
+	 * 클래스 Q&A 답글 조회(문의글 id로 조회)
+	 * @param Long qnaId
+	 * */
+	ClassReply selectByReplyQnaId(Long qnaId);
+	
+	/**
+	 * 클래스 Q&A 댓글 상세조회(댓글 id 로 조회)
+	 * */
+	ClassReply selectByReplyId(Long replyId);
 }

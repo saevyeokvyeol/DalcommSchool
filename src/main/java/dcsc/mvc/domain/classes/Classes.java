@@ -16,9 +16,9 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dcsc.mvc.domain.board.ClassQna;
-import dcsc.mvc.domain.user.PlaceRegion;
+import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,21 +53,37 @@ public class Classes {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
+	@JsonIgnore
 	private ClassCategory classCategory;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "state_id")
+	@JsonIgnore
 	private ClassState classState;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "region_id")
-	private PlaceRegion placeRegion;
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<ClassSchedule> classSchedules;
 	
 	@OneToMany(mappedBy = "classes")
-	private List<ClassQna> QnaList;
+	@JsonIgnore
+	private List<ClassImage> classImages;
+	
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<Likes> Likes;
+	
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<ClassReview> classReviews;
+	
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<ClassQna> classQnas;
 	
 }

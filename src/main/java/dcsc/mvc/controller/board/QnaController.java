@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassQna;
+import dcsc.mvc.domain.board.ClassReply;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.ClassQnaService;
 
 
@@ -29,22 +31,49 @@ public class QnaController {
 	/**
 	 * Q&A 전체조회
 	 * */
-	@RequestMapping("main/board/qna/qnaList")
+	/*@RequestMapping("main/board/qna/qnaList")
 	public void qnaList(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
 		
 		model.addAttribute("list", list);
-	}
+	}*/
 	
 	
 	/**
 	 * Q&A 상세조회
 	 * */
 	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
-	public ModelAndView qnaRead(@PathVariable Long qnaId ) {
+	public String qnaRead(@PathVariable Long qnaId, Model model ) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
+		model.addAttribute("qna", classQna);
+		model.addAttribute("qnaReply", classReply);
+		
+		return "main/board/qna/qnaRead";
+	}
+	
+	/**
+	 * 선생님 - Q&A 상세조회
+	 * */
+	/*@RequestMapping("teacher/board/qna/qnaRead_th/{qnaId}")
+	public ModelAndView qnaReadth(@PathVariable Long qnaId ) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
-		return new ModelAndView("main/board/qna/qnaRead", "qna", classQna);
+		return new ModelAndView("teacher/board/qna/qnaRead_th", "qna", classQna);
+	}*/
+	
+	/**
+	 * 선생님 - Q&A 상세조회
+	 * */
+	@RequestMapping("teacher/board/qna/qnaRead_th/{qnaId}")
+	public String qnaReadth(@PathVariable Long qnaId , Model model) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
+		
+		model.addAttribute("qna", classQna);
+		model.addAttribute("qnaReply", classReply);
+		
+		return "teacher/board/qna/qnaRead_th";
 	}
 	
 	/**
@@ -111,6 +140,16 @@ public class QnaController {
 	}
 	
 	/**
+	 * 선생님 QnA전체조회
+	 * */
+	@RequestMapping("teacher/board/qna/qnaList_th")
+	public void qnaSelectAll(Model model) {
+		List<ClassQna> list = classQnaService.selectAllQna();
+		
+		model.addAttribute("list", list);
+	}
+	
+	/**
 	 * 블라인드처리
 	 * */
 	@RequestMapping("admin/board/qna/qnaBlind")
@@ -126,17 +165,76 @@ public class QnaController {
 	/**
 	 * 클래스ID로 클래스 Q&A 검색
 	 * */
-	/*@RequestMapping("admin/board/qna/qnaBlind")
-	public void selectByClassId(Long classId) {
-		classQnaService.selectByClassId(classId);
-	}*/
+	@RequestMapping("main/board/qna/qnaList")
+	public void selectByClassId(Long classId , Model model) {
+		classId = 2L;
+		
+		List<ClassQna> list= classQnaService.selectByClassId(classId);
+		model.addAttribute("list", list);
+	}
 	
 	/**
-	 * 학생ID로 클래스 Q&A 검색
+	 * 강사ID로 클래스 Q&A 검색
 	 * */
-	/*@RequestMapping("admin/board/qna/qnaBlind")
-	public void selectByStudentId(Long studentId) {
-		classQnaService.selectByClassId(studentId);
-	}*/
+	@RequestMapping("teacher/teacherMypage/qnaListAll_th")
+	public void selectByStudentId(String teacherId , Model model) {
+		teacherId = "Tann1234";
+		
+		List<ClassQna> list = classQnaService.selectByTeacherId(teacherId);
+		model.addAttribute("list", list);
+	}
+	
+	
+	/**
+	 * 선생님 Q&A 답변 폼
+	 * */
+	@RequestMapping("qnaReplyWriteForm")
+	public String qnaReplyWriteFrom(Long qnaId, Model model) {
+		model.addAttribute("qnaId", qnaId);
+		
+		return "teacher/board/qna/qnaReplyWrite";
+	}
+	
+	/**
+	 * 선생님 Q&A 답변하기
+	 * */
+	@RequestMapping("qnaReplyInsert")
+	public String qnaReplyInsert(ClassReply classReply, Long qnaId , Teacher teacher ) {
+		classReply.setClassQna(new ClassQna(qnaId));
+		classReply.setTeacher(teacher);
+		classQnaService.insertReply(classReply);
+		
+		return "redirect:/teacher/board/qna/qnaRead_th/"+qnaId;
+	}
+	
+	/**
+	 * 선생님 Q&A 답변 수정폼
+	 * */
+	@RequestMapping("qnaReplyUpdateForm/{replyId}")
+	public ModelAndView qnaReplyUpdateForm(@PathVariable Long replyId){
+		ClassReply classReply= classQnaService.selectByReplyId(replyId);
+		
+		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
+	}
+	
+	/**
+	 * 선생님 Q&A 답변 수정하기
+	 * */
+	@RequestMapping("qnaReplyUpdate")
+	public String qnaReplyUpdate(ClassReply classReply) {
+		classQnaService.updateReply(classReply);
+		
+		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+	}
+
+	/**
+	 * 선생님 Q&A 답변 삭제하기
+	 * */
+	@RequestMapping("qnaReplyDelete/{replyId}")
+	public String qnaReplyDelete(@PathVariable Long replyId) {
+		classQnaService.deleteReply(replyId);
+		
+		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+	}
 	
 }

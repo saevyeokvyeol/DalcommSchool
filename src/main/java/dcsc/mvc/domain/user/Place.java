@@ -10,9 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -20,24 +24,33 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@RequiredArgsConstructor
 public class Place {
+	
 	@Id
+	@NonNull
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_id_seq")
 	@SequenceGenerator(sequenceName = "place_id_seq", allocationSize = 1, name = "place_id_seq")
-	private Long place_id;
+	private Long placeId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
 	private Teacher teacher;
 	
-	private String place_name;
+	private String placeName;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id")
+	@JsonIgnore
 	private PlaceRegion placeRegion;
 	
-	private String place_addr;
-	private String detail_addr;
-	private String place_route;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "place_id")
+	@JsonIgnore
+	private PlaceInfra placeInfra;
+	
+	private String placeAddr;
+	private String detailAddr;
+	private String placeRoute;
 }

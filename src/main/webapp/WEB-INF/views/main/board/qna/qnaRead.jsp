@@ -67,12 +67,43 @@
 						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
 						<input type=hidden name="blindState" value="${qna.blindState}" id="blindState">
 						<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
-						<input type=button value="수정하기" >
-						<input type=button value="삭제하기" >
-						<input type=button value="답변하기" >
+						<c:choose>
+							<c:when test="${qna.qnaComplete eq 'T'}">
+								<input type=hidden value="수정하기" >
+								<input type=hidden value="삭제하기" >
+							</c:when>
+							<c:otherwise>
+								<input type=button value="수정하기" >
+								<input type=button value="삭제하기" >
+							</c:otherwise>
+						</c:choose>
+						
 					</form>
 				</td>
 		    </tr>
+            
+        </table>
+    </div>
+        <hr>
+    <div>
+        <table>
+            <c:choose>
+            	<c:when test="${qna.qnaComplete eq 'T'}">
+            		<tr>
+		                <th>작성자</th>
+		                <td>${qnaReply.teacher.teacherId}</td>
+		                <th>등록일자</th>
+		                <td>${qnaReply.replyInsertDate}</td>
+		                <th>수정일자</th>
+		                <td>${qnaReply.replyUpdateDate}</td>
+				    </tr>
+		            <tr>
+		                <th>내용</th>
+		                <td>${qnaReply.replyContent}</td>
+		            </tr>
+            	</c:when>
+            </c:choose>
+        	
             
         </table>
     </div>
