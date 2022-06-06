@@ -7,11 +7,36 @@
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script type="text/javascript">
+$(function() {
+	function selectfaqCategory() {
+		$.ajax({
+			url: "/admin/board/FAQ/faqCategory",
+			type: "post",
+			data: {"${_csrf.parameterName}": "${_csrf.token}"},
+			dataType: "json",
+			success: function(result) {
+				text = ""
+				$.each(result , function(index, item) {
+					text += `<option value='\${item.faqCategoryId}'>\${item.faqCategoryName}</option>`;
+				})
+					text += ""
+					$("select[name = faqCategoryId]").append(text);
+				},
+				error: function(err) {
+					alert("카테고리를 가져올 수 없습니다.")
+			}
+		})
+	}
+	selectfaqCategory();
+})
+
+</script>
 <head>
 </head>
 
@@ -19,7 +44,7 @@
 
 
 <form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/FAQ/faqWrite"  >
-
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 <table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
 
     <tr>
@@ -37,9 +62,12 @@
         <td width="150" height="20" >
             <p align="right"><b><span style="font-size:9pt;">카테고리</span></b></p>
         </td>
+        
         <td width="450" height="20"><b>
         <span style="font-size:9pt;">
-         
+          <select name="faqCategoryId">
+          	
+          </select>
 		</span>
 		
 		</b></td>

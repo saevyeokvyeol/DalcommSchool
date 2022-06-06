@@ -2,6 +2,7 @@ package dcsc.mvc.domain.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,8 @@ public class PlaceRegion {
 	@SequenceGenerator(sequenceName = "region_id_seq", allocationSize = 1, name = "region_id_seq")
 	private Long regionId; 
 	
-	@OneToMany(mappedBy = "placeRegion")
+
+	@OneToMany(mappedBy = "placeRegion" , cascade = CascadeType.ALL , orphanRemoval = true)
 	@JsonIgnore
 	private List<Place> place;
 	

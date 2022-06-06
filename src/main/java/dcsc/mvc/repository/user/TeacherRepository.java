@@ -9,12 +9,7 @@ import dcsc.mvc.domain.user.Teacher;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
-	@Query("select t.teacherId from Teacher t where t.teacherName = ?1 and t.teacherPhone = ?2")
-	/**
-	 * 닉네임, 핸드폰 번호 중복체크
-	 * 규칙 필요(완전히 같은거)
-	 * */
-	
+		
 	
 	Teacher findByTeacherNicknameEquals(String teacherNickname);
 	

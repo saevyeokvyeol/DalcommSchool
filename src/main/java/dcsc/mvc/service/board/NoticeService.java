@@ -47,7 +47,7 @@ public interface NoticeService {
 	 * @param String keyword
 	 * @return List<Notice>
 	 * */
-	List<Notice> selectByKeyword(String keyword);
+	List<Notice> selectByKeyword(String keyfield, String keyword);
 
 	
 	

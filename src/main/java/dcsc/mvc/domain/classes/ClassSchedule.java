@@ -2,6 +2,7 @@ package dcsc.mvc.domain.classes;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -57,6 +59,7 @@ public class ClassSchedule {
 	@JsonIgnore
 	private Classes classes;
 	
-	@ColumnDefault("F")
-	private String scheduleFinished;
+	@OneToMany(mappedBy = "classSchedule")
+	@JsonIgnore
+	private List<Book> Books;
 }

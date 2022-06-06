@@ -12,30 +12,6 @@
 <meta charset="UTF-8"> 
 <script type="text/javascript">
 
-/* $(function() {
-	function selectfaqCategory() {
-		$.ajax({
-			url: "/admin/board/FAQ/faqCategory",
-			type: "post",
-			dataType: "json",
-			success: function(result) {
-				alert(result);
-				text = ""
-				$.each(result , function(index, item) {
-					text += `<option value='\${item.faqCategoryId}'>\${item.faqCategoryName}</option>`;
-				})
-					text += ""
-					$("select[name = placeRegion]").append(text);
-				},
-				error: function(err) {
-					alert("카테고리를 가져올 수 없습니다.")
-			}
-		})
-	}
-	selectfaqCategory();
-})
- */
-
 </script>
 <title>Insert title here</title>
 <head>

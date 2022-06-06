@@ -13,98 +13,124 @@
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
-		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-{SDK-최신버전}.js"></script>
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 		<style type="text/css">
-			.bootstrap-timepicker-widget.dropdown-menu {
-			    z-index: 1050!important;
-			}
-			#bookForm {display: none;}
 		</style>
 		<script>
 			$(function() {
+				function calTotalPrice() {
+					classPrice = $("#classPrice").val();
+					bookSeat = $("#bookSeat").val();
+					
+					$("#totalPrice").val(classPrice * bookSeat);
+		    	}
+				calTotalPrice();
 				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
+					type: "post",
+					data: {"${_csrf.parameterName}": "${_csrf.token}"},
+					dataType: "json",
+					success: function(result){
+						text = ""
+						$.each(result, function(index, item){
+							text += `<input type="radio" class="btn-check" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary" for="\${item.regionName}">\${item.regionName}</label>`;
+						})
+						$("#placeRegion").append(text);
+					},
+					error: function(err){
+						alert("지역정보를 가져올 수 없습니다.")
+					}
+				})
+				
+				function requestPay() {
+					// IMP.request_pay(param, callback) 결제창 호출
+					IMP.request_pay({ // param
+						pg: "html5_inicis",
+						pay_method: "card",
+						merchant_uid: 'kim1234_'+new Date().getTime(),
+						name: ${classes.classPrice},
+						amount: ${classes.classPrice},
+						buyer_email: "",
+						buyer_name: "김사장",
+						buyer_tel: "010-3693-6936",
+						buyer_addr: "1600 Amphitheatre Pkwy, Mountain View, CA 94043 미국",
+						buyer_postcode: "36963"
+					}, function (rsp) { // callback
+						if (rsp.success) {
+							$("#bookForm").submit();
+						} else {
+							alert("결제를 실패했습니다.\n잠시 뒤 다시 시도해주세요.")
+						}
+					});
+				}
+				
+				$("#order").on("click", function() {
+					/* IMP.init("imp86665517");
+					requestPay(); */
+					$("#bookForm").submit();
+				})
 			});
-
 		</script>
 	</head>
 	<body>
-		
-		${classes.classId}
-		 | ${classes.className}
-		 | ${classes.classInfo}
-		 | ${classes.classOpenDate}
-		 | ${classes.classCategory.categoryName}
-		 | ${classes.teacher.teacherNickname}
-		 | ${classes.classState.stateName}
-		<p>
-		<c:if test="${classes.classImages != null}">
-			<c:forEach items="${classes.classImages}" var="classImage">
-				<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-			</c:forEach>
-		</c:if>
-		<p>
-		${classes.teacher.teacherNickname} | 
-		${classes.teacher.teacherTel} | 
-		${classes.teacher.teacherImg} | 
-		${classes.teacher.teacherInfo}
-		<p>
-		${classes.teacher.place.placeId}
-		<p>
-		
-		<form action="" method="post"></form>
-		
-		<div id='calendar'></div>
-		
-		<form action="${pageContext.request.contextPath}/selectScheduleByClassId" id="bookForm" method="post">
+		<form action="${pageContext.request.contextPath}/main/book/bookComplete" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
-			<input type="hidden" name="scheduleId">
+			<input type="hidden" name="scheduleId" value="${schedule.scheduleId}">
+			<input type="hidden" name="studentId" value="kim1234">
 			<table class="table option-table table-borderless">
 				<tbody>
 					<tr>
-						<td>
-							수강일
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext" id="scheduleDate" readonly="readonly">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							수강 시간
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext" id="scheduleTime" readonly="readonly">
+						<td colspan="2">
+							${classes.classId}
+							 | ${classes.className}
+							 | ${classes.classInfo}
+							 | ${classes.classOpenDate}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							수강 가능 인원
+							수강자명
 						</td>
 						<td>
-							<input type="text" class="form-control-plaintext" id="leftSeat" readonly="readonly">
+							<input type="text" class="form-control" name="bookName" id="bookName" value="김유다">
 						</td>
 					</tr>
 					<tr>
 						<td>
-							예약 인원
+							수강자 연락처
 						</td>
 						<td>
-							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
-							<input type="number" class="form-control-plaintext num" name="bookSeat" id="bookSeat" min="1" max="9999" step="1" value="1" readonly="readonly">
-							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+							<input type="text" class="form-control" name="bookPhone" id="bookPhone" value="01033339999">
 						</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td>
+							사용 쿠폰
+						</td>
+						<td>
+							<select name="issueNo">
+								<option value="0">쿠폰 목록</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							금액 
 						</td>
 						<td>
 							<input type="number" readonly class="form-control-plaintext" id="classPrice" value="${classes.classPrice}">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							인원 
+						</td>
+						<td>
+							<input type="number" readonly class="form-control-plaintext" id="bookSeat" name="bookSeat" value="${book.bookSeat}">
 						</td>
 					</tr>
 					<tr>
@@ -117,7 +143,7 @@
 					</tr>
 				</tfoot>
 			</table>
-			<button type="submit" class="form-control btn btn-dark shadow-none btn-lg" id="order">결제</button>
+			<button type="button" class="form-control btn btn-dark shadow-none btn-lg" id="order">결제</button>
 		</form>
 	</body>
 </html>

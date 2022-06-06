@@ -5,19 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디 찾기 페이지입니다.</title>
+<title>클래스 리뷰 페이지입니다.</title>
 </head>
 <body>
-<h1>아이디를 찾아봅시당</h1>
 
-<table>
-  <tr>
-    <th>이름</th>
-    <input type="text">
-    <td>
-    </td>
-  </tr>
-</table>
-
+클래스 리뷰 페이지입니다.
 </body>
 </html>

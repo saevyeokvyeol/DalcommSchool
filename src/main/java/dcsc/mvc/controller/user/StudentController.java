@@ -96,13 +96,6 @@ public class StudentController {
 		}
 	}
 	
-	
-	//회원 비밀번호 수정
-	@RequestMapping("/main/mypage/modifyPwd")
-	public void modifyPwd() {
-		System.out.println("modifyPwd 호출...");
-	}
-	
 	//회원 탈퇴
 	@RequestMapping("/main/mypage/deleteUser")
 	public void withdrawal(String userId, String userPwd) {

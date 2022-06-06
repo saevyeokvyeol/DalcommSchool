@@ -76,7 +76,7 @@ public interface ClassesService {
 	 * 이틀 이내 체험 가능한 클래스 검색
 	 * @return List<Classes>
 	 * */
-	List<ClassSchedule> selectSpeedyClass();
+	List<ClassSchedule> selectNearClass();
 	
 	/**
 	 * 클래스 카테고리 조회
@@ -114,6 +114,12 @@ public interface ClassesService {
 	 * @return List<ClassSchedule>
 	 * */
 	List<ClassSchedule> selectScheduleByClassId(Long classId);
+
+	/**
+	 * 이용 가능한 클래스 일정 조회
+	 * @return List<ClassSchedule>
+	 * */
+	List<ClassSchedule> selectAvailableSchedule(Long bookId);
 
 	/**
 	 * 일정 상세 보기

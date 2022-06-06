@@ -2,8 +2,10 @@ package dcsc.mvc.service.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
@@ -66,10 +68,11 @@ public class TeacherServiceImpl implements TeacherService {
 		String studentId = studentRep.selectStudentId(userName, userPhone);
 		
 		if(teacherId==null && studentId==null) {
-			throw new RuntimeException("해당 정보에 일치하는 아이디가 없습니다.");
+			return null;
 		}else if(teacherId != null) {
 			return teacherId;
 		}else {
+			System.out.println("학생 아이디는 " + studentId + "입니다");
 			return studentId;
 		}
 		
@@ -84,29 +87,79 @@ public class TeacherServiceImpl implements TeacherService {
 		String studentPwd = studentRep.selectStudentPwd(userId, userName, userPhone);
 		
 		if(teacherPwd==null && studentPwd==null) {
-			throw new RuntimeException("해당 정보에 일치하는 아이디가 없습니다.");
+			return false;
 		}else{
 			return true;
 		}
 	}
 
 	@Override
-	public void updateTeacher(Teacher teahcer) {
-		// TODO Auto-generated method stub
-
+	public void updateTeacher(Teacher teacher) {
+		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(null);
+		
+		if(newTeacher==null) {
+			throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");
+		}
+		
+		newTeacher.setTeacherPhone(teacher.getTeacherPhone());
+		newTeacher.setTeacherEmail(teacher.getTeacherEmail());
+		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
+		newTeacher.setTeacherTel(teacher.getTeacherTel());
+	}
+	
+	@Override
+	public void updateUserPwd(String userId, String newUserPwd) {
+		System.out.println("teacherService, updateUserPwd 호출");
+		
+		Teacher teacher = teacherRep.findById(userId).orElse(null);
+		Student student = studentRep.findById(userId).orElse(null);
+		
+		if(teacher!=null) {
+			teacher.setTeacherPwd(newUserPwd);
+			System.out.println("강사 비밀번호 수정 완료");
+		}else {
+			student.setStudentPwd(newUserPwd);
+			System.out.println("학생 비밀번호 수정 완료");
+		}
+		
 	}
 
 	@Override
-	public void updateTeacherPwd(String teacherPwd) { //인수 하나 더 필요
-//		if(!passwordEncoder.matches(password, vo.getPassword())){
-//			throw new BadCredentialsException("패스워드 오류입니다."); 이런 방식으로~~
-		//현재 비밀번호를 입력 받아 DB와 일치하면 새로운 비밀번호 입력하게 해준다.
-		//(session에서 로그인된 사람의 정보를 가져와 그 사람의 패스워드 정보를 가져온다.)
+	public void updateUserPwd(String userPwd, String encodePassword, HttpSession session) {
+		System.out.println("teacherService, updateUserPwd 호출");
 		
-		//가져온 패스워드를 입력한 비밀번호로 바꾼다.(암호화)
-
+		Teacher teacher = teacherRep.findById(session.getId()).orElse(null);
+		Student student = studentRep.findById(session.getId()).orElse(null);
+		
+		if(teacher!=null) { //강사일 때
+			//입력한 기존 비밀번호랑 DB의 비밀번호를 비교한다.
+			if(!getBCryptPasswordEncoder.matches(userPwd, teacher.getTeacherPwd())) {
+				throw new BadCredentialsException("패스워드 오류입니다.");
+			}else {
+				teacher.setTeacherPwd(encodePassword);
+				System.out.println("강사 비밀번호 바꾸기 성공");
+			}
+		}else if(student!=null) { //학생일 때
+			if(!getBCryptPasswordEncoder.matches(userPwd, student.getStudentPwd())) {
+				throw new BadCredentialsException("패스워드 오류입니다.");
+			}else {
+				student.setStudentPwd(encodePassword);
+				System.out.println("학생 비밀번호 바꾸기 성공");
+			}
+		}
+		
 	}
 
+	/**
+	 * 강사 한명 가져오기
+	 * */
+	@Override
+	public Teacher selectById(String teacherId) {
+		Teacher teacher = teacherRep.findById(teacherId).orElse(null);
+		if(teacher == null) new RuntimeException("강사 불러오기에 실패했습니다.");
+		return teacher;
+	}
+	
 	/**
 	 * 아이디 중복체크
 	 * */
@@ -134,7 +187,6 @@ public class TeacherServiceImpl implements TeacherService {
 		}else {
 			return false;
 		}
-		
 	}
 
 	/**
@@ -152,10 +204,16 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 	}
 
+	
+	
 	@Override
 	public List<Teacher> selectAllTeacher() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Teacher> list = teacherRep.findAll();
+		
+		if(list==null) {
+			throw new RuntimeException("조회가능한 회원 데이터가 없습니다.");
+		}
+		return list;
 	}
 	
 	/**
@@ -163,6 +221,7 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public void insertPlace(Place place) {
+		
 		placeRep.save(place);
 		infraRep.save(place.getPlaceInfra());
 	}
@@ -181,6 +240,8 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		place2.setPlaceRegion(place.getPlaceRegion());
 		
+		place2.setPlaceInfra(place.getPlaceInfra());
+		
 		return place2;
 	}
 	
@@ -193,13 +254,16 @@ public class TeacherServiceImpl implements TeacherService {
 		return null;
 	}
 	
+	
+	
 	/**
 	 * 공방 상세 정보 가져오기
 	 * */
 	@Override
 	public Place selectByPlaceId(Long placeId) {
-		
-		return null;
+		Place place = placeRep.findById(placeId).orElse(null);
+		if(place == null) new RuntimeException("상세보기에 오류가 생겼습니다.");
+		return place;
 	}
 	
 	/**

@@ -36,3 +36,4 @@ src/main/resources/application-oauth.properties
 src/test/java/dcsc/mvc/DalcommSchoolApplicationTests.java
 src/main/java/dcsc/mvc/util/Link.java
 .tern-project
+src/main/java/dcsc/mvc/util/FileLink.java

@@ -50,7 +50,7 @@
 					eventClick: function(obj) {
 						
 						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
+							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
 							type : "post",
 							data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
 							dateType: "json",
@@ -170,9 +170,9 @@
 							"totalSeat" : $("#scheduleInsertForm .totalSeat").val(),
 							"leftSeat" : $("#scheduleInsertForm .leftSeat").val()
 						},
-						success : function() {
-							location.reload();
-						},
+						success : function(result) {
+/* 							location.reload();
+ */						},
 						error : function(error) {
 							alert("일정을 등록할 수 없습니다.");
 						}

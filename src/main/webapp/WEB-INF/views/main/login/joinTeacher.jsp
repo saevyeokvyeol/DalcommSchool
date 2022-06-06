@@ -15,9 +15,8 @@
 <!-- jQuery ui -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- jQuery ui -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 <style type="text/css">
@@ -26,87 +25,6 @@
 	
 </style>
 
-<!-- 주소 API -->
-<script type="text/javascript">
-// function sample6_execDaumPostcode() {
-//     new daum.Postcode({
-//         oncomplete: function(data) {
-//             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-//             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-//             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-//             var addr = ''; // 주소 변수
-//             var extraAddr = ''; // 참고항목 변수
-
-//             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-//             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-//                 addr = data.roadAddress;
-//             } else { // 사용자가 지번 주소를 선택했을 경우(J)
-//                 addr = data.jibunAddress;
-//             }
-
-//             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-//             if(data.userSelectedType === 'R'){
-//                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-//                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-//                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-//                     extraAddr += data.bname;
-//                 }
-//                 // 건물명이 있고, 공동주택일 경우 추가한다.
-//                 if(data.buildingName !== '' && data.apartment === 'Y'){
-//                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-//                 }
-//                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-//                 if(extraAddr !== ''){
-//                     extraAddr = ' (' + extraAddr + ')';
-//                 }
-//                 // 조합된 참고항목을 해당 필드에 넣는다.
-//                 document.getElementById("sample6_extraAddress").value = extraAddr;
-            
-//             } else {
-//                 document.getElementById("sample6_extraAddress").value = '';
-//             }
-
-//             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-//             document.getElementById('sample6_postcode').value = data.zonecode;
-//             document.getElementById("sample6_address").value = addr;
-//             // 커서를 상세주소 필드로 이동한다.
-//             document.getElementById("sample6_detailAddress").focus();
-//         }
-//     }).open();
-// }
-</script>
-
-<!-- 캘린더 jQuery (스크롤 문제 있음. css 적용해봐야함. 주석처리함)-->
-<script type="text/javascript">
-/*
-$(function() {
-	alert("ㅎㅇ")
-	//datepicker 설정
-	 $.datepicker.setDefaults({
-		dateFormat: 'yy-mm-dd',
-		changeYear: true,
-        changeMonth: true, 
-		prevText: '이전 달',
-		nextText: '다음 달',
-		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-		showMonthAfterYear: true,
-		yearSuffix: '년'
-	});
-	
-	$(".datepicker").datepicker("getDate");
-	
-	$(".datepicker").datepicker({
-		minDate: "-50Y",
-		maxDate: "-1"
-	});
-})
-*/
-</script>
 
 <!-- 형식 체크 (진행 중) -->
 <script type = "text/javascript">
@@ -124,6 +42,7 @@ $(function() {
 			
 			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
 			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
+			var isUpper = id.search(/[A-Z]/g); // -1 리턴해야함.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
 			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
@@ -134,7 +53,7 @@ $(function() {
 			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
 				$("#notValidId").css("display", "inline-block");
 				return false;
-			}else if(isNum<0 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
+			}else if(isNum<0 || isUpper!=-1 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
 			}else{
@@ -150,6 +69,7 @@ $(function() {
 			isValidPwd();
 		})
 		
+		
 		function isValidPwd(){
 			var id = $("#teacherPwd").val();
 			
@@ -162,12 +82,15 @@ $(function() {
 			
 			if(id.length<8){ //길이 체크
 				$("#notValidPwd").css("display", "inline-block");
+// 				alert("false")
 				return false;
 			}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidPwd").css("display", "inline-block");
+// 				alert("false")
 				return false;
 			}else{
 				$("#notValidPwd").css("display", "none");
+// 				alert("true")
 				return true;
 			}
 		}
@@ -327,6 +250,9 @@ $(function() {
  		$("#teacherNick").keyup(function(){
  			isNickChecked = false;
  		})
+ 		$("#teacherPwd").keyup(function(){
+			isSamePwd = false;
+ 		})
 
 		/*
 		비밀번호 일치 여부 체크
@@ -339,21 +265,22 @@ $(function() {
 			
 			if(pwd1!="" && pwd2!=""){
 				if(pwd1 == pwd2){
-					$("#pwdCheck_Fail").css("display", "none");
-					$("#pwdCheck_success").css("display", "inline-block");
+// 					$("#pwdCheck_Fail").css("display", "none");
+// 					$("#pwdCheck_success").css("display", "inline-block");
+					
 					isSamePwd = true;
 				}else{
-					$("#pwdCheck_success").css("display", "none");
-					$("#pwdCheck_Fail").css("display", "inline-block");
+// 					$("#pwdCheck_success").css("display", "none");
+// 					$("#pwdCheck_Fail").css("display", "inline-block");
 					isSamePwd = false;
 				}
 			}else if(pwd1 != "" && pwd2 == ""){
-				$("#pwdCheck_success").css("display", "none");
-				$("#pwdCheck_Fail").css("display", "none");
+// 				$("#pwdCheck_success").css("display", "none");
+// 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}else{
-				$("#pwdCheck_success").css("display", "none");
-				$("#pwdCheck_Fail").css("display", "none");
+// 				$("#pwdCheck_success").css("display", "none");
+// 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}
 		})
@@ -368,34 +295,43 @@ $(function() {
 			}
 			
 		})
-	})	
-	
-	$(function(){
-		$("#insertForm").submit(function(){			
+		
+		$("#insertForm").submit(function(event){
 			/*
 			중복체크 여부
 			*/
 			if(!isIdChecked){
 				alert("ID 중복체크를 진행해주세요.")
-				return false;
+				event.preventDefault();
 			}else if(!isNickChecked){
 				alert("닉네임 중복체크를 진행해주세요")
-				return false;
+				event.preventDefault();
 			}else if(!isPhoneChecked){
 				alert("핸드폰 번호 중복체크를 진행해주세요")
-				return false;
+				event.preventDefault();
 			}else if(!isSamePwd){
 				alert("비밀번호 일치 여부를 확인해주세요.")
-				return false;
+				event.preventDefault();
 			}
 			
-			isValidId();
-			isValidPwd();
-			isValidPhone();
-			isValidEmail();
+			if(!isValidPwd()){
+				alert("비밀번호를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidId()){
+// 				alert("아이디를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidPhone()){
+// 				alert("핸드폰 번호를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidEmail()){
+// 				alert("이메일을 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}	 
 		})
+	})	
+	
+	
 		
-	})
 </script>
 
 </head>
@@ -453,28 +389,6 @@ $(function() {
 	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required="required"/>
 	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
 	      </tr>
-<!-- 	      <tr> -->
-<!-- 	          <th>강사 소개</th> -->
-<!-- 	          <td><textarea rows=""10 cols="50" id="teacherInfo" placeholder="강사님의 소개를 자유롭게 적어주세요^^"></textarea> </td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 이름</th> -->
-<!-- 	          <td><input type="text" id="placeName" class="" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 위치</th> -->
-<!-- 	          <td></td> -->
-<!-- 	      </tr> -->
-<!-- 	      <tr> -->
-<!-- 	          <th>공방 주소</th> -->
-<!-- 	          <td> -->
-<!-- 				<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" > -->
-<!-- 				<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색"> -->
-<!-- 				<input type="text" id="sample6_address" name="addrAddr" class="form-control"> -->
-<!-- 				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)"> -->
-<!-- 				<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)"> -->
-<!-- 			  </td> -->
-<!-- 	      </tr> -->
 	  	</table>
 	  	<div>
 	  	<input type="submit" id="joinBtn" value="회원가입">

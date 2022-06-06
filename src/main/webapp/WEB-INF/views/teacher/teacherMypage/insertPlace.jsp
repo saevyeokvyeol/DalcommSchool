@@ -104,10 +104,12 @@ function sample6_execDaumPostcode() {
 				},
 				error: function(err){
 					
-					alert("지역정보를 가져올 수 없습니다.")
+					alert("지역정보를 가져올 수 없습니다.222")
 				}
 			})
 		}
+		
+		
 		selectPlaceRegion();
 	})
 	 

@@ -40,10 +40,9 @@ public class FaqController {
 	}
 	
 	/**
-	 * 등록 하기
+	 * 등록하기
 	 * */
 	@RequestMapping("/faqWrite")
-	@ResponseBody
 	public String insertFAQ(Faq faq, FaqCategory faqCategory) {
 		faq.setFaqCategory(faqCategory);
 		faqService.insertFAQ(faq);
@@ -61,7 +60,6 @@ public class FaqController {
 		Faq faq = faqService.selectBy(faqNo, state);//true는 조회수 증가!!
 		
 		return new ModelAndView("admin/board/FAQ/faqRead","faq",faq);
-	
 	}
 	
 	/**

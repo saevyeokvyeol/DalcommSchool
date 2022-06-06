@@ -2,6 +2,9 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.Event;
 
 public interface EventService {
@@ -15,7 +18,7 @@ public interface EventService {
 	 * 이벤트 게시글 수정
 	 * @param Event(제목, 내용, 이미지)
 	 * */
-	void updateEvent(Event event);
+	Event updateEvent(Event event);
 	
 	/**
 	 * 이벤트 게시글 삭제
@@ -29,13 +32,18 @@ public interface EventService {
 	 * @param Long eventNo
 	 * @return Event
 	 * */
-	Event selectByEventNo(Long eventNo);
+	Event selectByEventNo(Long eventNo, boolean state);
 	
 	/**
 	 * 이벤트 게시판 조회 기능
 	 * @return List<Event>
 	 * */
-	List<Event> selectAllNotice();
+	List<Event> selectAll();
+	
+	/**
+	 * 이벤트 게시판 페이징처리
+	 * */
+	Page<Event> selectAll(Pageable pageable);
 	
 	
 	/**
@@ -44,6 +52,8 @@ public interface EventService {
 	 * @return List<Event>
 	 * */
 	List<Event> selectByKeyword(String keyword);
+	
+
 	
 	
 }

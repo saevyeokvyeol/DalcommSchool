@@ -2,6 +2,7 @@ package dcsc.mvc.service.classes;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
@@ -21,6 +23,7 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.QClassSchedule;
 import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
+import dcsc.mvc.repository.classes.BookRepository;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
 import dcsc.mvc.repository.classes.ClassImageRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
@@ -36,6 +39,7 @@ public class ClassesServiceImpl implements ClassesService {
 	private final ClassScheduleRepository classScheduleRepository;
 	private final ClassCategoryRepository classCategoryRepository;
 	private final JPAQueryFactory jpaQueryFactory;
+	private final BookRepository bookRepository;
 
 	/**
 	 * 클래스 등록
@@ -118,7 +122,6 @@ public class ClassesServiceImpl implements ClassesService {
 		else if(stateId == 4 && dbClass.getClassState().getStateId() != 3) throw new RuntimeException("공개된 클래스가 아닙니다.");
 		else if(stateId == 4) {
 			for(ClassSchedule schedule : selectScheduleByClassId(classId)) {
-				if(schedule.getScheduleFinished().equals("T")) continue;
 				if(schedule.getTotalSeat() == schedule.getLeftSeat()) continue;
 				throw new RuntimeException("수강 신청된 일정이 있어 클래스를 비공개할 수 없습니다.");
 			}
@@ -224,7 +227,7 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @return List<Classes>
 	 * */
 	@Override
-	public List<ClassSchedule> selectSpeedyClass() {
+	public List<ClassSchedule> selectNearClass() {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClassSchedule schedule = QClassSchedule.classSchedule;
@@ -234,10 +237,11 @@ public class ClassesServiceImpl implements ClassesService {
 		LocalDateTime to = from.plusDays(1L);
 		
 		booleanBuilder.and(schedule.scheduleDate.between(Timestamp.valueOf(from), Timestamp.valueOf(to)));
+		booleanBuilder.and(schedule.leftSeat.gt(0));
 		
 		JPQLQuery<ClassSchedule> jpqlQuery = jpaQueryFactory.selectFrom(schedule)
-				.where(booleanBuilder)
-				.groupBy(schedule.classes.classId);
+				.distinct()
+				.where(booleanBuilder);
 		
 		List<ClassSchedule> list = jpqlQuery.fetch();
 		
@@ -334,6 +338,33 @@ public class ClassesServiceImpl implements ClassesService {
 	@Override
 	public List<ClassSchedule> selectScheduleByClassId(Long classId) {
 		List<ClassSchedule> list = classScheduleRepository.findByClassesClassIdEquals(classId);
+		return list;
+	}
+	
+	/**
+	 * 이용 가능한 클래스 일정 조회
+	 * @return List<ClassSchedule>
+	 * */
+	@Override
+	public List<ClassSchedule> selectAvailableSchedule(Long bookId) {
+		Book book = bookRepository.findById(bookId).orElse(null);
+		
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QClassSchedule schedule = QClassSchedule.classSchedule;
+		
+		booleanBuilder.and(schedule.classes.classId.eq(book.getClasses().getClassId()));
+		booleanBuilder.and(schedule.leftSeat.goe(book.getBookSeat()));
+		booleanBuilder.and(schedule.scheduleDate.gt(new Date()));
+		booleanBuilder.and(schedule.scheduleId.ne(book.getClassSchedule().getScheduleId()));
+
+		JPQLQuery<ClassSchedule> jpqlQuery = jpaQueryFactory.selectFrom(schedule)
+									.where(booleanBuilder)
+									.orderBy(schedule.scheduleDate.asc());
+
+		
+		List<ClassSchedule> list = jpqlQuery.fetch();
+		System.out.println("리스트 " + list);
 		return list;
 	}
 

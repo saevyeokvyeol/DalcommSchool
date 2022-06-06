@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
@@ -58,15 +60,15 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/update")
 	public ModelAndView updatePlace(Place place) {
-		teacherService.updatePlace(place);
+		Place place2 = teacherService.updatePlace(place);
 		
-		return new ModelAndView("teacher/teacherMypage/myPlace");
+		return new ModelAndView("teacher/teacherMypage/myPlace", "place", place2);
 	}
 	
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/read")
+	@RequestMapping("/user/{placeId}")
 	public ModelAndView readPlace(Long placeId) {
 		Place place = teacherService.selectByPlaceId(placeId);
 		return new ModelAndView("teacher/teacherMypage/placeDetail", "place", place);
@@ -76,6 +78,7 @@ public class PlaceController {
 	 * 공방 인프라 리스트 가져오기
 	 * */
 	@RequestMapping("/selectPlaceInfra")
+	@JsonIgnore
 	public List<PlaceInfra> selectPlaceInfra(Long placeId) {
 		List<PlaceInfra> list = teacherService.selectPlaceInfra(placeId);
 		
@@ -87,6 +90,7 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/selectPlaceRegion")
 	@ResponseBody
+	//@JsonIgnore
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = teacherService.selectPlaceRegion();
 		
