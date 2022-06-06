@@ -23,7 +23,7 @@ public class NoticeController {
 	 private String noticeList(Model model) {
 		 List<Notice> nolist = noticeService.selectAllNotice();
 		 
-		 model.addAttribute("nolist",nolist);
+		 model.addAttribute("notice",nolist);
 		 
 		 return "admin/board/Notice/noticeList";
 	 }
@@ -90,4 +90,14 @@ public class NoticeController {
 		return "redirect:/admin/board/Notice/noticeList";
 	}
 	
+	/**
+	 * 검색 하기
+	 * */
+	@RequestMapping("/noticeSearch")
+	public ModelAndView selectByKeyword(String keyfield , String keyword) {
+		System.out.println("keyfield : " + keyfield +" / " + "keyword : "+ keyword);
+		List<Notice> list = noticeService.selectByKeyword(keyfield, keyword);
+		
+		return new ModelAndView("/admin/board/Notice/noticeList","notice",list);
+	}
 }
