@@ -55,7 +55,7 @@
             <p align="right"><b><span style="font-size:9pt;">카테고리</span></b></p>
         </td>
         <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${faq.}</b></span>
+        	<span style="font-size:9pt;"><b>${faq.faqCategory.faqCategoryName}</b></span>
         </td>
     </tr>
     <tr>
