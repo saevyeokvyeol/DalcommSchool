@@ -27,6 +27,7 @@ $(function(){
 	          
 			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/askanswer/delete");
 			   $("#requestForm").submit();
+			   alert("삭제되었습니다.")
 		   
 	   }) 
 	   
@@ -43,7 +44,7 @@ $(function(){
 	    <c:when test="${empty requestScope.askSelectByIdList}">
 		<tr>
 	        <td colspan="5">
-	            <span style="font-size:9pt;">등록된 문의가 없습니다.</span></p>
+	            <span style="font-size:9pt;"><h3>등록된 문의가 없습니다.</h3></span></p>
 	        </td>
 	    </tr>
 	    </c:when>
@@ -56,6 +57,9 @@ $(function(){
 		        </td>
 		        <td>
 		        	문의 ID : ${askSelectByIdList.student.studentId}<p>
+		        </td>
+		        <td>
+		        	카테고리 : ${askSelectByIdList.askCategory.askCategoryName}<p>
 		        </td>
 		        <td>
 		        	문의제목 : ${askSelectByIdList.askTitle}<p>

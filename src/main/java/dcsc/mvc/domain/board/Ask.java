@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
@@ -40,6 +41,11 @@ public class Ask {
 	private String askContent;
 	
 	private String askImg;
+	
+//	private MultipartFile askImg;// <input type = "file" name="file">
+//	private String fname;
+//	private long fsize;
+//	
 	
 	@CreationTimestamp
 	private LocalDateTime askInsertDate;

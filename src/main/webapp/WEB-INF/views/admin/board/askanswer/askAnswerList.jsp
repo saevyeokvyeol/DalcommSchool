@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
 </head>
 <body>
 
@@ -28,10 +30,13 @@
 		        	문의 ID : ${askList.student.studentId}<p>
 		        </td>
 		        <td>
-		        	문의제목 : ${askList.askTitle}<p>
+		        	<span>
+		        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
+		        	문의제목 : ${askList.askTitle}</a>
+		        	</span><p>
 		        </td>
 		        <td>
-				    카테고리 : ${askList.askCategory.askCategoryId}<p>
+				    카테고리 : ${askList.askCategory.askCategoryName}<p>
 		        </td>
 		        <td>
 		            문의 내용 : ${askList.askContent}<p>
@@ -40,7 +45,10 @@
 		        	문의 일자 : ${askList.askInsertDate}<p>
 		        </td>
 		    </tr>
+		    	
+		     <hr>
     </c:forEach>
+   
 	</c:otherwise>
     </c:choose>
 
