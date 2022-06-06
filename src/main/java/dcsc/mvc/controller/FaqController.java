@@ -40,10 +40,9 @@ public class FaqController {
 	}
 	
 	/**
-	 * 등록 하기
+	 * 등록하기
 	 * */
 	@RequestMapping("/faqWrite")
-	@ResponseBody
 	public String insertFAQ(Faq faq, FaqCategory faqCategory) {
 		faq.setFaqCategory(faqCategory);
 		faqService.insertFAQ(faq);

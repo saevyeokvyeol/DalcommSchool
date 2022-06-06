@@ -23,7 +23,6 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public void insertFAQ(Faq faq) {
 		Faq saveFree= faqRepository.save(faq);
-		System.err.println("saveFree = " + saveFree);
 		
 	}
 
@@ -78,9 +77,6 @@ public class FaqServiceImpl implements FaqService {
 		
 		return list;
 	}
-
-
-	
 
 
 }
