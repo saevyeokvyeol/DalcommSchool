@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/main/class")
 public class MainClassController {
 	private final ClassesService classesService;
-	private final BookService bookService;
 	
 	/**
 	 * 공개된 클래스 리스트
@@ -85,40 +84,5 @@ public class MainClassController {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
 		return "/main/class/classDetail";
-	}
-	
-	/**
-	 * 클래스 예약 페이지
-	 * */
-	@RequestMapping("/bookForm")
-	public ModelAndView bookForm(Book book, Long classId, Long scheduleId) {
-		ModelAndView modelAndView = new ModelAndView("/main/class/bookForm");
-		
-		Classes classes = classesService.selectByClassId(classId);
-		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
-		
-		modelAndView.addObject("classes", classes);
-		modelAndView.addObject("schedule", schedule);
-		return modelAndView;
-	}
-	
-	/**
-	 * 클래스 예약 등록
-	 * */
-	@RequestMapping("/bookComplete")
-	public String insertBook(Book book, Classes classes, ClassSchedule schedule, Student student, IssueCoupon issueCoupon) {
-		book.setClasses(classes);
-		book.setClassSchedule(schedule);
-		book.setStudent(student);
-		
-		if(issueCoupon.getIssueNo() > 0L) {
-			book.setIssueCoupon(issueCoupon);
-			
-		}
-		book.setBookState(new BookState(1L, null));
-		
-		bookService.insert(book);
-		
-		return "/main/class/bookComplete";
 	}
 }

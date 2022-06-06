@@ -140,7 +140,7 @@
 		
 		<div id='calendar'></div>
 		
-		<form action="${pageContext.request.contextPath}/main/class/bookForm" id="bookForm" method="post">
+		<form action="${pageContext.request.contextPath}/main/book/bookForm" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
 			<input type="hidden" name="scheduleId" id="scheduleId">

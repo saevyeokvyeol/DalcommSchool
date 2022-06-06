@@ -50,7 +50,7 @@
 					eventClick: function(obj) {
 						
 						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
+							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
 							type : "post",
 							data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
 							dateType: "json",

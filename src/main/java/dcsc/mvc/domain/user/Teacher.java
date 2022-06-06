@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,8 +38,12 @@ public class Teacher {
 	private String teacherEmail;
 	private String teacherInfo;
 	private String teacherImg;
-	private String totalProfit;
-	private String adjustable;
+	
+	@ColumnDefault("0")
+	private int totalProfit;
+	
+	@ColumnDefault("0")
+	private int adjustable;
 	
 	@CreationTimestamp
 	private LocalDateTime teacherInsertDate;

@@ -74,7 +74,7 @@
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/main/class/bookComplete" id="bookForm" method="post">
+		<form action="${pageContext.request.contextPath}/main/book/bookComplete" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
 			<input type="hidden" name="scheduleId" value="${schedule.scheduleId}">

@@ -14,6 +14,7 @@
 	
 	
 	<form action="${pageContext.request.contextPath}/admin/user/teacherSearch" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	       <select name = "keyfield">
 	          <option value = "teacherID" selected>아이디</option>
 	          <option value = "teacherName">이름</option>
@@ -56,7 +57,8 @@
 		                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
 		                            </span></td>
 		                            <td><span>${teacher.teacherEmail}</span></td>
-		                            <td><span><fmt:parseDate value="${teacher.teacherInsertDate}" pattern="yyyy-mm-dd"/></span></td>
+		                            <td><span><fmt:parseDate value="${teacher.teacherInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
+		                            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
 		                            <td><span>${teacher.teacherQuit}</span></td>
 		                        </tr>
                     	</c:forEach>

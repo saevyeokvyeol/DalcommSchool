@@ -73,7 +73,6 @@ $(function() {
           <select>
           	<option>예약</option>
           	<option>결제</option>
-          	<option>클래스</option>
           </select>
 		</span>
 		

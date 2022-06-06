@@ -39,6 +39,7 @@
 	
 <div class="col-sm-12">	
 	<form action="${pageContext.request.contextPath}/admin/user/userSearch" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	       <select name = "keyfield">
 	          <option value = "studentID" selected>아이디</option>
 	          <option value = "studentName">이름</option>
@@ -84,7 +85,8 @@
 		                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
 		                            </span></td>
 		                            <td><span>${student.studentEmail}</span></td>
-		                            <td><span><fmt:parseDate value="${student.studentInsertDate}" pattern="yyyy-mm-dd"/></span></td>
+		                            <td><span><fmt:parseDate value="${student.studentInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
+		                            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
 		                            <td><span>${student.studentQuit}</span></td>
 		                        </tr>
                     	</c:forEach>
