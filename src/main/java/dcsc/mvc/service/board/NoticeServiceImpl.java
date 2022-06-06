@@ -62,9 +62,21 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Notice> selectByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Notice> selectByKeyword(String keyfield, String keyword) {
+		List<Notice> list = null;
+		switch (keyfield) {
+		case "noticeTitle":
+			System.out.println("noticeTitle....호출");
+			list = noRepository.findByNoticeTitleIsLike(keyword);
+			break;
+			
+		case "noticeContent":
+			System.out.println("noticeContent....호출");
+			list = noRepository.findByNoticeContentIsLike(keyword);
+			break;
+		}
+		
+		return list;
 	}
 	
 
