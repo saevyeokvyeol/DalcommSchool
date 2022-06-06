@@ -14,5 +14,4 @@ public class FullCalendar {
 	private Long groupId;
 	private String title;
 	private String start;
-	private String end;
 }

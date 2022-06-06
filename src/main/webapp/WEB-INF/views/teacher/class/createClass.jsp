@@ -154,7 +154,6 @@
 	<body>
 		<form action="${pageContext.request.contextPath}/teacher/class/insert?${_csrf.parameterName}=${_csrf.token}"
 			enctype="multipart/form-data" method="post">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<table>
 				<tr>
 					<td>

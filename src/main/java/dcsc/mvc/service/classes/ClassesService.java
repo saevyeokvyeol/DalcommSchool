@@ -116,6 +116,12 @@ public interface ClassesService {
 	List<ClassSchedule> selectScheduleByClassId(Long classId);
 
 	/**
+	 * 이용 가능한 클래스 일정 조회
+	 * @return List<ClassSchedule>
+	 * */
+	List<ClassSchedule> selectAvailableSchedule(Long bookId);
+
+	/**
 	 * 일정 상세 보기
 	 * @param Long ClassId
 	 * @return ClassSchedule
