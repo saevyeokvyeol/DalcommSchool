@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>선생님 : 전체 발급 쿠폰 조회</title>
+<title>클래스별 쿠폰 조회</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -30,14 +30,13 @@
 				<table class="table" id="couponTable">
 					<thead>
 						<tr>
-							<th>클래스아이디</th>
 							<th>쿠폰아이디</th>
 							<th>쿠폰명</th>
 							<th>할인금액</th>
 							<th>등록일자</th>
 							<th>수정일자</th>
 							<th>사용기간</th>
-							<th>쿠폰상태아이디</th>
+							<th>쿠폰상태</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -52,14 +51,13 @@
 		                    <c:otherwise>
 		                        <c:forEach items="${requestScope.list}" var="coupon">
 		                            <tr>
-		                            	<td>${coupon.classes.classId}</td>
 		                                <td>${coupon.couponId}</td>
 		                                <td>${coupon.couponName}</td>
 		                                <td>${coupon.couponDc}</td>
 		                                <td>${coupon.couponInsertDate}</td>
 		                                <td>${coupon.couponUpdateDate}</td>
 		                                <td>${coupon.couponEndDate}</td>
-		                                <td>${coupon.couponStateId}</td>
+		                                <td>${coupon.couponState.couponStateName}</td>
 		                            </tr>
 		                        </c:forEach>
 		                    </c:otherwise>
