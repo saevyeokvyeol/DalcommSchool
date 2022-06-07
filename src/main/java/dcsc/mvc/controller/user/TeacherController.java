@@ -46,7 +46,7 @@ public class TeacherController {
 	public ModelAndView updateTeacherForm(String teacherId) {
 		Teacher teacher = teacherService.selectById(teacherId);
 		
-		return new ModelAndView("teacher/teacherMypage/updateForm","teacher", teacher);
+		return new ModelAndView("teacher/teacherMypage/updateTeacher","teacher", teacher);
 	}
 	
 	/**

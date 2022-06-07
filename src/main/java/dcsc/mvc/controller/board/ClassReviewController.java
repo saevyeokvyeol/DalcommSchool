@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.Classes;
@@ -63,7 +63,7 @@ public class ClassReviewController {
 	/**
 	 * 후기 상세 보기
 	 * */
-	@RequestMapping("/read")
+	@RequestMapping("/read/{reviewId}")
 	public ClassReview readReview(Long reviewId) {
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
@@ -93,18 +93,45 @@ public class ClassReviewController {
 	}
 	
 	/**
+	 * 클래스 후기 수정 폼
+	 * */
+	@RequestMapping("/updateForm")
+	public void updateReviewForm() {}
+	
+	/**
 	 * 클래스 후기 수정
 	 * */
+	@RequestMapping("/update")
+	public String updateReview(ClassReview review) {
+		reviewService.update(review);
+		
+		return "redirect:/main/board/review/reviewDetail";
+	}
 	
 	/**
 	 * 클래스 후기 삭제
 	 * */
+	@RequestMapping("/delete")
+	public String deleteReview(Long reviewId) {
+		reviewService.delete(reviewId);
+		
+		return "redirect:/main/board/review/classReview";
+	}
 	
 	/**
 	 * 클래스 후기 블라인드 처리
 	 * */
+	@RequestMapping("/blind")
+	@ResponseBody
+	public String reviewBlind(Long reviewId, String reviewBlindState) {
+		
+		reviewService.updateBlind(reviewId, reviewBlindState);
+		
+		return "redirect:/";
+	}
 	
 	/**
 	 * 클래스 후기 신고 기능
 	 * */
+//	@RequestMapping("")
 }
