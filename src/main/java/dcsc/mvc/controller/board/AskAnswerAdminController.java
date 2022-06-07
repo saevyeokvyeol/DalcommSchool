@@ -30,7 +30,7 @@ public class AskAnswerAdminController {
 		model.addAttribute("askList", askList); 
 		  
 		return "/admin/board/askanswer/askAnswerList";  
-	}    
+	}     
 	         
 	/**    
 	 * 1대1 문의 상세보기 기능(관리자)   
@@ -44,14 +44,14 @@ public class AskAnswerAdminController {
 	}
 	 
 	     
-//	/**
-//	 * 1대1 문의 답변 폼 
-//	 * */
+	/**
+	 * 1대1 문의 답변 폼 
+	 * */
 //	 @RequestMapping("/askanswer/askAnswerDetail")
 //	 //public void askAnswerDetail(String askNo) {}
 //	
 //	 public void askAnswerDetail() {}
-	 
+//	  
 	/**  
 	 * 1대1 문의 답변하는 기능(관리자)
 	 * */
