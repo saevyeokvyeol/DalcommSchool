@@ -24,95 +24,97 @@
 		</style>
 		<script>
 			// 풀캘린더 API 사용
-			$(function() {
-				var insertModal = document.getElementById('insertModal')
-				
+			$(function() {				
 				// calendar element 취득
 				var calendarEl = $('#calendar')[0];
 				// full-calendar 생성하기
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					height: '700px', // calendar 높이 설정
-					slotMinTime: '09:00', // Day 캘린더에서 시작 시간
-					slotMaxTime: '22:00', // Day 캘린더에서 종료 시간
-					// 해더에 표시할 툴바
-					headerToolbar: {
-						left: 'prevYear,prev,today,next,nextYear',
-						center: 'title',
-						right: 'dayGridMonth,timeGridWeek'
-					},
-					initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-					navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-					editable: false, // 수정 가능?
-					selectable: true, // 달력 일자 드래그 설정가능
-					nowIndicator: true, // 현재 시간 마크
-					dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-					locale: 'ko', // 한국어 설정
-					eventClick: function(obj) {
-						
-						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
-							type : "post",
-							data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
-							dateType: "json",
-							success : function(result) {
-								$("#scheduleUpdateForm .scheduleId").val(obj.event.id)
-								var date = new Date(`\${result.scheduleDate}`)
-								$("#scheduleUpdateForm .scheduleDate").val(date.toLocaleDateString())
-								$("#scheduleUpdateForm .startTime").val(`\${result.startTime}`)
-								$("#scheduleUpdateForm .endTime").val(`\${result.endTime}`)
-								$("#scheduleUpdateForm .totalSeat").val(`\${result.totalSeat}`)
-								$("#scheduleUpdateForm .leftSeat").val(`\${result.leftSeat}`)
-								$("#scheduleUpdateForm #updateSchedule").val(obj.event.id)
-								
-								difference = $("#scheduleUpdateForm .totalSeat").val() - $("#scheduleUpdateForm .leftSeat").val()
-								if(difference > 0){
-									$("#scheduleUpdateForm h6").css("display", "block");
-									$("#scheduleUpdateForm .updateTime").attr("disabled", "disabled");
-								} else {
-									$("#scheduleUpdateForm h6").css("display", "none");
-									$("#scheduleUpdateForm .updateTime").removeAttr("disabled");
+				function calendarLoad() {
+					calendar = new FullCalendar.Calendar(calendarEl, {
+						height: '700px', // calendar 높이 설정
+						slotMinTime: '09:00', // Day 캘린더에서 시작 시간
+						slotMaxTime: '22:00', // Day 캘린더에서 종료 시간
+						// 해더에 표시할 툴바
+						headerToolbar: {
+							left: 'prevYear,prev,today,next,nextYear',
+							center: 'title',
+							right: 'dayGridMonth,timeGridWeek'
+						},
+						initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+						navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+						editable: false, // 수정 가능?
+						selectable: true, // 달력 일자 드래그 설정가능
+						nowIndicator: true, // 현재 시간 마크
+						dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+						locale: 'ko', // 한국어 설정
+						eventClick: function(obj) {
+							
+							$.ajax({
+								url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
+								type : "post",
+								data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
+								dateType: "text",
+								success : function(result) {
+									$("#scheduleUpdateForm .scheduleId").val(obj.event.id)
+									var date = new Date(`\${result.scheduleDate}`)
+									$("#scheduleUpdateForm .scheduleDate").val(date.toLocaleDateString())
+									$("#scheduleUpdateForm .startTime").val(`\${result.startTime}`)
+									$("#scheduleUpdateForm .endTime").val(`\${result.endTime}`)
+									$("#scheduleUpdateForm .totalSeat").val(`\${result.totalSeat}`)
+									$("#scheduleUpdateForm .leftSeat").val(`\${result.leftSeat}`)
+									$("#scheduleUpdateForm #updateSchedule").val(obj.event.id)
+									$("#scheduleUpdateForm #deleteSchedule").val(obj.event.id)
+									
+									difference = $("#scheduleUpdateForm .totalSeat").val() - $("#scheduleUpdateForm .leftSeat").val()
+									if(difference > 0){
+										$("#scheduleUpdateForm h6").css("display", "block");
+										$("#scheduleUpdateForm .updateTime").attr("disabled", "disabled");
+									} else {
+										$("#scheduleUpdateForm h6").css("display", "none");
+										$("#scheduleUpdateForm .updateTime").removeAttr("disabled");
+									}
+								},
+								error : function(error) {
+									alert("일정을 가져올 수 없습니다.");
 								}
-							},
-							error : function(error) {
-								alert("일정을 가져올 수 없습니다.");
-							}
-						}); // 아작스 종료
-						
-						$("#updateModal").modal("show");
-					},
-					select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-						var now = new Date();
-						var constraint = new Date(now.setDate(now.getDate() + 7));
-						
-						/* if(constraint >= arg.start){
-							alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
-							return;
-						} */
-						
-						$(".startTime").val("");
-						$(".endTime").val("");
-						$(".totalSeat").val("");
-						$(".leftSeat").val("");
-						
-						$(".scheduleDate").val(arg.start.toLocaleDateString());
-						
-					    $("#insertModal").modal("show");
-			        },
-					events: function(info, successCallback, failureCallback){
-						$.ajax({
-							url : "${pageContext.request.contextPath}/selectScheduleByClassId",
-							type : "post",
-							data : {"${_csrf.parameterName}":"${_csrf.token}", "classId": ${classes.classId}},
-							dataType : "json",
-							success : function(result) {
-								successCallback(result);
-							}
-						})
-					}
-				});
+							}); // 아작스 종료
+							
+							$("#updateModal").modal("show");
+						},
+						select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+							var now = new Date();
+							var constraint = new Date(now.setDate(now.getDate() + 7));
+							
+							/* if(constraint >= arg.start){
+								alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
+								return;
+							} */
+							
+							$(".startTime").val("");
+							$(".endTime").val("");
+							$(".totalSeat").val("");
+							$(".leftSeat").val("");
+							
+							$(".scheduleDate").val(arg.start.toLocaleDateString());
+							
+						    $("#insertModal").modal("show");
+				        },
+						events: function(info, successCallback, failureCallback){
+							$.ajax({
+								url : "${pageContext.request.contextPath}/selectScheduleByClassId",
+								type : "post",
+								data : {"${_csrf.parameterName}":"${_csrf.token}", "classId": ${classes.classId}},
+								dataType : "json",
+								success : function(result) {
+									successCallback(result);
+								}
+							})
+						}
+					});
+				}
+				
 				// 캘린더 렌더링
+				calendarLoad();
 				calendar.render();
-				$("#insertModal").modal();
 				
 				$(document).ready(function(){
 					$('.timepicker').timepicker({
@@ -145,7 +147,7 @@
 		
 			$(function() {
 				// 일정 등록
-				$("#scheduleInsertForm").submit(function() {
+				$("#insertSchedule").click(function() {
 					
 					if($("#scheduleInsertForm .startTime").val() == "" || $("#scheduleInsertForm .endTime").val() == ""){
 						alert("수강 체험 가능 시간을 입력해주세요.");
@@ -170,9 +172,11 @@
 							"totalSeat" : $("#scheduleInsertForm .totalSeat").val(),
 							"leftSeat" : $("#scheduleInsertForm .leftSeat").val()
 						},
-						success : function(result) {
-/* 							location.reload();
- */						},
+						success : function() {
+							calendar.refetchEvents()
+							calendar.render();
+							$("#insertModal").modal("hide");
+						},
 						error : function(error) {
 							alert("일정을 등록할 수 없습니다.");
 						}
@@ -193,7 +197,7 @@
 				})
 				
 				// 일정 수정
-				$("#scheduleUpdateForm").submit(function() {
+				$("#updateSchedule").click(function() {
 					
 					if($("#scheduleUpdateForm .startTime").val() >= $("#scheduleUpdateForm .endTime").val()){
 						alert("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
@@ -213,10 +217,12 @@
 							"leftSeat" : $("#scheduleUpdateForm .leftSeat").val()
 						},
 						success : function() {
-							location.reload();
+							calendar.refetchEvents()
+							calendar.render();
+							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 등록할 수 없습니다.");
+							alert("일정을 수정할 수 없습니다.");
 						}
 					}); // 아작스 종료
 				})
@@ -237,10 +243,12 @@
 							"scheduleId" : $(this).val()
 						},
 						success : function() {
-							location.reload();
+							calendar.refetchEvents()
+							calendar.render();
+							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 등록할 수 없습니다.");
+							alert("일정을 삭제할 수 없습니다.");
 						}
 					})
 				})
@@ -279,7 +287,7 @@
 								<input type="number" class="form-control leftSeat" name="leftSeat" required readonly="readonly">
 							</div>
 							<div class="modal-footer">
-								<input type="submit" class="btn btn-primary" id="insertSchedule" value="일정 등록">
+								<input type="button" class="btn btn-primary" id="insertSchedule" value="일정 등록">
 							</div>
 						</form>
 					</div>
@@ -320,8 +328,8 @@
 								<input type="number" class="form-control leftSeat" name="leftSeat" required readonly="readonly">
 							</div>
 							<div class="modal-footer">
-								<input type="button" class="btn btn-primary" id="deleteSchedule" value="일정 삭제">
-								<button type="submit" class="btn btn-primary" id="updateSchedule" value="">일정 수정</button>
+								<button type="button" class="btn btn-primary" id="deleteSchedule" value="">일정 삭제</button>
+								<button type="button" class="btn btn-primary" id="updateSchedule" value="">일정 수정</button>
 							</div>
 						</form>
 					</div>
