@@ -76,10 +76,12 @@ public class FaqController {
 	 * 수정하기
 	 * */
 	@RequestMapping("/faqUpdate")
-	public ModelAndView updateFAQ(Faq faq) {
+	public String updateFAQ(Faq faq,FaqCategory faqCategory) {
+		faq.setFaqCategory(faqCategory);
 		faqService.updateFAQ(faq);
+	System.out.println("faqCategory" + faqCategory);
 		
-		return new ModelAndView("admin/board/FAQ/faqRead","faq",faq);
+		return "redirect:/admin/board/FAQ/faqRead/" + faq.getFaqNo();
 	}
 	
 	/**
