@@ -1,14 +1,22 @@
 package dcsc.mvc.controller.board;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Ask;
+import dcsc.mvc.domain.board.AskCategory;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
+import dcsc.mvc.util.Link;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -18,7 +26,9 @@ public class AskAnswerUserController {
 
 	private final AskAnswerService askAnswerService; 
 	
-	@RequestMapping("/askAnswer")
+	
+	 
+	@RequestMapping("/askAnswer") 
 	public String selectById(String studentId, Model model) {
 		
 		studentId = "jang1234"; 
@@ -29,23 +39,51 @@ public class AskAnswerUserController {
 		
 		return "/main/board/askanswer/askAnswerSelectById"; 
 	} 
-	  
+	   
 	/** 
 	 * 등록폼  
 	 * */
 	@RequestMapping("/askAnswerWrite")
 	public void askAnswerWrite() {}
-	
-	
+	 
+	 
 	@RequestMapping("/insert")
-	public String insert(Ask ask) {
+	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
+		ask.setAskCategory(askCategory);
+		ask.setStudent(student);
 		
+		
+
+		//파일이 첨부되었다면 fname, fsize를 설정한다.
+		//MultipartFile mfile=elect.getFile();
+		 
+//		MultipartFile mfile = ask.getAskImg();
+//		
+//		if(mfile.getSize() > 0 ) { //첨부된 파일에 용량이 있다면..
+//			mfile.transferTo(new File(PATH_SAVE+"/"+mfile.getOriginalFilename())); //폴더에 저장
+//			
+//			electronics.setFname(mfile.getOriginalFilename());
+//			electronics.setFsize(mfile.getSize());
+//		
+//		ask.setFname(mfile.getOriginalFilename());
+//		ask.setFsize(mfile.getSize());
+//			
+//		} 
+		
+		if(file.getSize() > 0) {
+			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		  
 		askAnswerService.insertAsk(ask);
 		
 		return "/main/board/askanswer/askAnswerTest";
 	} 
-	 
-	 
+	  
+	  
 	/**
 	 * 수정폼
 	 * */
@@ -56,7 +94,7 @@ public class AskAnswerUserController {
 		return new ModelAndView("/main/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
 
-	/**
+	/** 
 	 * 1대1 문의 수정하기 
 	 * */
 	@RequestMapping("/update")
@@ -68,8 +106,8 @@ public class AskAnswerUserController {
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
 		return "redirect:/main/board/askanswer/askAnswer";
 	}
-	
-	/**
+	  
+	/** 
 	 * 1대1 문의 삭제하기 
 	 * */
 	@RequestMapping("/delete")
@@ -79,7 +117,7 @@ public class AskAnswerUserController {
 		
 		return "redirect:/main/board/askanswer/askAnswer";
 	}
-	
+
 	
 }
 

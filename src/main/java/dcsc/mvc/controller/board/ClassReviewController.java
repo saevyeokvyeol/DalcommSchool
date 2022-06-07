@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/main/board/review")
 public class ClassReviewController {
 	
-	public final ClassReviewService reviewService;
+	//public final ClassReviewService reviewService;
 	
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
