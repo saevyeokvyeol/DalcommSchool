@@ -10,8 +10,11 @@
 </head>
 <body>
 
-	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert" 
+	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert?${_csrf.parameterName}=${_csrf.token}" 
 	enctype="multipart/form-data">
+	
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+	
 	 <select name="askCategoryId">
 		  <option value="">카테고리 종류</option>
 		  <option value="1">클래스</option>
@@ -38,7 +41,7 @@
     </tr>
     <tr>
     	<td>
-    		첨부 이미지 :<input type="file" name="askImg" multiple="multiple"><p>
+    		첨부 이미지 :<input type="file" name="file" multiple="multiple"><p>
     	</td>
   	</tr> 
   	

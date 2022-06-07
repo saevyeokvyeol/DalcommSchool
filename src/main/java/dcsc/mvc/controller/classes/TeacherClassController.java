@@ -56,14 +56,14 @@ public class TeacherClassController {
 		
 		ClassImage mainImage = new ClassImage();
 		
-		if(file.getSize() > 0) {
+		 if(file.getSize() > 0) {
 			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
 			file.transferTo(img);
-			
+		   	
 			mainImage.setImageName(file.getOriginalFilename());
 			mainImage.setThumbnailState("T");
 		}
-		
+		//하나만 받는 거 
 		ClassImage[] subImages = new ClassImage[3];
 		int index = 0;
 		
@@ -73,13 +73,13 @@ public class TeacherClassController {
 				if(f.getSize() > 0) {
 					File imgs = new File(Link.CLASS_IMG + f.getOriginalFilename());
 					f.transferTo(imgs);
-					
+		 			
 					subImages[index] = new ClassImage(null, null, f.getOriginalFilename(), null, null); 
 					index++;
 				}
 			}
 		}
-
+		//여러개 받는거 유다센세 나이스 yuda nice 감사합니다!
 		classesService.insert(classes, mainImage, subImages);
 		return "redirect:/teacher/class/classList";
 	}

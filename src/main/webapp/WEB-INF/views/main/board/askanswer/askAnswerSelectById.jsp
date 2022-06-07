@@ -68,6 +68,9 @@ $(function(){
 		            문의 내용 : ${askSelectByIdList.askContent}<p> 
 		        </td>
 		        <td>
+		        	첨부 파일 : ${askSelectByIdList.askImg}<p>
+		        </td>
+		        <td>
 		        	문의 일자 : ${askSelectByIdList.askInsertDate}<p>
 		        </td>
 		    </tr>

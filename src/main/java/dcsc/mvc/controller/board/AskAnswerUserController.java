@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
+import dcsc.mvc.util.Link;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -23,8 +26,7 @@ public class AskAnswerUserController {
 
 	private final AskAnswerService askAnswerService; 
 	
-	private static final String PATH_SAVE="C:\\Edu\\Spring\\fileSave";
- 
+	
 	 
 	@RequestMapping("/askAnswer") 
 	public String selectById(String studentId, Model model) {
@@ -46,9 +48,10 @@ public class AskAnswerUserController {
 	 
 	 
 	@RequestMapping("/insert")
-	public String insert(Ask ask, AskCategory askCategory,Student student)throws IOException {
+	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
 		ask.setAskCategory(askCategory);
 		ask.setStudent(student);
+		
 		
 
 		//파일이 첨부되었다면 fname, fsize를 설정한다.
@@ -67,12 +70,20 @@ public class AskAnswerUserController {
 //			
 //		} 
 		
+		if(file.getSize() > 0) {
+			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		  
 		askAnswerService.insertAsk(ask);
 		
 		return "/main/board/askanswer/askAnswerTest";
 	} 
 	  
-	
+	  
 	/**
 	 * 수정폼
 	 * */
@@ -83,7 +94,7 @@ public class AskAnswerUserController {
 		return new ModelAndView("/main/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
 
-	/**
+	/** 
 	 * 1대1 문의 수정하기 
 	 * */
 	@RequestMapping("/update")
@@ -95,8 +106,8 @@ public class AskAnswerUserController {
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
 		return "redirect:/main/board/askanswer/askAnswer";
 	}
-	
-	/**
+	  
+	/** 
 	 * 1대1 문의 삭제하기 
 	 * */
 	@RequestMapping("/delete")
