@@ -56,7 +56,7 @@ public class TeacherController {
 	public ModelAndView updateTeacher(Teacher teacher) {
 		teacherService.updateTeacher(teacher);
 		
-		return new ModelAndView("/teacher/board");
+		return new ModelAndView("redirect:/teacher/board");
 	}
 	
 	/**
