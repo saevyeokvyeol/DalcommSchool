@@ -40,6 +40,26 @@ public class TeacherController {
 	}
 	
 	/**
+	 * 강사 정보 수정폼
+	 * */
+	@RequestMapping("/teacher/teacherMypage/updateForm")
+	public ModelAndView updateTeacherForm(String teacherId) {
+		Teacher teacher = teacherService.selectById(teacherId);
+		
+		return new ModelAndView("teacher/teacherMypage/updateForm","teacher", teacher);
+	}
+	
+	/**
+	 * 강사 정보 수정하기
+	 * */
+	@RequestMapping("/teacher/teacherMypage/updateTeacher")
+	public ModelAndView updateTeacher(Teacher teacher) {
+		teacherService.updateTeacher(teacher);
+		
+		return new ModelAndView("/teacher/board");
+	}
+	
+	/**
 	 * 아이디 찾기 폼
 	 * */
 	@RequestMapping("/main/login/findIdForm")
@@ -119,7 +139,6 @@ public class TeacherController {
 	@ResponseBody
 	public boolean checkId(String userId) {
 		boolean result = teacherService.userIdCheck(userId);
-//		System.out.println(result);
 		
 		return result;
 	}
@@ -132,7 +151,7 @@ public class TeacherController {
 	public boolean checkPhone(String userPhone) {
 		boolean result = teacherService.userPhoneCheck(userPhone);
 		
-//		System.out.println(result);
+
 		return result;
 	}
 	
@@ -147,13 +166,30 @@ public class TeacherController {
 		return result;
 	}
 	
+	/**
+	 * 강사 상세 보기(관리자)
+	 * */
+	@RequestMapping("/admin/user/{teacherId}")
+	public Teacher readTeacherAdmin(String teacherId) {
+		Teacher teacher = teacherService.selectById(teacherId);
+		
+		return teacher;
+	}
+	
+	/**
+	 * 강사 상세 보기(회원)
+	 * */
+	@RequestMapping("/main/teacher/{teacherId}")
+	public Teacher readTeacherUser(String teacherId) {
+		Teacher teacher = teacherService.selectById(teacherId);
+		
+		return teacher;
+	}
 	
 //	@RequestMapping("/mypage")
 //	public void teacherMypage(){}
 //	
-//	@RequestMapping("/updateProfile")
-//	public void updateProfile() {}
-//	
+
 
 	
 	

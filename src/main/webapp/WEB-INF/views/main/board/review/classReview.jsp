@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강사 회원정보 수정 페이지입니다.</title>
+<title>클래스 리뷰 페이지입니다.</title>
 </head>
 <body>
-<h1> 강사정보 수정~ </h1>
 
+클래스 리뷰 페이지입니다.
 </body>
 </html>

@@ -3,25 +3,18 @@ package dcsc.mvc.controller.classes;
 import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
-import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
-import dcsc.mvc.domain.classes.Search;
-import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
-import dcsc.mvc.util.Link;
+import dcsc.mvc.util.FileLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -49,15 +42,20 @@ public class TeacherClassController {
 	/**
 	 * 클래스 등록하기
 	 * */
-	@RequestMapping("/teacher/class/insert")
-	public String insert(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file, List<MultipartFile> files, HttpSession session) throws Exception {
+	@RequestMapping("/insert")
+	public String insert(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file, List<MultipartFile> files) throws Exception {
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
 		
 		ClassImage mainImage = new ClassImage();
 		
+<<<<<<< HEAD
 		 if(file.getSize() > 0) {
 			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+=======
+		if(file.getSize() > 0) {
+			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
+>>>>>>> 04b1020b6715ce8689a9c23f66211e4c6ffa1b31
 			file.transferTo(img);
 		   	
 			mainImage.setImageName(file.getOriginalFilename());
@@ -71,7 +69,7 @@ public class TeacherClassController {
 			for(MultipartFile f : files) {
 				System.out.println(f);
 				if(f.getSize() > 0) {
-					File imgs = new File(Link.CLASS_IMG + f.getOriginalFilename());
+					File imgs = new File(FileLink.CLASS_IMG + f.getOriginalFilename());
 					f.transferTo(imgs);
 		 			
 					subImages[index] = new ClassImage(null, null, f.getOriginalFilename(), null, null); 
@@ -92,5 +90,13 @@ public class TeacherClassController {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
 		return "/teacher/class/classDetail";
+	}
+	
+	/**
+	 * 클래스 예약자 목록 페이지
+	 * */
+	@RequestMapping("/bookList")
+	public String bookList() {
+		return "/teacher/class/bookList";
 	}
 }

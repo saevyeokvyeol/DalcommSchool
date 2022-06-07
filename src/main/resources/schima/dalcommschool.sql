@@ -152,8 +152,8 @@ insert into Class_Schedule values(schedule_id_seq.nextval,systimestamp,systimest
 
 alter table class_schedule rename column id to schedule_id;
 
-alter table Class_Schedule modify (end_time VARCHAR2(255 CHAR));
-alter table Class_Schedule modify (start_time VARCHAR2(255 CHAR));
+alter table teacher modify (ADJUSTABLE number(19, 0));
+alter table teacher modify (TOTAL_PROFIT number(19, 0));
 --클래스 상세 이미지 안됌
 insert into class_Image values(classimage_id_seq.nextval, systimestamp, 'T','쿠키이미지', 1);
 insert into class_Image values(classimage_id_seq.nextval, systimestamp, 'T','마카롱이미지', 2);
@@ -245,5 +245,12 @@ commit;
 alter table place drop column place_region;
 
 
-
+insert into book_state values(book_state_id.nextval, '수강 확정');
+insert into book_state values(book_state_id.nextval, '수강 완료');
+insert into book_state values(book_state_id.nextval, '취소');
+commit;
 create table class_schedule (schedule_id number(19,0) not null, schedule_insert_date timestamp, schedule_update_date timestamp, end_time varchar2(255 char), left_seat number(10,0) not null, schedule_date timestamp, schedule_finished varchar2(255 char) default 'F', start_time varchar2(255 char), total_seat number(10,0) not null, class_id number(19,0), primary key (schedule_id))
+
+alter table class_schedule drop column schedule_finished
+
+alter table teacher add constraint

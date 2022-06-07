@@ -1,6 +1,8 @@
 package dcsc.mvc.controller.classes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +15,11 @@ import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookState;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.classes.Search;
-import dcsc.mvc.domain.coupon.Coupon;
-import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.user.Student;
-import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
+import dcsc.mvc.service.classes.LikeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/main/class")
 public class MainClassController {
 	private final ClassesService classesService;
-	private final BookService bookService;
+	private final LikeService likeService;
 	
 	/**
 	 * 공개된 클래스 리스트
@@ -37,6 +38,17 @@ public class MainClassController {
 		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
 		
 		List<Classes> list = classesService.selectAll();
+		
+		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+
+		for(Likes l : likeList) {
+			for(Classes c : list) {
+				if(c.getClassId() == l.getClasses().getClassId()) {
+					c.setLikeId(l.getLikeId());
+					break;
+				}
+			}
+		}
 		
 		model.addAttribute("list", list);
 	}
@@ -85,40 +97,5 @@ public class MainClassController {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
 		return "/main/class/classDetail";
-	}
-	
-	/**
-	 * 클래스 예약 페이지
-	 * */
-	@RequestMapping("/bookForm")
-	public ModelAndView bookForm(Book book, Long classId, Long scheduleId) {
-		ModelAndView modelAndView = new ModelAndView("/main/class/bookForm");
-		
-		Classes classes = classesService.selectByClassId(classId);
-		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
-		
-		modelAndView.addObject("classes", classes);
-		modelAndView.addObject("schedule", schedule);
-		return modelAndView;
-	}
-	
-	/**
-	 * 클래스 예약 등록
-	 * */
-	@RequestMapping("/bookComplete")
-	public String insertBook(Book book, Classes classes, ClassSchedule schedule, Student student, IssueCoupon issueCoupon) {
-		book.setClasses(classes);
-		book.setClassSchedule(schedule);
-		book.setStudent(student);
-		
-		if(issueCoupon.getIssueNo() > 0L) {
-			book.setIssueCoupon(issueCoupon);
-			
-		}
-		book.setBookState(new BookState(1L, null));
-		
-		bookService.insert(book);
-		
-		return "/main/class/bookComplete";
 	}
 }

@@ -60,15 +60,15 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/update")
 	public ModelAndView updatePlace(Place place) {
-		teacherService.updatePlace(place);
+		Place place2 = teacherService.updatePlace(place);
 		
-		return new ModelAndView("teacher/teacherMypage/myPlace");
+		return new ModelAndView("teacher/teacherMypage/myPlace", "place", place2);
 	}
 	
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/read")
+	@RequestMapping("/user/{placeId}")
 	public ModelAndView readPlace(Long placeId) {
 		Place place = teacherService.selectByPlaceId(placeId);
 		return new ModelAndView("teacher/teacherMypage/placeDetail", "place", place);

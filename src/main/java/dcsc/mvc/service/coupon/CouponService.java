@@ -28,6 +28,11 @@ public interface CouponService {
 	 * */
 	List<Coupon> selectByTeacherId(String teacherId);
 	
+	/**
+	 * 쿠폰 상세조회
+	 * */
+	Coupon selectByCouponId(Long couponId);
+	
 	
 	/**
 	 * 클래스 쿠폰 등록 기능
@@ -51,7 +56,7 @@ public interface CouponService {
 	 * @param String couponId
 	 * @return void
 	 * */
-	void deleteCoupon(String couponId);
+	void deleteCoupon(Long couponId);
 	
 	/**
 	 * 클래스 쿠폰 상태 변경 기능 ; 선생님
@@ -70,10 +75,18 @@ public interface CouponService {
 	
 	
 	/**
-	 * 학생이 보유한 쿠폰 조회 기능 ; 관리자
+	 * 학생이 보유한 쿠폰 조회 기능 ; 관리자(test)
 	 * @param studentId(검색기준)
 	 * @return List<IssueCoupon>
 	 * */
 	List<IssueCoupon> selectByStudent(String studentId);
+	
+	
+	/**
+	 * 해당 클래스에 사용할 수 있는 쿠폰조회
+	 * @param 
+	 * @return List<Coupon>
+	 * */
+	//List<Coupon> selectAllClassId(Long classId);
 
 }

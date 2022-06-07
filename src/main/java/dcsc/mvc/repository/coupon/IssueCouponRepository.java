@@ -15,4 +15,5 @@ public interface IssueCouponRepository extends JpaRepository<IssueCoupon, Long> 
 	 * */
 	List<IssueCoupon> findByStudentStudentIdEquals(String studentId);
 	
+	
 }

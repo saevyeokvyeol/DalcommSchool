@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
-		
+				<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
 			    z-index: 1050!important;
@@ -140,7 +140,7 @@
 		
 		<div id='calendar'></div>
 		
-		<form action="${pageContext.request.contextPath}/main/class/bookForm" id="bookForm" method="post">
+		<form action="${pageContext.request.contextPath}/main/book/bookForm" id="bookForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" name="classId" value="${classes.classId}">
 			<input type="hidden" name="scheduleId" id="scheduleId">
@@ -175,9 +175,9 @@
 							예약 인원
 						</td>
 						<td>
-							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
+							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><i class="fa-solid fa-minus"></i></button>
 							<input type="number" class="form-control-plaintext num" name="bookSeat" id="bookSeat" min="1" max="9999" step="1" value="1" readonly="readonly">
-							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><i class="fa-solid fa-plus"></i></button>
 						</td>
 					</tr>
 				</tbody>

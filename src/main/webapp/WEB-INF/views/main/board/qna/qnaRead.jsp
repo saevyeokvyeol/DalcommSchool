@@ -67,6 +67,7 @@
 						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
 						<input type=hidden name="blindState" value="${qna.blindState}" id="blindState">
 						<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
+						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 						<c:choose>
 							<c:when test="${qna.qnaComplete eq 'T'}">
 			 					<input type=hidden value="수정하기" >

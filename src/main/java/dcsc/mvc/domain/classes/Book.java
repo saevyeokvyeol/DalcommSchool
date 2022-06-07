@@ -46,17 +46,17 @@ public class Book {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
 	@JsonIgnore
-	private Student student; //
+	private Student student;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
 	@JsonIgnore
-	private Classes classes; //
+	private Classes classes;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "schedule_id")
 	@JsonIgnore
-	private ClassSchedule ClassSchedule; //
+	private ClassSchedule classSchedule;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "issue_no")
@@ -67,10 +67,10 @@ public class Book {
 	@JoinColumn(name = "book_state_id")
 	@JsonIgnore
 	private BookState bookState;
-	private int bookSeat; //
-	private int totalPrice; //
-	private String bookName; //
-	private String bookPhone; //
+	private int bookSeat;
+	private int totalPrice;
+	private String bookName;
+	private String bookPhone;
 	
 	@CreationTimestamp
 	private LocalDateTime bookInsertDate;

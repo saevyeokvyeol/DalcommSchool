@@ -2,7 +2,6 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
-import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReview;
 
 public interface ClassReviewService {
@@ -39,11 +38,21 @@ public interface ClassReviewService {
 	List<ClassReview> selectByTeacherId(String teacherId);
 
 	/**
+	 * 학생ID로 후기 검색
+	 * */
+	List<ClassReview> selectByStudentId(String studentId);	
+	
+	/**
+	 * 클래스 후기 전체 가져오기
+	 * */
+	List<ClassReview> selectAll();
+	
+	/**
 	 * 클래스 후기 상세 보기
 	 * @param Long reviewId
 	 * @return ClassQna
 	 * */
-	ClassQna selectByReviewId(Long reviewId);
+	ClassReview selectByReviewId(Long reviewId);
 
 	/**
 	 * 클래스 후기 블라인드

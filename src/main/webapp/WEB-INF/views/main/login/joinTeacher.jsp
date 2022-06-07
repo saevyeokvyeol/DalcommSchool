@@ -15,9 +15,8 @@
 <!-- jQuery ui -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- jQuery ui -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 <style type="text/css">
@@ -43,6 +42,7 @@
 			
 			var isNum = id.search(/[0-9]/g); //숫자 있는지 확인. 있으면 index 리턴. 없으면 -1. -> -1이면 안됨.
 			var checkLow = /[a-z]/; //영소문자인지 확인 -> true를 반환해야함.
+			var isUpper = id.search(/[A-Z]/g); // -1 리턴해야함.
 			var isSpace = id.search(/\s/); //공백 있는지 확인. 없으면 -1. -> -1 리턴해야함.
 			var specialChar = id.search(/[~!@#$%^&*?\|=]/gi); //특수문자 있는지 확인. -> -1리턴해야함
 			var isKorean = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi); // -1리턴해야함.
@@ -53,7 +53,7 @@
 			}else if(!checkLow.test(id)){ //영소문자 체크  --> 확인해봐야함.
 				$("#notValidId").css("display", "inline-block");
 				return false;
-			}else if(isNum<0 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
+			}else if(isNum<0 || isUpper!=-1 || isSpace!=-1 || specialChar!=-1 || isKorean!= -1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidId").css("display", "inline-block");
 				return false;
 			}else{
@@ -69,6 +69,7 @@
 			isValidPwd();
 		})
 		
+		
 		function isValidPwd(){
 			var id = $("#teacherPwd").val();
 			
@@ -81,12 +82,15 @@
 			
 			if(id.length<8){ //길이 체크
 				$("#notValidPwd").css("display", "inline-block");
+// 				alert("false")
 				return false;
 			}else if(isNum<0 || isUp<0 || isLow<0 || isSpace!=-1 || specialChar!=-1 || isKorean!=-1){ //숫자, 영대문자, 공백, 특수문자, 한글 체크
 				$("#notValidPwd").css("display", "inline-block");
+// 				alert("false")
 				return false;
 			}else{
 				$("#notValidPwd").css("display", "none");
+// 				alert("true")
 				return true;
 			}
 		}
@@ -246,6 +250,9 @@
  		$("#teacherNick").keyup(function(){
  			isNickChecked = false;
  		})
+ 		$("#teacherPwd").keyup(function(){
+			isSamePwd = false;
+ 		})
 
 		/*
 		비밀번호 일치 여부 체크
@@ -258,21 +265,22 @@
 			
 			if(pwd1!="" && pwd2!=""){
 				if(pwd1 == pwd2){
-					$("#pwdCheck_Fail").css("display", "none");
-					$("#pwdCheck_success").css("display", "inline-block");
+// 					$("#pwdCheck_Fail").css("display", "none");
+// 					$("#pwdCheck_success").css("display", "inline-block");
+					
 					isSamePwd = true;
 				}else{
-					$("#pwdCheck_success").css("display", "none");
-					$("#pwdCheck_Fail").css("display", "inline-block");
+// 					$("#pwdCheck_success").css("display", "none");
+// 					$("#pwdCheck_Fail").css("display", "inline-block");
 					isSamePwd = false;
 				}
 			}else if(pwd1 != "" && pwd2 == ""){
-				$("#pwdCheck_success").css("display", "none");
-				$("#pwdCheck_Fail").css("display", "none");
+// 				$("#pwdCheck_success").css("display", "none");
+// 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}else{
-				$("#pwdCheck_success").css("display", "none");
-				$("#pwdCheck_Fail").css("display", "none");
+// 				$("#pwdCheck_success").css("display", "none");
+// 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}
 		})
@@ -287,34 +295,43 @@
 			}
 			
 		})
-	})	
-	
-	$(function(){
-		$("#insertForm").submit(function(){			
+		
+		$("#insertForm").submit(function(event){
 			/*
 			중복체크 여부
 			*/
 			if(!isIdChecked){
 				alert("ID 중복체크를 진행해주세요.")
-				return false;
+				event.preventDefault();
 			}else if(!isNickChecked){
 				alert("닉네임 중복체크를 진행해주세요")
-				return false;
+				event.preventDefault();
 			}else if(!isPhoneChecked){
 				alert("핸드폰 번호 중복체크를 진행해주세요")
-				return false;
+				event.preventDefault();
 			}else if(!isSamePwd){
 				alert("비밀번호 일치 여부를 확인해주세요.")
-				return false;
+				event.preventDefault();
 			}
 			
-			isValidId();
-			isValidPwd();
-			isValidPhone();
-			isValidEmail();
+			if(!isValidPwd()){
+				alert("비밀번호를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidId()){
+// 				alert("아이디를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidPhone()){
+// 				alert("핸드폰 번호를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}else if(!isValidEmail()){
+// 				alert("이메일을 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+			}	 
 		})
+	})	
+	
+	
 		
-	})
 </script>
 
 </head>
