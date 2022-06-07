@@ -13,6 +13,7 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.CouponState;
 import dcsc.mvc.domain.coupon.IssueCoupon;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.coupon.CouponRepository;
 import dcsc.mvc.repository.coupon.IssueCouponRepository;
@@ -31,7 +32,7 @@ public class CouponController {
 	 * */
 	@RequestMapping("main/mypage/couponList")
 	public void selectAllIssueCouponByStudentId(String studentId, Model model) {
-		studentId = "lee1234";
+		studentId = "kim1234";
 		
 		List<IssueCoupon> list = couponService.selectByStudentId(studentId);
 		model.addAttribute("list", list);
@@ -230,4 +231,26 @@ public class CouponController {
 		
 		return "redirect:/";
 	}
+	
+	/**
+	 * 학생이 쿠폰 다운로드할 수 있는 페이지
+	 * */
+	@RequestMapping("main/class/issueCouponList")
+	public void issueCouponList() {
+		
+	}
+	
+	/**
+	 * 학생이 쿠폰 다운로드 하는 기능
+	 * */
+	@RequestMapping("main/class/insertIssueCoupon")
+	public String insertIssueCoupon(Student student , Coupon coupon) {
+		
+		IssueCoupon issueCoupon = new IssueCoupon(null, student, coupon, null, null, null);
+		couponService.insertIssueCoupon(issueCoupon);
+		
+		return "redirect:/main/mypage/couponList";
+	}
+	
+	
 }

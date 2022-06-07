@@ -1,6 +1,8 @@
 package dcsc.mvc.service.coupon;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -159,7 +161,7 @@ public class CouponServiceImpl implements CouponService {
 		return list;
 	}
 
-
+	
 	
 	/**
 	 * 해당 클래스에 사용할 수 있는 쿠폰조회
@@ -179,4 +181,30 @@ public class CouponServiceImpl implements CouponService {
 		return mergeList;
 	}*/
 
+	
+	/**
+	 * 학생이 쿠폰 다운로드 하는 기능
+	 * */
+	@Override
+	public void insertIssueCoupon(IssueCoupon issueCoupon) {
+		Long couponId = issueCoupon.getCoupon().getCouponId();
+		String studentId = issueCoupon.getStudent().getStudentId();
+		
+		Coupon dbCoupon = couponRep.findById(couponId).orElse(null);
+		Integer endDate = dbCoupon.getCouponEndDate(); //Integer
+		
+		System.out.println("couponId ="+ couponId);
+		System.out.println("studentId ="+ studentId);
+		System.out.println("endDate ="+ endDate);
+		
+		LocalDateTime now = LocalDateTime.now();
+		
+		issueCoupon.setIssueStartDate(now);
+		issueCoupon.setIssueEndDate(now.plusDays(endDate));
+		issueCoupon.setIssueUsable("T");
+		
+		issueCouponRep.save(issueCoupon);
+		
+	}
+	
 }

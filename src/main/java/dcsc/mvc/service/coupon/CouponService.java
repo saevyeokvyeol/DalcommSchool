@@ -88,5 +88,11 @@ public interface CouponService {
 	 * @return List<Coupon>
 	 * */
 	//List<Coupon> selectAllClassId(Long classId);
+	
+	
+	/**
+	 * 학생이 쿠폰 다운로드하는 기능
+	 * */
+	void insertIssueCoupon(IssueCoupon issueCoupon);
 
 }
