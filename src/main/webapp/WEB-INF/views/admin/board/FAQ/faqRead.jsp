@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	$(function(){
 	 $("input[value=수정하기]").click(function(){
-		   
+		   alert(1)
 		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/updateForm");
 		   $("#requestForm").submit();
 		   
@@ -88,6 +88,7 @@
         <td height="20" colspan="2" align="center" valign="middle">
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 			<form name="requestForm" method="post" id="requestForm">
+				 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type=hidden name="faqNo" value="${faq.faqNo}">
 				<input type=button value="수정하기" >
 				<input type=button value="삭제하기" >
