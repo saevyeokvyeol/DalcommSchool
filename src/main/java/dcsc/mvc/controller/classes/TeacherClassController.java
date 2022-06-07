@@ -49,13 +49,8 @@ public class TeacherClassController {
 		
 		ClassImage mainImage = new ClassImage();
 		
-<<<<<<< HEAD
-		 if(file.getSize() > 0) {
-			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
-=======
 		if(file.getSize() > 0) {
 			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
->>>>>>> 04b1020b6715ce8689a9c23f66211e4c6ffa1b31
 			file.transferTo(img);
 		   	
 			mainImage.setImageName(file.getOriginalFilename());
