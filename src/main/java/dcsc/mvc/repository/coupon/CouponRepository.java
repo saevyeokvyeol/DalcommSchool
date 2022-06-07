@@ -23,4 +23,5 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, QuerydslP
 	 * */
 	List<Coupon> findByTeacherTeacherId(String teacherId);
 	
+	
 }

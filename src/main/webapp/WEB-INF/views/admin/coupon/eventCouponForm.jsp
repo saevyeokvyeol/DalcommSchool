@@ -12,37 +12,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
-<title>선생님 : 클래스 쿠폰 등록하기</title>
+<title>관리자 : 이벤트 쿠폰 등록하기</title>
 
 <script type="text/javascript">
 	$(function() {
 		//alert(1);
 		
-		//선생님이 보유한 클래스명 가져오기
-		$(function(){
-		function selectByTeacherId(){
-			$.ajax({
-				url: "/teacher/selectByTeacherId",
-				type: "post",
-				data: {"${_csrf.parameterName}": "${_csrf.token}"},
-				dataType: "json",
-				success: function(result){
-// 					alert(result);
-					text = ""
-					$.each(result, function(index, item){
-						text += `<option value='\${item.classId}'>\${item.className}</option>`;
-					})
-					text += ""
-					$("select[name = classId]").append(text);
-				},
-				error: function(err){
-					
-					alert("클래스명을 가져올 수 없습니다.")
-				}
-			})
-		}
-		selectByTeacherId();
-	})
 		
 		
 	});
@@ -54,23 +29,10 @@
     <!--쿠폰등록하기-->
     <div class="card">
         <div class="card-body">
-         	<form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/couponInsert">
+         	<form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/eventCouponInsert">
          	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
          		<h2> 쿠폰 등록하기 </h2>
          		<table>
-	         			<tr>
-	         				<th>선생님ID</th>
-	         				<td><input type=hidden name="teacherId" value="Tkim1234" id="teacherId"></td>
-	         				<%-- <td><input type=hidden name="teacherId" value="${teacher.teacherId} id="teacherId"></td> --%>
-	         			</tr>
-	         			<tr>
-	         				<th>클래스명</th>
-	         				<td>
-								<select name="classId" id="classId">
-						        	<option value="0">-클래스 선택-</option>          
-						        </select>
-							</td>
-	         			</tr>
 	         			<tr>
 	         				<th>쿠폰상태</th>
 	         				<td>
@@ -103,7 +65,7 @@
      </div>
      <hr>
     
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList">뒤로 돌아가기</a>&gt;</span></div>
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon">뒤로 돌아가기</a>&gt;</span></div>
 
 
 </body>

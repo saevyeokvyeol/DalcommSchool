@@ -61,6 +61,6 @@ public class Coupon {
 	@UpdateTimestamp
 	private LocalDateTime couponUpdateDate;
 	
-	private int couponEndDate;
+	private Integer couponEndDate;
 	
 }

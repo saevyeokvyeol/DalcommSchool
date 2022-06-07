@@ -48,6 +48,10 @@ $(function(){
 		}
 	}
 	
+	$("#newUserPwd").keyup(function(){
+		isSamePwd = false;
+		})
+	
 	isSamePwd = false;
 	
 	$("#newUserPwd2").focusout(function(){
@@ -56,21 +60,13 @@ $(function(){
 		
 		if(pwd1!="" && pwd2!=""){
 			if(pwd1 == pwd2){
-				$("#pwdCheck_Fail").css("display", "none");
-				$("#pwdCheck_success").css("display", "inline-block");
 				isSamePwd = true;
 			}else{
-				$("#pwdCheck_success").css("display", "none");
-				$("#pwdCheck_Fail").css("display", "inline-block");
 				isSamePwd = false;
 			}
 		}else if(pwd1 != "" && pwd2 == ""){
-			$("#pwdCheck_success").css("display", "none");
-			$("#pwdCheck_Fail").css("display", "none");
 			isSamePwd = false;
 		}else{
-			$("#pwdCheck_success").css("display", "none");
-			$("#pwdCheck_Fail").css("display", "none");
 			isSamePwd = false;
 		}
 	})
@@ -80,7 +76,6 @@ $(function(){
 		let pwd2 = $("#newUserPwd2").val();
 		
 		if(pwd1=="" && pwd2!=""){
-			$("#pwdCheck_Fail").css("display", "inline-block");
 			isSamePwd = false;
 		}
 		
@@ -89,10 +84,10 @@ $(function(){
 	/*
 	 비밀번호 일치 여부 확인
 	 */
-	$("#updatePwdForm").submit(function(){	
+	$("#updatePwdForm").submit(function(event){	
 		if(!isSamePwd){
 			alert("비밀번호 일치 여부를 확인해주세요.")
-			return false;
+			event.preventDefault();
 		}
 		
 		let pwd = $("#userPwd").val();
@@ -100,10 +95,14 @@ $(function(){
 		
 		if(pwd==newPwd){
 			alert("새로운 비밀번호는 기존 비밀번호와 달라야합니다.")
-			return false;
+			event.preventDefault();
 		}
 		
-		isValidPwd();
+		if(!isValidPwd()){
+			alert("비밀번호를 형식에 맞게 입력해주세요.");
+			event.preventDefault();
+		}
+		
 		
 	})
 	
@@ -129,9 +128,7 @@ $(function(){
     </tr>
     <tr>
       <th>새 비밀번호 확인</th>
-      <td><input type="password" id="newUserPwd2" placeholder="한번 더 입력해주세요." required>
-      <span id="pwdCheck_success" class="message">비밀번호가 일치합니다.</span>
-	  <span id="pwdCheck_Fail" class="message">비밀번호 일치 여부를 확인해주세요.</span></td>
+      <td><input type="password" id="newUserPwd2" placeholder="한번 더 입력해주세요." required></td>
     </tr>
   </table>
   <div>
