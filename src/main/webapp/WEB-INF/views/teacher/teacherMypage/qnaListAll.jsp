@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,12 +49,18 @@
 	                                        <a>이 글은 관리자의 권한으로 블라인드처리가 되었습니다.</a>
 	                                    </c:when>
 	                                    <c:otherwise>
-	                                    	<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead_th/${qna.qnaId}">${qna.qnaTitle}</a>
+	                                    	<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
 	                                    </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td><span>${qna.qnaInsertDate}</span></td>
-                                <td><span>${qna.qnaUpdateDate}</span></td>
+                                <td>
+		                        	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
+		                        <td>
+		                        	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
                                 <td><span>${qna.qnaComplete}</span></td>
                             </tr>
                         </c:forEach>

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,9 +44,15 @@
                 <th>작성자</th>
                 <td>${qna.student.studentId.substring(0,4)}****</td>
                 <th>등록일자</th>
-                <td>${qna.qnaInsertDate}</td>
+                <td>
+                	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+                	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+                </td>
                 <th>수정일자</th>
-                <td>${qna.qnaUpdateDate}</td>
+                <td>
+                	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+                	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+                </td>
             </tr>
             <tr>
                 <th>제목</th>
@@ -62,12 +69,11 @@
 		        <td height="20" colspan="3" align="center" valign="middle">
 					<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 					<form name="requestForm" method="post" id="requestForm">
+						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 						<input type=hidden name="qnaId" value="${qna.qnaId}">
 						<input type=hidden name="classId" value="${qna.classes.classId}" id="classId">
 						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
-						<input type=hidden name="blindState" value="${qna.blindState}" id="blindState">
-						<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
-						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+						
 						<c:choose>
 							<c:when test="${qna.qnaComplete eq 'T'}">
 			 					<input type=hidden value="수정하기" >
