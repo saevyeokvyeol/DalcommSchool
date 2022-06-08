@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.board;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
