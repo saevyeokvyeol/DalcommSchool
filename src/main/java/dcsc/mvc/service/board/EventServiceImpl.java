@@ -62,6 +62,9 @@ public class EventServiceImpl implements EventService {
 	 * */
 	@Override
 	public Event selectByEventNo(Long eventNo, boolean state) {
+		if(state) { //조회수 증가
+			eventRep.updateReadNum(eventNo);
+		}
 		Event event = eventRep.findById(eventNo).orElse(null);
 		if(event==null) throw new RuntimeException("해당 이벤트가 존재하지 않습니다.");
 		

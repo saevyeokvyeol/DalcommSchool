@@ -55,7 +55,7 @@ public interface TeacherService {
 	 * @param: String userPwd, String newUserPwd, HttpSession session
 	 * @return:
 	 * */
-	void updateUserPwd (String userPwd, String newUserPwd, HttpSession session);
+	void updateLoginUserPwd (String userPwd, String newUserPwd);
 	
 	
 	/**

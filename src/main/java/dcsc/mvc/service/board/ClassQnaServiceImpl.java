@@ -52,10 +52,10 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	@Override
 	public void insertQuestion(ClassQna classQna) {
 		ClassQna saveQna = classQnaRep.save(classQna);
-		//System.out.println("saveQna.getQnaId = " + saveQna.getQnaId());
-		//System.out.println("saveQna.getQnaTitle = " + saveQna.getQnaTitle());
-		//System.out.println("saveQna.getClasses().getClassId() = " + saveQna.getClasses().getClassId());
-		//System.out.println("saveQna.getStudent().getStudentId() = " + saveQna.getStudent().getStudentId());
+		System.out.println("saveQna.getQnaId = " + saveQna.getQnaId());
+		System.out.println("saveQna.getQnaTitle = " + saveQna.getQnaTitle());
+		System.out.println("saveQna.getClasses().getClassId() = " + saveQna.getClasses().getClassId());
+		System.out.println("saveQna.getStudent().getStudentId() = " + saveQna.getStudent().getStudentId());
 		
 
 	}
@@ -176,7 +176,10 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		
 		classReplyRep.deleteById(replyId);
 		
-		ClassQna dbQna = classQnaRep.findById(replyId).orElse(null);
+		Long qnaId = dbReply.getClassQna().getQnaId();
+		
+		ClassQna dbQna = classQnaRep.findById(qnaId).orElse(null);
+		System.out.println("dbQna.getQnaId()="+dbQna.getQnaId());
 		dbQna.setQnaComplete("F");
 		
 	}

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,15 @@
                 <th>작성자</th>
                 <td>${qna.student.studentId}</td>
                 <th>등록일자</th>
-                <td>${qna.qnaInsertDate}</td>
+                <td>
+                	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+                	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+                </td>
+                <th>수정일자</th>
+                <td>
+                	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+                	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+                </td>
                 <th>클래스 아이디</th>
                 <td>${qna.classes.classId}</td>
             </tr>
@@ -57,6 +66,7 @@
 		        <td height="20" colspan="3" align="center" valign="middle">
 					<!-- 답변시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 					<form name="requestForm" method="post" id="requestForm">
+						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 						<input type=hidden name="qnaId" value="${qna.qnaId}">
 						<input type=hidden name="classId" value="${qna.classes.classId}" id="classId">
 						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
@@ -86,9 +96,15 @@
 		                <th>작성자</th>
 		                <td>${qnaReply.teacher.teacherId}</td>
 		                <th>등록일자</th>
-		                <td>${qnaReply.replyInsertDate}</td>
-		                <th>수정일자</th>
-		                <td>${qnaReply.replyUpdateDate}</td>
+		              	<td>
+		              	<span><fmt:parseDate value="${qnaReply.replyInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		              	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		              	</td>
+		              	<th>수정일자</th>
+		              	<td>
+		              	<span><fmt:parseDate value="${qnaReply.replyUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		              	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+		              	</td>
 				    </tr>
 		            <tr>
 		                <th>내용</th>
@@ -109,7 +125,7 @@
     <hr>
     
    
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList_th">목록으로 돌아가기</a>&gt;</span></div>
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
 
 
 </body>

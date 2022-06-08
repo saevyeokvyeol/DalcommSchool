@@ -17,6 +17,7 @@
 <body>
 
 <form name=updateForm method=post action="${pageContext.request.contextPath}/main/board/qna/qnaUpdate" >
+	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type='hidden' name='qnaId' value="${qna.qnaId}">
     <input type="hidden" name="classId" value="${qna.classes.classId}">
 	<input type="hidden" name="studentId" value="${qna.student.studentId}">

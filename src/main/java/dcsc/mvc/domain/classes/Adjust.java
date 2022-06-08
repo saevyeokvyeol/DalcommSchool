@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +29,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Adjust {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "adjust_no_seq")
@@ -37,12 +39,16 @@ public class Adjust {
 	@JoinColumn(name = "teacher_id")
 	@JsonIgnore
 	private Teacher teacher;
-	private int adjustStateId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "adjust_state_id")
+	private AdjustState adjustState;
 	private int adjustPrice;
 	private String bank;
 	private String depositor;
 	private String account;
 	
+	@CreationTimestamp
 	private LocalDateTime adjustInsertDate;
 	private LocalDateTime adjustCompleteDate;
 	
