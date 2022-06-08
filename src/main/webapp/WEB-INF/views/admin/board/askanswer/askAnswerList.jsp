@@ -7,8 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
 </head>
 <body>
+
 
 <c:choose>
     <c:when test="${empty requestScope.askList}">
@@ -20,6 +23,7 @@
     </c:when>
     <c:otherwise>
 	<c:forEach items="${requestScope.askList}" var="askList">
+	
 		     <tr>  
 		        <td>
 		           글 번호 : ${askList.askNo}<p>
@@ -28,21 +32,37 @@
 		        	문의 ID : ${askList.student.studentId}<p>
 		        </td>
 		        <td>
-		        	문의제목 : ${askList.askTitle}<p>
+		        	<span>
+		        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
+		        	문의제목 : ${askList.askTitle}</a>
+		        	</span><p>
 		        </td>
 		        <td>
-				    카테고리 : ${askList.askCategory.askCategoryId}<p>
+				    카테고리 : ${askList.askCategory.askCategoryName}<p>
 		        </td>
 		        <td>
 		            문의 내용 : ${askList.askContent}<p>
 		        </td>
 		        <td>
-		        	문의 일자 : ${askList.askInsertDate}<p>
+		         	첨부 파일명 : ${askList.askImg}<p>
 		        </td>
+		        <td>
+		        	1문의 일자 : ${askList.askInsertDate}<p>
+		        </td>
+		       <%-- 	<td>
+		       		<span>
+		       			<a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/admin/board/askanswer/askAnswerDetail">답변하기</a>
+		       		</span>
+		       	</td> --%>
 		    </tr>
+		    	
+    
+		     <hr>
     </c:forEach>
+   
 	</c:otherwise>
     </c:choose>
+   
 
 </body>
 </html>

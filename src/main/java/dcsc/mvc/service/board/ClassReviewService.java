@@ -2,6 +2,9 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.ClassReview;
 
 public interface ClassReviewService {
@@ -15,7 +18,7 @@ public interface ClassReviewService {
 	 * 클래스 후기 수정
 	 * @param ClassReview(후기ID, 학생ID, 내용, 이미지, 별점)
 	 * */
-	void update(ClassReview classReview);
+	ClassReview update(ClassReview classReview);
 
 	/**
 	 * 클래스 후기 삭제
@@ -58,5 +61,5 @@ public interface ClassReviewService {
 	 * 클래스 후기 블라인드
 	 * @param Long reviewId
 	 * */
-	void updateBlind(Long reviewId);
+	void updateBlind(Long reviewId, String reviewBlindState);
 }

@@ -70,7 +70,7 @@
 						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 						<c:choose>
 							<c:when test="${qna.qnaComplete eq 'T'}">
-								<input type=hidden value="수정하기" >
+			 					<input type=hidden value="수정하기" >
 								<input type=hidden value="삭제하기" >
 							</c:when>
 							<c:otherwise>

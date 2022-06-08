@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -90,4 +91,6 @@ public class Classes {
 	@JsonIgnore
 	private List<ClassQna> classQnas;
 	
+	@Transient
+	private Long likeId;
 }

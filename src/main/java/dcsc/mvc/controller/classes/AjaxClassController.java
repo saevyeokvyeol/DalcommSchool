@@ -100,7 +100,9 @@ public class AjaxClassController {
 		return list;
 	}
 	
-
+	/**
+	 * 이용 가능한 클래스 일정 가져오기
+	 * */
 	@RequestMapping("/selectAvailableSchedule")
 	public List<FullCalendar> selectAvailableSchedule(Long bookId){
 		System.out.println(bookId);
@@ -122,7 +124,7 @@ public class AjaxClassController {
 	@RequestMapping("/teacher/class/insertSchedule")
 	public void insertSchedule(Classes classes, ClassSchedule classSchedule) {		
 		classSchedule.setClasses(classes);
-		classesService.insertSchedule(classSchedule);	
+		classesService.insertSchedule(classSchedule);
 	}
 	
 	/**
@@ -130,8 +132,15 @@ public class AjaxClassController {
 	 * */
 	@RequestMapping("/teacher/class/updateSchedule")
 	public void updateSchedule(ClassSchedule classSchedule) {
-		System.out.println(classSchedule.getScheduleId());
 		classesService.updateSchedule(classSchedule);	
+	}
+	
+	/**
+	 * 클래스 일정 수정
+	 * */
+	@RequestMapping("/teacher/class/deleteSchedule")
+	public void deleteSchedule(Long scheduleId) {
+		classesService.deleteSchedule(scheduleId);	
 	}
 	
 	
@@ -142,19 +151,5 @@ public class AjaxClassController {
 	public ClassSchedule selectScheduleByScheduleId(Long scheduleId) {
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
 		return schedule;
-	}
-	
-	/**
-	 * 클래스 찜 등록
-	 * */
-	
-	/**
-	 * 클래스 찜 삭제
-	 * */
-	
-	/**
-	 * 회원 아이디로 찜목록 조회
-	 * */
-	
-	
+	}	
 }

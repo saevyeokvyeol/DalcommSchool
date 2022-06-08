@@ -1,6 +1,8 @@
 package dcsc.mvc.controller.classes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +15,11 @@ import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookState;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.classes.Search;
-import dcsc.mvc.domain.coupon.Coupon;
-import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.user.Student;
-import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
+import dcsc.mvc.service.classes.LikeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/main/class")
 public class MainClassController {
 	private final ClassesService classesService;
+	private final LikeService likeService;
 	
 	/**
 	 * 공개된 클래스 리스트
@@ -36,6 +38,17 @@ public class MainClassController {
 		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
 		
 		List<Classes> list = classesService.selectAll();
+		
+		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+
+		for(Likes l : likeList) {
+			for(Classes c : list) {
+				if(c.getClassId() == l.getClasses().getClassId()) {
+					c.setLikeId(l.getLikeId());
+					break;
+				}
+			}
+		}
 		
 		model.addAttribute("list", list);
 	}

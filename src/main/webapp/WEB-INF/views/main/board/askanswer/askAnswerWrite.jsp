@@ -10,7 +10,11 @@
 </head>
 <body>
 
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert" >
+	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert?${_csrf.parameterName}=${_csrf.token}" 
+	enctype="multipart/form-data">
+	
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+	
 	 <select name="askCategoryId">
 		  <option value="">카테고리 종류</option>
 		  <option value="1">클래스</option>
@@ -18,7 +22,7 @@
 		  <option value="3">환불</option>
 		  <option value="4">후기</option>
 		  <option value="5">탈퇴</option>
-	</select> 
+	</select> 	
 <table>
     <tr>
         <td>
@@ -37,14 +41,25 @@
     </tr>
     <tr>
     	<td>
-    		첨부 이미지 :<input type="image" name="askImg"><p>
+    		첨부 이미지 :<input type="file" name="file" multiple="multiple"><p>
     	</td>
-  	</tr>
+  	</tr> 
+  	
+   	<!-- <tr>
+        <td width="150" height="20">
+            <p align="right"><b><span style="font-size:9pt;">*파일첨부</span></b></p>
+        </td>
+        <td width="450" height="20">
+        	<b><span style="font-size:9pt;">
+        		 <input type="file" name="file" maxlength="60" size="40">
+        	   </span></b>
+        </td>
+    </tr>  -->
     
 </table>
 	<tr>
         <span><input type=submit value=글쓰기></span> 
-        <span><input type=reset value=다시쓰기></span></td>
+        <span><input type=reset value=다시쓰기></span>
     </tr>
 </form>
 
