@@ -631,6 +631,7 @@ a{
                     <div class="user-info">
                         <ul class="meta list list-unstyled">
                             <span class="fa fa-user"> &nbsp;${student.studentId} 님 로그인 </span>
+                            <input type="hidden" name="studentId" value="${studentId}">
                         </ul>
                     </div>
                     <nav class="side-menu">
@@ -640,7 +641,7 @@ a{
                             <br>
                             <li class="active"><a href="#"><span class="fa fa-calendar"></span>&nbsp;예약 조회</a></li>
                             <li><a href="#"><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;내 쿠폰 조회</a></li>
-                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;내 리뷰 관리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/main/mypage/reviewList"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;내 리뷰 관리</a></li>
                             <li><a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;클래스 문의 조회</a></li>
                             <li><a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;1대1 문의 조회</a></li>
                             <br>

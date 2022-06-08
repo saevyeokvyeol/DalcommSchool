@@ -20,6 +20,7 @@ import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.service.board.ClassReviewService;
 import dcsc.mvc.util.FileLink;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -35,19 +36,19 @@ public class ClassReviewController {
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/reviewList/{classId}")
-	public String selectByClassId(Model model, @PathVariable Long classId, @RequestParam(defaultValue="1") int nowPage){
+	@RequestMapping("/reviewList/classId")
+	public String selectByClassId(Model model, Long classId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByClassId(classId);
 		
 		//페이징 처리하기
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByClassId(classId, page);
-//		
+		
 		model.addAttribute("classReviews", pageList);
 		
 		int temp=(nowPage-1)%BLOCK_COUNT;
 		int startPage = nowPage-temp;
-//		
+	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage",nowPage);
@@ -56,44 +57,81 @@ public class ClassReviewController {
 		System.out.println(startPage);
 		System.out.println(nowPage);
 		
-		return "main/class/pagingTest";
+		return "main/class/classDetail";
 	}
 	
 	/**
 	 * 강사 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/{teacherId}")
-	public List<ClassReview> selectByTeacherId(String teacherId){
-		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
+	@RequestMapping("/teacher")
+	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int nowPage){
+//		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
-		return list;
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, page);
+		
+		model.addAttribute("classReviews", pageList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		return "teacher/teacherMypage/classReview";
 	}
 	
 	/**
 	 * 전체 후기 가져오기(관리자)
 	 * */
 	@RequestMapping("/list")
-	public List<ClassReview> selectAll(){
-		List<ClassReview> list = reviewService.selectAll();
+	public String selectAll(Model model, @RequestParam(defaultValue="1") int nowPage){
+//		List<ClassReview> list = reviewService.selectAll();
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectAll(page);
 		
-		return list;
+		model.addAttribute("classReviews", pageList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		return "admin/board/review/reviewList";
 	}
 	
 	/**
-	 * 학생 ID로 리스트 가져오기(관리자)
+	 * 학생 ID로 리스트 가져오기
 	 * */
-	@RequestMapping("/{studentId}")
-	public List<ClassReview> classReviewSearch(String studentId){
-		List<ClassReview> list = reviewService.selectByStudentId(studentId);
+	@RequestMapping("/student")
+	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int nowPage){
+//		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
-		return list;
+		studentId="kim1234";
+		
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, page);
+		
+		model.addAttribute("classReviews", pageList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		return "main/mypage/reviewList";
 	}
 	
 	/**
 	 * 후기 상세 보기
 	 * */
 	@RequestMapping("/read/{reviewId}")
-	public ClassReview readReview(Long reviewId) {
+	public ClassReview readReview(@PathVariable Long reviewId) {
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return review;
@@ -125,8 +163,10 @@ public class ClassReviewController {
 	public String insertReview(ClassReview review, MultipartFile file, Long classId) throws Exception{
 		review.setClasses(new Classes(classId));
 		
+		
+		
 		if(file.getSize()>0) {
-			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			review.setReviewImg(file.getOriginalFilename());
@@ -135,7 +175,7 @@ public class ClassReviewController {
 		
 		reviewService.insert(review);
 		
-		return "redirect:/main/board/review/classReview";
+		return "redirect:/main/board/review/classDetail";
 	}
 	
 	/**

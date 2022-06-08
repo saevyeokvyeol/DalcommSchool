@@ -96,8 +96,8 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 	 * */
 	@Override
 	public Page<ClassReview> selectByTeacherId(String teacherId, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return reviewRep.findByClassesTeacherTeacherIdEquals(teacherId, pageable);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 	 * */
 	@Override
 	public Page<ClassReview> selectByStudentId(String studentId, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return reviewRep.findByStudentStudentIdEquals(studentId, pageable);
 	}
 	
 	/**
@@ -114,8 +114,8 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 	 * */
 	@Override
 	public Page<ClassReview> selectAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return reviewRep.findAll(pageable);
 	}
 	
 	/**

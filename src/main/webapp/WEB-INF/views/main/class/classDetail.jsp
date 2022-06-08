@@ -21,6 +21,19 @@
 			    z-index: 1050!important;
 			}
 			#bookForm {display: none;}
+			
+			/* 클래스 후기 CSS */
+			fieldset input[type=radio]{display: none;}
+			fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
+			fieldset{display: inline-block; direction: rtl; border: 0;}
+			
+			.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
+			.star:hover{text-shadow: 0 0 0 #EB5353;}
+			.star:hover~label{text-shadow: 0 0 0 #EB5353;}
+			
+			textarea{width:100%; height:6.25em; resize:none;}
+			
+			
 		</style>
 		<script>
 			// 풀캘린더 API 사용
@@ -110,37 +123,37 @@
 				}); // 수량 증가 종료
 			});
 
-			$(function(){
-				//페이징처리 아작스
-				function reviewPaging(){
-					$.ajax({
-						url: "${pageContext.request.contextPath}/main/board/review/reviewList/{classId}",
-						type: "post",
-						dataType: "json",
-						data: {
-							"${_csrf.parameterName}":"${_csrf.token}",
-							"nowPage" : ${nowPage}
-						},
-						success : function(result){
-							alert("성공");
-							let str="";
-							$.each(result.content, function(index, item){
-								str+="<tr>";
-								str+=`<td>${item.studentId}</td>`;
-								str+=`<td>${item.reviewRate}</td>`;
-								str+=`<td>${item.reviewContent}</td>`;
-								str+=`<td>${item.reviewInsertDate}</td>`;
-								str+="</tr>";
-							})
-							$("#review").after(str);
-						},
-						error : function(error){
-							alert("페이징처리 실패했습니다.")
-						}
-					})
-				}
-				reviewPaging();
-			})
+// 			$(function(){
+// 				//페이징처리 아작스
+// 				function reviewPaging(){
+// 					$.ajax({
+// 						url: "${pageContext.request.contextPath}/main/board/review/reviewList/{classId}",
+// 						type: "post",
+// 						dataType: "json",
+// 						data: {
+// 							"${_csrf.parameterName}":"${_csrf.token}",
+// 							"nowPage" : ${nowPage}
+// 						},
+// 						success : function(result){
+// 							alert("성공");
+// 							let str="";
+// 							$.each(result.content, function(index, item){
+// 								str+="<tr>";
+// 								str+=`<td>${item.studentId}</td>`;
+// 								str+=`<td>${item.reviewRate}</td>`;
+// 								str+=`<td>${item.reviewContent}</td>`;
+// 								str+=`<td>${item.reviewInsertDate}</td>`;
+// 								str+="</tr>";
+// 							})
+// 							$("#review").after(str);
+// 						},
+// 						error : function(error){
+// 							alert("페이징처리 실패했습니다.")
+// 						}
+// 					})
+// 				}
+// 				reviewPaging();
+// 			})
 		</script>
 	</head>
 	<body>
@@ -266,78 +279,76 @@
 		      </c:otherwise>
 		    </c:choose>
 		  </tbody>
-		  <tfoot>
-		    <input type="button" value="후기 남기기" onclick="location.href='${pageContext.request.contextPath}/main/board/review/insertForm'">
-		  </tfoot>
 		</table>
 		
 		<!-- 페이징 처리 -->
-<!-- 		<div> -->
-<!-- 		  <nav class="pagination-container"> -->
-<!-- 		    <div class="pagination"> -->
-<%-- 		      <c:set var="doneLoop" value="false"/> --%>
-<%-- 		      		<c:if test="${(startPage-blockCount)>0 }"> --%>
-<%-- 		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/review/reviewList/{classId}?nowPage=${startPage-1}">이전</a>	      		 --%>
-<%-- 		      		</c:if> --%>
+		<div>
+		  <nav class="pagination-container">
+		    <div class="pagination">
+		      <c:set var="doneLoop" value="false"/>
+		      		<c:if test="${(startPage-blockCount)>0 }">
+		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/review/reviewList/classId?nowPage=${startPage-1}">이전</a>	      		
+		      		</c:if>
 		      		
-<!-- 		      		<span class="pagination-inner"> -->
-<%-- 		      		  <c:forEach var='i' begin="${startPage}" end="${(startPage-1)+blockCount}"> --%>
+		      		<span class="pagination-inner">
+		      		  <c:forEach var='i' begin="${startPage}" end="${(startPage-1)+blockCount}">
 		      		    
-<%-- 		      		    <c:if test="${(i-1)>=classReviews.getTotalPages()}"> --%>
-<%-- 		      		      <c:set var="doneLoop" value="true"/> --%>
-<%-- 		      		    </c:if> --%>
-<%-- 		      		    <c:if test="${not doneLoop}"> --%>
-<%-- 		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/review/reviewList/${classId}?nowPage=${i}">${i}</a> --%>
-<%-- 		      		    </c:if> --%>
+		      		    <c:if test="${(i-1)>=classReviews.getTotalPages()}">
+		      		      <c:set var="doneLoop" value="true"/>
+		      		    </c:if>
+		      		    <c:if test="${not doneLoop}">
+		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/review/reviewList/classId?nowPage=${i}">${i}</a>
+		      		    </c:if>
 		      		    
-<%-- 		      		  </c:forEach> --%>
-<!-- 		      		</span> -->
+		      		  </c:forEach>
+		      		</span>
 		      		
-<%-- 		      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}"> --%>
-<%-- 		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/review/reviewList/${classId}?nowPage=${startPage+blockCount}">다음</a> --%>
-<%-- 		      		</c:if> --%>
-<!-- 		    </div> -->
+		      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}">
+		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/review/reviewList/classId?nowPage=${startPage+blockCount}">다음</a>
+		      		</c:if>
+		    </div>
 		  
-<!-- 		  </nav> -->
-<!-- 		</div> -->
+		  </nav>
+		</div>
 		
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   			후기 등록하기
 		</button>
 		
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">클래스 후기 등록</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form id="reviewInsertForm" method="post" action="${pageContext.request.contextPath}/main/board/review/insert">
-					<fieldset>
-					  <label for="recipient-name" class="col-form-label">별점</label>
-				        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-				        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-				        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-				        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-				        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					</fieldset>
-					<div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">이미지 첨부</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="reviewImg" multiple>
-                    </div>
-					<div class="mb-3">
-						<label for="recipient-name" class="col-form-label">내용</label>
-						<textarea name="reviewContent" placeholder="후기를 자유롭게 입력해주세요."></textarea>
+		  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">클래스 후기 등록</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" id="insertReview" value="후기 등록">
+					<div class="modal-body">
+						<form id="reviewInsertForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/board/review/insert?${_csrf.parameterName}=${_csrf.token}">
+						<input type="hidden" name="classId" value="${classId}">
+							<fieldset>
+							  <label for="recipient-name" class="col-form-label">별점</label>
+						        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+							</fieldset>
+							<div class="mb-3">
+		                        <label for="formFileMultiple" class="form-label">이미지 첨부</label>
+		                        <input class="form-control" type="file" id="formFileMultiple" name="reviewImg" multiple>
+		                    </div>
+							<div class="mb-3">
+								<label for="recipient-name" class="col-form-label">내용</label>
+								<textarea name="reviewContent" placeholder="후기를 자유롭게 입력해주세요."></textarea>
+							</div>
+							<div class="modal-footer">
+								<input type="submit" class="btn btn-primary" id="insertReview" value="후기 등록">
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 			</div>
-		</div>
-	</div>
-  </div>
+		  </div>
 		
 	</body>
 </html>

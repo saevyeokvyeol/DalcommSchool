@@ -41,7 +41,8 @@ $(function(){
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form id="reviewInsertForm" method="post" action="${pageContext.request.contextPath}/main/board/review/insert">
+				<form id="reviewInsertForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/board/review/insert?${_csrf.parameterName}=${_csrf.token}">
+				<input type="hidden" name="classId" value="${classId}">
 					<fieldset>
 					  <label for="recipient-name" class="col-form-label">별점</label>
 				        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
