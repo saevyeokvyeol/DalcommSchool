@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import dcsc.mvc.domain.board.Event;
 import dcsc.mvc.service.board.EventService;
 import dcsc.mvc.util.FileLink;
-import dcsc.mvc.util.Link;
 import lombok.RequiredArgsConstructor;
 
 @Controller

@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -151,15 +154,17 @@ public class ClassesServiceImpl implements ClassesService {
 
 	/**
 	 * 클래스 검색 및 필터링
-	 * @param Search(공방 지역, 카테고리, 검색 키워드, 새로운 클래스 여부, 이틀 이내 체험 가능 여부, 정렬 기준)
-	 *        boolean timeOut(내일까지 체험 가능한 클래스)
+	 * @param Search search, Pageable pageable
 	 * @return List<Classes>
 	 * */
 	@Override
-	public List<Classes> selectByFilter(Search search) {
+	public Page<Classes> selectByFilter(Search search, Pageable pageable) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClasses classes = QClasses.classes;
+		
+		// 공개된 클래스만 검색
+		booleanBuilder.and(classes.classState.stateId.eq(3L));
 		
 		// 지역으로 검색
 		if(search.getPlaceRegion() != null) booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getPlaceRegion()));
@@ -175,7 +180,9 @@ public class ClassesServiceImpl implements ClassesService {
 		
 
 		JPQLQuery<Classes> jpqlQuery = jpaQueryFactory.selectFrom(classes)
-									.where(booleanBuilder);
+									.where(booleanBuilder)
+									.offset(pageable.getOffset())
+									.limit(pageable.getPageSize());
 
 		// 정렬하기
 		jpqlQuery.orderBy(classes.classId.desc());
@@ -196,7 +203,7 @@ public class ClassesServiceImpl implements ClassesService {
 			}
 		}
 		
-		List<Classes> list = jpqlQuery.fetch();
+		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
 		return list;
 	}
@@ -206,7 +213,7 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @return List<Classes>
 	 * */
 	@Override
-	public List<Classes> selectNewClass() {
+	public Page<Classes> selectNewClass(Pageable pageable) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClasses classes = QClasses.classes;
@@ -216,8 +223,13 @@ public class ClassesServiceImpl implements ClassesService {
 		
 		booleanBuilder.and(classes.classOpenDate.between(from, to));
 		
-		Iterable<Classes> iterable = classesRepository.findAll(booleanBuilder);
-		List<Classes> list = Lists.newArrayList(iterable);
+		JPQLQuery<Classes> jpqlQuery = jpaQueryFactory.selectFrom(classes)
+				.where(booleanBuilder)
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.orderBy(classes.classOpenDate.desc());
+		
+		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
 		return list;
 	}
@@ -227,7 +239,7 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @return List<Classes>
 	 * */
 	@Override
-	public List<ClassSchedule> selectNearClass() {
+	public Page<ClassSchedule> selectNearClass(Pageable pageable) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClassSchedule schedule = QClassSchedule.classSchedule;
@@ -243,7 +255,7 @@ public class ClassesServiceImpl implements ClassesService {
 				.distinct()
 				.where(booleanBuilder);
 		
-		List<ClassSchedule> list = jpqlQuery.fetch();
+		Page<ClassSchedule> list = new PageImpl<ClassSchedule>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
 		return list;
 	}
@@ -364,7 +376,6 @@ public class ClassesServiceImpl implements ClassesService {
 
 		
 		List<ClassSchedule> list = jpqlQuery.fetch();
-		System.out.println("리스트 " + list);
 		return list;
 	}
 
