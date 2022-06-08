@@ -25,7 +25,7 @@ public interface StudentService {
 	/**
 	 * 학생 회원 정보 수정
 	 * */
-	void updateStudent(Student student);
+	Student updateStudent(Student student);
 	
 	
 	/**

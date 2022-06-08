@@ -1,12 +1,12 @@
 package dcsc.mvc.repository.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import dcsc.mvc.domain.user.Student;
-import dcsc.mvc.domain.user.Teacher;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
 	
@@ -21,6 +21,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	@Query("select s.role from Student s where s.studentId = ?1")
 	String selectStudentRoleById(String studentId);
 	
+	Optional<Student> findByStudentEmail(String studentEmail);
 	
 	
 	/**
