@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
@@ -125,25 +127,28 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public void updateUserPwd(String userPwd, String encodePassword, HttpSession session) {
+	public void updateLoginUserPwd(String userPwd, String encodePassword) {
 		System.out.println("teacherService, updateUserPwd 호출");
+		System.out.println("userPwd : " + userPwd + "encodePassword : " + encodePassword );
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		boolean result = principal.toString().contains("Student");
 		
-		Teacher teacher = teacherRep.findById(session.getId()).orElse(null);
-		Student student = studentRep.findById(session.getId()).orElse(null);
-		
-		if(teacher!=null) { //강사일 때
+		if(!result) { //강사일 때
+			Teacher teacher = (Teacher)principal;
 			//입력한 기존 비밀번호랑 DB의 비밀번호를 비교한다.
 			if(!getBCryptPasswordEncoder.matches(userPwd, teacher.getTeacherPwd())) {
 				throw new BadCredentialsException("패스워드 오류입니다.");
 			}else {
-				teacher.setTeacherPwd(encodePassword);
+				(teacherRep.findById(teacher.getTeacherId()).orElse(null)).setTeacherPwd(encodePassword);
 				System.out.println("강사 비밀번호 바꾸기 성공");
 			}
-		}else if(student!=null) { //학생일 때
+		}else if(result) { //학생일 때
+			Student student = (Student)principal;
 			if(!getBCryptPasswordEncoder.matches(userPwd, student.getStudentPwd())) {
 				throw new BadCredentialsException("패스워드 오류입니다.");
 			}else {
-				student.setStudentPwd(encodePassword);
+				(studentRep.findById(student.getStudentId()).orElse(null)).setStudentPwd(encodePassword);
 				System.out.println("학생 비밀번호 바꾸기 성공");
 			}
 		}

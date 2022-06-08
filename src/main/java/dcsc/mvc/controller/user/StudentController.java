@@ -94,6 +94,7 @@ public class StudentController {
 		
 	}
 	
+	
 	//회원 정보 수정 폼
 	@RequestMapping("/main/mypage/modifyForm")
 	public ModelAndView modifyForm(HttpServletRequest request) {

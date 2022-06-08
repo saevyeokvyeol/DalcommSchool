@@ -636,7 +636,7 @@ a{
                     <nav class="side-menu">
                         <ul class="nav">
                             <li><a href="${pageContext.request.contextPath}/main/mypage/modifyForm"><span class="fa fa-cog"></span>&nbsp;회원 정보 수정</a></li>
-                            <li><a href="#"><i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;비밀 번호 수정</a></li>
+                            <li><a href="${pageContext.request.contextPath}/main/mypage/modifyPwd"><i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;비밀 번호 수정</a></li>
                             <br>
                             <li class="active"><a href="#"><span class="fa fa-calendar"></span>&nbsp;예약 조회</a></li>
                             <li><a href="#"><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;내 쿠폰 조회</a></li>
