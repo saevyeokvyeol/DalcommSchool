@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +24,8 @@ import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -30,11 +33,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Classes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "class_id_seq")
 	@SequenceGenerator(sequenceName = "class_id_seq", allocationSize = 1 , name = "class_id_seq")
+	@NonNull
 	private Long classId;
 	
 	private String className;
@@ -86,4 +91,6 @@ public class Classes {
 	@JsonIgnore
 	private List<ClassQna> classQnas;
 	
+	@Transient
+	private Long likeId;
 }

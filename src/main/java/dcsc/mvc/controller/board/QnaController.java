@@ -85,7 +85,7 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 등록
+	 * Q&A 등록 
 	 * */
 	@RequestMapping("main/board/qna/qnaInsert")
 	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {

@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,6 +43,11 @@ public class Ask {
 	private String askContent;
 	
 	private String askImg;
+	
+//	private MultipartFile askImg;// <input type = "file" name="file">
+//	private String fname;
+//	private long fsize;
+//	
 	
 	@CreationTimestamp
 	private LocalDateTime askInsertDate;

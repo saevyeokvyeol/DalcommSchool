@@ -18,7 +18,7 @@ import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/place")
+@RequestMapping("teacher/teacherMypage/place")
 @RequiredArgsConstructor
 public class PlaceController {
 	
@@ -28,9 +28,7 @@ public class PlaceController {
 	 * 공방 등록 폼
 	 * */
 	@RequestMapping("/insertForm")
-	public String insertForm() {
-		return "teacher/teacherMypage/insertPlace";
-	}
+	public void insertForm() {}
 	
 	/**
 	 * 공방 등록하기
@@ -52,7 +50,7 @@ public class PlaceController {
 	public ModelAndView updateForm(Long placeId) {
 		Place place = teacherService.selectByPlaceId(placeId);
 		
-		return new ModelAndView("teacher/teacherMypage/updatePlace", "place", place);
+		return new ModelAndView("teacher/teacherMypage/updateForm", "place", place);
 	}
 	
 	/**
@@ -60,18 +58,18 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/update")
 	public ModelAndView updatePlace(Place place) {
-		teacherService.updatePlace(place);
+		Place place2 = teacherService.updatePlace(place);
 		
-		return new ModelAndView("teacher/teacherMypage/myPlace");
+		return new ModelAndView("redirect:/teacher/teacherMypage/myPlace", "place", place2);
 	}
 	
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/read")
+	@RequestMapping("/user/{placeId}")
 	public ModelAndView readPlace(Long placeId) {
 		Place place = teacherService.selectByPlaceId(placeId);
-		return new ModelAndView("teacher/teacherMypage/placeDetail", "place", place);
+		return new ModelAndView("teacher/teacherMypage/place/placeDetail", "place", place);
 	}
 	
 	/**

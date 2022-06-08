@@ -33,7 +33,7 @@ public interface NoticeService {
 	 *  @param Long noticeNo
 	 *  @return Notice
 	 * */
-	Notice selectBy(Long noticeNo, boolean state);
+	Notice selectByNotuceNo(Long noticeNo, boolean state);
 	
 	/**
 	 * 공지사항 게시판 조회 기능(강사&회원)
@@ -47,7 +47,7 @@ public interface NoticeService {
 	 * @param String keyword
 	 * @return List<Notice>
 	 * */
-	List<Notice> selectByKeyword(String keyword);
+	List<Notice> selectByKeyword(String keyfield, String keyword);
 
 	
 	

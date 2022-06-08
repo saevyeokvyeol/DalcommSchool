@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강사 회원정보 수정 페이지입니다.</title>
+
+<title>Insert title here</title>
 </head>
 <body>
-<h1> 강사정보 수정~ </h1>
+<h1>${teacherId}님의 정산 가능 금액 : ${adjustable}</h1>
+
 
 </body>
 </html>

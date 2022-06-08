@@ -33,7 +33,7 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		Ask dbAsk=askRep.save(ask);
 		if(dbAsk==null)throw new RuntimeException();
 		  
-		System.out.println("============dbAsk : "+dbAsk);
+		System.out.println("============dbAsk : "+dbAsk); 
 	}
 	/**
 	 * 1대1 문의 수정하기 (학생&선생님)

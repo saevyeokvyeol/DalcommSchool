@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>강사 마이페이지~</title>
 </head>
 <body>
 
-
+강사 마이페이지 메인 화면
 
 </body>
 </html>

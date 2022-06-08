@@ -94,9 +94,17 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public void updateTeacher(Teacher teahcer) {
-		// TODO Auto-generated method stub
-
+	public void updateTeacher(Teacher teacher) {
+		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(null);
+		
+		if(newTeacher==null) {
+			throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");
+		}
+		
+		newTeacher.setTeacherPhone(teacher.getTeacherPhone());
+		newTeacher.setTeacherEmail(teacher.getTeacherEmail());
+		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
+		newTeacher.setTeacherTel(teacher.getTeacherTel());
 	}
 	
 	@Override
@@ -143,6 +151,16 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	/**
+	 * 강사 한명 가져오기
+	 * */
+	@Override
+	public Teacher selectById(String teacherId) {
+		Teacher teacher = teacherRep.findById(teacherId).orElse(null);
+		if(teacher == null) new RuntimeException("강사 불러오기에 실패했습니다.");
+		return teacher;
+	}
+	
+	/**
 	 * 아이디 중복체크
 	 * */
 	@Override
@@ -169,7 +187,6 @@ public class TeacherServiceImpl implements TeacherService {
 		}else {
 			return false;
 		}
-		
 	}
 
 	/**
@@ -187,10 +204,16 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 	}
 
+	
+	
 	@Override
 	public List<Teacher> selectAllTeacher() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Teacher> list = teacherRep.findAll();
+		
+		if(list==null) {
+			throw new RuntimeException("조회가능한 회원 데이터가 없습니다.");
+		}
+		return list;
 	}
 	
 	/**
@@ -217,6 +240,8 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		place2.setPlaceRegion(place.getPlaceRegion());
 		
+		place2.setPlaceInfra(place.getPlaceInfra());
+		
 		return place2;
 	}
 	
@@ -229,13 +254,16 @@ public class TeacherServiceImpl implements TeacherService {
 		return null;
 	}
 	
+	
+	
 	/**
 	 * 공방 상세 정보 가져오기
 	 * */
 	@Override
 	public Place selectByPlaceId(Long placeId) {
-		
-		return null;
+		Place place = placeRep.findById(placeId).orElse(null);
+		if(place == null) new RuntimeException("상세보기에 오류가 생겼습니다.");
+		return place;
 	}
 	
 	/**

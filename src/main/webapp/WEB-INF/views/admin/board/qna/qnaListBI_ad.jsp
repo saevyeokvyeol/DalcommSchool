@@ -23,7 +23,7 @@
 			$.ajax({
 	        url: "${pageContext.request.contextPath}/admin/board/qna/qnaBlind" , //서버요청주소
 	        type: "post" , //요청방식 (get,post...)
-	        data: {qnaId: target, blindState: 'T'} , //서버에게 보낼 데이터정보(parameter정보)
+	        data: {"${_csrf.parameterName}": "${_csrf.token}", qnaId: target, blindState: 'T'} , //서버에게 보낼 데이터정보(parameter정보)
 	        
 	        success: function(result){
 	            alert("블라인드 처리되었습니다.")

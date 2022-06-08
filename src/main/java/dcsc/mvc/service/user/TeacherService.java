@@ -43,7 +43,7 @@ public interface TeacherService {
 	 * @param: Teacher teahcer
 	 * @return:
 	 * */
-	void updateTeacher (Teacher teahcer);
+	void updateTeacher (Teacher teacher);
 	
 	/**
 	 * 비밀번호 찾기 성공 후 수정
@@ -79,6 +79,10 @@ public interface TeacherService {
 	 * */
 	boolean userPhoneCheck (String userPhone);
 
+	/**
+	 * 강사 한명 조회
+	 * */	
+	Teacher selectById(String teacherId);
 	
 	/**
 	 * 강사 조회

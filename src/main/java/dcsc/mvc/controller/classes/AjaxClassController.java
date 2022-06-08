@@ -69,21 +69,16 @@ public class AjaxClassController {
 	 * 강사의 모든 클래스 일정 가져오기
 	 * */
 	@RequestMapping("/selectScheduleByTeacherId")
-	public List<FullCalendar> selectScheduleByTeacherId(Long classId){
-		List<ClassSchedule> schedules = classesService.selectScheduleByClassId(classId);
+	public List<FullCalendar> selectScheduleByTeacherId(){
+		String teacherId = "Tkim1234";
+		List<ClassSchedule> schedules = classesService.selectScheduleByTeacherId(teacherId);
 		List<FullCalendar> list = new ArrayList<FullCalendar>();
 		for(ClassSchedule c : schedules) {
 			c.getScheduleDate().setHours(Integer.parseInt(c.getStartTime().substring(0, 2)));
 			c.getScheduleDate().setMinutes(Integer.parseInt(c.getStartTime().substring(3, 5)));
 			Date start = c.getScheduleDate();
-			System.out.println(start);
-			System.out.println(start.toString());
 			
-			c.getScheduleDate().setHours(Integer.parseInt(c.getEndTime().substring(0, 2)));
-			c.getScheduleDate().setMinutes(Integer.parseInt(c.getEndTime().substring(3, 5)));
-			Date end = c.getScheduleDate();
-			
-			list.add(new FullCalendar(c.getScheduleId(), classId, c.getClasses().getClassName(), start.toString(), end.toString()));
+			list.add(new FullCalendar(c.getScheduleId(), c.getClasses().getClassId(), c.getClasses().getClassName(), start.toString()));
 		}
 		return list;
 	}
@@ -99,14 +94,26 @@ public class AjaxClassController {
 			c.getScheduleDate().setHours(Integer.parseInt(c.getStartTime().substring(0, 2)));
 			c.getScheduleDate().setMinutes(Integer.parseInt(c.getStartTime().substring(3, 5)));
 			Date start = c.getScheduleDate();
-			System.out.println(start);
-			System.out.println(start.toString());
 			
-			c.getScheduleDate().setHours(Integer.parseInt(c.getEndTime().substring(0, 2)));
-			c.getScheduleDate().setMinutes(Integer.parseInt(c.getEndTime().substring(3, 5)));
-			Date end = c.getScheduleDate();
+			list.add(new FullCalendar(c.getScheduleId(), classId, c.getTotalSeat() + "명", start.toString()));
+		}
+		return list;
+	}
+	
+	/**
+	 * 이용 가능한 클래스 일정 가져오기
+	 * */
+	@RequestMapping("/selectAvailableSchedule")
+	public List<FullCalendar> selectAvailableSchedule(Long bookId){
+		System.out.println(bookId);
+		List<ClassSchedule> schedules = classesService.selectAvailableSchedule(bookId);
+		List<FullCalendar> list = new ArrayList<FullCalendar>();
+		for(ClassSchedule c : schedules) {
+			c.getScheduleDate().setHours(Integer.parseInt(c.getStartTime().substring(0, 2)));
+			c.getScheduleDate().setMinutes(Integer.parseInt(c.getStartTime().substring(3, 5)));
+			Date start = c.getScheduleDate();
 			
-			list.add(new FullCalendar(c.getScheduleId(), classId, c.getTotalSeat() + "명", start.toString(), end.toString()));
+			list.add(new FullCalendar(c.getScheduleId(), c.getClasses().getClassId(), c.getTotalSeat() + "명", start.toString()));
 		}
 		return list;
 	}
@@ -117,7 +124,7 @@ public class AjaxClassController {
 	@RequestMapping("/teacher/class/insertSchedule")
 	public void insertSchedule(Classes classes, ClassSchedule classSchedule) {		
 		classSchedule.setClasses(classes);
-		classesService.insertSchedule(classSchedule);	
+		classesService.insertSchedule(classSchedule);
 	}
 	
 	/**
@@ -125,8 +132,15 @@ public class AjaxClassController {
 	 * */
 	@RequestMapping("/teacher/class/updateSchedule")
 	public void updateSchedule(ClassSchedule classSchedule) {
-		System.out.println(classSchedule.getScheduleId());
 		classesService.updateSchedule(classSchedule);	
+	}
+	
+	/**
+	 * 클래스 일정 수정
+	 * */
+	@RequestMapping("/teacher/class/deleteSchedule")
+	public void deleteSchedule(Long scheduleId) {
+		classesService.deleteSchedule(scheduleId);	
 	}
 	
 	
@@ -137,19 +151,5 @@ public class AjaxClassController {
 	public ClassSchedule selectScheduleByScheduleId(Long scheduleId) {
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
 		return schedule;
-	}
-	
-	/**
-	 * 클래스 찜 등록
-	 * */
-	
-	/**
-	 * 클래스 찜 삭제
-	 * */
-	
-	/**
-	 * 회원 아이디로 찜목록 조회
-	 * */
-	
-	
+	}	
 }

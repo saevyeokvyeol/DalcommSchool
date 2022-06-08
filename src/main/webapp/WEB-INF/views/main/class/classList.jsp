@@ -63,11 +63,42 @@
 					$("[value="+param.get('sort')+"]").prop("checked", true)
 				}
 
+				$(document).on("click", "button[name=none-like]", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/like/insert",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : $(this).val()},
+						context: this,
+						success: function(result){
+							$(this).html('<i class="fa-solid fa-heart"></i>');
+							$(this).attr("name", "like");
+							$(this).attr("value", `\${result.likeId}`);
+						},
+						error: function(err){
+						}
+					})
+				})
+
+				$(document).on("click", "button[name=like]", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/like/deleteByLikeId",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "likeId" : $(this).val()},
+						context: this,
+						success: function(result){
+							$(this).html('<i class="fa-regular fa-heart"></i>');
+							$(this).attr("name", "none-like")
+							$(this).attr("value", `\${result}`);
+						},
+						error: function(err){
+							alert(123)
+						}
+					})
+				})
+				
 				selectClassCategory();
 				selectPlaceRegion();
 			})
-		
-			
 		</script>
 	</head>
 	<body>
@@ -110,9 +141,18 @@
 					 | ${classes.classCategory.categoryName}
 					 | ${classes.teacher.teacherNickname}
 					 | ${classes.classState.stateName}
-					<div class="like_box">
-						<i class="fa-solid fa-heart"></i>
-					</div>
+					<c:choose>
+						<c:when test="${classes.likeId != null}">
+							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="like" value="${classes.likeId}">
+								<i class="fa-solid fa-heart"></i>
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="none-like" value="${classes.classId}">
+								<i class="fa-regular fa-heart"></i>
+							</button>
+						</c:otherwise>
+					</c:choose>
 					<c:if test="${classes.classImages != null}">
 						<c:forEach items="${classes.classImages}" var="classImage">
 							<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">

@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.board;
 
 import java.util.List;
 
@@ -23,11 +23,10 @@ public class NoticeController {
 	 private String noticeList(Model model) {
 		 List<Notice> nolist = noticeService.selectAllNotice();
 		 
-		 model.addAttribute("nolist",nolist);
+		 model.addAttribute("notice",nolist);
 		 
 		 return "admin/board/Notice/noticeList";
 	 }
-	 
 	 	/**
 		 * 글 등록폼
 		 * */
@@ -55,7 +54,7 @@ public class NoticeController {
 	public ModelAndView read(@PathVariable Long noticeNo,String flag) {
 		boolean state = flag==null ? true : false;
 		
-		Notice notice = noticeService.selectBy(noticeNo, state);//true는 조회수 증가!!
+		Notice notice = noticeService.selectByNotuceNo(noticeNo, state);//true는 조회수 증가!!
 		
 		return new ModelAndView("admin/board/Notice/noticeRead","notice",notice);
 	}
@@ -65,7 +64,7 @@ public class NoticeController {
 	 * */
 	@RequestMapping("/updateForm")
 	public ModelAndView updateForm(Long noticeNo, boolean state) {
-		Notice notice = noticeService.selectBy(noticeNo, false);
+		Notice notice = noticeService.selectByNotuceNo(noticeNo, false);
 		
 		return new ModelAndView("admin/board/Notice/noticeUpdate","notice",notice);
 	}
@@ -90,4 +89,14 @@ public class NoticeController {
 		return "redirect:/admin/board/Notice/noticeList";
 	}
 	
+	/**
+	 * 검색 하기
+	 * */
+	@RequestMapping("/noticeSearch")
+	public ModelAndView selectByKeyword(String keyfield , String keyword) {
+		System.out.println("keyfield : " + keyfield +" / " + "keyword : "+ keyword);
+		List<Notice> list = noticeService.selectByKeyword(keyfield, keyword);
+		
+		return new ModelAndView("/admin/board/Notice/noticeList","notice",list);
+	}
 }
