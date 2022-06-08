@@ -18,5 +18,7 @@
 				<li><a href="${pageContext.request.contextPath}/main/login/loginForm">로그인</a></li>
 			</c:otherwise>
 		</c:choose>
+
+		
 	</body>
 </html>
