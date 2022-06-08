@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dcsc.mvc.domain.board.ClassQna;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,11 +46,24 @@ public class Student {
 	@CreationTimestamp
 	private LocalDateTime studentInsertDate;
 	
-	private String studentQuit;
+	private String studentQuit = "F";
 	
-	private String role = "STUDENT"; //STUDENT
+	private String role = "ROLE_STUDENT"; //STUDENT
 	
 	@OneToMany(mappedBy = "student")
 	@JsonIgnore
 	private List<ClassQna> qnaList;
+
+//	@Builder
+//	public Student(String studentId, String studentPwd, String studentName, String studentEmail,
+//			String provider, String providerId, LocalDateTime studentInsertDate, String studentQuit, String role
+//			) {
+//		this.studentPwd = studentPwd;
+//		this.studentName = studentName;
+//		this.studentEmail = studentEmail;
+//		this.studentInsertDate = studentInsertDate;
+//		this.studentQuit = studentQuit;
+//		this.role = role;
+//	}
+
 }

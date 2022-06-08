@@ -53,10 +53,10 @@ public class TeacherController {
 	 * 강사 정보 수정하기
 	 * */
 	@RequestMapping("/teacher/teacherMypage/updateTeacher")
-	public ModelAndView updateTeacher(Teacher teacher) {
+	public String updateTeacher(Teacher teacher) {
 		teacherService.updateTeacher(teacher);
 		
-		return new ModelAndView("redirect:/teacher/board");
+		return "redirect:/teacher/board";
 	}
 	
 	/**
@@ -121,13 +121,13 @@ public class TeacherController {
 	 * 비밀번호 수정(session O)
 	 * */
 	@RequestMapping("/main/login/updatePwd")
-	public String updatePwd(String userPwd, String newUserPwd, HttpSession session) {
+	public String updatePwd(String userPwd, String newUserPwd) {
 		System.out.println("teacherController, updatePwd 호출");
 		
 		String encodePassword = getBCryptPasswordEncoder.encode(newUserPwd);
 				
 		//서비스 호출
-		teacherService.updateUserPwd(userPwd, encodePassword, session);
+		teacherService.updateLoginUserPwd(userPwd, encodePassword);
 				
 		return "redirect:/";
 	}

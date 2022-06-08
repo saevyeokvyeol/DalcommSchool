@@ -1,4 +1,4 @@
-package dcsc.mvc.controller;
+package dcsc.mvc.controller.board;
 
 import java.util.List;
 
@@ -21,6 +21,9 @@ public class FaqController {
 	
 	private final FaqService faqService;
 	
+	/**
+	 * 
+	 * */
 	@RequestMapping("/faqList")
 	private String faqList(Model model) {
 		List<Faq> faqlist = faqService.selectAllfqa();
@@ -28,6 +31,15 @@ public class FaqController {
 		model.addAttribute("faqlist",faqlist);
 		
 		return "admin/board/FAQ/faqList";
+	}
+	
+	@RequestMapping("/faqCategoryList")
+	private String faqCategoryList(Model model,Long faqCategoryId) {
+		
+		System.out.println(faqCategoryId);
+		List<Faq> faqlist=faqService.selectByfaqCategoryId(faqCategoryId);
+		model.addAttribute("faqlist",faqlist);
+		return "redirect:/admin/board/FAQ/faqList";
 	}
 	
 	/**
@@ -57,7 +69,7 @@ public class FaqController {
 	public ModelAndView read(@PathVariable Long faqNo,String flag) {
 		boolean state = flag==null ? true : false;
 		
-		Faq faq = faqService.selectBy(faqNo, state);//true는 조회수 증가!!
+		Faq faq = faqService.selectByFaqNo(faqNo, state);//true는 조회수 증가!!
 		
 		return new ModelAndView("admin/board/FAQ/faqRead","faq",faq);
 	}
@@ -67,7 +79,7 @@ public class FaqController {
 	 * */
 	@RequestMapping("/updateForm")
 	public ModelAndView updateForm(Long faqNo,boolean state) {
-		Faq faq = faqService.selectBy(faqNo,false);
+		Faq faq = faqService.selectByFaqNo(faqNo,false);
 		
 		return new ModelAndView("admin/board/FAQ/faqUpdate","faq",faq);
 	}
@@ -78,7 +90,7 @@ public class FaqController {
 	@RequestMapping("/faqUpdate")
 	public String updateFAQ(Faq faq,FaqCategory faqCategory) {
 		faq.setFaqCategory(faqCategory);
-		faqService.updateFAQ(faq);
+		faqService.updateFAQ(faq, faqCategory);
 	System.out.println("faqCategory" + faqCategory);
 		
 		return "redirect:/admin/board/FAQ/faqRead/" + faq.getFaqNo();
@@ -95,7 +107,7 @@ public class FaqController {
 	}
 	
 	/**
-	 * 카테고리 등록
+	 * 카테고리 조회
 	 * */
 	@RequestMapping("/faqCategory")
 	@ResponseBody
@@ -104,4 +116,15 @@ public class FaqController {
 		
 		return list;
 	}
+	
+	/**
+	 * 카테고리 별로 정렬
+	 * */
+	@RequestMapping("/faqCategoryId")
+	public List<Faq> selectByfaqCategoryId(){
+		List<Faq> list = faqService.selectByfaqCategoryId(null);
+		
+		return list;
+	}
+	
 }
