@@ -18,7 +18,7 @@
 <body>
 
 <!--정산하기-->
-<div class="card">
+<div class="card" style="width: 25rem;">
     <div class="card-body">
      	<form name="adjust-teacher-insert" method="post" id="adjust-teacher-insert" action="${pageContext.request.contextPath}/applyAdjust">
      	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -62,6 +62,10 @@
      	 </form>
      </div>
  </div>
+
+<hr>
+
+
 
 
 </body>

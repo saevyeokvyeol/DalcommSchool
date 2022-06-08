@@ -52,7 +52,7 @@
     
     
     <!--쿠폰등록하기-->
-    <div class="card">
+    <div class="card" style="width: 30rem;">
         <div class="card-body">
          	<form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/couponInsert">
          	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -66,7 +66,7 @@
 	         			<tr>
 	         				<th>클래스명</th>
 	         				<td>
-								<select name="classId" id="classId">
+								<select name="classId" id="classId" class="form-select">
 						        	<option value="0">-클래스 선택-</option>          
 						        </select>
 							</td>
@@ -74,7 +74,7 @@
 	         			<tr>
 	         				<th>쿠폰상태</th>
 	         				<td>
-								<select name="couponStateId" id="couponStateId">
+								<select name="couponStateId" id="couponStateId" class="form-select">
 						        	<option value="0">-쿠폰상태 선택-</option>
 						        	<option value="1">발급</option>
 						        	<option value="2">발급중지</option>
@@ -84,15 +84,15 @@
 	         			</tr>
 	         			<tr>
 	         				<th>쿠폰명</th>
-	         				<td><input class="form-control" type=text name="couponName" id="couponName"></td>
+	         				<td><input class="form-control" type="text" name="couponName" id="couponName"></td>
 	         			</tr>
 	         			<tr>
 	         				<th>할인금액</th>
-	         				<td><input class="form-control" type=text name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요."></td>
+	         				<td><input class="form-control" type="number" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요."></td>
 	         			</tr>
 	         			<tr>
 	         				<th>사용기간</th>
-	         				<td><input class="form-control" type=number name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요."></td>
+	         				<td><input class="form-control" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요."></td>
 	         			</tr>
          				
          		</table>
