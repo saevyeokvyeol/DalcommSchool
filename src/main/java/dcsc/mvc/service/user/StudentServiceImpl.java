@@ -1,19 +1,18 @@
 package dcsc.mvc.service.user;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.user.Student;
-import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.repository.user.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
 	//private final Teacher teacher;
 	
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
-	
+
 	
 	/**
 	 * 회원가입
@@ -64,11 +63,19 @@ public class StudentServiceImpl implements StudentService {
 	 * 학생 회원 정보 수정
 	 * */
 	@Override
-	public void updateStudent(Student student) {
-		Student stu = studentRep.save(student);
-		if(stu==null) {
+	public Student updateStudent(Student student) {
+		Student dbStudent = studentRep.findById(student.getStudentId()).orElse(student);
+		
+		if(dbStudent==null) {
 			new RuntimeException("회원 정보 수정에 실패했습니다.");
 		}
+		
+		dbStudent.setStudentPhone(student.getStudentPhone());
+		dbStudent.setStudentEmail(student.getStudentEmail());
+		
+
+		return dbStudent;
+
 	}
 	
 	
@@ -101,11 +108,11 @@ public class StudentServiceImpl implements StudentService {
 	 * */
 	@Override
 	public Student selectStudent(String studentId) {
-		Student s = studentRep.findById(studentId).orElse(null);
-			if(s==null) {
+		Student student = studentRep.findById(studentId).orElse(null);
+			if(student==null) {
 				throw new RuntimeException("해당하는 학생 상세정보가 없습니다.");
 			}
-		return s;
+		return student;
 	}
 	
 	

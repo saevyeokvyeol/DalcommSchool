@@ -214,14 +214,14 @@ body{margin-top:20px;}
                 <div class="loginbox-social">
                     <div class="social-title ">SNS계정으로 10초만에 로그인</div>
                     <div class="social-buttons">
-                        <a href="/oauth2/authorization/google" class="button-facebook">
-                            <i class="social-icon fa fa-facebook"></i>
+                        <a href="/oauth2/authorization/google" class="button-google">
+                            <i class="social-icon fa fa-google-plus"></i>
                         </a>
                         <a href="/oauth2/authorization/kakao" class="button-twitter">
                             <i class="social-icon fa fa-twitter"></i>
                         </a>
-                        <a href="/oauth2/authorization/naver" class="button-google">
-                            <i class="social-icon fa fa-google-plus"></i>
+                        <a href="/oauth2/authorization/naver" class="button-facebook">
+                            <i class="social-icon fa fa-facebook"></i>
                         </a>
                     </div>
                 </div>

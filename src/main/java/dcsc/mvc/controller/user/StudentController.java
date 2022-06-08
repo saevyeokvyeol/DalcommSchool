@@ -1,19 +1,27 @@
 package dcsc.mvc.controller.user;
 
-import java.util.List;
+import java.security.Principal;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.user.Student;
-import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.user.StudentService;
 import dcsc.mvc.service.user.TeacherService;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping
@@ -72,55 +80,73 @@ public class StudentController {
 	
 	
 	//마이페이지
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/main/mypage/myPage")
-	public void myPage() {
+	public void myPage(HttpServletRequest request) {
 		System.out.println("myPage 호출...");
+		
+		//Student student = (Student)authentication.getPrincipal(); 
+		
+		//Student student = (Student)principal.getName();
+		//System.out.println("studentId : " + studentId);
+		//Student student = studentService.selectStudent(studentId);
+		//model.addAttribute("student",student);
+		
 	}
 	
 	//회원 정보 수정 폼
 	@RequestMapping("/main/mypage/modifyForm")
-	public ModelAndView modifyForm() {
+	public ModelAndView modifyForm(HttpServletRequest request) {
 		//로그인 한 유저 정보 불러오기
+		System.out.println("회원 정보 수정");
 		
-		return new ModelAndView("/main/mypage/modifyForm","null", null);
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//Student student = (Student)authentication.getPrincipal(); 
+		
+		//db에서 회원 정보 가져와서 폼에 넣기
+		//System.out.println(studentId);
+		//Student student = studentService.selectStudent(studentId);
+		
+		return new ModelAndView("/main/mypage/modifyForm","student", student);
 	}
 	
 	
 	//회원 정보 수정
 	@RequestMapping("/main/mypage/modify")
-	public void modify(Student student) {
+	public String modify(HttpServletRequest request, Student student) {
 		System.out.println("modify 호출...");
-		boolean check = teacherService.userPhoneCheck(student.getStudentId());
-		if(check==true) {
-			studentService.updateStudent(student);
-		}
+		
+		studentService.updateStudent(student);
+		
+		Student stu = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//세션 회원정보 업데이트
+		stu.setStudentPhone(student.getStudentPhone());
+		stu.setStudentEmail(student.getStudentEmail());
+		
+		return "redirect:/main/mypage/myPage";
 	}
+	
+	//회원 탈퇴 페이지
+	@RequestMapping("/main/mypage/deleteUserForm")
+	public void deleteUserForm() {
+		System.out.println("회원 탈퇴 페이지");
+		
+	}
+
 	
 	//회원 탈퇴
 	@RequestMapping("/main/mypage/deleteUser")
-	public void withdrawal(String userId, String userPwd) {
+	public String deleteUser(String userId, String userPwd) {
 		System.out.println("deleteUser 호출...");
 		studentService.deleteStudent(userId, userPwd);
+		
+		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
+		
+		return "redirect:/";
 	}
 	
 
-	//내 예약 조회
-	@RequestMapping("/main/mypage/bookList")
-	public void bookList() {
-		System.out.println("bookList 호출...");
-	}
 
-	
-	//내 클래스 문의 조회
-	@RequestMapping("/main/mypage/faqList")
-	public void faqList() {
-		System.out.println("faqList 호출...");
-	}
-	
-	//내 리뷰 조회
-	@RequestMapping("/main/mypage/reviewList")
-	public void reviewList() {
-		System.out.println("reviewList 호출...");
-	}
 
 }

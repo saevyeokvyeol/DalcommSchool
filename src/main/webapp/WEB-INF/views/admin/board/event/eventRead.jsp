@@ -15,7 +15,7 @@
 		
 	 $("input[value=수정하기]").click(function(){
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/event/eventUpdateForm");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/event/eventUpdate");
 		   $("#requestForm").submit();
 		   
 	   })
@@ -29,8 +29,6 @@
 	   
 	})
 </script>
-
-
 
 
 <title>Insert title here</title>
@@ -77,6 +75,7 @@
         </td>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
         <td width="450" height="200" valign="top" colspan="3">
+		<img alt="" src="${pageContext.request.contextPath}/img/event/${requestScope.event.eventImg}">
         <span style="font-size:9pt;"><b><pre>${requestScope.event.eventContent}</pre></b></span></td>
     </tr>
     

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,17 @@
 		color:red;
 		display: none;
 	}
+	
+	.id, .name { 
+		background-color: #D3D3D3;
+	}
 
 </style>
 
 
 
 <script type="text/javascript">
+
 
 $(function(){
 	
@@ -144,23 +150,26 @@ $(function(){
 </head>
 <body>
  <section>
+  <sec:authorize access="isAuthenticated()">
+ 	<sec:authentication property="principal" var="student"/>
 	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/main/mypage/modify">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+		
 	  <h1> 학생 회원정보 수정페이지 </h1>
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
 	      <tr>
-	          <th>* 아이디</th>
-	          <td class=""><input type="text" id="studentId" class="" name="studentId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." readonly="readonly"/>
+	          <th>아이디</th>
+	          <td class=""><input type="text" id="studentId" class="id" name="studentId" value="${student.studentId}" readonly="readonly"/>
 
 	      </tr>
 	      <tr>
-	          <th>* 이름</th>
-	          <td><input type="text" id="studentName" name="studentName" class="" placeholder="" readonly="readonly""/>
+	          <th>이름</th>
+	          <td><input type="text" id="studentName" name="studentName" class="name" value="${student.studentName}" readonly="readonly"/>
 	      </tr>
 	      <tr>
 	          <th>* 핸드폰 번호</th>
-	          <td><input type="text" id="studentPhone" name="studentPhone" class="" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+	          <td><input type="text" id="studentPhone" name="studentPhone" class="" value="${student.studentPhone}" />
 	          <button type="button" id="phoneCheck" class="">중복체크</button>
 	          <span id="notValidPhone" class="notValidPhone">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span><br>
 	          <span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
@@ -168,15 +177,17 @@ $(function(){
 	      </tr>
 	      <tr>
 	          <th>* 이메일</th>
-	          <td><input type="text" id="studentEmail" name="studentEmail" class="" required="required"/>
+	          <td><input type="text" id="studentEmail" name="studentEmail" class="" value="${student.studentEmail}" />
 	          <span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span></td>
 	      </tr>
   	</table>
 	  	<div>
-	  	<input type="submit" id="joinBtn" value="회원가입">
+	  	<input type="submit" id="updateBtn" value="수정">
 	  	<a href="../index.jsp" id="cancelBtn">취소</a>
+	  	<a href="${pageContext.request.contextPath}/main/mypage/myPage" id="cancelBtn">뒤로가기</a>
 	  	</div>
 	</form>
+	</sec:authorize>
   </section>
 </body>
 </html>

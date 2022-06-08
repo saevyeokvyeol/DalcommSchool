@@ -1,15 +1,21 @@
 package dcsc.mvc.controller.board;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Event;
 import dcsc.mvc.service.board.EventService;
+import dcsc.mvc.util.FileLink;
+import dcsc.mvc.util.Link;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -45,7 +51,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 등록 폼
 	 * */
-	@RequestMapping("/eventInsertForm")
+	@RequestMapping("/eventWrite")
 	public void eventWrite() {
 		
 	}
@@ -54,7 +60,13 @@ public class EventController {
 	 * 이벤트 글 등록 
 	 * */
 	@RequestMapping("/eventInsert")
-	public String eventInsert(Event event) {
+	public String eventInsert(Event event, MultipartFile file) throws Exception {
+		
+		if(file.getSize() > 0) {
+			File img = new File(FileLink.EVENT_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			event.setEventImg(file.getOriginalFilename());
+		}
 		eventService.insertEvent(event);
 		
 		return "redirect:/admin/board/event/eventList";
@@ -63,7 +75,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 수정 폼
 	 * */
-	@RequestMapping("/eventUpdateForm")
+	@RequestMapping("/eventUpdate")
 	public ModelAndView eventUpdateForm(Long eventNo) {
 		Event event = eventService.selectByEventNo(eventNo,false);
 	
@@ -73,7 +85,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 수정
 	 * */
-	@RequestMapping("/eventUpdate")
+	@RequestMapping("/eventUpdateForm")
 	public String eventUpdate(Event event) {
 		eventService.updateEvent(event);
 		
@@ -84,11 +96,12 @@ public class EventController {
 	/**
 	 * 이벤트 글 삭제
 	 * */
-	@RequestMapping("/event/eventDelete")
+	@RequestMapping("/eventDelete")
 	public String eventDelete(Long eventNo) {
+		System.out.println(eventNo + "이벤트 글 삭제");
 		eventService.deleteEvent(eventNo);
 		
-		return "redirect:/main/board/event/eventList";
+		return "redirect:/admin/board/event/eventList";
 
 	}
 	
