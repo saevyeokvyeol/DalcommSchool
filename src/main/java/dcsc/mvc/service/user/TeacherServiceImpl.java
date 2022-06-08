@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -311,8 +313,11 @@ public class TeacherServiceImpl implements TeacherService {
 		return list;
 	}
 
-	
-	
-	
+	//관리자페이지 강사 조회 페이징처리
+	@Override
+	public Page<Teacher> selectAllTeacher(Pageable pageable) {
+		return teacherRep.findAll(pageable);
+	}
+
 
 }
