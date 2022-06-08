@@ -27,7 +27,7 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public Faq updateFAQ(Faq faq) {
+	public Faq updateFAQ(Faq faq,FaqCategory faqCategory) {
 		
 		Faq dbFaq = faqRepository.findById(faq.getFaqNo()).orElse(null);
 		if(dbFaq==null) {
@@ -35,6 +35,7 @@ public class FaqServiceImpl implements FaqService {
 		}
 		
 		dbFaq.setFaqTitle(faq.getFaqTitle());
+		dbFaq.setFaqCategory(faq.getFaqCategory());
 		dbFaq.setFaqContent(faq.getFaqContent());
 		
 		return dbFaq;
@@ -50,7 +51,7 @@ public class FaqServiceImpl implements FaqService {
 	}
 	
 	@Override
-	public Faq selectBy(Long faqNo, boolean state) {
+	public Faq selectByFaqNo(Long faqNo, boolean state) {
 		if(state) {
 			//조회수 증가해보자
 			}
@@ -67,7 +68,7 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public List<Faq> selectBykeyword(String keyword) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -76,6 +77,13 @@ public class FaqServiceImpl implements FaqService {
 		List<FaqCategory> list = faqCategoryRepository.findAll();
 		
 		return list;
+	}
+
+	@Override
+	public List<Faq> selectByfaqCategoryId(Long FaqCategoryId) {
+		
+		
+		return null;
 	}
 
 

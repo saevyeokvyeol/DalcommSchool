@@ -17,9 +17,10 @@ public interface FaqService {
 	void insertFAQ(Faq faq);
 	/**
 	 * FAQ 수정 기능
+	 * @param faqCategory 
 	 * @param FAQ( 제목, 카테고리, 내용, 이미지)
 	 * */
-	Faq updateFAQ(Faq faq);
+	Faq updateFAQ(Faq faq, FaqCategory faqCategory);
 	
 	/**
 	 * FAQ 삭제 기능
@@ -29,12 +30,9 @@ public interface FaqService {
 	void deleteFAQ(Long faqNo);
 	
 	/**
-	 * FAQ 게시판 카테고리보기 기능
-	 * faqCategory를 들고 들어와서 카테고리별로 출력한다
-	 * @param String faqCategory
-	 * @return List<FAQ>
+	 * 리스트 
 	 * */
-	Faq selectBy(Long faq ,boolean state);
+	Faq selectByFaqNo(Long faq ,boolean state);
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능
@@ -55,4 +53,10 @@ public interface FaqService {
 	 * @return List<FAQ>
 	 * */
 	List<Faq> selectBykeyword(String keyword);
+	
+	/**
+	 * 카테고리 별로 정렬
+	 * */
+	List<Faq> selectByfaqCategoryId(Long FaqCategoryId);
+	
 }

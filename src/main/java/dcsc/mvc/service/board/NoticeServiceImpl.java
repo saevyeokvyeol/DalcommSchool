@@ -47,7 +47,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice selectBy(Long noticeNo,boolean state) {
+	public Notice selectByNotuceNo(Long noticeNo,boolean state) {
 		if(state) {
 			//조회수 증가해보자
 		}
@@ -78,6 +78,4 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return list;
 	}
-	
-
 }
