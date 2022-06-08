@@ -33,6 +33,15 @@ public class FaqController {
 		return "admin/board/FAQ/faqList";
 	}
 	
+	@RequestMapping("/faqCategoryList")
+	private String faqCategoryList(Model model,Long faqCategoryId) {
+		
+		System.out.println(faqCategoryId);
+		List<Faq> faqlist=faqService.selectByfaqCategoryId(faqCategoryId);
+		model.addAttribute("faqlist",faqlist);
+		return "redirect:/admin/board/FAQ/faqList";
+	}
+	
 	/**
 	 * 글 등록폼
 	 * */

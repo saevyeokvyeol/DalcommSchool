@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.board.Notice;
@@ -54,14 +56,19 @@ public class NoticeServiceImpl implements NoticeService {
 		Notice notice = noRepository.findById(noticeNo).orElse(null);
 		if(notice==null)new RuntimeException("상세보기에 오류가 발생했습니다.");
 		return notice;
-	}
+	} 
 
 	@Override
 	public List<Notice> selectAllNotice() {
 		return noRepository.findAll();
 	}
-
+	
 	@Override
+	public Page<Notice> selectAllNotice(Pageable pageable) {
+		return noRepository.findAll(pageable);
+	}
+
+	@Override 
 	public List<Notice> selectByKeyword(String keyfield, String keyword) {
 		List<Notice> list = null;
 		switch (keyfield) {
@@ -78,4 +85,6 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return list;
 	}
+
+	
 }
