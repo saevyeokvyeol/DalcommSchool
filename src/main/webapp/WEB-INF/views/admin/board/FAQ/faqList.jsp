@@ -19,20 +19,20 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">전체공개</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/board/FAQ/faqCategoryList?faqCategoryId">전체공개</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">예약</a>
+          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqCategoryList?faqCategoryId=1">예약</a>
         </li>
         <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="#">결제</a>
+           <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqCategoryList?faqCategoryId=2">결제</a>
         </li>
       </ul>
-      <form class="d-flex" action="${pageContext.request.contextPath}/admin/board/FAQ/FAQSearch" method="post">
+      <form class="d-flex" action="${pageContext.request.contextPath}/admin/board/FAQ/fAQSearch" method="post">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyword" name="keyword">
         <button class="btn btn-outline-success" type="submit" id="search">Search</button>
       </form>
@@ -47,21 +47,68 @@
 <hr>
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
- <c:forEach items="${requestScope.faqlist}" var="faq">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
-       ${faq.faqTitle}
-      </button>
-    </h2>
-    <div id="flush-collapseOne${faq.faqNo}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body"> <a href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
-				${faq.faqContent}<p>
-					</a></div>
-    
-    </div>
-  </div>
-  </c:forEach>
+
+	<c:forEach items="${requestScope.faqlist}" var="faq">
+		<c:choose>
+
+			<c:when test="${faq.faqCategoryId==1}">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingOne">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#flush-collapseOne${faq.faqNo}"
+							aria-expanded="false" aria-controls="flush-collapseOne">
+							${faq.faqTitle}</button>
+					</h2>
+					<div id="flush-collapseOne${faq.faqNo}"
+						class="accordion-collapse collapse"
+						aria-labelledby="flush-headingOne"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body">
+							<a
+								href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
+								${faq.faqContent}
+								<p>
+							</a>
+						</div>
+
+					</div>
+				</div>
+			</c:when>
+
+			<c:when test="${faq.faqCategoryId==2}">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingOne">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#flush-collapseOne${faq.faqNo}"
+							aria-expanded="false" aria-controls="flush-collapseOne">
+							${faq.faqTitle}</button>
+					</h2>
+					<div id="flush-collapseOne${faq.faqNo}"
+						class="accordion-collapse collapse"
+						aria-labelledby="flush-headingOne"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body">
+							<a
+								href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
+								${faq.faqContent}
+								<p>
+							</a>
+						</div>
+
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+			
+			</c:otherwise>
+		</c:choose>
+
+	</c:forEach>
+
+
+
 </div>
 
 

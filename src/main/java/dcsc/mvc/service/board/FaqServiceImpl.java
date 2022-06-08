@@ -1,13 +1,18 @@
 package dcsc.mvc.service.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+import com.querydsl.core.BooleanBuilder;
+
 import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.FaqCategory;
+import dcsc.mvc.domain.board.QFaq;
 import dcsc.mvc.repository.board.FAQRepository;
 import dcsc.mvc.repository.board.FaqCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -81,10 +86,17 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public List<Faq> selectByfaqCategoryId(Long FaqCategoryId) {
+		QFaq faq = QFaq.faq;
+		BooleanBuilder builder = new BooleanBuilder();
 		
+		builder.and(faq.faqCategory.faqCategoryId.eq(FaqCategoryId));
 		
-		return null;
+		Iterable<Faq> result=faqRepository.findAll(builder);
+		
+		List<Faq> list = Lists.newArrayList(result);
+		
+		return list;
 	}
-
+	
 
 }

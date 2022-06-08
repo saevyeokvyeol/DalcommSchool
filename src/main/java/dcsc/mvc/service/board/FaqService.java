@@ -55,8 +55,14 @@ public interface FaqService {
 	List<Faq> selectBykeyword(String keyword);
 	
 	/**
-	 * 카테고리 별로 정렬
+	 * 카테고리 리스트
 	 * */
 	List<Faq> selectByfaqCategoryId(Long FaqCategoryId);
+	
+	/**
+	 * 
+	 * */
+	
+	
 	
 }
