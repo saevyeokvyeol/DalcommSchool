@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* { 
+	font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+	font-weight: 450;
+}
+
+/* 헤더 */
+#index-header {
+	width: 100%; position: fixed; z-index: 1040; 
+	background-color: transparent;
+	-moz-transition: background, 0.2s;
+	-o-transition: background, 0.2s;
+	-webkit-transition: background, 0.2s;
+	transition: background, 0.2s;
+} 
+
+#index-header.roll {
+	background-color: white; box-shadow: 0 0px 3px 0px rgb(0 0 0 / 20%);
+	-moz-transition: background, 0.5s;
+	-o-transition: background, 0.5s;
+	-webkit-transition: background, 0.5s;
+	transition: background, 0.5s;
+} 
+
+#main-header {
+	top: 0;	width: 100%; position: fixed; z-index: 1040; 
+	background-color: white; box-shadow: 0 0px 3px 0px rgb(0 0 0 / 20%);
+	
+} 
+#inner-main-header {
+	 margin: auto; max-width: 1200px; display: flex; justify-content: space-between; vertical-align: middle;
+}
+
+#logo_menu {
+	display: flex; justify-content: space-between;
+}
+
+#logo_menu h1 {
+	margin: 0px 50px 15px 0;
+}
+
+#inner-main-header ul {
+	margin: 0; padding: 0;
+}
+
+#inner-main-header li {
+	margin: 25px 0 25px 50px; padding: 0; float: left; list-style: none; 
+}
+
+#inner-main-header a {
+	font-size: 17px; font-weight: 700; text-decoration: none; color: #690000;
+}
+
+#inner-main-header a:hover {
+	color: #EB5353;
+	-moz-transition: background, 0.2s;
+	-o-transition: background, 0.2s;
+	-webkit-transition: background, 0.2s;
+	transition: background, 0.2s;
+}
+
+/* 푸터 */
+#main-footer {
+	background-color: #222;
+}
+
+#inner-main-footer {
+	 margin: 0 auto; max-width: 1200px; height: 240px; padding: 50px 0;
+	 display: flex; justify-content: space-between;
+}
+
+#inner-main-footer h1 {
+	padding: 15px 0;
+}
+
+#main-footer span {
+	display: table-cell;
+	color: #b2b2b2; font-size: 15px; font-weight: 300; text-decoration: none; vertical-align: middle;
+}
+
+#main-footer span.incInfo {
+	padding: 25px 0;
+}
+
+.main-body {
+	margin: 0 auto 100px; max-width: 1200px; 
+}
+
+.main-content {
+	margin: 100px auto; max-width: 1200px; 
+}
+
+.index-title {
+	font-weight: 600; color: #333;
+	padding: 50px 0 0;
+}
+
+.classList {
+	display: flex; justify-content: space-between; flex-wrap: wrap;
+}
+
+.classBox {
+	 padding: 20px 0;
+}
+
+.classBox .classBoxImg {
+	width: 380px; height: 253px; border-radius: 10px; overflow: hidden;
+}
+
+.classBox a {
+	text-decoration: none;
+}
+
+.classBox a:hover {
+	color: black;
+}
+
+.classBox img {
+	width: 380px; height: 253px; transform: scale(1.0); transition: transform .5s;
+}
+
+.classBox img:hover {
+    transform: scale(1.2); transition: transform .5s;
+}
+
+.classBox .classBoxContent {
+	padding: 10px 0;
+}
+
+.classBox .classBoxName {
+	display: flex; justify-content: space-between; line-height: 40px;
+}
+
+.classBox .classBoxName span {
+	font-weight: 700;
+}
+
+.classBox .likeBtn {
+	width: 37px; height: 37px; line-height: 28px; border-radius: 18px; border-width: 2px;
+}
+
+.classBox .classBoxInfo {
+	display: flex; justify-content: space-between; color: #555; 
+}
+
+.classBox .classBoxLocation i {
+	padding: 0 10px;
+}
+
+.classBox .classBoxLocation span {
+	padding: 0 20px 0 0; margin: 0 10px 0 0; border-right: 2px solid #888;
+}
+
+.classMore {
+	text-align: right; font-size: 18px;
+}
+
+.classMore a {
+	text-decoration: none;
+}
+
+.title {
+	text-align: center; margin: 50px 0 30px; padding: 50px 0 40px; border-bottom: 2px solid #ddd;
+}

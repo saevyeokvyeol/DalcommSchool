@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dcsc.mvc.domain.classes.Adjust;
 import dcsc.mvc.domain.classes.AdjustState;
@@ -72,7 +73,32 @@ public class AdjustController {
 		
 		return"redirect:/teacher/adjust/adjustList";
 	}
-		
 	
+	/**
+	 * 정산 내역 전체 조회 - 관리자
+	 * @return List<Adjust>
+	 * */
+	@RequestMapping("admin/adjust/adjustAllList")
+	public void selectAllAdjust(Model model) {
+		List<Adjust> list = adjustService.selectAll();
+		model.addAttribute("list", list);
+	}
+	
+	/**
+	 * 요청된 정산 처리 기능
+	 * 
+	 * 정산 상태 '정산진행중'으로 변경 (update)
+	 * 
+	 * state로 정산 상태 관리(정산테이블의 정산일,정산상태Id변경)
+	 * 
+	 * @param int adjustStateId(정렬기준)
+	 * @return
+	 * */
+	@RequestMapping("admin/adjust/changeAdjustState")
+	@ResponseBody
+	public void changeAdjustState(Adjust adjust, AdjustState adjustState) {
+		adjust.setAdjustState(adjustState);
+		adjustService.updateAdjust(adjust, adjustState);
+	}
 	
 }

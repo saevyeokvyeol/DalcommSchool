@@ -2,6 +2,9 @@ package dcsc.mvc.service.classes;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
@@ -53,11 +56,10 @@ public interface ClassesService {
 
 	/**
 	 * 클래스 검색 및 필터링
-	 * @param Class(공방 지역, 카테고리), String keyword(검색 키워드), String sort(정렬),
-	 *        boolean timeOut(내일까지 체험 가능한 클래스)
+	 * @param Search search, Pageable pageable
 	 * @return List<Classes>
 	 * */
-	List<Classes> selectByFilter(Search search);
+	Page<Classes> selectByFilter(Search search, Pageable pageable);
 
 	/**
 	 * 클래스 상세 보기
@@ -68,15 +70,17 @@ public interface ClassesService {
 
 	/**
 	 * 신규 클래스 검색
+	 * @param Pageable
 	 * @return List<Classes>
 	 * */
-	List<Classes> selectNewClass();
+	Page<Classes> selectNewClass(Pageable pageable);
 
 	/**
 	 * 이틀 이내 체험 가능한 클래스 검색
+	 * @param Pageable
 	 * @return List<Classes>
 	 * */
-	List<ClassSchedule> selectNearClass();
+	Page<ClassSchedule> selectNearClass(Pageable pageable);
 	
 	/**
 	 * 클래스 카테고리 조회
