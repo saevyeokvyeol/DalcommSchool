@@ -2,6 +2,9 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.Notice;
 
 /**
@@ -33,7 +36,7 @@ public interface NoticeService {
 	 *  @param Long noticeNo
 	 *  @return Notice
 	 * */
-	Notice selectBy(Long noticeNo, boolean state);
+	Notice selectByNotuceNo(Long noticeNo, boolean state);
 	
 	/**
 	 * 공지사항 게시판 조회 기능(강사&회원)
@@ -48,7 +51,10 @@ public interface NoticeService {
 	 * @return List<Notice>
 	 * */
 	List<Notice> selectByKeyword(String keyfield, String keyword);
-
 	
+	/**
+	 * 공지사항 게시판 조회 - 페이징 처리
+	 * */
+	Page<Notice> selectAllNotice(Pageable pageable) ;
 	
 }

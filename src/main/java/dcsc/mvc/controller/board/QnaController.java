@@ -55,17 +55,17 @@ public class QnaController {
 	/**
 	 * 선생님 - Q&A 상세조회
 	 * */
-	/*@RequestMapping("teacher/board/qna/qnaRead_th/{qnaId}")
+	/*@RequestMapping("teacher/board/qna/qnaRead/{qnaId}")
 	public ModelAndView qnaReadth(@PathVariable Long qnaId ) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
-		return new ModelAndView("teacher/board/qna/qnaRead_th", "qna", classQna);
+		return new ModelAndView("teacher/board/qna/qnaRead", "qna", classQna);
 	}*/
 	
 	/**
 	 * 선생님 - Q&A 상세조회
 	 * */
-	@RequestMapping("teacher/board/qna/qnaRead_th/{qnaId}")
+	@RequestMapping("teacher/board/qna/qnaRead/{qnaId}")
 	public String qnaReadth(@PathVariable Long qnaId , Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
@@ -73,7 +73,7 @@ public class QnaController {
 		model.addAttribute("qna", classQna);
 		model.addAttribute("qnaReply", classReply);
 		
-		return "teacher/board/qna/qnaRead_th";
+		return "teacher/board/qna/qnaRead";
 	}
 	
 	/**
@@ -89,12 +89,18 @@ public class QnaController {
 	 * */
 	@RequestMapping("main/board/qna/qnaInsert")
 	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
+		
+		String blindState = "F";
+		String qnaComplete = "F";
+		
 		classQna.setClasses(classes);
 		classQna.setStudent(student);
-		classQna.setBlindState(classQna.getBlindState());
-		classQna.setQnaComplete(classQna.getQnaComplete());
+		//classQna.setBlindState(classQna.getBlindState());
+		//classQna.setQnaComplete(classQna.getQnaComplete());
+		classQna.setBlindState(blindState);
+		classQna.setQnaComplete(qnaComplete);
 		classQnaService.insertQuestion(classQna);
-		//System.out.println("classQna = "+classQna );
+		System.out.println("classQna = "+classQna );
 		
 		return "redirect:/main/board/qna/qnaList";
 	}
@@ -142,7 +148,7 @@ public class QnaController {
 	/**
 	 * 선생님 QnA전체조회
 	 * */
-	@RequestMapping("teacher/board/qna/qnaList_th")
+	@RequestMapping("teacher/board/qna/qnaList")
 	public void qnaSelectAll(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
 		
@@ -176,7 +182,7 @@ public class QnaController {
 	/**
 	 * 강사ID로 클래스 Q&A 검색
 	 * */
-	@RequestMapping("teacher/teacherMypage/qnaListAll_th")
+	@RequestMapping("teacher/teacherMypage/qnaListAll")
 	public void selectByStudentId(String teacherId , Model model) {
 		teacherId = "Tann1234";
 		
@@ -204,7 +210,7 @@ public class QnaController {
 		classReply.setTeacher(teacher);
 		classQnaService.insertReply(classReply);
 		
-		return "redirect:/teacher/board/qna/qnaRead_th/"+qnaId;
+		return "redirect:/teacher/board/qna/qnaRead/"+qnaId;
 	}
 	
 	/**
@@ -224,7 +230,7 @@ public class QnaController {
 	public String qnaReplyUpdate(ClassReply classReply) {
 		classQnaService.updateReply(classReply);
 		
-		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+		return "redirect:/teacher/teacherMypage/qnaListAll";
 	}
 
 	/**
@@ -234,7 +240,7 @@ public class QnaController {
 	public String qnaReplyDelete(@PathVariable Long replyId) {
 		classQnaService.deleteReply(replyId);
 		
-		return "redirect:/teacher/teacherMypage/qnaListAll_th";
+		return "redirect:/teacher/teacherMypage/qnaListAll";
 	}
 	
 }

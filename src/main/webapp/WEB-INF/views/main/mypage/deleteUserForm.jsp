@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,7 @@
 <body>
 <h2> 탈퇴 페이지 입니다 ^^ </h2>
 
-	<form id="frm" action="/mypage/newFireProc" method="post">
+	
 	<h3 class="h3tit01">회원탈퇴사유</h3>
 	<div class="bk_box mgt0">회원 탈퇴 신청 전, 탈퇴 사유를 체크해주세요.</div>
 	<table class="sy_tbl">
@@ -125,6 +127,10 @@
 	<div class="bk_box mgt60">마지막으로, 회원 탈퇴를 위한 고객님의 회원 정보를 입력해 주세요.</div>
 	<div class="ad_box">
 		<div class="ad_tbl_box">
+		<sec:authorize access="isAuthenticated()">
+ 		<sec:authentication property="principal" var="student"/>
+		<form id="delete" action="${pageContext.request.contextPath}/main/mypage/deleteUser" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 			<table>
 				<colgroup>
 					<col style="width:160px;" />
@@ -133,18 +139,19 @@
 				<tbody>
 					<tr>
 						<th scope="row">아이디</th>
-						<td class="id"><span></span></td>
+						<td class="id"><input type="text" id="userId" name="userId" value="${student.studentId}" /><span></span></td>
 					</tr>
 					<tr>
 						<th scope="row">비밀번호</th>
-						<td><input type="password" id="user_pass" name="user_pass"  /></td>
+						<td><input type="password" id="userPwd" name="userPwd" /></td>
 					</tr>
 				</tbody>
 			</table>
-			<div class="btn_right"><a href="javascript:void(0);" onclick="clickFire();" class="btn_black01">회원 탈퇴하기</a></div>
+			<input type="submit" value="탈퇴하기" name="delete"> <input type="reset" value="나가기">
+	    </form>
+		</sec:authorize>
 		</div>
 	</div>
-    </form>
 <input type="hidden" id="contents" name="contents" value=""  />
 <input type="hidden" id="userid" name="userid" value=""  />
 		

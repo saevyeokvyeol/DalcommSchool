@@ -252,6 +252,8 @@
 						}
 					})
 				})
+				
+				
 			})
 		</script>
 	</head>
@@ -374,6 +376,6 @@
 		 </c:forEach>
 		 
 		 
-		 
+		
 	</body>
 </html>

@@ -50,7 +50,7 @@
     	</thead>
 	<tbody>
 		<c:choose>
-			<c:when test="${empty notice}">
+			<c:when test="${empty pageList}">
 				<tr>
 					<th colspan="10">
 					<span> 검색할 정보가 없습니다.</span>
@@ -58,8 +58,8 @@
 				</tr>
 			</c:when>
 
-			<c:when test="${not empty notice}">
-				<c:forEach items="${requestScope.notice}" var="notice">
+			    <c:otherwise>
+				<c:forEach items="${requestScope.pageList.content}" var="notice">
 					<tr>
 						<td><span>${notice.noticeNo}</span></td>
 						<td><span><a href="${pageContext.request.contextPath}/admin/board/Notice/noticeRead/${notice.noticeNo}">
@@ -68,12 +68,46 @@
 						<td><span>${notice.noticeContent}</span></td>
 					</tr>
 				</c:forEach>
-			</c:when>
+				</c:otherwise>
 		</c:choose>
 	</tbody>
 </table>
+
+<hr>
+
+<div style="text-align: center">
+		<!--  블럭당  -->
+ <nav class="pagination-container">
+	<div class="pagination">
+	<c:set var="doneLoop" value="false"/>
+		
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${startPage-1}">PREV</a>
+		  </c:if>
+		  
+				<span class="pagination-inner"> 
+				  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+				  
+					    <c:if test="${(i-1)>=pageList.getTotalPages()}">
+					       <c:set var="doneLoop" value="true"/>
+					    </c:if> 
+				    
+				  <c:if test="${not doneLoop}" >
+				         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${i}">${i}</a> 
+				  </c:if>
+				   
+				</c:forEach>
+				</span> 
+				 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+				     <a class="pagination-older" href="${pageContext.request.contextPath}/board/list?nowPage=${startPage+blockCount}">NEXT</a>
+				 </c:if>
+		</div>
+	</nav>  
+</div>
   
   <hr><!-- 구분선 -->
+  
+  
   
 <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/admin/board/Notice/write'">등록하기</button>
 <button type="button" class="btn btn-danger" onclick="">삭제</button>

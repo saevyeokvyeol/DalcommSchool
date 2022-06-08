@@ -1,13 +1,18 @@
 package dcsc.mvc.service.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+import com.querydsl.core.BooleanBuilder;
+
 import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.FaqCategory;
+import dcsc.mvc.domain.board.QFaq;
 import dcsc.mvc.repository.board.FAQRepository;
 import dcsc.mvc.repository.board.FaqCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +32,7 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public Faq updateFAQ(Faq faq) {
+	public Faq updateFAQ(Faq faq,FaqCategory faqCategory) {
 		
 		Faq dbFaq = faqRepository.findById(faq.getFaqNo()).orElse(null);
 		if(dbFaq==null) {
@@ -35,6 +40,7 @@ public class FaqServiceImpl implements FaqService {
 		}
 		
 		dbFaq.setFaqTitle(faq.getFaqTitle());
+		dbFaq.setFaqCategory(faq.getFaqCategory());
 		dbFaq.setFaqContent(faq.getFaqContent());
 		
 		return dbFaq;
@@ -50,7 +56,7 @@ public class FaqServiceImpl implements FaqService {
 	}
 	
 	@Override
-	public Faq selectBy(Long faqNo, boolean state) {
+	public Faq selectByFaqNo(Long faqNo, boolean state) {
 		if(state) {
 			//조회수 증가해보자
 			}
@@ -67,7 +73,7 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public List<Faq> selectBykeyword(String keyword) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -78,5 +84,19 @@ public class FaqServiceImpl implements FaqService {
 		return list;
 	}
 
+	@Override
+	public List<Faq> selectByfaqCategoryId(Long FaqCategoryId) {
+		QFaq faq = QFaq.faq;
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		builder.and(faq.faqCategory.faqCategoryId.eq(FaqCategoryId));
+		
+		Iterable<Faq> result=faqRepository.findAll(builder);
+		
+		List<Faq> list = Lists.newArrayList(result);
+		
+		return list;
+	}
+	
 
 }

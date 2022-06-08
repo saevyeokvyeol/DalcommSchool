@@ -3,6 +3,7 @@ package dcsc.mvc.service.classes;
 import java.util.List;
 
 import dcsc.mvc.domain.classes.Adjust;
+import dcsc.mvc.domain.classes.AdjustState;
 
 public interface AdjustService {
 	/**
@@ -29,10 +30,10 @@ public interface AdjustService {
 	 * 
 	 * state로 정산 상태 관리(정산테이블의 정산일,정산상태Id변경)
 	 * 
-	 * @param int adjustStateId(정렬기준)
+	 * @param int adjustStateId(정렬기준) //String state??? //Long adjustNo
 	 * @return int(수정된 데이터 수)
 	 * */
-	void updateAdjust(Long adjustId, String state);
+	void updateAdjust(Adjust adjust, AdjustState adjustState);
 	
 
 	/**
@@ -42,6 +43,12 @@ public interface AdjustService {
 	 * */
 	List<Adjust> selectByTeacherId(String teacherId);
 	
+	
+	/**
+	 * 정산 내역 전체 조회 - 관리자
+	 * @return List<Adjust>
+	 * */
+	List<Adjust> selectAll();
 	
 	
 }

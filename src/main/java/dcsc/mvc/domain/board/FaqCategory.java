@@ -23,6 +23,6 @@ public class FaqCategory {
 	@SequenceGenerator(sequenceName = "faq_category_id_seq" , allocationSize = 1 , name = "faq_category_id_seq")
 	private Long faqCategoryId;
 	
-	private String faqCategoryName;
+	private String faqCategoryName; 
 	
 }
