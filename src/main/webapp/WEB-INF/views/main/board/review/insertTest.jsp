@@ -30,7 +30,7 @@ $(function(){
 <body>
 클래스 후기 등록 폼입니다.
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  후기 등록하기
+  Launch demo modal
 </button>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,6 +42,8 @@ $(function(){
 			</div>
 			<div class="modal-body">
 				<form id="reviewInsertForm" method="post" action="${pageContext.request.contextPath}/main/board/review/insert">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				<input type="hidden" name="classId" value="1">
 					<fieldset>
 					  <label for="recipient-name" class="col-form-label">별점</label>
 				        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>

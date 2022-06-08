@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.service.board.ClassReviewService;
-import dcsc.mvc.util.Link;
+import dcsc.mvc.util.FileLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -110,6 +110,15 @@ public class ClassReviewController {
 	}
 	
 	/**
+	 * 클래스 후기 등록 폼(테스트)
+	 * */
+	@RequestMapping("/insertTest")
+	public void insertForm() {
+		
+		
+	}
+	
+	/**
 	 * 클래스 후기 등록 (별점)
 	 * */
 	@RequestMapping("/insert")
@@ -117,7 +126,7 @@ public class ClassReviewController {
 		review.setClasses(new Classes(classId));
 		
 		if(file.getSize()>0) {
-			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			review.setReviewImg(file.getOriginalFilename());
@@ -145,7 +154,7 @@ public class ClassReviewController {
 	@RequestMapping("/update")
 	public String updateReview(ClassReview review, MultipartFile file) throws Exception{
 		if(file.getSize()>0) {
-			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			review.setReviewImg(file.getOriginalFilename());
