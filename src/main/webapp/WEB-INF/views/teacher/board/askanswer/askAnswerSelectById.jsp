@@ -16,7 +16,7 @@ $(function(){
 	   $("input[value=수정하기]").click(function(){
 		   //document.requestForm.action="${pageContext.request.contextPath}/board/updateForm";
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?${_csrf.parameterName}=${_csrf.token}");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/askanswer/updateFormTeacher?${_csrf.parameterName}=${_csrf.token}");
 		   $("#requestForm").submit();
 	   })
 	   
@@ -25,7 +25,7 @@ $(function(){
 		   
 		   
 	          
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/askanswer/deleteStudent?${_csrf.parameterName}=${_csrf.token}");
+			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/askanswer/deleteTeacher?${_csrf.parameterName}=${_csrf.token}");
 			   $("#requestForm").submit();
 			   alert("삭제되었습니다.")
 		   
@@ -56,7 +56,7 @@ $(function(){
 		           글 번호 : ${askSelectByIdList.askNo}<p>  
 		        </td>
 		        <td>
-		        	문의 ID : ${askSelectByIdList.student.studentId}<p>
+		        	문의 ID : ${askSelectByIdList.teacher.teacherId}<p>
 		        </td>
 		        <td>
 		        	카테고리 : ${askSelectByIdList.askCategory.askCategoryName}<p>

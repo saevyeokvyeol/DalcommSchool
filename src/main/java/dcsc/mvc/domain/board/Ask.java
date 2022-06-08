@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -71,4 +72,8 @@ public class Ask {
 	@JoinColumn(name = "ask_category_id")
 	@JsonIgnore
 	private AskCategory askCategory;
+	 
+	@OneToOne(mappedBy = "ask")
+	private Answer answer;
+	
 }

@@ -10,7 +10,7 @@
 </head>
 <body>
 \${askSelectByIdList.askNo} : ${askSelectByIdList.askNo}
-<form name=updateForm method=post action="${pageContext.request.contextPath}/main/board/askanswer/updateStudent?${_csrf.parameterName}=${_csrf.token}" >
+<form name=updateForm method=post action="${pageContext.request.contextPath}/main/board/askanswer/updateTeacher?${_csrf.parameterName}=${_csrf.token}" >
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
     
     <input type='hidden' name='askNo' value="${askSelectByIdList.askNo}">
@@ -50,7 +50,7 @@
 </table>
 </form>
 <hr>
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerStudent">리스트로 돌아가기</a>&gt;</span></div>
+<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerTeacher">리스트로 돌아가기</a>&gt;</span></div>
 
 
 </body>

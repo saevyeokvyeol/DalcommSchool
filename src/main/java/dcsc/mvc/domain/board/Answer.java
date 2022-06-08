@@ -40,7 +40,7 @@ public class Answer {
 	private LocalDateTime answerInsertDate;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ask_id")
+	@JoinColumn(name = "ask_no")
 	@JsonIgnore
 	private Ask ask;
 	
