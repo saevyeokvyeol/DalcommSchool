@@ -114,7 +114,7 @@
 				//페이징처리 아작스
 				function reviewPaging(){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/main/board/review/{classId}",
+						url: "${pageContext.request.contextPath}/main/board/review/reviewList/{classId}",
 						type: "post",
 						dataType: "json",
 						data: {
