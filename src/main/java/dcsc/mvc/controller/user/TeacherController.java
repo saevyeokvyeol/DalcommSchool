@@ -53,10 +53,10 @@ public class TeacherController {
 	 * 강사 정보 수정하기
 	 * */
 	@RequestMapping("/teacher/teacherMypage/updateTeacher")
-	public ModelAndView updateTeacher(Teacher teacher) {
+	public String updateTeacher(Teacher teacher) {
 		teacherService.updateTeacher(teacher);
 		
-		return new ModelAndView("redirect:/teacher/board");
+		return "redirect:/teacher/board";
 	}
 	
 	/**

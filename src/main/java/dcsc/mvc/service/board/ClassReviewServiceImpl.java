@@ -77,7 +77,47 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		List<ClassReview> list = reviewRep.findAll();
 		return list;
 	}
+	
+	/**
+	 * 클래스 ID로 후기 검색 - 페이징 처리
+	 * */
+	@Override
+	public Page<ClassReview> selectByClassId(Long classId, Pageable pageable) {
+		
+//		List<ClassReview> list = reviewRep.findByClassesClassIdEquals(classId);
+		
+		
+		
+		return reviewRep.findByClassesClassIdEquals(classId, pageable);
+	}
+	
+	/**
+	 * 강사 ID로 후기 검색 - 페이징 처리
+	 * */
+	@Override
+	public Page<ClassReview> selectByTeacherId(String teacherId, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	/**
+	 * 학생 ID로 후기 검색 - 페이징 처리
+	 * */
+	@Override
+	public Page<ClassReview> selectByStudentId(String studentId, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 후기 전체 검색 - 페이징 처리
+	 * */
+	@Override
+	public Page<ClassReview> selectAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/**
 	 * 후기 상세보기
 	 * */

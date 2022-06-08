@@ -2,6 +2,8 @@ package dcsc.mvc.repository.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import dcsc.mvc.domain.board.ClassReview;
@@ -23,4 +25,8 @@ public interface ClassReviewReposiroty extends JpaRepository<ClassReview, Long> 
 	 * */
 	List<ClassReview> findByStudentStudentIdEquals(String studentId);
 	
+	/**
+	 * 알아서 쓰셈
+	 * */
+	Page<ClassReview> findByClassesClassIdEquals(Long classId, Pageable pageable);
 }
