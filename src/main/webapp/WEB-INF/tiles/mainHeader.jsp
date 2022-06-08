@@ -32,7 +32,7 @@
 				<ul>
 					<li><a href=""><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
 					<li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
-					<li><a href=""><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+					<li><a href="${pageContext.request.contextPath}/main/login/loginForm"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 				</ul>
 			</div>
 		</div>
