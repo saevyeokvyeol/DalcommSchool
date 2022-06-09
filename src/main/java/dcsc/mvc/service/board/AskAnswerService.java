@@ -33,7 +33,7 @@ public interface AskAnswerService {
 	 * 1대1 문의 답변하는 기능(관리자)
 	 * @param Answer(답변글번호, 글번호, 답변내용, 등록일자)
 	 * */
-	void insertAnswer(Answer answer);
+	Answer insertAnswer(Answer answer);
 	
 	/**
 	 * 1대1문의 전체 리스트 조회하는 기능(관리자)

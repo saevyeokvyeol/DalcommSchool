@@ -39,6 +39,8 @@ public class ClassReviewController {
 	public String selectByClassId(Model model, Long classId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByClassId(classId);
 		
+		classId=1L;
+		
 		//페이징 처리하기
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByClassId(classId, page);
@@ -130,10 +132,10 @@ public class ClassReviewController {
 	 * 후기 상세 보기
 	 * */
 	@RequestMapping("/read/{reviewId}")
-	public ClassReview readReview(@PathVariable Long reviewId) {
+	public ModelAndView readReview(@PathVariable Long reviewId) {
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
-		return review;
+		return new ModelAndView("main/board/review/reviewDetail", "review", review);
 	}
 	
 	/**

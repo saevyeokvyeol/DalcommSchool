@@ -8,7 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- JavaScript Bundle with Popper -->
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -17,7 +19,7 @@
 		text-decoration: none;
 	}
 	table,th,td{
-		text-align: center;
+		text-align: center;width: 1px
 	}
 	table{
 		width: 500px;
@@ -99,12 +101,12 @@
 				</c:forEach>
 				</span> 
 				 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-				     <a class="pagination-older" href="${pageContext.request.contextPath}/board/list?nowPage=${startPage+blockCount}">NEXT</a>
+				     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${startPage+blockCount}">NEXT</a>
 				 </c:if>
 		</div>
 	</nav>  
 </div>
-  
+
   <hr><!-- 구분선 -->
   
   

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,8 +59,10 @@ $(function(){
 <%-- 	            <td><span>${review.student.studentId}</span></td> --%>
 				<td><span>${review.classes.className}</span>
 	            <td><span>${review.reviewRate}</span></td>
-	            <td><span id="readReview" onclick="${pageContext.request.contextPath}/main/board/review/read/${reviewId}">${review.reviewContent}</span></td>
-	            <td><span>${review.reviewInsertDate}</span></td>
+	            <td><a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="readReview" >${review.reviewContent}</a></td>
+	            <input type="hidden" name="reviewId" value="${reviewId}">
+	            <td><span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
+	            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
 	          </tr>
 			  </div>
 	        </c:forEach>
@@ -97,5 +100,5 @@ $(function(){
 	  
 	  </nav>
 	</div>
-</body>
-</html>
+	
+    

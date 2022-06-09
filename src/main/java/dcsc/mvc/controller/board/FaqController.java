@@ -126,5 +126,17 @@ public class FaqController {
 		
 		return list;
 	}
+	/**
+	 * 검색 하기
+	 * */
+	@RequestMapping("/faqSearch")
+	public ModelAndView selectByKeyword(String keyword) {
+		System.out.println("keyfield : " +" / " + "keyword : "+ keyword);
+		List<Faq> list = faqService.selectBykeyword(keyword);
+		
+		return new ModelAndView("/admin/board/FAQ/faqList","faqlist",list);
+		
+	}
+	
 	
 }

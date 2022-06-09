@@ -2,8 +2,10 @@ package dcsc.mvc.controller.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class TeacherController {
 	public final TeacherService teacherService;
 	
 	public final BCryptPasswordEncoder getBCryptPasswordEncoder;
+	
+	
 	
 	/**
 	 * 강사 회원가입 폼
@@ -58,6 +62,16 @@ public class TeacherController {
 		
 		return "redirect:/teacher/board";
 	}
+	
+	/**
+	 * 마이페이지
+	 * */
+//	@PreAuthorize("isAuthenticated()")
+	@RequestMapping("/teacher/teacherMypage/teacherMypage")
+	public void teacherMypage(HttpServletRequest request) {
+		
+	}
+
 	
 	/**
 	 * 아이디 찾기 폼
@@ -177,13 +191,14 @@ public class TeacherController {
 	}
 	
 	/**
-	 * 강사 상세 보기(회원)
+	 * 강사 상세 보기
 	 * */
-	@RequestMapping("/main/teacher/{teacherId}")
-	public Teacher readTeacherUser(String teacherId) {
+	@RequestMapping("/main/teacher/teacherId")
+	public ModelAndView readTeacherUser(String teacherId) {
+		teacherId="Tpark1234";
 		Teacher teacher = teacherService.selectById(teacherId);
 		
-		return teacher;
+		return new ModelAndView("/teacher/teacherMypage/teacherDetail", "teacher", teacher);
 	}
 	
 //	@RequestMapping("/mypage")
