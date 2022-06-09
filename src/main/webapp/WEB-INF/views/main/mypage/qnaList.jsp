@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>클래스별 쿠폰 조회</title>
+<title>학생(자신)이 작성한 QnA 글 조회</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -27,45 +27,45 @@
 		<section>
 			<form>
 
-				<h1>쿠폰조회 </h1>
+				<h1>QnA 글 조회 </h1>
 				
-				<table class="table" id="couponTable">
+				<table class="table" id="qnaTable">
 					<thead>
 						<tr>
-							<th>쿠폰아이디</th>
-							<th>쿠폰명</th>
-							<th>할인금액</th>
+							<th>Q&A글번호</th>
+							<th>클래스ID</th>
+							<th>제목</th>
 							<th>등록일자</th>
 							<th>수정일자</th>
-							<th>사용기간</th>
-							<th>쿠폰상태</th>
+							<th>답변완료여부</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:choose>
 		                    <c:when test ="${empty requestScope.list}">
 		                        <tr>
-		                            <th colspan="7">
-		                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>
+		                            <th colspan="6">
+		                                <span> 작성한 글이 없습니다.</span>
 		                            </th>
 		                        </tr>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <c:forEach items="${requestScope.list}" var="coupon">
+		                        <c:forEach items="${requestScope.list}" var="qna">
 		                            <tr>
-		                                <td>${coupon.couponId}</td>
-		                                <td>${coupon.couponName}</td>
-		                                <td>${coupon.couponDc}</td>
+		                                <td>${qna.qnaId}</td>
+		                                <td>${qna.classes.classId}</td>
 		                                <td>
-				                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                                <a href="${pageContext.request.contextPath}/main/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
+		                                </td>
+		                                <td>
+				                        	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 				                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
 				                        </td>
 				                        <td>
-				                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+				                        	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
 				                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
 				                        </td>
-		                                <td>${coupon.couponEndDate}</td>
-		                                <td>${coupon.couponState.couponStateName}</td>
+				                        <td>${qna.qnaComplete}</td>
 		                            </tr>
 		                        </c:forEach>
 		                    </c:otherwise>

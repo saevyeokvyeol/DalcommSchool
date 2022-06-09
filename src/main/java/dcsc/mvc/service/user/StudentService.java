@@ -5,7 +5,11 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.Ask;
+import dcsc.mvc.domain.board.Event;
 import dcsc.mvc.domain.user.Student;
 
 public interface StudentService {
@@ -41,6 +45,12 @@ public interface StudentService {
 	 * @return: List<Student>
 	 * */
 	List<Student> selectAllStudent ();
+	
+	
+	/**
+	 * 학생 조회 페이징처리
+	 * */
+	Page<Student> selectAllStudent(Pageable pageable);
 	
 	
 	/**

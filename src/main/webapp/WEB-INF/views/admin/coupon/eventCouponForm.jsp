@@ -27,7 +27,7 @@
     
     
     <!--쿠폰등록하기-->
-    <div class="card">
+    <div class="card" style="width: 25rem;">
         <div class="card-body">
          	<form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/eventCouponInsert">
          	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -36,7 +36,7 @@
 	         			<tr>
 	         				<th>쿠폰상태</th>
 	         				<td>
-								<select name="couponStateId" id="couponStateId">
+								<select name="couponStateId" id="couponStateId" class="form-select">
 						        	<option value="0">-쿠폰상태 선택-</option>
 						        	<option value="1">발급</option>
 						        	<option value="2">발급중지</option>

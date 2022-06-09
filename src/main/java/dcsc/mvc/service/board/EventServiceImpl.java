@@ -5,10 +5,16 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import dcsc.mvc.domain.board.Event;
+import dcsc.mvc.domain.board.QEvent;
 import dcsc.mvc.repository.board.EventRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class EventServiceImpl implements EventService {
 	
 	private final EventRepository eventRep;
+	private final JPAQueryFactory factory;
 
 	/**
 	 * 이벤트 등록하기
@@ -80,6 +87,7 @@ public class EventServiceImpl implements EventService {
 		return list;
 	}
 	
+	
 	@Override
 	public Page<Event> selectAll(Pageable pageable) {
 		return eventRep.findAll(pageable);
@@ -90,8 +98,18 @@ public class EventServiceImpl implements EventService {
 	 * */
 	@Override
 	public List<Event> selectByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		QEvent event = QEvent.event;
+		booleanBuilder.and(event.eventContent.like("%"+keyword+"%"));
+		booleanBuilder.or(event.eventTitle.like("%"+keyword+"%"));
+		JPQLQuery<Event> jpqlQuery = factory.selectFrom(event).where(booleanBuilder);
+//				.offset(pageable.getOffset()).limit(pageable.getPageSize);
+		
+//		Page<Event> list = new PageImpl<Event>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		
+		List<Event> list = jpqlQuery.fetch();
+		return list;
+		
 	}
 
 

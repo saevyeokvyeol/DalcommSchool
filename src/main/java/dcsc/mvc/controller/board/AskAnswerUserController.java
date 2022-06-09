@@ -16,7 +16,7 @@ import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
-import dcsc.mvc.util.FileLink;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -71,7 +71,7 @@ public class AskAnswerUserController {
 //		} 
 		
 		if(file.getSize() > 0) {
-			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());

@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
@@ -128,6 +131,11 @@ public interface TeacherService {
 	 * @return: List<Teacher>
 	 * */
 	List<Teacher> selectByTeacherId (String keyfield, String keyword);
+	
+	/**
+	 * 강사 조회 페이징처리
+	 * */
+	Page<Teacher> selectAllTeacher(Pageable pageable);
 	
 	
 }
