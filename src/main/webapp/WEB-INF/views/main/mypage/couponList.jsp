@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,8 +56,14 @@
 		                                <td>${issueCoupon.coupon.couponId}</td>
 		                                <td>${issueCoupon.coupon.couponName}</td>
 		                                <td>${issueCoupon.issueUsable}</td>
-		                                <td>${issueCoupon.issueStartDate}</td>
-		                                <td>${issueCoupon.issueEndDate}</td>
+		                                <td>
+				                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+				                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
+				                        <td>
+				                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+				                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
 		                            </tr>
 		                        </c:forEach>
 		                    </c:otherwise>

@@ -138,7 +138,7 @@ public class QnaController {
 	/**
 	 * 관리자 QnA전체조회
 	 * */
-	@RequestMapping("admin/board/qna/qnaListBI_ad")
+	@RequestMapping("admin/board/qna/qnaListBI")
 	public void qnaAll(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
 		
@@ -183,7 +183,7 @@ public class QnaController {
 	 * 강사ID로 클래스 Q&A 검색
 	 * */
 	@RequestMapping("teacher/teacherMypage/qnaListAll")
-	public void selectByStudentId(String teacherId , Model model) {
+	public void selectByteacherId(String teacherId , Model model) {
 		teacherId = "Tann1234";
 		
 		List<ClassQna> list = classQnaService.selectByTeacherId(teacherId);
@@ -241,6 +241,18 @@ public class QnaController {
 		classQnaService.deleteReply(replyId);
 		
 		return "redirect:/teacher/teacherMypage/qnaListAll";
+	}
+	
+	/**
+	 * 학생ID로 클래스 Q&A 검색
+	 * */
+	@RequestMapping("main/mypage/qnaList")
+	public void selectByStudentId(String studentId, Model model) {
+		studentId="lee1234";
+		
+		List<ClassQna> list = classQnaService.selectByStudentId(studentId);
+		model.addAttribute("list", list);
+		
 	}
 	
 }

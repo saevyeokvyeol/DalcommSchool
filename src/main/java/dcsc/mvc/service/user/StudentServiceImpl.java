@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -77,8 +79,7 @@ public class StudentServiceImpl implements StudentService {
 		return dbStudent;
 
 	}
-	
-	
+
 
 	/**
 	 * 회원 탈퇴
@@ -145,6 +146,12 @@ public class StudentServiceImpl implements StudentService {
 					break;	
 		}
 		return list;
+	}
+
+	//관리자페이지 학생 조회 페이징처리
+	@Override
+	public Page<Student> selectAllStudent(Pageable pageable) {
+		return studentRep.findAll(pageable);
 	}
 
 }

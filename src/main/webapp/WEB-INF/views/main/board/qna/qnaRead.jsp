@@ -37,7 +37,7 @@
 </head>
 <body>
 
-    <div>
+    <div >
         <table>
             
         	<tr>
@@ -92,7 +92,7 @@
         </table>
     </div>
         <hr>
-    <div>
+    <div >
         <table>
             <c:choose>
             	<c:when test="${qna.qnaComplete eq 'T'}">
@@ -100,9 +100,15 @@
 		                <th>작성자</th>
 		                <td>${qnaReply.teacher.teacherId}</td>
 		                <th>등록일자</th>
-		                <td>${qnaReply.replyInsertDate}</td>
+		                <td>
+		                	<span><fmt:parseDate value="${qnaReply.replyInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		                </td>
 		                <th>수정일자</th>
-		                <td>${qnaReply.replyUpdateDate}</td>
+		                <td>
+		                	<span><fmt:parseDate value="${qnaReply.replyUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		                	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+		                </td>
 				    </tr>
 		            <tr>
 		                <th>내용</th>

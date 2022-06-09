@@ -89,7 +89,7 @@ function sample6_execDaumPostcode() {
 	$(function(){
 		function selectPlaceRegion(){
 			$.ajax({
-				url: "/place/selectPlaceRegion",
+				url: "/teacher/teacherMypage/place/selectPlaceRegion",
 				type: "post",
 				data: {"${_csrf.parameterName}": "${_csrf.token}"},
 				dataType: "json",
@@ -104,7 +104,7 @@ function sample6_execDaumPostcode() {
 				},
 				error: function(err){
 					
-					alert("지역정보를 가져올 수 없습니다.222")
+					alert("지역정보를 가져올 수 없습니다.")
 				}
 			})
 		}
@@ -145,7 +145,7 @@ function sample6_execDaumPostcode() {
 			        alert('Geocode was not successful for the following reason: ' + status);
 			      }
 			    });
-			  }
+	  }
 	
 </script>
 </head>

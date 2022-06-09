@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공방 상세보기 입니다.</title>
+<title>강사 마이페이지용 리뷰 리스트</title>
 </head>
 <body>
-<h1>공방 상세보기~</h1>
+
 
 </body>
 </html>

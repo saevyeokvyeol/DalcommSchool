@@ -19,5 +19,9 @@ public interface ClassQnaReposiroty extends JpaRepository<ClassQna, Long> {
 	 * */
 	List<ClassQna> findByClassesTeacherTeacherIdEquals(String teacherId);
 	
+	/**
+	 * 자신이 쓴 클래스 Q&A 검색
+	 * */
+	List<ClassQna> findByStudentStudentIdEquals(String studentId);
 	
 }

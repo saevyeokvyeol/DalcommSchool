@@ -23,8 +23,16 @@
 <script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-$(function(){
-})
+function getImage(input){
+	if(input.files && input.files[0]){
+		var reader = new FileReader()
+		
+		reader.readAsDataURL(input.files[0])
+		}
+	}
+}
+	
+	
 </script>
 </head>
 <body>
@@ -41,8 +49,7 @@ $(function(){
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form id="reviewInsertForm" method="post" action="${pageContext.request.contextPath}/main/board/review/insert">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				<form id="reviewInsertForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/board/review/insert?${_csrf.parameterName}=${_csrf.token}">
 				<input type="hidden" name="classId" value="1">
 					<fieldset>
 					  <label for="recipient-name" class="col-form-label">별점</label>
@@ -54,7 +61,7 @@ $(function(){
 					</fieldset>
 					<div class="mb-3">
                         <label for="formFileMultiple" class="form-label">이미지 첨부</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="reviewImg" multiple>
+                        <input class="form-control" type="file" id="formFileMultiple" name="file" accept="image/*" multiple>
                     </div>
 					<div class="mb-3">
 						<label for="recipient-name" class="col-form-label">내용</label>

@@ -206,6 +206,16 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		return classReply;
 	}
 
+	/**
+	 * 학생ID로 클래스 Q&A 검색
+	 * */
+	@Override
+	public List<ClassQna> selectByStudentId(String studentId) {
+		List<ClassQna> list = classQnaRep.findByStudentStudentIdEquals(studentId);
+		return list;
+	}
+
+	
 	
 
 }

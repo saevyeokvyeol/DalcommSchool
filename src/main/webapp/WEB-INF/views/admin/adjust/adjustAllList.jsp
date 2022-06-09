@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,10 +89,16 @@
 		                                <td>${adjust.bank}</td>
 		                                <td>${adjust.depositor}</td>
 		                                <td>${adjust.account}</td>
-		                                <td>${adjust.adjustInsertDate}</td>
-		                                <td>${adjust.adjustCompleteDate}</td>
 		                                <td>
-											<select name="select_adjustStateName" id="select_adjustStateName">
+				                        	<span><fmt:parseDate value="${adjust.adjustInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+				                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
+				                        <td>
+				                        	<span><fmt:parseDate value="${adjust.adjustCompleteDate}" pattern="yyyy-mm-dd" var="completeDate"/></span>
+				                        	<span><fmt:formatDate value="${completeDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
+		                                <td>
+											<select name="select_adjustStateName" id="select_adjustStateName" class="form-select">
 												<c:choose>
 												<c:when test="${adjust.adjustState.adjustStateId == '1'}">
 													<option name="adjustStateId" value="1">${adjust.adjustState.adjustStateName}</option>
