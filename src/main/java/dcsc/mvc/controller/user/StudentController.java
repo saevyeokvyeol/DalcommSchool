@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.user.StudentService;
@@ -115,7 +116,7 @@ public class StudentController {
 	
 	//회원 정보 수정
 	@RequestMapping("/main/mypage/modify")
-	public String modify(HttpServletRequest request, Student student) {
+	public String modify(HttpServletRequest request, Student student, RedirectAttributes ra) {
 		System.out.println("modify 호출...");
 		
 		studentService.updateStudent(student);
@@ -124,6 +125,8 @@ public class StudentController {
 		//세션 회원정보 업데이트
 		stu.setStudentPhone(student.getStudentPhone());
 		stu.setStudentEmail(student.getStudentEmail());
+		
+		ra.addFlashAttribute("msg", "modSuccess");
 		
 		return "redirect:/main/mypage/myPage";
 	}
