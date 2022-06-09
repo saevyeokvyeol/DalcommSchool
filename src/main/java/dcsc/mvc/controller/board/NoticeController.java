@@ -1,5 +1,6 @@
 package dcsc.mvc.controller.board;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -11,10 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Notice;
 import dcsc.mvc.service.board.NoticeService;
+import dcsc.mvc.util.FileLink;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -24,8 +28,8 @@ public class NoticeController {
 	
 	private final NoticeService noticeService;
 	
-	private final static int PAGE_COUNT=10;
-	private final static int BLOCK_COUNT=5;
+	private final static int PAGE_COUNT= 5;
+	private final static int BLOCK_COUNT= 2;
 	
 	
 	 @RequestMapping("/noticeList")
@@ -60,7 +64,13 @@ public class NoticeController {
 		 * 등록 하기
 		 * */
 	 @RequestMapping("/noticeWrite")
-	 public String insertNotice(Notice notice) {
+	 public String insertNotice(Notice notice,MultipartFile file) throws Exception{
+		 System.out.println("notice: " + notice);
+		 if(file.getSize() > 0) {
+				File img = new File(ImageLink.NOTICE_IMG + file.getOriginalFilename());
+				file.transferTo(img);
+				notice.setNoticeImg(file.getOriginalFilename());
+			}
 		 noticeService.insertNotice(notice);
 		 
 		 return "redirect:/admin/board/Notice/noticeList";

@@ -343,6 +343,15 @@
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
 	      <tr>
+	        <th>프로필 이미지</th>
+			<td>
+				<div class="image-container">
+				    <img style="width: 500px;" id="preview-image" src="">
+				</div>
+				<input type="file" id="input-image" name="file">
+			</td>
+		  </tr>
+	      <tr>
 	          <th>* 강사 ID</th>
 	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>
 	          <button type="button" class="" id="idCheck">중복체크</button>

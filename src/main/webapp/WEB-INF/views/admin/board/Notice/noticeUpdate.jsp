@@ -14,7 +14,9 @@
 
 <head>
 
-<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/Notice/noticeUpdate">
+<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/Notice/noticeUpdate?${_csrf.parameterName}=${_csrf.token}"
+	enctype="multipart/form-data">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type='hidden' name='noticeNo' value="${notice.noticeNo}">
 	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>
@@ -30,7 +32,13 @@
 		<input type=text name="noticeTitle" size="30"
 		 value="${requestScope.notice.noticeTitle}"></span></b></td>
     </tr>
-    
+    <tr>
+   	    <td width="150" height="20" >
+        <p align="right"><b><span style="font-size:9pt;">파일 첨부</span></b></p>
+        </td>
+        <td width="450" height="20"><b><span style="font-size:9pt;">
+		<input type="file" name="file" size="30" value="${notice.noticeImg}"></span></b></td>
+    </tr>
     <tr>
         <td width="150" height="20" >
             <p align="right"><b><span style="font-size:9pt;">내 용</span></b></p>
