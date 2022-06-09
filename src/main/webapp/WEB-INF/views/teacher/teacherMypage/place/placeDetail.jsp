@@ -97,11 +97,11 @@
 	    });
 	}
 	
-	codeAddress();
-// 	$(function(){	
-// 		codeAddress();
+// 	codeAddress();
+	$(function(){	
+		codeAddress();
 		
-// })
+})
 
 </script>
 </head>
