@@ -11,7 +11,7 @@
 <h2>강사 소개 페이지</h2>
 
 <table>
-
+  <img src="">
   <tr>
     <th>강사 이름</th>
     <td>${teacher.teacherName}</td>

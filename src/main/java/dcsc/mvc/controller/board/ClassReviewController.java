@@ -66,10 +66,12 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/teacher")
 	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int nowPage){
+		teacherId = "Tpark1234";
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, page);
+		
 		
 		model.addAttribute("classReviews", pageList);
 		
@@ -133,6 +135,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/read/{reviewId}")
 	public ModelAndView readReview(@PathVariable Long reviewId) {
+		reviewId=5L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return new ModelAndView("main/board/review/reviewDetail", "review", review);
@@ -210,10 +213,11 @@ public class ClassReviewController {
 	 * 클래스 후기 삭제
 	 * */
 	@RequestMapping("/delete")
-	public String deleteReview(Long reviewId) {
+	@ResponseBody
+	public void deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
 		
-		return "redirect:/main/board/review/classReview";
+		
 	}
 	
 	/**

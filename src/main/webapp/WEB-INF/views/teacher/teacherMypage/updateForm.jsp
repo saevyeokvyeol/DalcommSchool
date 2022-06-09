@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+
+	.message{display: none}
+	
+</style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -148,6 +155,8 @@ $(function(){
 		}else if(!isValidEmail()){
 			alert("이메일을 형식에 맞게 입력해주세요.");
 			event.preventDefault();
+		}else{
+			alert("회원정보가 수정되었습니다.")
 		}
 	})
 })
@@ -158,13 +167,16 @@ $(function(){
 <body>
 <h1> 강사정보 수정~ </h1>
 <section>
+  <sec:authorize access="isAuthenticated()">
+ 	<sec:authentication property="principal" var="teacher"/>
 	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/updateTeacher">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+		<input type="hidden" name=teacherId value="${teacher.teacherId}">
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
 	      <tr>
 	          <th>강사 ID</th>
-	          <td class=""><b>${teacher.teacherId}</b></td>
+	          <td><b>${teacher.teacherId}</b></td>
 	      </tr>
 	      <tr>
 	          <th>강사 비밀번호</th>
@@ -175,14 +187,14 @@ $(function(){
 	          <td><b>${teacher.teacherName}</b></td>
 	      </tr>
 	      <tr>
-	          <th>강사 닉네임</th>
+	          <th>*강사 닉네임</th>
 	          <td><input type="text" id="teacherNick" name="teacherNickname" class="" value="${teacher.teacherNickname}" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required/>
 	          <button type="button" id="nickCheck" class="">중복체크</button>
 	          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
 	          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
 	      </tr>
 	      <tr>
-	          <th>강사 핸드폰 번호</th>
+	          <th>*강사 핸드폰 번호</th>
 	          <td><input type="text" id="teacherPhone" name="teacherPhone" class="" value="${teacher.teacherPhone}" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required/>
 	          <button type="button" id="phoneCheck" class="">중복체크</button>
 	          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
@@ -194,16 +206,17 @@ $(function(){
 	          <td><input type="text" id="teacherNick" class="" name="teacherTel" value="${teacher.teacherTel}" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td>
 	      </tr>
 	      <tr>
-	          <th>강사 이메일</th>
-	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required/>
+	          <th>*강사 이메일</th>
+	          <td><input type="text" id="teacherEmail" name="teacherEmail" value="${teacher.teacherEmail}" class="" required/>
 	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
 	      </tr>
 	  	</table>
 	  	<div>
-	  	<input type="submit" id="joinBtn" value="회원가입">
+	  	<input type="submit" id="updateBtn" value="수정하기">
 	  	<a href="../board.jsp" id="cancelBtn">취소</a>
 	  	</div>
 	</form>
+	</sec:authorize>
   </section>
 </body>
 </html>
