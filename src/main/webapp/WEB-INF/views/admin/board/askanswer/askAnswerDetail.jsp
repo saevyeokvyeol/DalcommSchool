@@ -13,14 +13,14 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <style type="text/css">
 
-	#answerBtn{
+	/* #answerBtn{
     background-color: rgb(0, 128,255);
     width: 5.5em;
     height: 3.3em;;
     font-size: 15px;
     font-weight: bold;
     color: aliceblue;
-	}
+	} */
 
 	#span{
 	    width: 100%;
@@ -109,6 +109,9 @@
 		        <td>
 		        	문의 일자 : ${askAnswerDetail.askInsertDate}<p>
 		        </td>
+		        <td>
+		        	답변 유무 : ${askAnswerDetail.askComplete}<p>
+		        </td>
 		    </tr>
 		    
 		</table>
@@ -133,9 +136,9 @@
 	<textarea rows="10" cols="10" id="answerArea" placeholder="답변을 입력해 주세요."></textarea>
 	<!-- <input type="button" id="answerBtn" value="답변하기">  -->
 	
-	<!-- <button type="button" id="answerBtn">답변하기</button> -->
+	 <button type="button" id="answerBtn"  class="btn btn-secondary">답변하기</button>
 	
-	<button id="answerBtn">답변하기</button>
+	<!-- <button id="answerBtn">답변하기</button> -->
 </span>
 </c:if>
 

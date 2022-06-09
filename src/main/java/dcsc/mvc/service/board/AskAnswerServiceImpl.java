@@ -77,6 +77,10 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		Answer dbAnswer=answerRep.save(answer);
 		if(dbAnswer==null)throw new RuntimeException();
 		
+		
+		Ask dbAsk=askRep.findById(answer.getAsk().getAskNo()).orElse(null);
+		dbAsk.setAskComplete("T");
+		
 		return dbAnswer;
 
 	}

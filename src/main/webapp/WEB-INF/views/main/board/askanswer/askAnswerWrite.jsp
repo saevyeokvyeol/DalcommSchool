@@ -7,6 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+
+<style type="text/css">
+	#askCategory{width: 150px;}
+</style>
 </head>
 <body>
 
@@ -15,7 +23,7 @@
 	
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 	
-	 <select name="askCategoryId">
+	 <select name="askCategoryId" id="askCategory" class="form-select" aria-label="Default select example">
 		  <option value="">카테고리 종류</option>
 		  <option value="1">클래스</option>
 		  <option value="2">결제</option>

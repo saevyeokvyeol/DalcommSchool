@@ -69,11 +69,14 @@ public class AskAnswerAdminController {
 	 * */
 	 @RequestMapping("/insertAnswer")
 	 @ResponseBody//아작스하려면 필요
-	 public Answer insertAnswer(Answer answer, Ask ask) {
+	 public Answer insertAnswer(Answer answer, Ask ask, Model model) {
 		 answer.setAsk(ask);
 	
 		 Answer dbAnswer=askAnswerService.insertAnswer(answer);
 		 
+		 System.out.println("*****************"+dbAnswer.getAnswerContent());;
+		 
+		 model.addAttribute("answerReply", dbAnswer);
 		 
 		 return dbAnswer;
 		 

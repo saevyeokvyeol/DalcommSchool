@@ -2,6 +2,7 @@ package dcsc.mvc.domain.board;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -73,7 +74,7 @@ public class Ask {
 	@JsonIgnore
 	private AskCategory askCategory;
 	 
-	@OneToOne(mappedBy = "ask")
+	@OneToOne(mappedBy = "ask", cascade = CascadeType.REMOVE)
 	private Answer answer;
 	
 }

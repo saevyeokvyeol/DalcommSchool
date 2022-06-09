@@ -67,14 +67,18 @@ public class AskAnswerUserController {
 	 
 	@RequestMapping("/insert")
 	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
+		
+		String askComplete="F";
+		
 		ask.setAskCategory(askCategory);
 		ask.setStudent(student);
+		ask.setAskComplete(askComplete);
 		
 		
 
 		//파일이 첨부되었다면 fname, fsize를 설정한다.
 		//MultipartFile mfile=elect.getFile();
-		 
+		     
 //		MultipartFile mfile = ask.getAskImg();
 //		
 //		if(mfile.getSize() > 0 ) { //첨부된 파일에 용량이 있다면..
@@ -87,9 +91,9 @@ public class AskAnswerUserController {
 //		ask.setFsize(mfile.getSize());
 //			
 //		} 
-		
+		  
 		if(file.getSize() > 0) {
-			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());
@@ -121,7 +125,7 @@ public class AskAnswerUserController {
 		Ask dbAsk=askAnswerService.updateAsk(ask);
 		
 		if(file.getSize() > 0) {
-			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());
@@ -132,7 +136,7 @@ public class AskAnswerUserController {
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
 		return "redirect:/main/board/askanswer/askAnswer";
 	}
-	  
+	    
 	/**
 	 * 수정폼(선생님)
 	 * */
@@ -142,17 +146,17 @@ public class AskAnswerUserController {
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
 		return new ModelAndView("/teacher/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
-	
+	 
 	/** 
 	 * 1대1 문의 수정하기(선생님)     
 	 * */ 
-	@RequestMapping("/updateStudent")
+	@RequestMapping("/updateTeacher")
 	public String updateTeacher(Ask ask, MultipartFile file)throws Exception {
 		
 		Ask dbAsk=askAnswerService.updateAsk(ask);
 		
 		if(file.getSize() > 0) {
-			File img = new File(Link.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());
@@ -172,10 +176,10 @@ public class AskAnswerUserController {
 	@RequestMapping("/deleteStudent")
 	public String deleteStudent(Long askNo) {
 		
-		askAnswerService.deleteAsk(askNo);
+		askAnswerService.deleteAsk(askNo); 
 		
 		return "redirect:/main/board/askanswer/askAnswerStudent";
-	}
+	} 
 	
 	/** 
 	 * 1대1 문의 삭제하기 (선생님)
