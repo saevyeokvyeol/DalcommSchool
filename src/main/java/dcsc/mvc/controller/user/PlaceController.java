@@ -76,7 +76,6 @@ public class PlaceController {
 	 * 공방 인프라 리스트 가져오기
 	 * */
 	@RequestMapping("/selectPlaceInfra")
-	@JsonIgnore
 	public List<PlaceInfra> selectPlaceInfra(Long placeId) {
 		List<PlaceInfra> list = teacherService.selectPlaceInfra(placeId);
 		
@@ -88,7 +87,6 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/selectPlaceRegion")
 	@ResponseBody
-	//@JsonIgnore
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = teacherService.selectPlaceRegion();
 		

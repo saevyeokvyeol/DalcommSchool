@@ -28,7 +28,7 @@
 			$(function() {
 				function selectPlaceRegion(){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
+						url: "${pageContext.request.contextPath}/teacher/teacherMypage/place/selectPlaceRegion",
 						type: "post",
 						data: {"${_csrf.parameterName}": "${_csrf.token}"},
 						dataType: "json",
@@ -39,8 +39,10 @@
 							})
 							$("#placeRegion").append(text);
 						},
-						error: function(err){
-							alert("지역정보를 가져올 수 없습니다.")
+						error:function(request, status, error){
+
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
 						}
 					})
 				}

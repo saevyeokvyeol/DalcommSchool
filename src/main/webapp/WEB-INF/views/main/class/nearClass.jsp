@@ -19,7 +19,7 @@
 			$(function() {
 				function selectPlaceRegion(){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
+						url: "${pageContext.request.contextPath}/teacher/teacherMypage/place/selectPlaceRegion",
 						type: "post",
 						data: {"${_csrf.parameterName}": "${_csrf.token}"},
 						dataType: "json",
