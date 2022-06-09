@@ -5,49 +5,72 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.AskAnswerService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/main/board/askanswer")
+@RequestMapping("/")
 public class AskAnswerUserController {
 
 	private final AskAnswerService askAnswerService;  
 	
+	private final static int PAGE_COUNT=8;
+	private final static int BLOCK_COUNT=4;
 	       
 	 /**
 	  * 학생 ID로 자신 1대1문의 조회 
 	  * */
-	@RequestMapping("/askAnswerStudent") 
-	public String selectByStudentId(String studentId, Model model) {
+	@RequestMapping("main/board/askanswer/askAnswerStudent") 
+	public String selectByStudentId(String studentId, Model model,@RequestParam(defaultValue = "1") int nowPage) {
 		
 		studentId = "jang1234"; 
 		   
-		List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
+		
+		  List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
+		  
+		  model.addAttribute("askSelectByIdList", askSelectByIdList);
 		 
+		
+		//페이징 처리
+	/*	Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "askNo");
+		Page<Ask> askList = askAnswerService.selectById(page);
+		
 		model.addAttribute("askSelectByIdList", askSelectByIdList);
 		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		*/
 		return "/main/board/askanswer/askAnswerSelectById"; 
 	} 
 	
 	 /**
 	  * 선생님 ID로 자신 1대1문의 조회 
 	  * */
-	@RequestMapping("/askAnswerTeacher") 
+	@RequestMapping("teacher/board/askanswer/askAnswerTeacher") 
 	public String selectByTeacherId(String teacherId, Model model) {
 		
-		teacherId = ""; 
+		teacherId = "Tjang1234"; 
 		   
 		List<Ask> askSelectByIdList=askAnswerService.selectById(teacherId);
 		 
@@ -57,13 +80,16 @@ public class AskAnswerUserController {
 	}
 	   
 	/** 
-	 * 등록폼  
+	 * 등록폼(학생)  
 	 * */
-	@RequestMapping("/askAnswerWrite")
-	public void askAnswerWrite() {}
+	@RequestMapping("main/board/askanswer/askAnswerWriteStudent")
+	public void askAnswerWriteStudent() {}
 	 
 	 
-	@RequestMapping("/insert")
+	/**
+	 * 등록하기 (학생)
+	 * */
+	@RequestMapping("main/board/askanswer/insertStudent")
 	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
 		
 		String askComplete="F";
@@ -101,14 +127,47 @@ public class AskAnswerUserController {
 		  
 		askAnswerService.insertAsk(ask);
 		
-		return "/main/board/askanswer/askAnswerTest";
+		return "/teacher/board/askanswer/askAnswerTest";
 	} 
 	  
+	
+	/** 
+	 * 등록폼(선생님)  
+	 * */			
+	@RequestMapping("teacher/board/askanswer/askAnswerWriteTeacher")
+	public void askAnswerWriteTeacher() {}
+	 
+	/**
+	 * 등록하기(선생님
+	 * */		
+	@RequestMapping("teacher/board/askanswer/insertTeacher")
+	public String insertTeacher(Ask ask, AskCategory askCategory,Teacher teacher, MultipartFile file,HttpSession session)throws Exception {
+		
+		String askComplete="F";
+		
+		ask.setAskCategory(askCategory);
+		ask.setTeacher(teacher);
+		ask.setAskComplete(askComplete); 
+		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
+
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		  
+		askAnswerService.insertAsk(ask);
+		
+		return "/teacher/board/askanswer/askAnswerTest";
+	} 
+	
 	  
 	/**
 	 * 수정폼(학생)
 	 * */
-	@RequestMapping("/updateFormStudent") 
+	@RequestMapping("main/board/askanswer/updateFormStudent") 
 	public ModelAndView updateFormStudent(Long askNo) {
 		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
@@ -118,7 +177,7 @@ public class AskAnswerUserController {
 	/** 
 	 * 1대1 문의 수정하기(학생)     
 	 * */ 
-	@RequestMapping("/updateStudent")
+	@RequestMapping("main/board/askanswer/updateStudent")
 	public String updateStudent(Ask ask, MultipartFile file)throws Exception {
 		
 		Ask dbAsk=askAnswerService.updateAsk(ask);
@@ -139,7 +198,7 @@ public class AskAnswerUserController {
 	/**
 	 * 수정폼(선생님)
 	 * */
-	@RequestMapping("/updateFormTeacher") 
+	@RequestMapping("teacher/board/askanswer/updateFormTeacher") 
 	public ModelAndView updateFormTeacher(Long askNo) {
 		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
@@ -149,7 +208,7 @@ public class AskAnswerUserController {
 	/** 
 	 * 1대1 문의 수정하기(선생님)     
 	 * */ 
-	@RequestMapping("/updateTeacher")
+	@RequestMapping("teacher/board/askanswer/updateTeacher")
 	public String updateTeacher(Ask ask, MultipartFile file)throws Exception {
 		
 		Ask dbAsk=askAnswerService.updateAsk(ask);
@@ -172,7 +231,7 @@ public class AskAnswerUserController {
 	/**   
 	 * 1대1 문의 삭제하기 (학생)
 	 * */
-	@RequestMapping("/deleteStudent")
+	@RequestMapping("main/board/askanswer/deleteStudent")
 	public String deleteStudent(Long askNo) {
 		
 		askAnswerService.deleteAsk(askNo); 
@@ -183,7 +242,7 @@ public class AskAnswerUserController {
 	/** 
 	 * 1대1 문의 삭제하기 (선생님)
 	 * */
-	@RequestMapping("/deleteTeacher")
+	@RequestMapping("teacher/board/askanswer/deleteTeacher")
 	public String deleteTeacher(Long askNo) {
 		
 		askAnswerService.deleteAsk(askNo);
