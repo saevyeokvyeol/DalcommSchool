@@ -2,13 +2,19 @@ package dcsc.mvc.controller.coupon;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dcsc.mvc.domain.classes.Adjust;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.CouponState;
@@ -26,6 +32,9 @@ import lombok.RequiredArgsConstructor;
 public class CouponController {
 	
 	private final CouponService couponService;
+	
+	private final static int PAGE_COUNT=10;
+	private final static int BLOCK_COUNT=3;
 	
 	/**
 	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생
@@ -53,24 +62,72 @@ public class CouponController {
 	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님
 	 * */
-	@RequestMapping("teacher/coupon/couponAllList")
+	/*@RequestMapping("teacher/coupon/couponAllList")
 	public void selectAllCouponByTeacherId(String teacherId, Model model) {
 		teacherId = "Tkim1234";
 		
 		List<Coupon> list = couponService.selectByTeacherId(teacherId);
 		model.addAttribute("list", list);
+	}*/
+	
+	/**
+	 * 전체 발급 쿠폰 조회 기능 ; 선생님-페이징처리
+	 * */
+	@RequestMapping("teacher/coupon/couponAllList")
+	public void selectAllCouponByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int nowPage) {
+		teacherId = "Tkim1234";
+		
+		//페이징 처리하기
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"couponId");
+		Page<Coupon> couponList = couponService.selectByTeacherId(teacherId, page);
+		
+		model.addAttribute("couponList", couponList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		System.out.println(BLOCK_COUNT);
+		System.out.println(startPage);
+		System.out.println(nowPage);
 	}
 	
 	/**
 	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자
 	 * */
-	@RequestMapping("admin/coupon/selectAllCoupon")
+	/*@RequestMapping("admin/coupon/selectAllCoupon")
 	public void selectAllCoupon(Model model) {
 		List<Coupon> list = couponService.selectAll();
 		model.addAttribute("list", list);
-	}
+	}*/
 	
-
+	/**
+	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자 - 페이징처리
+	 * @param 
+	 * @return List<Coupon>
+	 * */
+	@RequestMapping("admin/coupon/selectAllCoupon")
+	public void selectAllCoupon(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		
+		//페이징처리하기
+		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "couponId");
+		Page<Coupon> couponList = couponService.selectAll(page);
+		
+		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		
+		model.addAttribute("couponList", couponList);
+		
+		
+		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = nowPage-temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+	}
 	
 	/**
 	 * 학생이 보유한 쿠폰 조회 기능 ; 관리자
@@ -220,7 +277,7 @@ public class CouponController {
 	}
 	
 	/**
-	 * 이벤트 상태 변경하기
+	 * 이벤트쿠폰 상태 변경하기
 	 * */
 	@RequestMapping("admin/coupon/changeEventCouponState")
 	@ResponseBody
