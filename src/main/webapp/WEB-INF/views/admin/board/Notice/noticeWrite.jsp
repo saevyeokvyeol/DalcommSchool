@@ -7,8 +7,8 @@
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -19,8 +19,7 @@
 <body>
 
 
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/Notice/noticeWrite"  >
-
+<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/Notice/noticeWrite?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" >
 <table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
 
     <tr>
@@ -44,7 +43,7 @@
             <p align="right"><b><span style="font-size:9pt;">파일 첨부</span></b></p>
         </td>
         <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type="file" name="noticeTitle" size="30"></span></b></td>
+		<input type="file" name="file" size="30"></span></b></td>
     </tr>
    
     <tr>

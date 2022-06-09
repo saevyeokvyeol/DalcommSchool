@@ -74,6 +74,7 @@
         </td>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
         <td width="450" height="200" valign="top" colspan="3">
+        <img alt="" src="${pageContext.request.contextPath}/img/notice/${requestScope.notice.noticeImg}">
         <span style="font-size:9pt;"><b><pre>${requestScope.notice.noticeContent}</pre></b></span></td>
     </tr>
     
@@ -81,6 +82,7 @@
         <td height="20" colspan="2" align="center" valign="middle">
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 			<form name="requestForm" method="post" id="requestForm">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type=hidden name="noticeNo" value="${notice.noticeNo}">
 				<input type=button value="수정하기" >
 				<input type=button value="삭제하기" >

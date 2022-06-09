@@ -22,7 +22,7 @@ import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/admin/board/event")
+@RequestMapping
 @RequiredArgsConstructor
 public class EventController {
 	
@@ -32,10 +32,10 @@ public class EventController {
 	 private final static int BLOCK_COUNT=4;
 	
 	/**
-	 * 이벤트 전체 조회
+	 * 이벤트 전체 조회 - 관리자
 	 * */
-	@RequestMapping("/eventList")
-	public void eventList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	@RequestMapping("/admin/board/event/eventList")
+	public void eventAdminList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//List<Event> list = eventService.selectAll();
 		
@@ -54,11 +54,35 @@ public class EventController {
 		
 	}
 
+	
+	/**
+	 * 이벤트 전체 조회 - 메인
+	 * */
+	@RequestMapping("/main/board/event/eventList")
+	public void eventUserList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		
+		//List<Event> list = eventService.selectAll();
+		
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectAll(page);
+		
+		model.addAttribute("eventList", eventList);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
+	}
+	
 
 	/**
-	 * 이벤트 상세 페이지 (글 제목 누르면 이동)
+	 * 이벤트 상세 페이지 (글 제목 누르면 이동) - 관리자
 	 * */
-	@RequestMapping("/eventRead/{eventNo}")
+	@RequestMapping("/admin/board/event/eventRead/{eventNo}")
 	public ModelAndView selectByEventNo(@PathVariable Long eventNo, String flag) {
 		 boolean state = flag==null ? true : false;
 		 
@@ -67,10 +91,24 @@ public class EventController {
 		
 	}
 	
+	
+	/**
+	 * 이벤트 상세 페이지 (글 제목 누르면 이동) - 메인
+	 * */
+	@RequestMapping("/main/board/event/eventRead/{eventNo}")
+	public ModelAndView userSelectByEventNo(@PathVariable Long eventNo, String flag) {
+		 boolean state = flag==null ? true : false;
+		 
+		Event event = eventService.selectByEventNo(eventNo, state); //true면 글 조회수 증가
+		return new ModelAndView("/main/board/event/eventRead" , "event", event);
+		
+	}
+	
+	
 	/**
 	 * 이벤트 글 등록 폼
 	 * */
-	@RequestMapping("/eventWrite")
+	@RequestMapping("/admin/board/event/eventWrite")
 	public void eventWrite() {
 		
 	}
@@ -78,7 +116,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 등록 
 	 * */
-	@RequestMapping("/eventInsert")
+	@RequestMapping("/admin/board/event/eventInsert")
 	public String eventInsert(Event event, MultipartFile file) throws Exception {
 		
 		if(file.getSize() > 0) {
@@ -94,7 +132,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 수정 폼
 	 * */
-	@RequestMapping("/eventUpdate")
+	@RequestMapping("/admin/board/event/eventUpdate")
 	public ModelAndView eventUpdateForm(Long eventNo) {
 		Event event = eventService.selectByEventNo(eventNo,false);
 	
@@ -104,7 +142,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 수정
 	 * */
-	@RequestMapping("/eventUpdateForm")
+	@RequestMapping("/admin/board/event/eventUpdateForm")
 	public String eventUpdate(Event event, MultipartFile file) throws Exception {
 		
 		if(file.getSize() > 0) {
@@ -121,7 +159,7 @@ public class EventController {
 	/**
 	 * 이벤트 글 삭제
 	 * */
-	@RequestMapping("/eventDelete")
+	@RequestMapping("/admin/board/event/eventDelete")
 	public String eventDelete(Long eventNo) {
 		System.out.println(eventNo + "이벤트 글 삭제");
 		eventService.deleteEvent(eventNo);
@@ -132,13 +170,23 @@ public class EventController {
 	
 	
 	/**
-	 * 이벤트 키워드로 검색
+	 * 이벤트 키워드로 검색 - 관리자
 	 * */
-	@RequestMapping("/eventSearch")
-	public ModelAndView techerInquiry(String keyword) {
+	@RequestMapping("/admin/eventSearch")
+	public ModelAndView eventSearch(String keyword) {
 		List<Event> list = eventService.selectByKeyword(keyword);
 		
 		return new ModelAndView("/admin/board/event/eventList","eventList",list);
+	}
+	
+	/**
+	 * 이벤트 키워드로 검색 - 유저
+	 * */
+	@RequestMapping("/user/eventSearch")
+	public ModelAndView userEventSearch(String keyword) {
+		List<Event> list = eventService.selectByKeyword(keyword);
+		
+		return new ModelAndView("/main/board/event/eventList","eventList",list);
 	}
 	
 	

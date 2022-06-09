@@ -1,0 +1,346 @@
+-1월 25일
+* NEWNEEK  - 구독형 뉴스 (뉴닉) 
+                 각종 이슈들에 대한 뉴스레터
+                 https://newneek.co/
+
+ 
+ * 까탈로그 - 가벼운 주제로....재미있게...(매주 금요일 마다...)
+               http://the-edit.co.kr/newsletter
+
+
+ * Yumm-IT - 아이티관련  맛있는 IT뉴스 (삼성에서 작년에 만듦)
+                   삼성SDS에서 만든 IT 뉴스레터
+                   https://page.stibee.com/subscriptions/118923
+
+
+  *  IT world의 인사이트 : 아이티 관련 기사 ( 관심있는 분야 선택해서...구독)
+                                  https://www.itworld.co.kr/
+                                  https://www.itworld.co.kr/insight
+
+-1월 27일
+===== 코딩테스트 준비를 위한 무료 유튜브 강의 =====
+
+코딩테스트를 보는 기업들이 많음(문제해결 능력)
+- 문제들을 풀기 위해선 여러가지 자료구조, 알고리즘 기법들을 알고, 많은 문제들을 풀어봐야 함
+- 혼자 인터넷 글 보면서 공부하기엔 어려움이 큼. 어디서부터, 무엇을 해야할지?
+- 좋은 무료강의가 많음. (바킹독, 나동빈 실전 알고리즘 강의)
+
+->> 유튜브 바킹독: https://www.youtube.com/watch?v=LcOIobH7ues&list=PLtqbFd2VIQv4O6D6l9HcD732hdrnYb6CY
+- 각종 대회 수상, 기관 코딩테스트 문제출제 경험 등
+
+->> 유튜브 나동빈: https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwfVrz
+- 알고리즘 책 저자
+- 목소리가 좋음
+
+- 두 강의 모두 C/C++ 언어를 사용하지만, 언어의 기본적인 틀은 같음
+=====================================================================
+   백     준    - 알고리즘 티어(브론즈, 실버, 골드, 플래티넘 ... )가 있어 티어 올리는 재미가 있음
+      	     - https://www.acmicpc.net/step	(단계별 풀기)
+프로그래머스 - Level 별로 문제가 나누어져 있음.
+	     - 기업 채용에서 온라인 코딩테스트 플랫폼으로 많이 사용
+	     - https://programmers.co.kr/
+
+-1월 28일
+
+대용량 무료 이미지
+https://unsplash.com/
+
+css, js 소스 참고
+http://bootstrapk.com/
+
+노션(필기할 때 유용함)
+https://www.notion.so/ko-kr/product
+
+-2월 7일
+
+리트코드
+https://leetcode.com/
+
+
+
+
+https://marupong.tistory.com/
+
+-2월 8일
+
+구독 뉴스레터 (경제관련)
+
+부딩 BOODING - 부동산관련 뉴스레터
+https://www.booding.co/
+
+어피티 UPPITY - 머니레터 (머니로그 추천!-은근 재밌음..ㅎㅎ)
+https://uppity.co.kr/
+
+http://funuppity.com/
+
+-2월 9일
+
+https://kidc.eprivacy.go.kr/ 털린 내 정보찾기
+https://www.eprivacy.go.kr/main.do e프라이버시 클린서비스
+ 
+-2월 10일
+
+1. stackEdit
+https://stackedit.io/app#
+마크다운 에디터
+
+2. 얄팍한 코딩
+깃 끝판왕 강좌] 제대로 파는 Git & GitHub
+https://www.yalco.kr/@git-github/1-3/
+강의 : https://www.youtube.com/watch?v=1I3hMwQU6GU
+인프런에서 유료강의이지만 앞부분은 무료로 강의 수강 가능
+
+1.드림코딩by엘리
+깃, 깃허브 제대로 배우기 (기본 마스터편, 실무에서 꿀리지 말자)
+https://www.youtube.com/watch?v=Z9dvM7qgN9s
+
+2월 11일
+
+www.codenary.co.kr
+
+https://www.youtube.com/watch?v=Bn-KjYwAjUw
+
+
+2월 14일
+ 
+https://blog.jandi.com/ko/
+
+https://startuprecipe.co.kr/
+
+2월 16일
+
+<자바 책>
+이펙티브 자바
+모던 자바 인 액션
+성공과 실패를 결정하는 1%의 네트워크 원리 
+
+2월 18일
+
+마이뱅크
+https://www.mibank.me/deposit/yegeum/index.php?group=201
+
+계좌통합조회
+https://www.payinfo.or.kr/account.html
+
+2월 21일 
+
+이클립스 글꼴 색상 
+http://www.eclipsecolorthemes.org/
+
+TCP school
+http://tcpschool.com/
+
+2월 22일
+
+
+****************유용함
+
+https://github.com/Integerous/goQuality-dev-contents
+
+https://github.com/tony9402/baekjoon
+
+
+https://github.com/JaeYeopHan/Interview_Question_for_Beginner
+
+2월 23일
+
+오늘의일기 -피아노
+https://www.youtube.com/c/%EC%98%A4%EB%8A%98%EC%9D%98%EC%9D%BC%EA%B8%B0Oneul/videos
+
+Hellotalk -언어교환 어플
+
+소니 wh 1000xm3 -노이즈캔슬링 헤드셋
+https://www.youtube.com/watch?v=JT-N8xlQImA
+
+2월 24일
+
+
+<청년희망적금>
+https://blog.naver.com/xuenxu/222652661062?isInf=true
+
+<무주택청년월세지원>
+https://blog.naver.com/alcmskfl17/222652380456
+
+<청년행복주택>
+https://blog.naver.com/tjvod112/222653635114?isInf=true
+
+<청년버팀목/중소기업청년전세자금대출>
+https://post.naver.com/viewer/postView.nhn?volumeNo=33065239&memberNo=2966116&isInf=true
+
+<청년우대형 청약통장>
+https://blog.naver.com/rmsgud2007/222647416495?isInf=true
+
+<청년내일저축계좌>
+https://blog.naver.com/jamdoong/222622267911?isInf=true
+
+2월 25일
+
+https://blog.naver.com/sicle_official/222071769230
+---국내 IT 기업 기술 블로그
+
+2월 28일
+
+3월 2일
+
+머신러닝 : https://teachablemachine.withgoogle.com/
+ 
+
+무료 https 호스팅 : https://www.netlify.com/
+
+3월 3일
+
+3월 4일
+
+오늘의 방역 https://o-bang.kr/
+대학 강의 사이트 
+http://www.kmooc.kr/ 
+http://www.kocw.net/home/index.do
+
+
+3월 8일
+ https://www.rndjob.or.kr/ : 무료인적성검사
+  https://job.seoul.go.kr/ : 서울시 운영하는 일자리 카페, 서울시 청년일자리센터
+
+
+*****************************************************************************
+  https://haejun0317.tistory.com/239?category=987777 : 백엔드 기술면접
+******************************************************************************* 
+
+ : 심리테스트
+   http://bftest.wecode.co.kr/
+
+ : 가장 정확할지도 모르는 직업 테스트
+   https://www.arealme.com/career/ko/
+
+
+3월 14일 
+-------------------------------------------------------------
+https://noonnu.cc/
+글꼴
+
+https://ovenapp.io/project/6aFVkPw2SjpPJBpsRnAzoxtas91NewqT#BB1Oj
+카카오오븐
+
+https://www.jobplanet.co.kr/companies/304143/reviews/%EC%94%A8%EC%99%80%EC%9D%B4%EB%94%94%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0?utm_source=worknet
+잡플랫
+https://www.remove.bg/ko
+배경날리기
+-------------------------------------------------------------
+3월 15일 
+
+혼자놀기대백과사전 https://page.stibee.com/archives/97673
+
+미리캔버스 https://www.miricanvas.com/
+----------------------------------포토폴리오 참고
+3월 16일
+net start OracleOraDB21Home1MTSRecoveryService
+
+net start OracleOraDB21Home1TNSListener
+
+net start OracleServiceXE
+
+net start OracleVssWriterXE
+
+isqlplusctl start
+--------------------------------------------
+net stop OracleOraDB21Home1MTSRecoveryService
+
+net stop OracleOraDB21Home1TNSListener
+
+net stop OracleServiceXE
+
+net stop OracleVssWriterXE
+
+isqlplusctl stop
+배치file
+
+3월 17일
+
+1. A SOFT MURMUR : asmr 사이트
+원하는 소리 마음대로 섞을 수 있음.
+자주 듣는 조합으로 저장해도 됨!
+https://asoftmurmur.com/
+
+
+2. 개발 지식 정리
+https://www.grabbing.me/IT-A-to-Z-By-1e1fbc981b7c4c03ac44943085ac8304
+**************************************
+3. 위키독스 : 책 공유 사이트
+코딩에 관련된 책 무료
+https://wikidocs.net/
+**********************************
+
+3월 21일
+
+*****************************
+구직공고싸이트 : https://github.com/jojoldu/junior-recruit-scheduler
+*****************************
+프로그래머스 (코딩테스트 및 구직싸이트): https://programmers.co.kr/job?page=1&job_category_ids=1&locations=pangyo&locations=south_east&min_career=0&order=recent
+*******************************
+인강 강의 : https://www.inflearn.com/
+
+
+3월 22일
+
+어플 응급의료정보제공 영상https://youtu.be/DKE0YYxF4LQ
+
+
+3월 24일
+https://boottent.sayun.studio/camps
+
+https://velog.io/
+
+https://www.youtube.com/watch?v=cpEeqACsF_Q
+
+
+
+3월 25일
+
+https://www.mangoplate.com/ --맛집
+
+3월 28일
+ 
+https://youtu.be/dJXZRZvqbYg
+
+
+3월 31일
+
+월드잡 -해외취업, 이력서, 인턴
+https://www.worldjob.or.kr/new_index.do#next
+
+워홀인포센터
+https://whic.mofa.go.kr/whic/main/
+
+국제교육원 -유학,장학정보
+http://www.niied.go.kr/user/nd83075.do
+
+프랑스문화원 -어학강좌
+https://kr.ambafrance-culture.org/ko/cours/
+
+독일문화원 -온라인독일어강좌
+https://www.goethe.de/ins/kr/ko/spr/kur/onl.html
+
+인도문화원 -온라인힌디어/산스크리트어강좌
+https://www.indembassyseoul.gov.in/icc/page/language/
+
+체코문화원 -프라하미술관 영상 시리즈
+https://seoul.czechcentres.cz/ko/program
+
+경기도평생학습포털 -온라인외국어강좌
+https://www.gseek.kr/member/rl/courseInfo/A000/onCourseList.do?menuId=UA00&menuStep=2&pMenuId=OTOP
+
+
+4월 6일
+
+https://devfolio.kr/--포트폴리오 모아놓은 곳
+
+4월 7일
+https://superkts.com/jquery/
+https://kfonts.kr/
+https://carbon.now.sh/
+
+4월 8일 
+https://hangeul.naver.com/2014/document-
+---한글 서식
+https://unsplash.com
+--무료고퀄 이미지

@@ -2,6 +2,7 @@ package dcsc.mvc.domain.board;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -71,4 +73,8 @@ public class Ask {
 	@JoinColumn(name = "ask_category_id")
 	@JsonIgnore
 	private AskCategory askCategory;
+	 
+	@OneToOne(mappedBy = "ask", cascade = CascadeType.REMOVE)
+	private Answer answer;
+	
 }

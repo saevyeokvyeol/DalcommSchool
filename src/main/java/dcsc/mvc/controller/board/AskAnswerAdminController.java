@@ -2,14 +2,20 @@ package dcsc.mvc.controller.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
+import dcsc.mvc.domain.board.AskCategory;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
 import lombok.RequiredArgsConstructor; 
 
@@ -30,7 +36,7 @@ public class AskAnswerAdminController {
 		model.addAttribute("askList", askList); 
 		  
 		return "/admin/board/askanswer/askAnswerList";  
-	}    
+	}     
 	         
 	/**    
 	 * 1대1 문의 상세보기 기능(관리자)   
@@ -44,23 +50,35 @@ public class AskAnswerAdminController {
 	}
 	 
 	     
-//	/**
-//	 * 1대1 문의 답변 폼 
-//	 * */
+	/**
+	 * 1대1 문의 답변 폼 
+	 * */
 //	 @RequestMapping("/askanswer/askAnswerDetail")
 //	 //public void askAnswerDetail(String askNo) {}
 //	
 //	 public void askAnswerDetail() {}
-	 
+//	  
+	
+//	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
+//		ask.setAskCategory(askCategory);
+//		ask.setStudent(student);
+//		
+		 
 	/**  
 	 * 1대1 문의 답변하는 기능(관리자)
 	 * */
 	 @RequestMapping("/insertAnswer")
-	 public String insertAnswer(Answer answer) {
+	 @ResponseBody//아작스하려면 필요
+	 public Answer insertAnswer(Answer answer, Ask ask, Model model) {
+		 answer.setAsk(ask);
+	
+		 Answer dbAnswer=askAnswerService.insertAnswer(answer);
 		 
-		 askAnswerService.insertAnswer(answer);
+		 System.out.println("*****************"+dbAnswer.getAnswerContent());;
 		 
-		 return "redirect:/admin/board/askAnswerList";
+		 model.addAttribute("answerReply", dbAnswer);
+		 
+		 return dbAnswer;
 		 
 	 }
 }

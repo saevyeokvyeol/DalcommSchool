@@ -59,10 +59,6 @@ public interface FaqService {
 	 * */
 	List<Faq> selectByfaqCategoryId(Long FaqCategoryId);
 	
-	/**
-	 * 
-	 * */
-	
 	
 	
 }

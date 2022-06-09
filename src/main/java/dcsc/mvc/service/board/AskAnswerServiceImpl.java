@@ -35,6 +35,9 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		  
 		System.out.println("============dbAsk : "+dbAsk); 
 	}
+	
+	
+	
 	/**
 	 * 1대1 문의 수정하기 (학생&선생님)
 	 * */ 
@@ -69,8 +72,16 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 	 * 1대1문의 답변하는 기능(관리자)
 	 * */
 	@Override
-	public void insertAnswer(Answer answer) {
-		// TODO Auto-generated method stub
+	public Answer insertAnswer(Answer answer) {
+		
+		Answer dbAnswer=answerRep.save(answer);
+		if(dbAnswer==null)throw new RuntimeException();
+		
+		
+		Ask dbAsk=askRep.findById(answer.getAsk().getAskNo()).orElse(null);
+		dbAsk.setAskComplete("T");
+		
+		return dbAnswer;
 
 	}
 

@@ -29,10 +29,9 @@
 	
 <div class="main-content">
 	
-	<h5> 관리자 > 이벤트 관리 </h5>
+	<h5> 공지사항 > 이벤트 </h5><br><hr>
 	
-	
-	<form action="${pageContext.request.contextPath}/admin/board/event/eventSearch" method="post">
+	<form action="${pageContext.request.contextPath}/main/board/event/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <input type="text" id="keyword" name="keyword">
    	  <input type="submit" id="search" value="검색">
@@ -71,7 +70,7 @@
 					관리자
 				</td>
 				<td>
-				<a href="${pageContext.request.contextPath}/admin/board/event/eventRead/${event.eventNo}">
+				<a href="${pageContext.request.contextPath}/main/board/event/eventRead/${event.eventNo}">
 					${event.eventTitle}
 				</a>
 				</td>
@@ -98,7 +97,7 @@
 	<c:set var="doneLoop" value="false"/>
 		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">PREV</a>
+		      <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage-1}">PREV</a>
 		  </c:if>
 		  
 		<span class="pagination-inner"> 
@@ -109,22 +108,18 @@
 			    </c:if> 
 		    
 		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
+		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${i}">${i}</a> 
 		  </c:if>
 		   
 		</c:forEach>
 		</span> 
 				
 		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">NEXT</a>
+		     <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage+blockCount}">NEXT</a>
 		 </c:if>
 		</div>
 	</nav>  
 </div>
-
-	<div align=right>
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a></div>
-	</div>
 
 </body>
 </html>
