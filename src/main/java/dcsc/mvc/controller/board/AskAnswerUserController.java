@@ -1,7 +1,6 @@
 package dcsc.mvc.controller.board;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,10 +16,6 @@ import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
 import dcsc.mvc.util.ImageLink;
-<<<<<<< HEAD
-import dcsc.mvc.util.Link;
-=======
->>>>>>> 9c1fb908fa3cf7a7a997f07d872745a10ac14c94
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -96,11 +91,8 @@ public class AskAnswerUserController {
 //		} 
 		  
 		if(file.getSize() > 0) {
-<<<<<<< HEAD
 			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
-=======
-			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
->>>>>>> 9c1fb908fa3cf7a7a997f07d872745a10ac14c94
+
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());
