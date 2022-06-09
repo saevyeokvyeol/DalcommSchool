@@ -26,6 +26,17 @@
 				width: 430px;
 				position: fixed;
 			}
+			
+			/* 클래스 후기 CSS */
+			fieldset input[type=radio]{display: none;}
+			fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
+			fieldset{display: inline-block; direction: rtl; border: 0;}
+			
+			.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
+			.star:hover{text-shadow: 0 0 0 #EB5353;}
+			.star:hover~label{text-shadow: 0 0 0 #EB5353;}
+			
+			textarea{width:100%; height:6.25em; resize:none;}
 		</style>
 		<script>
 			// 풀캘린더 API 사용
@@ -436,3 +447,4 @@
 		</div>
 	</body>
 </html>
+			 
