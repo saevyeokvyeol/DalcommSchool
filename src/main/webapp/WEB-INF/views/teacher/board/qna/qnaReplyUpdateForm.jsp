@@ -35,6 +35,7 @@
     <div class="card">
         <div class="card-body">
          	<form name="reply-teacher-insert" method="post" id="reply-teacher-insert" action="${pageContext.request.contextPath}/qnaReplyUpdate">
+         		<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
          		<b>${qnaReply.replyId}번 답글 수정 </b>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="replyContent"></textarea>
                 <%-- <input type=hidden name="qnaId" value="${classQna.qnaId}" id="qnaId">

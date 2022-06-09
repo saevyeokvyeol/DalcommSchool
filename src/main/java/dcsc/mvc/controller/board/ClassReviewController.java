@@ -29,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 public class ClassReviewController {
 	
 	public final ClassReviewService reviewService;
-	
 	private final static int PAGE_COUNT=5;
 	private final static int BLOCK_COUNT=3;
 	

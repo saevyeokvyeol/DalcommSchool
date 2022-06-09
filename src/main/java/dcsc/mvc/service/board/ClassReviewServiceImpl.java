@@ -1,7 +1,6 @@
 package dcsc.mvc.service.board;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -39,9 +38,9 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 
 	@Override
 	public void delete(Long reviewId) {
-		reviewRep.deleteById(reviewId);
-	}
+		// TODO Auto-generated method stub
 
+	}
 	/**
 	 * 클래스 ID로 후기 검색
 	 * */
@@ -99,7 +98,6 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		
 		return reviewRep.findByClassesTeacherTeacherIdEquals(teacherId, pageable);
 	}
-
 	/**
 	 * 학생 ID로 후기 검색 - 페이징 처리
 	 * */
@@ -137,7 +135,6 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 			throw new RuntimeException("블라인드 처리에 실패하였습니다.");
 		}
 		review.setReviewBlindState(reviewBlindState);
-
 	}
 
 }

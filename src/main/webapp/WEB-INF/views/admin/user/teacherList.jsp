@@ -49,7 +49,7 @@
                 </c:when>
                 
                  <c:when test ="${not empty teacherList}">
-		              <c:forEach items="${teacherList}" var="teacher">
+		              <c:forEach items="${teacherList.content}" var="teacher">
 		                        <tr>
 		                            <td><span>${teacher.teacherId}</span></td>
 		                            <td><span>${teacher.teacherName}</span></td>
@@ -66,5 +66,39 @@
             </c:choose>
         </tbody>
     </table>
+    
+    <hr>
+<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
+<div style="text-align: center">
+		<!--  블럭당  -->
+ <nav class="pagination-container">
+	<div class="pagination">
+	<c:set var="doneLoop" value="false"/>
+		
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage-1}">PREV</a>
+		  </c:if>
+		  
+		<span class="pagination-inner"> 
+		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		  
+			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
+			       <c:set var="doneLoop" value="true"/>
+			    </c:if> 
+		    
+		  <c:if test="${not doneLoop}" >
+		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${i}">${i}</a> 
+		  </c:if>
+		   
+		</c:forEach>
+		</span> 
+				
+		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage+blockCount}">NEXT</a>
+		 </c:if>
+		</div>
+	</nav>  
+</div>
+    
 </body>
 </html>

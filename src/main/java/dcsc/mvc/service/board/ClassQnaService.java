@@ -93,4 +93,11 @@ public interface ClassQnaService {
 	 * 클래스 Q&A 댓글 상세조회(댓글 id 로 조회)
 	 * */
 	ClassReply selectByReplyId(Long replyId);
+	
+	/**
+	 * 학생ID로 클래스 Q&A 검색
+	 * @param String studentId
+	 * @return List<ClassQna>
+	 * */
+	List<ClassQna> selectByStudentId(String studentId);
 }

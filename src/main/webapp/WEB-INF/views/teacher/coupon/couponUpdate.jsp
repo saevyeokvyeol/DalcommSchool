@@ -27,7 +27,7 @@
     
     
     <!--쿠폰수정하기-->
-    <div class="card">
+    <div class="card" style="width: 25rem;">
         <div class="card-body">
          	<form name="coupon-teacher-update" method="post" id="coupon-teacher-update" action="${pageContext.request.contextPath}/teacher/coupon/couponUpdate">
          	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -45,15 +45,15 @@
          				</tr>
 	         			<tr>
 	         				<th>쿠폰명</th>
-	         				<td><input class="form-control" type=text name="couponName" id="couponName" value="${coupon.couponName}"></td>
+	         				<td><input class="form-control" type="text" name="couponName" id="couponName" value="${coupon.couponName}"></td>
 	         			</tr>
 	         			<tr>
 	         				<th>할인금액</th>
-	         				<td><input class="form-control" type=text name="couponDc" id="couponDc" value="${coupon.couponDc}"></td>
+	         				<td><input class="form-control" type="number" name="couponDc" id="couponDc" value="${coupon.couponDc}"></td>
 	         			</tr>
 	         			<tr>
 	         				<th>사용기간</th>
-	         				<td><input class="form-control" type=number name="couponEndDate" id="couponEndDate" value="${coupon.couponEndDate}"></td>
+	         				<td><input class="form-control" type="number" name="couponEndDate" id="couponEndDate" value="${coupon.couponEndDate}"></td>
 	         			</tr>
          				
          		</table>

@@ -35,6 +35,7 @@
     <div class="card">
         <div class="card-body">
          	<form name="reply-teacher-insert" method="post" id="reply-teacher-insert" action="${pageContext.request.contextPath}/qnaReplyInsert">
+         		<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
          		<b>${qnaId}번 Q&A글에  답변 등록 </b>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="replyContent"></textarea>
                 <%-- <input type=hidden name="qnaId" value="${classQna.qnaId}" id="qnaId">
@@ -50,7 +51,7 @@
      </div>
      <hr>
     
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList_th">목록으로 돌아가기</a>&gt;</span></div>
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
 
 
 </body>

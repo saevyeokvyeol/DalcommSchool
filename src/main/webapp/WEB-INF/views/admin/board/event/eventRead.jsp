@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,6 +82,8 @@
     
       <tr>
         <td height="20" colspan="2" align="center" valign="middle">
+        <!-- 관리자 버튼 권한-->
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 			<form name="requestForm" method="post" id="requestForm">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
@@ -88,7 +91,9 @@
 				<input type=button value="수정하기" >
 				<input type=button value="삭제하기" >
 			</form>
+		</div>
 		</td>
+		<span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/admin/board/event/eventList">목록으로</a>&gt;</span>
     </tr>
     </table>
 

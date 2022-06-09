@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,11 +86,17 @@
 		                                <td>${coupon.couponId}</td>
 		                                <td>${coupon.couponName}</td>
 		                                <td>${coupon.couponDc}</td>
-		                                <td>${coupon.couponInsertDate}</td>
-		                                <td>${coupon.couponUpdateDate}</td>
-		                                <td>${coupon.couponEndDate}</td>
 		                                <td>
-											<select name="select_couponStateName" id="select_couponStateName">
+				                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+				                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
+				                        <td>
+				                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+				                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+				                        </td>
+		                                <td>${coupon.couponEndDate}일</td>
+		                                <td>
+											<select name="select_couponStateName" id="select_couponStateName" class="form-select">
 												<c:choose>
 												<c:when test="${coupon.couponState.couponStateId == '1'}">
 													<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
@@ -109,7 +117,7 @@
 		        							</select>
 		        						</td>
 		        						<td>
-		        							<form method="post" id="updateForm" action="${pageContext.request.contextPath}/admin/coupon/eventCouponUpdateForm">
+		        							<form method="post" id="updateForm" action="${pageContext.request.contextPath}/teacher/coupon/couponUpdateForm">
 												<input type="hidden" name="couponId" value="${coupon.couponId}">
 												<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 												<input class="btn btn-primary" type="submit" value="수정하기">

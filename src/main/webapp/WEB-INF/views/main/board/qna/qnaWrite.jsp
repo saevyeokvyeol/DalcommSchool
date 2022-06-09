@@ -17,14 +17,12 @@
 <body>
 
 <form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/qna/qnaInsert" >
+	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 	<%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
 	<input type="hidden" name="studentId" value="${qna.student.studentId}">
-	<input type="hidden" name="blindState" value="${qna.blindState}">
-	<input type="hidden" name="qnaComplete" value="${qna.qnaComplete}"> --%>
+	 --%>
 	<input type="hidden" name="classId" value="2">
 	<input type="hidden" name="studentId" value="lee1234">
-	<input type="hidden" name="blindState" value="F">
-	<input type="hidden" name="qnaComplete" value="F">
 <table >
 
     <tr>
