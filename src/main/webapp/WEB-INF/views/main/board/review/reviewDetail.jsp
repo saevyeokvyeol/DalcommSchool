@@ -37,7 +37,7 @@ $(function(){
 </script>
 </head>
 <body>
-
+클래스 후기 상세보기입니다
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">

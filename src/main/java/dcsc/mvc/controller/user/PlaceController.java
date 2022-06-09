@@ -66,8 +66,10 @@ public class PlaceController {
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/user/{placeId}")
+	@RequestMapping("/detail")
 	public ModelAndView readPlace(Long placeId) {
+		placeId=4L;
+		
 		Place place = teacherService.selectByPlaceId(placeId);
 		return new ModelAndView("teacher/teacherMypage/place/placeDetail", "place", place);
 	}
