@@ -87,7 +87,7 @@ public class EventController {
 		 boolean state = flag==null ? true : false;
 		 
 		Event event = eventService.selectByEventNo(eventNo, state); //true면 글 조회수 증가
-		return new ModelAndView("/admin/board/event/eventRead" , "event", event);
+		return new ModelAndView("admin/board/event/eventRead" , "event", event);
 		
 	}
 	
@@ -100,7 +100,7 @@ public class EventController {
 		 boolean state = flag==null ? true : false;
 		 
 		Event event = eventService.selectByEventNo(eventNo, state); //true면 글 조회수 증가
-		return new ModelAndView("/main/board/event/eventRead" , "event", event);
+		return new ModelAndView("main/board/event/eventRead" , "event", event);
 		
 	}
 	
@@ -136,7 +136,7 @@ public class EventController {
 	public ModelAndView eventUpdateForm(Long eventNo) {
 		Event event = eventService.selectByEventNo(eventNo,false);
 	
-		return new ModelAndView("/admin/board/event/eventUpdate","event", event);
+		return new ModelAndView("admin/board/event/eventUpdate","event", event);
 	}
 	
 	/**
@@ -173,22 +173,45 @@ public class EventController {
 	 * 이벤트 키워드로 검색 - 관리자
 	 * */
 	@RequestMapping("/admin/eventSearch")
-	public ModelAndView eventSearch(String keyword) {
-		List<Event> list = eventService.selectByKeyword(keyword);
+	public String eventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
-		return new ModelAndView("/admin/board/event/eventList","eventList",list);
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectByKeyword(keyword, page);
+		
+		model.addAttribute("eventList", eventList);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+
+		return "admin/board/event/eventList";
 	}
 	
 	/**
 	 * 이벤트 키워드로 검색 - 유저
 	 * */
 	@RequestMapping("/user/eventSearch")
-	public ModelAndView userEventSearch(String keyword) {
-		List<Event> list = eventService.selectByKeyword(keyword);
+	public String userEventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
-		return new ModelAndView("/main/board/event/eventList","eventList",list);
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectByKeyword(keyword, page);
+		
+		model.addAttribute("eventList", eventList);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
+		return "main/board/event/eventList";
+	
 	}
-	
-	
 
 }
