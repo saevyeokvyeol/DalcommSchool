@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 수정 페이지입니다</title>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <style type="text/css">
 
@@ -112,11 +115,14 @@ $(function(){
 </head>
 <body>
 		
+<div class="main-content">
+		
+<br><br><br>
 <h3>비밀번호 수정 페이지입니다.</h3>
-<span id="notice">*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</span>
+<span id="notice">*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</span><br><br><hr>
 <form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-  <table>
+  <table class="table">
     <tr>
       <th>기존 비밀번호</th>
       <td><input type="password" id="userPwd" name="userPwd" required></td>
@@ -137,6 +143,6 @@ $(function(){
 </div>
 </form>
 
-		
+</div>	
 </body>
 </html>

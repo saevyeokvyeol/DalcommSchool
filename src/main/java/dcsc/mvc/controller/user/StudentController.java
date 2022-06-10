@@ -110,7 +110,7 @@ public class StudentController {
 		//System.out.println(studentId);
 		//Student student = studentService.selectStudent(studentId);
 		
-		return new ModelAndView("/main/mypage/modifyForm","student", student);
+		return new ModelAndView("main/mypage/modifyForm","student", student);
 	}
 	
 	

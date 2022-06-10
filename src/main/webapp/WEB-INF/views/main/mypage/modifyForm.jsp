@@ -15,7 +15,10 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-
+	
+	h3 {
+		text-align: center;
+	}
 
 	.idCheck_success, .pwdCheck_success, .phoneCheck_success, .phoneCheck_success {
 		color: blue;
@@ -28,6 +31,10 @@
 	
 	.id, .name { 
 		background-color: #D3D3D3;
+	}
+
+	.joinNotice {
+		text-align: center;
 	}
 
 </style>
@@ -163,15 +170,19 @@ $(function(){
 
 </head>
 <body>
+
+<div class="main-content">
+
+<br><br><br>
  <section>
   <sec:authorize access="isAuthenticated()">
  	<sec:authentication property="principal" var="student"/>
 	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/main/mypage/modify">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		
-	  <h1> 학생 회원정보 수정페이지 </h1>
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
-	    <table>
+	  <h3> 학생 회원정보 수정페이지 </h3>
+	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><br><hr>
+	    <table class="table">
 	      <tr>
 	          <th>아이디</th>
 	          <td class=""><input type="text" id="studentId" class="id" name="studentId" value="${student.studentId}" readonly="readonly"/>
@@ -204,5 +215,8 @@ $(function(){
 
 	</sec:authorize>
   </section>
+  
+</div>
+  
 </body>
 </html>
