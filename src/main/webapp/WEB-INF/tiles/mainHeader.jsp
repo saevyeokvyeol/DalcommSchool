@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>header</title>
+		
+		<script type="text/javascript">
+			
+			$("#form").hide();
+		
+			function logout() {
+				document.getElementById('logout').submit();
+			}
+		
+		</script>
+
 	</head>
 	<body>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -32,9 +44,36 @@
 				<ul>
 					<li><a href=""><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
 					<li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
-					<li><a href="${pageContext.request.contextPath}/main/login/loginForm"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+					<sec:authorize access="isAnonymous()">
+					<li><a href="#" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+					</sec:authorize>
+					<sec:authorize access="isAuthenticated()">
+					<li><a href="${pageContext.request.contextPath}/main/mypage/myPage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+					<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+					</sec:authorize>
 				</ul>
 			</div>
 		</div>
+		
+<div class="form">	
+ <form action="${pageContext.request.contextPath}/logout" method="post" id="logout">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+</form>
+</div>	
+		
+<!-- ---------------------------------로그인 모달--------------------------------------- -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"><!-- 모달 본문 -->
+      <jsp:include page="/WEB-INF/views/main/login/login.jsp"/>
+      </div>
+    </div>
+  </div>
+</div>
+	
 	</body>
 </html>
