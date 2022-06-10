@@ -143,14 +143,19 @@ public class StudentController {
 	@RequestMapping("/main/mypage/deleteUser")
 	public String deleteUser(String userId, String userPwd) {
 		System.out.println("deleteUser 호출...");
+
 		studentService.deleteStudent(userId, userPwd);
 		
 		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
 		
-		return "redirect:/";
+		return "redirect:/main/mypage/deleteOk";
 	}
 	
-
-
+	
+	//회원 탈퇴 완료
+	@RequestMapping("/main/mypage/deleteOk")
+	public void deleteUser() {
+	
+	}
 
 }
