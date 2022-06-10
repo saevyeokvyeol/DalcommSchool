@@ -249,9 +249,9 @@ public class CouponController {
 	 * */
 	@RequestMapping("admin/coupon/eventCouponUpdateForm")
 	public ModelAndView eventCouponUpdateForm(Long couponId) {
-		//System.out.println("eventCouponUpdateForm의 couponId = "+ couponId);
+			//System.out.println("eventCouponUpdateForm의 couponId = "+ couponId);
 		Coupon coupon = couponService.selectByCouponId(couponId);
-		//System.out.println("eventCouponUpdateForm의 coupon.couponId = "+ coupon.getCouponId());
+			//System.out.println("eventCouponUpdateForm의 coupon.couponId = "+ coupon.getCouponId());
 		return new ModelAndView("admin/coupon/eventCouponUpdate", "coupon", coupon);
 	}
 	
