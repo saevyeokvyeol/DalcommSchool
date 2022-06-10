@@ -53,13 +53,13 @@ public interface AskAnswerService {
 	 * 내가 쓴 1대1 문의 리스트 조회기능 페이징 처리
 	 * */
 	
-	//Page<Ask> selectById(String id, Pageable pageable);
+	Page<Ask> selectById(String id, Pageable pageable);
 	
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회기능(강사&회원)
 	 * @return List<Ask>
 	 * */
-	List<Ask> selectById(String id);
+	//List<Ask> selectById(String id);
 	
 	/**
 	 * 1대1 문의 상세보기(강사&회원)
