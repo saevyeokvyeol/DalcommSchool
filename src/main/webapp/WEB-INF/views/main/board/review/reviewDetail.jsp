@@ -27,30 +27,61 @@
 $(function(){
 	alert($("#reviewId").val());
 	
+	
 	$("#deleteBtn").on("click",function(){
-		alert("삭제하시겠습니까?");
+		var result = confirm("정말로 삭제하시겠습니까?");
 		
-		$.ajax({
-			url:"/main/board/review/delete",
-			data:{reviewId : $("#reviewId").val(),
-				  "${_csrf.parameterName}" : "${_csrf.token}"
-				 },
-			type:"post",
-			success: function(){
-				 alert("삭제되었습니다.")
-			},
-			error: function(err){
-				alert(err + "에러 발생")
-			}
-		})
+		if(result){
+			$.ajax({
+				url:"/main/board/review/delete",
+				data:{reviewId : $("#reviewId").val(),
+					  "${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				type:"post",
+				success: function(){
+					 alert("삭제되었습니다.")
+				},
+				error: function(err){
+					alert(err + "에러 발생")
+				}
+			})
+		}else{
+			
+		}
 	})
+	
+	$("#updateBtn").on("click",function(){
+		$("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/review/updateForm");
+		$("#requestForm").submit();
+	})
+	
+// 	$("#updateBtn").on("click",function(){
+// 		alert(${review.reviewId} + "번 게시물 수정 페이지로 이동합니다.")
+		
+// 		$.ajax({
+// 			url:"/main/board/review/updateForm",
+// 			data:{reviewId : $("#reviewId").val(),
+// 				"${_csrf.parameterName}" : "${_csrf.token}"	
+// 			},
+// 			type:"post",
+// 			success: function(){
+// 				alert("수정페이지로 이동하는 데 성공하였습니다.")
+// 			},
+// 			error: function(err){
+// 				alert(err + "에러 발생")
+// 			}
+// 		})
+// 	})
 })
 </script>
 </head>
 <body>
 클래스 후기 상세보기입니다
 <table>
-<input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+	<tr>
+    	<th>글번호</th>
+    	<td>${review.reviewId}</td>
+  	</tr>
   	<tr>
     	<th>작성자</th>
     	<td>${review.student.studentId}</td>
@@ -74,12 +105,21 @@ $(function(){
     	</td>
   	</tr>
   	<tr>
+	     <td colspan="2" style="text-align: center;">
+			<img alt="" src="${pageContext.request.contextPath}/img/classReview/${requestScope.review.reviewImg}">
+<%-- 			<span style="font-size:9pt;"><b><pre>${requestScope.review.reviewContent}</pre></b></span> --%>
+	     </td>
+	</tr>
+  	<tr>
     	<th>내용</th>
     	<td>${review.reviewContent}</td>
   	</tr>
-  	<input type="button" id="updateBtn" value="수정하기">
-  	<input type="button" id="deleteBtn" value="삭제하기">
-  	<input type="button" id="cancelBtn" value="취소"
+  	<form id="requestForm">
+  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+  		<input type="button" id="updateBtn" value="수정하기">
+	  	<input type="button" id="deleteBtn" value="삭제하기">
+	  	<input type="button" id="cancelBtn" value="취소">
+	</form>
 </table>
 
 

@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
@@ -34,11 +36,10 @@ public class PlaceController {
 	 * 공방 등록하기
 	 * */
 	@RequestMapping("/insert")
-	public String insertPlace(Place place, PlaceRegion placeRegion, PlaceInfra placeInfra) {
-		
-		place.setPlaceInfra(placeInfra);
+	public String insertPlace(Place place, PlaceRegion placeRegion,@RequestParam List<Long> infraId) {
+		System.out.println("placeController - insertPlace 실행");
 		place.setPlaceRegion(placeRegion);
-		teacherService.insertPlace(place);
+		teacherService.insertPlace(place, infraId);
 		
 		return "redirect:/teacher/teacherMypage/place/placeDetail";
 	}
@@ -58,8 +59,10 @@ public class PlaceController {
 	 * 공방 수정하기
 	 * */
 	@RequestMapping("/update")
-	public String updatePlace(Place place) {
-		teacherService.updatePlace(place);
+	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam List<Long> infraId) {
+		
+		place.setPlaceRegion(placeRegion);
+		teacherService.updatePlace(place, infraId);
 		
 		return "redirect:/teacher/teacherMypage/place/detail";
 		//redirect:/ 는 오른쪽의 주소로 URL요청을 다시 하는 것. 즉 매핑 주소를 입력.(컨트롤러 재사용)
@@ -81,8 +84,9 @@ public class PlaceController {
 	 * 공방 인프라 리스트 가져오기
 	 * */
 	@RequestMapping("/selectPlaceInfra")
-	public List<PlaceInfra> selectPlaceInfra(Long placeId) {
-		List<PlaceInfra> list = teacherService.selectPlaceInfra(placeId);
+	@ResponseBody
+	public List<Infra> selectPlaceInfra() {
+		List<Infra> list = teacherService.selectPlaceInfra();
 		
 		return list;
 	}

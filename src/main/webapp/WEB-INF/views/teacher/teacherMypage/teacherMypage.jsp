@@ -33,6 +33,7 @@
 		  <li>수익 관리</li>
 		  <li><a href ="">정산 신청</a></li>
 		  <li><a href ="">정산 내역</a></li>
+		  <li><a href="${pageContext.request.contextPath}/main/mypage/deleteUserForm"><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;회원 탈퇴</a></li>
 		</ul>
 	</div>
 	</form>
