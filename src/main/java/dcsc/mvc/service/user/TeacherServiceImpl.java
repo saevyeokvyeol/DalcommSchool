@@ -13,12 +13,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.repository.user.InfraRepository;
 import dcsc.mvc.repository.user.PlaceInfraRepository;
 import dcsc.mvc.repository.user.PlaceRegionRepository;
 import dcsc.mvc.repository.user.PlaceRepository;
@@ -35,7 +38,8 @@ public class TeacherServiceImpl implements TeacherService {
 	private final StudentRepository studentRep;
 	private final PlaceRepository placeRep;
 	private final PlaceRegionRepository regionRep;
-	private final PlaceInfraRepository infraRep;
+	private final PlaceInfraRepository placeInfraRep;
+	private final InfraRepository infraRep;
 	
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 //	private final Student student;
@@ -228,19 +232,23 @@ public class TeacherServiceImpl implements TeacherService {
 	 * 공방 등록하기
 	 * */
 	@Override
-	public void insertPlace(Place place) {
+	public void insertPlace(Place place, @RequestParam List<Long> infraId) {
 		
-		placeRep.save(place);
-		infraRep.save(place.getPlaceInfra());
+		Place dbPlace = placeRep.save(place);
+		
+		for(Long l : infraId) {
+			Infra infra = infraRep.findById(l).orElse(null);
+			placeInfraRep.save(new PlaceInfra(null, dbPlace, infra));
+		}
 	}
 	
 	/**
 	 * 공방 수정하기
 	 * */
 	@Override
-	public Place updatePlace(Place place) {
+	public void updatePlace(Place place,@RequestParam List<Long> infraId) {
 		Place place2 = placeRep.findById(place.getPlaceId()).orElse(place);
-		
+				
 		place2.setDetailAddr(place.getDetailAddr());
 		place2.setPlaceName(place.getPlaceName());
 		place2.setPlaceAddr(place.getPlaceAddr());
@@ -248,18 +256,21 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		place2.setPlaceRegion(place.getPlaceRegion());
 		
-		place2.setPlaceInfra(place.getPlaceInfra());
+		placeInfraRep.deletePlaceInfra(place.getPlaceId());
 		
-		return place2;
+		for(Long i : infraId) {
+			Infra infra = infraRep.findById(i).orElse(null);
+			placeInfraRep.save(new PlaceInfra(null, place2, infra));
+		}
 	}
 	
 	/**
 	 * 공방 인프라 정보 가져오기
 	 * */
 	@Override
-	public List<PlaceInfra> selectPlaceInfra(Long placeId) {
-		
-		return null;
+	public List<Infra> selectPlaceInfra() {
+		List<Infra> list = infraRep.findAll();
+		return list;
 	}
 	
 	
@@ -282,6 +293,10 @@ public class TeacherServiceImpl implements TeacherService {
 		List<PlaceRegion> list = regionRep.findAll();
 		return list;
 	}
+	
+	/**
+	 * 
+	 * */
 	
 	/**
 	 * 강사 정보로 강사 검색하기

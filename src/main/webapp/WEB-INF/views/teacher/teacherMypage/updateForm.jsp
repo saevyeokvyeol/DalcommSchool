@@ -7,6 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <style type="text/css">
 
 	.message{display: none}
@@ -165,15 +170,18 @@ $(function(){
 <title>강사 회원정보 수정 페이지입니다.</title>
 </head>
 <body>
-<h1> 강사정보 수정~ </h1>
+<div class="main-content">
+
+<br><br><br>
+<h3> 강사정보 수정 페이지 </h3>
 <section>
   <sec:authorize access="isAuthenticated()">
  	<sec:authentication property="principal" var="teacher"/>
 	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/updateTeacher">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		<input type="hidden" name=teacherId value="${teacher.teacherId}">
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
-	    <table>
+	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><br><hr>
+	    <table class="table">
 	      <tr>
 	          <th>강사 ID</th>
 	          <td><b>${teacher.teacherId}</b></td>
@@ -218,5 +226,6 @@ $(function(){
 	</form>
 	</sec:authorize>
   </section>
+  </div>
 </body>
 </html>

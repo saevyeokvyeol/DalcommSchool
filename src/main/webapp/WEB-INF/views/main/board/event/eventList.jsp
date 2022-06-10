@@ -31,7 +31,7 @@
 	
 	<h5> 공지사항 > 이벤트 </h5><br><hr>
 	
-	<form action="${pageContext.request.contextPath}/main/board/event/eventSearch" method="post">
+	<form action="${pageContext.request.contextPath}/user/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <input type="text" id="keyword" name="keyword">
    	  <input type="submit" id="search" value="검색">
@@ -120,6 +120,6 @@
 		</div>
 	</nav>  
 </div>
-
+</div>
 </body>
 </html>
