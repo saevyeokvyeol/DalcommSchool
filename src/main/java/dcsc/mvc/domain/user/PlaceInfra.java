@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,30 +15,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "placeInfra")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlaceInfra {
+public class PlaceInfra{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "infra_id")
-	@SequenceGenerator(sequenceName = "infra_id",allocationSize = 1,name = "infra_id")
-	private Long infraId; 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "place_infra_id_seq")
+	@SequenceGenerator(sequenceName = "place_infra_id_seq",allocationSize = 1,name = "place_infra_id_seq")
+	private Long placeInfraId; 
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "place_id")
 	@JsonIgnore
 	private Place place; 
 	
-	private String parking;
-	private String wifi;
-	private String elevator;
-	private String genderToilet;
-	private String kidsfriendly;
-	private String etc;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="infra_id")
+	@JsonIgnore
+	private Infra infra;
+	
+
 }

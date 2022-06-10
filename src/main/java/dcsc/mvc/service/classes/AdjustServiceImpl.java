@@ -76,6 +76,14 @@ public class AdjustServiceImpl implements AdjustService {
 			dbAdjust.setAdjustCompleteDate(LocalDateTime.now());
 		}
 		
+		if(adjustState.getAdjustStateId()==4) {
+			int adjustable = dbAdjust.getTeacher().getAdjustable();
+			dbAdjust.getTeacher().setAdjustable(adjustable + dbAdjust.getAdjustPrice());
+			System.out.println("adjustable="+adjustable);
+			System.out.println("adjust.getAdjustPrice()=" + dbAdjust.getAdjustPrice());
+			
+		}
+		
 	}
 
 	/**

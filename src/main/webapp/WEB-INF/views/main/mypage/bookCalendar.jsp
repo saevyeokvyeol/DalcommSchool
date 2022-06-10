@@ -14,6 +14,111 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
 		<script type="text/javascript">
 			$(function() {
+				// calendar element 취득
+				var calendarEl = $('#calendar')[0];
+				// full-calendar 생성하기
+				function calendarLoad() {
+					calendar = new FullCalendar.Calendar(calendarEl, {
+						height: '680px', // calendar 높이 설정
+						slotMinTime: '09:00', // Day 캘린더에서 시작 시간
+						slotMaxTime: '22:00', // Day 캘린더에서 종료 시간
+						// 해더에 표시할 툴바
+						headerToolbar: {
+							left: 'prevYear,prev',
+							center: 'title',
+							right: 'next,nextYear'
+						},
+						initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+						navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+						editable: false, // 수정 가능?
+						selectable: true, // 달력 일자 드래그 설정가능
+						nowIndicator: true, // 현재 시간 마크
+						dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+						navLinks: false,
+						locale: 'ko', // 한국어 설정
+						bootstrapFontAwesome: {
+							close: 'fa-times',
+							prev: 'fa-chevron-left',
+							next: 'fa-chevron-right',
+							prevYear: 'fa-angle-double-left',
+							nextYear: 'fa-angle-double-right'
+						},
+						themeSystem: 'bootstrap',
+						eventColor: '#EB5353',
+						displayEventTime: 'true',
+						eventClick: function(obj) {
+							
+							$.ajax({
+								url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
+								type : "post",
+								data: {"scheduleId" : obj.event.id, "${_csrf.parameterName}":"${_csrf.token}",},
+								dateType: "text",
+								success : function(result) {
+									$("#scheduleUpdateForm .scheduleId").val(obj.event.id)
+									var date = new Date(`\${result.scheduleDate}`)
+									$("#scheduleUpdateForm .scheduleDate").val(date.toLocaleDateString())
+									$("#scheduleUpdateForm .startTime").val(`\${result.startTime}`)
+									$("#scheduleUpdateForm .endTime").val(`\${result.endTime}`)
+									$("#scheduleUpdateForm .totalSeat").val(`\${result.totalSeat}`)
+									$("#scheduleUpdateForm .leftSeat").val(`\${result.leftSeat}`)
+									$("#scheduleUpdateForm #updateSchedule").val(obj.event.id)
+									$("#scheduleUpdateForm #deleteSchedule").val(obj.event.id)
+									
+									difference = $("#scheduleUpdateForm .totalSeat").val() - $("#scheduleUpdateForm .leftSeat").val()
+									if(difference > 0){
+										$("#scheduleUpdateForm h6").css("display", "block");
+										$("#scheduleUpdateForm .updateTime").attr("disabled", "disabled");
+									} else {
+										$("#scheduleUpdateForm h6").css("display", "none");
+										$("#scheduleUpdateForm .updateTime").removeAttr("disabled");
+									}
+								},
+								error : function(error) {
+									alert("일정을 가져올 수 없습니다.");
+								}
+							}); // 아작스 종료
+							
+							$("#updateModal").modal("show");
+						},
+						select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+							var now = new Date();
+							var constraint = new Date(now.setDate(now.getDate() + 7));
+							
+							/* if(constraint >= arg.start){
+								alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
+								return;
+							} */
+							
+							$(".startTime").val("");
+							$(".endTime").val("");
+							$(".totalSeat").val("");
+							$(".leftSeat").val("");
+							
+							$(".scheduleDate").val(arg.start.toLocaleDateString());
+							
+						    $("#insertModal").modal("show");
+				        },
+						events: function(info, successCallback, failureCallback){
+							$.ajax({
+								url : "${pageContext.request.contextPath}/book/selectCalendarByStudentId",
+								type : "post",
+								data : {"${_csrf.parameterName}":"${_csrf.token}"},
+								dataType : "json",
+								success : function(result) {
+									successCallback(result);
+								},
+								error: function(error) {
+									alert();
+								}
+							})
+						}
+					});
+				}
+			
+				// 캘린더 렌더링
+				calendarLoad();
+				calendar.render();
+				
 				$(".updateSchedule").on("click", function() {
 					$("#bookIdBox").val($(this).val())
 					$.ajax({
@@ -118,7 +223,7 @@
 			</div>
 		</div>
 		
-		<h3>예약 목록</h3>
+		<h3>예약 캘린더</h3>
 		
 		<div id='calendar'></div>
 		

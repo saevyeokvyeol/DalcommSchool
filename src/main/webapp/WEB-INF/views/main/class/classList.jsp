@@ -113,7 +113,6 @@
 	</head>
 	<body>
 		<div class="main-content">
-			
 			<h2 class="title">
 				<c:choose>
 					<c:when test="${empty title}">전체 클래스</c:when>
