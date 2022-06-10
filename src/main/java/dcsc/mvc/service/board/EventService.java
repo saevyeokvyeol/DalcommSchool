@@ -51,7 +51,7 @@ public interface EventService {
 	 * @param String keyword
 	 * @return List<Event>
 	 * */
-	List<Event> selectByKeyword(String keyword);
+	Page<Event> selectByKeyword(String keyword, Pageable pageable);
 	
 
 	

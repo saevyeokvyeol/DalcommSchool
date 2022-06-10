@@ -247,10 +247,6 @@
 						<h4 class="classBoxName">강사 소개</h4>
 					<hr>
 					</div>
-					<div class="classInfoBox" id="place">
-						<h4 class="classBoxName">공방 소개</h4>
-					<hr>
-					</div>
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">클래스 후기</h4>
 					<hr>

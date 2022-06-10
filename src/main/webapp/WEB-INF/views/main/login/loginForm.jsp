@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,31 @@
 
 <div class="main-content">
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">모달</button>
+		<sec:authorize access="isAuthenticated()">
+       		<sec:authentication property="principal" var="student"/>
+	    		<h2>${student.studentId}님 로그인 중</h2>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/myPage">마이페이지</a></li>
+<%-- 			<c:if test="${user=teacher}"> --%>
+<%-- 	    		<h2>${teacher.teacherId}님 로그인 중</h2> --%>
+<%-- 				<li><a href="${pageContext.request.contextPath}/teacher/teacherMypage/teacherMypage">강사페이지</a></li> --%>
+<%-- 			</c:if> --%>
+		     <form action="${pageContext.request.contextPath}/logout" method="post">
+     			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+     			<input type="submit" value="로그아웃"/>
+     		</form>
+		</sec:authorize>
+
+<%-- 		 <sec:authorize access="hasRole('TEACHER')"> --%>
+<%--        		<sec:authentication property="principal" var="teacher"/> --%>
+<%--        		<h2>${teacher.teacherId} 선생님 로그인 중</h2> --%>
+<%--        		<li><a href="${pageContext.request.contextPath}/teacher/teacherMypage/teacherMypage">강사페이지</a></li> --%>
+<%-- 			<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li> --%>
+<%--    		 </sec:authorize> --%>
+
+<br><br><br>
+
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
 
 <!-- Modal -->
 
