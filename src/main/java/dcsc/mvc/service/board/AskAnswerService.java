@@ -49,7 +49,6 @@ public interface AskAnswerService {
 	 * */
 	Page<Ask> selectAll(Pageable pageable);
 	
-	
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회기능 페이징 처리
 	 * */

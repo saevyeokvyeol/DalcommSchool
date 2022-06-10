@@ -192,9 +192,9 @@ public class AskAnswerUserController {
 		
 		
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
-		return "redirect:/main/board/askanswer/askAnswer";
+		return "redirect:/main/board/askanswer/askAnswerStudent";
 	}
-	    
+					
 	/**
 	 * 수정폼(선생님)
 	 * */
@@ -223,9 +223,8 @@ public class AskAnswerUserController {
 		
 		
 	
-		return "redirect:/main/board/askanswer/askAnswerTeacher";
+		return "redirect:/teacher/board/askanswer/askAnswerTeacher";
 	}
-	
 	
 	
 	/**   

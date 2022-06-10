@@ -17,7 +17,7 @@
 \${askSelectByIdList.askNo} : ${askSelectByIdList.askNo}
 <form name=updateForm method=post action="${pageContext.request.contextPath}/main/board/askanswer/updateStudent?${_csrf.parameterName}=${_csrf.token}" >
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-    
+    																							
     <input type='hidden' name='askNo' value="${askSelectByIdList.askNo}">
 	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>
