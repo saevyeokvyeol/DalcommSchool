@@ -47,7 +47,7 @@ public class AjaxCouponController {
 	/**
 	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생
 	 * */
-	@RequestMapping("couponList")
+	@RequestMapping("/couponList")
 	public List<IssueCoupon> selectAllIssueCouponByStudentId(String studentId, Model model) {
 		studentId = "lee1234";
 		
@@ -55,6 +55,27 @@ public class AjaxCouponController {
 		
 		return list;
 	
+	}
+	
+	/**
+	 * 이벤트 쿠폰 수정 폼
+	 * */
+	@RequestMapping("/eventCouponUpdateForm")
+	public Coupon eventCouponUpdateForm(Long couponId) {
+			
+		Coupon coupon = couponService.selectByCouponId(couponId);
+			
+		return coupon;
+	}
+	
+	/**
+	 * 클래스 쿠폰 수정폼
+	 * */
+	@RequestMapping("/couponUpdateForm")
+	public Coupon couponUpdateForm(Long couponId) {
+		Coupon coupon = couponService.selectByCouponId(couponId);
+		
+		return coupon;
 	}
 	
 }

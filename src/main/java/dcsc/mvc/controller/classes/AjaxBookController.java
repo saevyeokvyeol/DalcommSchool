@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookDTO;
+import dcsc.mvc.domain.classes.FullCalendar;
 import dcsc.mvc.service.classes.BookService;
 import lombok.RequiredArgsConstructor;
 
@@ -68,6 +69,26 @@ public class AjaxBookController {
 		}
 		
 		return dtoList;
+	}
+	
+	/**
+	 * 학생ID로 예약 조회
+	 * */
+	@RequestMapping("/book/selectCalendarByStudentId")
+	public List<FullCalendar> selectCalendarByStudentId() {
+		List<Book> list = bookService.selectByStudentId("kim1234");
+		List<FullCalendar> calList = new ArrayList<FullCalendar>();
+		
+		for(Book b : list) {
+			Date bookDate = b.getClassSchedule().getScheduleDate();
+			bookDate.setHours(Integer.parseInt(b.getClassSchedule().getStartTime().substring(0, 2)));
+			bookDate.setMinutes(Integer.parseInt(b.getClassSchedule().getStartTime().substring(3, 5)));
+			
+			FullCalendar calendar = new FullCalendar(b.getBookId(), b.getClassSchedule().getScheduleId(), b.getClasses().getClassName(), bookDate.toString());
+			calList.add(calendar);
+		}
+		
+		return calList;
 	}
 	
 	/**

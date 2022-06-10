@@ -35,10 +35,11 @@ public class BookServiceImpl implements BookService {
 	/**
 	 * 클래스 예약 등록
 	 * @param Book(학생ID, 클래스ID, 일정ID, 쿠폰번호, 인원 수, 수강자 이름, 전화번호)
+	 * @return Book
 	 * */
 	@Override
-	public void insert(Book book) {
-		bookRepository.save(book);
+	public Book insert(Book book) {
+		Book dbBook = bookRepository.save(book);
 		
 		ClassSchedule schedule = classScheduleRepository.findById(book.getClassSchedule().getScheduleId()).orElse(null);
 		schedule.setLeftSeat(schedule.getLeftSeat() - book.getBookSeat());
@@ -47,6 +48,8 @@ public class BookServiceImpl implements BookService {
 			IssueCoupon issueCoupon = issueCouponRepository.findById(book.getIssueCoupon().getIssueNo()).orElse(null);
 			issueCoupon.setIssueUsable("T");
 		}
+		
+		return dbBook;
 	}
 
 	/**
@@ -118,7 +121,7 @@ public class BookServiceImpl implements BookService {
 	 * @return Book
 	 * */
 	@Override
-	public Book selectByStudentId(Long bookId) {
+	public Book selectByBookId(Long bookId) {
 		Book book = bookRepository.findById(bookId).orElse(null);
 		
 		if(book == null) throw new RuntimeException("예약 내역이 존재하지 않습니다.");

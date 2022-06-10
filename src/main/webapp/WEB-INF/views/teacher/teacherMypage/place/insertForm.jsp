@@ -82,6 +82,30 @@ function sample6_execDaumPostcode() {
 <script type="text/javascript">
 
 
+	$(function(){
+
+		function selectPlaceInfra(){
+			$.ajax({
+				url:"/teacher/teacherMypage/place/selectPlaceInfra",
+				type: "post",
+				data : {"${_csrf.parameterName}": "${_csrf.token}"},
+				dataType: "json",
+				success: function(result){
+// 					alert(result);
+					text=""
+					$.each(result, function(index,item){
+						text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>\${item.infraName}`;
+					})
+					text += ""
+					$("fieldset[id=field]").after(text);
+				},
+				error: function(err){
+					alert("인프라 정보를 가져올 수 없습니다.")
+				}
+			})
+		}
+		selectPlaceInfra();
+	})
 	
 	/*
 	공방 지역 정보 가져오기
@@ -108,8 +132,7 @@ function sample6_execDaumPostcode() {
 				}
 			})
 		}
-		
-		
+
 		selectPlaceRegion();
 	})
 	 
@@ -153,7 +176,7 @@ function sample6_execDaumPostcode() {
 <h1> 공방 등록폼~ </h1>
 
 <section>
-  <form id="insertForm" method="post" action="${pageContext.request.contextPath}/place/insert">
+  <form id="insertForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/place/insert">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <table>
       <tr>
@@ -189,13 +212,8 @@ function sample6_execDaumPostcode() {
       <tr>
         <th>공방 편의 시설</th>
           <td>
-            <fieldset>
-              <input type="checkbox" name="parking" value="T">주차공간 &nbsp;
-              <input type="checkbox" name="wifi" value="T">와이파이 &nbsp;
-              <input type="checkbox" name="elevator" value="T">엘레베이터 &nbsp;
-              <input type="checkbox" name="genderToilet" value="T">남녀 화장실 분리 &nbsp;
-              <input type="checkbox" name="kidsfriendly" value="T">어린이 동반 가능 <br>
-              <textarea id="etc" name="etc" class="textbox" placeholder="기타, 추가시설을 입력해주세요."></textarea>
+            <fieldset id="field">
+
             </fieldset>
           </td>
       </tr>
