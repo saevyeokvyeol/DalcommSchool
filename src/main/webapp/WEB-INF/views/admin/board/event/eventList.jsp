@@ -32,7 +32,7 @@
 	<h5> 관리자 > 이벤트 관리 </h5>
 	
 	
-	<form action="${pageContext.request.contextPath}/admin/board/event/eventSearch" method="post">
+	<form action="${pageContext.request.contextPath}/admin/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <input type="text" id="keyword" name="keyword">
    	  <input type="submit" id="search" value="검색">

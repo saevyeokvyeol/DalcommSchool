@@ -184,7 +184,7 @@ function sample6_execDaumPostcode() {
 	  <tr>
 	    <th>찾아오는 방법</th>
 	    <td>
-<%-- 	  <input type="text" name="placeRoute" value="${place.placeRoute}"> textarea는 value 속성이 적용되지 않는다. --%>
+<%-- 	  <input type="text" name="placeRoute" value="${place.placeRoute}"> textarea는 value 속성이 적용되지 않는다. 대신 바깥에 적는다. --%>
 	      <textarea id="placeRoute" name="placeRoute" class="textbox" placeholder="공방을 찾아오는 방법을 간단하게 설명해주세요.&#13;&#10; ex)강동역에 내려서 341번 버스를 타고 길동사거리 앞에서 내리시면 됩니다^^">${place.placeRoute}</textarea>
 	    </td>
 	  </tr>     

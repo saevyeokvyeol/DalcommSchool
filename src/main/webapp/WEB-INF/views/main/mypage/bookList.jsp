@@ -6,13 +6,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
-		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
 		<script type="text/javascript">
 			$(function() {
 				$(".updateSchedule").on("click", function() {
@@ -119,33 +118,9 @@
 			</div>
 		</div>
 		
-		<c:choose>
-			<c:when test="${list == null}">
-				<h2>예약한 클래스가 없습니다.</h2>
-			</c:when>
-			<c:otherwise>
-				<c:forEach items="${list}" var="book"><p>
-					${book.student.studentId}
-					| ${book.bookId}
-					| <a href="${pageContext.request.contextPath}/main/class/${book.bookId}">${book.classes.className}</a>
-					| ${book.classSchedule.scheduleDate.toString().substring(0, 10)} ${book.classSchedule.startTime} ~ ${book.classSchedule.endTime}
-					| ${book.bookSeat}
-					| ${book.bookState.bookStateName}
-					<c:choose>
-						<c:when test="${book.bookState.bookStateId == 1}">
-							<button class="updateSchedule" value="${book.bookId}">일정 변경</button>
-							<button class="bookCancel" value="${book.bookId}">수강 취소</button>
-							<button class="bookFinish" value="${book.bookId}">수강 완료</button>
-						</c:when>
-						<c:when test="${book.bookState.bookStateId == 2}">
-							<a>후기 쓰러 가기</a>
-						</c:when>
-						<c:when test="${book.bookState.bookStateId == 3}">
-							수강 취소
-						</c:when>
-					</c:choose>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
+		<h3>예약 목록</h3>
+		
+		<div id='calendar'></div>
+		
 	</body>
 </html>

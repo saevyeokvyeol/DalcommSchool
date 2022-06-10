@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Notice;
 import dcsc.mvc.service.board.NoticeService;
-import dcsc.mvc.util.FileLink;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 

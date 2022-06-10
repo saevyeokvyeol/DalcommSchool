@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,8 +87,15 @@ public class StudentServiceImpl implements StudentService {
 	 * */
 	@Override
 	public void deleteStudent(String userId, String userPwd) { 
-		//아이디 비밀번호 입력 받은 후 탈퇴	
-		studentRep.deleteById(userId);
+		//저장된 사용자 정보를 불러온다
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//DB에 저장된 비밀번호화 입력받은 비밀번호 비교
+		if(!getBCryptPasswordEncoder.matches(userPwd, student.getStudentPwd())) {
+			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+		} else {
+			studentRep.deleteById(userId);
+		}
 	}
 	
 	/**

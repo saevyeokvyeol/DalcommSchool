@@ -110,7 +110,7 @@ public class StudentController {
 		//System.out.println(studentId);
 		//Student student = studentService.selectStudent(studentId);
 		
-		return new ModelAndView("/main/mypage/modifyForm","student", student);
+		return new ModelAndView("main/mypage/modifyForm","student", student);
 	}
 	
 	
@@ -143,14 +143,19 @@ public class StudentController {
 	@RequestMapping("/main/mypage/deleteUser")
 	public String deleteUser(String userId, String userPwd) {
 		System.out.println("deleteUser 호출...");
+
 		studentService.deleteStudent(userId, userPwd);
 		
 		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
 		
-		return "redirect:/";
+		return "redirect:/main/mypage/deleteOk";
 	}
 	
-
-
+	
+	//회원 탈퇴 완료
+	@RequestMapping("/main/mypage/deleteOk")
+	public void deleteUser() {
+	
+	}
 
 }

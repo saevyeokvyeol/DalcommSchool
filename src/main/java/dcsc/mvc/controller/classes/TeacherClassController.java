@@ -84,7 +84,7 @@ public class TeacherClassController {
 	public String selectByClassId(@PathVariable Long classId, Model model) {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
-		return "/teacher/class/classDetail";
+		return "teacher/class/classDetail";
 	}
 	
 	/**
@@ -92,6 +92,6 @@ public class TeacherClassController {
 	 * */
 	@RequestMapping("/bookList")
 	public String bookList() {
-		return "/teacher/class/bookList";
+		return "teacher/class/bookList";
 	}
 }

@@ -198,7 +198,7 @@
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
-		       정말 탈퇴하시겠습니까?
+		       정말 탈퇴하시겠습니까?<br>
 		       * 탈퇴 신청 후, 1개월 동안 재가입이 불가능합니다
 		      </div>
 		      <div class="modal-footer">

@@ -5,13 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -44,8 +43,6 @@ $(function(){
 </script>
 </head>
 <body>
-\${answerReply}:${answerReply}<p>
-<%=request.getAttribute("answerReply") %>
 
 <c:choose>
 	 
@@ -94,7 +91,7 @@ $(function(){
 				 	<%-- <input type=hidden name="askNo" value="${askSelectByIdList.askNo}">
 					<input type=button value="수정하기" > --%>
 					
-					<a class="btn btn-primary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${ask.askNo}">수정하기</a>
+					<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${ask.askNo}">수정하기</a>
 					<a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/deleteStudent?askNo=${ask.askNo}">삭제하기</a>				
 				
 			</td>

@@ -7,11 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
-import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
-import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
 public interface TeacherService {
@@ -100,14 +100,14 @@ public interface TeacherService {
 	 * @param Place place //Place 안에 PlaceInfra 있음 (JPA) 트랜잭션으로 인프라까지 등록
 	 * @return 
 	 * */
-	void insertPlace (Place place);
+	void insertPlace (Place place,@RequestParam List<Long> infraId);
 	
 	/**
 	 * 공방 정보 수정
 	 * @param Place place //Place 안에 PlaceInfra 있음 (JPA) 트랜잭션으로 인프라까지 수정
 	 * @return
 	 * */
-	Place updatePlace (Place place);
+	void updatePlace (Place place, @RequestParam List<Long> infraId);
 	
 	/**
 	 * 공방 조회하기
@@ -118,12 +118,13 @@ public interface TeacherService {
 	 * 공방 인프라 가져오기
 	 * @return PlaceInfra
 	 * */
-	List<PlaceInfra> selectPlaceInfra(Long placeId);
+	List<Infra> selectPlaceInfra();
 	
 	/**
 	 * 공방 지역 가져오기
 	 * */
 	List<PlaceRegion> selectPlaceRegion();
+
 	
 	/**
 	 * 아이디, 이름 등등으로 강사 조회하기

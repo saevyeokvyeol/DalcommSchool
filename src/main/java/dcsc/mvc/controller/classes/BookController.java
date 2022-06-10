@@ -1,17 +1,22 @@
 package dcsc.mvc.controller.classes;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookState;
+import dcsc.mvc.domain.classes.ClassDTO;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.classes.FullCalendar;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.classes.BookService;
@@ -29,7 +34,7 @@ public class BookController {
 	 * */
 	@RequestMapping("/main/book/bookForm")
 	public ModelAndView bookForm(Book book, Long classId, Long scheduleId) {
-		ModelAndView modelAndView = new ModelAndView("/main/class/bookForm");
+		ModelAndView modelAndView = new ModelAndView("main/class/bookForm");
 		
 		Classes classes = classesService.selectByClassId(classId);
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
@@ -43,7 +48,7 @@ public class BookController {
 	 * 클래스 예약 등록
 	 * */
 	@RequestMapping("/main/book/bookComplete")
-	public String insertBook(Book book, Classes classes, ClassSchedule schedule, Student student, IssueCoupon issueCoupon) {
+	public ModelAndView insertBook(Book book, Classes classes, ClassSchedule schedule, Student student, IssueCoupon issueCoupon) {
 		book.setClasses(classes);
 		book.setClassSchedule(schedule);
 		book.setStudent(student);
@@ -54,9 +59,12 @@ public class BookController {
 		}
 		book.setBookState(new BookState(1L, null));
 		
-		bookService.insert(book);
+		book = bookService.insert(book);
 		
-		return "/main/class/bookComplete";
+		ModelAndView modelAndView = new ModelAndView("main/class/bookComplete");
+		modelAndView.addObject("book", book);
+		
+		return modelAndView;
 	}
 	
 	/**
@@ -65,19 +73,26 @@ public class BookController {
 	@RequestMapping("/main/mypage/book/{bookId}")
 	public String selectByBookId(@PathVariable Long bookId, Model model){
 		String studentId = "kim1234";
-		List<Book> list = bookService.selectByStudentId(studentId);
-		model.addAttribute("list", list);
-		return "/main/mypage/bookDetail";
+		Book book = bookService.selectByBookId(bookId);
+		model.addAttribute("book", book);
+		return "main/mypage/bookDetail";
+	}
+	
+	/**
+	 * 예약 캘린더
+	 * */
+	@RequestMapping("/main/mypage/bookCalendar")
+	public String selectByStudentId(){
+		
+		return "main/mypage/bookCalendar";
 	}
 	
 	/**
 	 * 학생ID로 예약 조회
 	 * */
-	@RequestMapping("/main/mypage/book")
+	@RequestMapping("/main/mypage/bookList")
 	public String selectByStudentId(Model model){
-		String studentId = "kim1234";
-		List<Book> list = bookService.selectByStudentId(studentId);
-		model.addAttribute("list", list);
-		return "/main/mypage/bookList";
+		
+		return "main/mypage/bookList";
 	}
 }

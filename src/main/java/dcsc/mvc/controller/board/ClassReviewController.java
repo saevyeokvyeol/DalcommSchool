@@ -53,11 +53,7 @@ public class ClassReviewController {
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage",nowPage);
-		
-		System.out.println(BLOCK_COUNT);
-		System.out.println(startPage);
-		System.out.println(nowPage);
-		
+
 		return "main/class/classDetail";
 	}
 	
@@ -135,7 +131,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/read/{reviewId}")
 	public ModelAndView readReview(@PathVariable Long reviewId) {
-		reviewId=5L;
+		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return new ModelAndView("main/board/review/reviewDetail", "review", review);
@@ -164,10 +160,9 @@ public class ClassReviewController {
 	 * 클래스 후기 등록 (별점)
 	 * */
 	@RequestMapping("/insert")
-	public String insertReview(ClassReview review, MultipartFile file, Long classId) throws Exception{
+	public void insertReview(ClassReview review, MultipartFile file, Long classId) throws Exception{
+		
 		review.setClasses(new Classes(classId));
-		
-		
 		
 		if(file.getSize()>0) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
@@ -179,7 +174,6 @@ public class ClassReviewController {
 		
 		reviewService.insert(review);
 		
-		return "redirect:/main/board/review/classDetail";
 	}
 	
 	/**
@@ -187,6 +181,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/updateForm")
 	public ModelAndView updateReviewForm(Long reviewId) {
+//		reviewId=11L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return new ModelAndView("main/board/review/updateForm", "review", review);
@@ -198,15 +193,14 @@ public class ClassReviewController {
 	@RequestMapping("/update")
 	public String updateReview(ClassReview review, MultipartFile file) throws Exception{
 		if(file.getSize()>0) {
-			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
 			review.setReviewImg(file.getOriginalFilename());
-		}
+		}		
+		ClassReview newReview = reviewService.update(review);
 		
-		reviewService.update(review);
-		
-		return "redirect:/main/board/review/reviewDetail";
+		return "redirect:/main/board/review/read/" + newReview.getReviewId();
 	}
 	
 	/**

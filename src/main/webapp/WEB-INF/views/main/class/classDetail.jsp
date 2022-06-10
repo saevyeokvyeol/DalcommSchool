@@ -23,8 +23,11 @@
 			#bookForm {display: none;}
 
 			#classOrder {
-				width: 430px;
-				position: fixed;
+				width: 430px; position: fixed;
+			}
+			
+			#bookSeat {
+				width: 100px; display: inline; text-align: center;
 			}
 			
 			/* 클래스 후기 CSS */
@@ -85,6 +88,11 @@
 								$("#scheduleDate").val(date.toLocaleDateString())
 								$("#scheduleTime").val(`\${result.startTime} ~ \${result.endTime}`)
 								$("#leftSeat").val(`\${result.leftSeat}명`)
+								
+								if(parseInt($("#leftSeat").val()) == 0){
+									$("#bookSeat").val(`0`);
+								}
+								
 								$("#bookSeat").attr("max", `\${result.leftSeat}`)
 								calTotalPrice()
 								$("#bookForm").css("display", "block");
@@ -123,7 +131,10 @@
 				// 수량 감소
 				$(document).on("click", "button[name=minus]", function() {
 					let updateNum = parseInt($(this).next().val()) - 1;
-					if(updateNum <= 0){
+					
+					if(1 > parseInt($("#leftSeat").val())){
+						updateNum = 0;
+					} else if (updateNum <= 0){
 						updateNum = 1;
 					}
 					$(this).next().val(updateNum);
@@ -245,10 +256,6 @@
 					
 					<div class="classInfoBox" id="teacher">
 						<h4 class="classBoxName">강사 소개</h4>
-					<hr>
-					</div>
-					<div class="classInfoBox" id="place">
-						<h4 class="classBoxName">공방 소개</h4>
 					<hr>
 					</div>
 					<div class="classInfoBox" id="review">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,23 +26,6 @@
 					$("#totalPrice").val(classPrice * bookSeat);
 		    	}
 				calTotalPrice();
-				
-				$.ajax({
-					url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
-					type: "post",
-					data: {"${_csrf.parameterName}": "${_csrf.token}"},
-					dataType: "json",
-					success: function(result){
-						text = ""
-						$.each(result, function(index, item){
-							text += `<input type="radio" class="btn-check" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary" for="\${item.regionName}">\${item.regionName}</label>`;
-						})
-						$("#placeRegion").append(text);
-					},
-					error: function(err){
-						alert("지역정보를 가져올 수 없습니다.")
-					}
-				})
 				
 				function requestPay() {
 					// IMP.request_pay(param, callback) 결제창 호출
@@ -74,76 +58,140 @@
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/main/book/bookComplete" id="bookForm" method="post">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			<input type="hidden" name="classId" value="${classes.classId}">
-			<input type="hidden" name="scheduleId" value="${schedule.scheduleId}">
-			<input type="hidden" name="studentId" value="kim1234">
-			<table class="table option-table table-borderless">
-				<tbody>
-					<tr>
-						<td colspan="2">
-							${classes.classId}
-							 | ${classes.className}
-							 | ${classes.classInfo}
-							 | ${classes.classOpenDate}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							수강자명
-						</td>
-						<td>
-							<input type="text" class="form-control" name="bookName" id="bookName" value="김유다">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							수강자 연락처
-						</td>
-						<td>
-							<input type="text" class="form-control" name="bookPhone" id="bookPhone" value="01033339999">
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td>
-							사용 쿠폰
-						</td>
-						<td>
-							<select name="issueNo">
-								<option value="0">쿠폰 목록</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							금액 
-						</td>
-						<td>
-							<input type="number" readonly class="form-control-plaintext" id="classPrice" value="${classes.classPrice}">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							인원 
-						</td>
-						<td>
-							<input type="number" readonly class="form-control-plaintext" id="bookSeat" name="bookSeat" value="${book.bookSeat}">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<h5>총 주문 금액</h5>
-						</td>
-						<td>
-							<h5><input type="number" readonly class="form-control-plaintext" name="totalPrice" id="totalPrice" value=""></h5>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-			<button type="button" class="form-control btn btn-dark shadow-none btn-lg" id="order">결제</button>
-		</form>
+		<div class="main-content">
+			<h2 class="title">클래스 예약</h2>
+			<form action="${pageContext.request.contextPath}/main/book/bookComplete" id="bookForm" method="post">
+				<div id="bookForm">
+					<div class="bookInfoBox">
+						<div>
+							<table class="table option-table table-borderless classBox">
+								<tbody>
+									<tr>
+										<th colspan="2">
+											<h4 class="book-title">클래스 정보</h4>
+										</th>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<c:if test="${classes.classImages != null}">
+												<c:forEach items="${classes.classImages}" var="classImage">
+													<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}" class="d-block w-100 h-100 rounded-3">
+												</c:forEach>
+											</c:if>
+											<div class="classBoxContent">
+												<h5 class="classBoxName">
+													<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+														<span>${classes.className}</span>
+													</a>
+												</h5>
+												<div class="classBoxInfo">
+													<h6>${classes.teacher.teacherNickname} 선생님</h6>
+												<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}</div>
+												</div>
+												<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											일정
+										</td>
+										<td>
+											${schedule.scheduleDate.toString().substring(0, 10)} ${schedule.startTime} ~ ${schedule.endTime}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											주소
+										</td>
+										<td>
+											${classes.teacher.place.placeAddr} ${classes.teacher.place.detailAddr}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="bookInfoBox">
+						<div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							<input type="hidden" name="classId" value="${classes.classId}">
+							<input type="hidden" name="scheduleId" value="${schedule.scheduleId}">
+							<input type="hidden" name="studentId" value="kim1234">
+							<table class="table option-table table-borderless">
+								<tbody>
+									<tr>
+										<th colspan="2">
+											<h4 class="book-title">결제 정보</h4>
+										</th>
+									</tr>
+									<tr>
+										<td>
+											수강자명
+										</td>
+										<td>
+											<input type="text" class="form-control" name="bookName" id="bookName" value="김유다" required="required">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											수강자 연락처
+										</td>
+										<td>
+											<input type="text" class="form-control" name="bookPhone" id="bookPhone" value="01033339999" required="required">
+										</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>
+											사용 쿠폰
+										</td>
+										<td>
+											<select name="issueNo" class="form-select">
+												<option value="0">쿠폰 목록</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											금액 
+										</td>
+										<td>
+											<input type="number" readonly class="form-control-plaintext" id="classPrice" value="${classes.classPrice}">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											인원 
+										</td>
+										<td>
+											<input type="number" readonly class="form-control-plaintext" id="bookSeat" name="bookSeat" value="${book.bookSeat}">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											쿠폰 할인 금액
+										</td>
+										<td>
+											<input type="number" readonly class="form-control-plaintext" id="couponPrice" value="${classes.classPrice}">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h5>총 주문 금액</h5>
+										</td>
+										<td>
+											<h5><input type="number" readonly class="form-control-plaintext" name="totalPrice" id="totalPrice" value=""></h5>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+							<button type="button" class="form-control btn btn-primary shadow-none btn-lg" id="order">결제</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 	</body>
 </html>

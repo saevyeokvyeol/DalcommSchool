@@ -6,9 +6,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>달콤스쿨 :: 달콤함을 배우다</title>
-		<style type="text/css">
-			
-		</style>
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
+		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	</head>
 	<body>
 		<header>

@@ -11,11 +11,25 @@
 		<put-attribute name="header" value="/WEB-INF/tiles/mainHeader.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/tiles/mainFooter.jsp"/>
 	</definition>
+	<definition name="mainSideBarLayout" template="/WEB-INF/tiles/mainSidebarLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/mainHeader.jsp"/>
+		<put-attribute name="sidebar" value="/WEB-INF/tiles/mypageSidebar.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/tiles/mainFooter.jsp"/>
+	</definition>
+	<definition name="teacherLayout" template="/WEB-INF/tiles/teacherLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/teacherHeader.jsp"/>
+	</definition>
 	
 	<definition name="*" extends="indexLayout">
 		<put-attribute name="content" value="/WEB-INF/views/index.jsp"/>
 	</definition>
+	<definition name="main/mypage/**" extends="mainSideBarLayout">
+		<put-attribute name="content" value="/WEB-INF/views/main/mypage/{1}.jsp"/>
+	</definition>
 	<definition name="main/**" extends="mainLayout">
 		<put-attribute name="content" value="/WEB-INF/views/main/{1}.jsp"/>
+	</definition>
+	<definition name="teacher/**" extends="teacherLayout">
+		<put-attribute name="content" value="/WEB-INF/views/teacher/{1}.jsp"/>
 	</definition>
 </tiles-definitions>
