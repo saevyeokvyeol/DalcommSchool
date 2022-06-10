@@ -32,39 +32,64 @@
 <script type="text/javascript">
 	
 	
-// 	function initialize() {
-// 	  var geocoder = new google.maps.Geocoder();
-// 	  var map;
-// 	  var address = document.getElementById('placeAddr').value;
-	  
-// 	  geocoder.geocode( { 'address': address}, function(results, status) {
-// 	      if (status == 'OK') {
-// 	        map.setCenter(results[0].geometry.location);
-// 	        var marker = new google.maps.Marker({
-// 	            map: map,
-// 	            position: results[0].geometry.location
-// 	        });
-// 	        var lat = results[0].geometry.location.lat();
-// 	        var lng = results[0].geometry.location.lng();
-	        
-// 	        var latlng = new google.maps.LatLng(lat, lng);
-	        
-// 	        var mapOptions = {
-// 	        	    zoom: 14,
-// 	        	    center: latlng
-// 	        }
-// 	        map = new google.maps.Map(document.getElementById('map'), mapOptions);
-// 	      } else {
-// 	        alert('Geocode was not successful for the following reason: ' + status);
-// 	      }
-// 	  });
-// 	}
+/* var geocoder;
+var map;
 
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+  var mapOptions = {
+    zoom: 16,
+    center: latlng
+  }
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+
+
+
+function codeAddress() {
+  var address = document.getElementById('placeAddr').value;
+  alert(address)
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == 'OK') {
+  	  
+  	  var lat = results[0].geometry.location.lat();
+	      var lng = results[0].geometry.location.lng(); 
+  	  
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+      
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+codeAddress();
+ */
 
 	  var geocoder;
 	  var map;
 	  
 	  function initialize() {
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	      if (status == 'OK') {
+	    	  
+	    	  var lat = results[0].geometry.location.lat();
+	 	      var lng = results[0].geometry.location.lng(); 
+	    	  
+	        map.setCenter(results[0].geometry.location);
+	        var marker = new google.maps.Marker({
+	            map: map,
+	            position: results[0].geometry.location
+	        });
+	        
+	      }
+	  })
+		 
 	    geocoder = new google.maps.Geocoder();
 	    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
 	    var mapOptions = {
@@ -78,7 +103,7 @@
 	
 	function codeAddress() {
 	    var address = document.getElementById('placeAddr').value;
-	    alert(address)
+// 	    alert(address)
 	    geocoder.geocode( { 'address': address}, function(results, status) {
 	      if (status == 'OK') {
 	    	  
@@ -96,17 +121,33 @@
 	      }
 	    });
 	}
-	
-// 	codeAddress();
-	$(function(){	
-		codeAddress();
-		
-})
 
 </script>
 </head>
 <body>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <h3>나의 공방 상세정보</h3>
 
 <table>
@@ -128,10 +169,10 @@
     <td>
       <div id="map"></div>
 	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly" defer></script>
-	  
-      
+	        
     </td>
   </tr>
+  <a href="${pageContext.request.contextPath }/teacher/teacherMypage/place/updateForm">수정하기</a>
 <!--   <tr> -->
 <!--     <th>공방 편의시설</th> -->
 <!--     <td> -->

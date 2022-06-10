@@ -1,20 +1,25 @@
 package dcsc.mvc.controller.user;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.config.security.PasswordEncoder;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.user.TeacherService;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -37,7 +42,16 @@ public class TeacherController {
 	 * 강사 회원가입
 	 * */
 	@RequestMapping("/main/login/insert")
-	public String insert(Teacher teacher) {
+	public String insert(Teacher teacher, MultipartFile file) throws Exception{
+		
+		
+		if(file.getSize()>0) {
+			File img = new File(ImageLink.TEACHER_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			teacher.setTeacherImg(file.getOriginalFilename());
+		}
+		
 		teacherService.insertTeacher(teacher);
 		
 		return "redirect:/";
@@ -47,26 +61,40 @@ public class TeacherController {
 	 * 강사 정보 수정폼
 	 * */
 	@RequestMapping("/teacher/teacherMypage/updateForm")
-	public ModelAndView updateTeacherForm(String teacherId) {
-		Teacher teacher = teacherService.selectById(teacherId);
+	public ModelAndView updateTeacherForm(HttpServletRequest request) {
+//		teacherId = "Tpark1234";
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		return new ModelAndView("teacher/teacherMypage/updateTeacher","teacher", teacher);
+		return new ModelAndView("teacher/teacherMypage/updateForm","teacher", teacher);
 	}
 	
 	/**
 	 * 강사 정보 수정하기
 	 * */
 	@RequestMapping("/teacher/teacherMypage/updateTeacher")
-	public String updateTeacher(Teacher teacher) {
+	public String updateTeacher(Teacher teacher,HttpServletRequest request) {
+		
+		System.out.println(teacher.getTeacherId());
+		System.out.println(teacher.getTeacherNickname());
+		System.out.println(teacher.getTeacherPhone());
+		
+		
 		teacherService.updateTeacher(teacher);
 		
-		return "redirect:/teacher/board";
+		Teacher tea = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		tea.setTeacherPhone(teacher.getTeacherPhone());
+		tea.setTeacherEmail(teacher.getTeacherEmail());
+		tea.setTeacherNickname(teacher.getTeacherNickname());
+		tea.setTeacherTel(teacher.getTeacherTel());
+		
+		return "redirect:/teacher/teacherMypage/teacherMypage";
 	}
 	
 	/**
 	 * 마이페이지
 	 * */
-//	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/teacher/teacherMypage/teacherMypage")
 	public void teacherMypage(HttpServletRequest request) {
 		
@@ -194,9 +222,9 @@ public class TeacherController {
 	 * 강사 상세 보기
 	 * */
 	@RequestMapping("/main/teacher/teacherId")
-	public ModelAndView readTeacherUser(String teacherId) {
-		teacherId="Tpark1234";
-		Teacher teacher = teacherService.selectById(teacherId);
+	public ModelAndView readTeacherUser(HttpServletRequest request) {
+//		teacherId="Tpark1234";
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		return new ModelAndView("/teacher/teacherMypage/teacherDetail", "teacher", teacher);
 	}

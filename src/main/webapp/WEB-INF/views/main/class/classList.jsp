@@ -7,15 +7,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
-		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
-		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 		<style type="text/css">
 			.accordion-body {border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 10px; padding: 30px;}
 			#searchBtn {text-align: right;}
@@ -85,7 +80,7 @@
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : $(this).val()},
 						context: this,
 						success: function(result){
-							$(this).html('<i class="fa-solid fa-heart"></i>');
+							$(this).html('<i class="fa-solid fa-heart fa-lg"></i>');
 							$(this).attr("name", "like");
 							$(this).attr("value", `\${result.likeId}`);
 						},
@@ -101,7 +96,7 @@
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "likeId" : $(this).val()},
 						context: this,
 						success: function(result){
-							$(this).html('<i class="fa-regular fa-heart"></i>');
+							$(this).html('<i class="fa-regular fa-heart fa-lg"></i>');
 							$(this).attr("name", "none-like")
 							$(this).attr("value", `\${result}`);
 						},

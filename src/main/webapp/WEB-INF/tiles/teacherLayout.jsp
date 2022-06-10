@@ -18,8 +18,5 @@
 		<section>
 			<tiles:insertAttribute name="content"/>
 		</section>
-		<footer>
-			<tiles:insertAttribute name="footer"/>
-		</footer>
 	</body>
 </html>

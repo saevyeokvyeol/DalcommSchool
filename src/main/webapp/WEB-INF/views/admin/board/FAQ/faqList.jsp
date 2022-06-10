@@ -26,10 +26,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?faqCategoryId==1">예약</a>
+          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqCategoryId/1">예약</a>
+          
         </li>
         <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?faqCategoryId==2">결제</a>
+           <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/board/FAQ/faqCategoryId/2">결제</a>
         </li>
       </ul>
       <form class="d-flex" action="${pageContext.request.contextPath}/admin/board/FAQ/faqSearch" method="post">
@@ -52,7 +53,7 @@
 	<c:forEach items="${requestScope.faqlist}" var="faq">
 		<c:choose>
 
-			<c:when test="${faq.faqCategory.faqCategoryId==1}">
+			<c:when test="${faq.faqCategory.faqCategoryId eq 1}">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="flush-headingOne">
 						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -70,7 +71,7 @@
 					</div>
 				</div>
 			</c:when>
-			<c:when test="${faq.faqCategory.faqCategoryId==2}">
+			<c:when test="${faq.faqCategory.faqCategoryId eq 2}">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="flush-headingOne">
 						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">

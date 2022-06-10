@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
@@ -47,6 +49,8 @@ public class CouponServiceImpl implements CouponService {
 		List<Coupon> list = couponRep.findByClassesClassId(classId);
 		return list;
 	}
+	
+	
 
 	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님
@@ -58,6 +62,16 @@ public class CouponServiceImpl implements CouponService {
 		List<Coupon> list = couponRep.findByTeacherTeacherId(teacherId);
 		return list;
 	}
+	
+	/**
+	 * 전체 발급 쿠폰 조회 기능 ; 선생님-페이징처리
+	 * */
+	@Override
+	public Page<Coupon> selectByTeacherId(String teacherId, Pageable pageable) {
+		
+		return couponRep.findByTeacherTeacherId(teacherId, pageable);
+	}
+	
 	
 	/**
 	 * 쿠폰 상세조회
@@ -149,6 +163,15 @@ public class CouponServiceImpl implements CouponService {
 		return list;
 	}
 	
+	/**
+	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자 - 페이징처리
+	 * */
+	@Override
+	public Page<Coupon> selectAll(Pageable pageable) {
+		
+		return couponRep.findAll(pageable);
+	}
+	
 
 	/**
 	 * 학생이 보유한 쿠폰 조회 기능 ; 관리자(test)
@@ -206,5 +229,8 @@ public class CouponServiceImpl implements CouponService {
 		issueCouponRep.save(issueCoupon);
 		
 	}
+
+	
+	
 	
 }

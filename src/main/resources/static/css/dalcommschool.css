@@ -90,7 +90,7 @@
 }
 
 .main-content {
-	margin: 100px auto; max-width: 1200px; 
+	margin: 100px auto; max-width: 1200px; position: relative;
 }
 
 .index-title {
@@ -135,10 +135,10 @@
 }
 
 .classBox .classBoxName span {
-	font-weight: 700;
+	font-weight: 700; color: #333;
 }
 
-.classBox .likeBtn {
+.classBox .likeBtn  {
 	width: 37px; height: 37px; line-height: 28px; border-radius: 18px; border-width: 2px;
 }
 
@@ -164,4 +164,71 @@
 
 .title {
 	text-align: center; margin: 50px 0 30px; padding: 50px 0 40px; border-bottom: 2px solid #ddd;
+}
+
+#classDetail {
+	display: flex; justify-content: space-between; margin: 42px 0 0;
+}
+
+#classInfomation{
+	width: 750px;
+}
+
+#classOrderCalendar {
+	width: 430px;
+}
+			
+.orderTable tr, .orderTable td {
+	height: 10px;
+}
+
+.fc-daygrid-day-frame {
+	border: 1px solid #f3f4f6;
+}
+
+#classBox {
+	padding: 20px 0;
+}
+
+#classBox .className {
+	display: flex; justify-content: space-between; line-height: 40px;
+}
+
+#classBox .className span {
+	font-weight: 700; color: #333;
+}
+
+#classBox .likeBtn  {
+	width: 37px; height: 37px; line-height: 28px; border-radius: 18px; border-width: 2px;
+}
+
+#classBoxInfo {
+	display: flex; justify-content: space-between; width: 60%;
+}
+
+#classBoxInfo h6 {
+	line-height: 25px;
+}
+
+#classBoxInfo i {
+	padding: 0 10px;
+}
+
+#classNav {
+	background-color: white; padding: 80px 0 0;
+}
+
+#classNav .btn-outline-primary {
+	border: 0;
+}
+
+#classNav a {
+	 font-weight: 700px;
+}
+
+.classInfoBox {
+	padding: 80px 0 0;
+}
+
+.classBoxName {
 }

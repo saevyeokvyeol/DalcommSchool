@@ -99,7 +99,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public void updateTeacher(Teacher teacher) {
-		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(null);
+		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(teacher);
 		
 		if(newTeacher==null) {
 			throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");
@@ -109,6 +109,7 @@ public class TeacherServiceImpl implements TeacherService {
 		newTeacher.setTeacherEmail(teacher.getTeacherEmail());
 		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
 		newTeacher.setTeacherTel(teacher.getTeacherTel());
+
 	}
 	
 	@Override
@@ -238,7 +239,7 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public Place updatePlace(Place place) {
-		Place place2 = placeRep.findById(place.getPlaceId()).orElse(null);
+		Place place2 = placeRep.findById(place.getPlaceId()).orElse(place);
 		
 		place2.setDetailAddr(place.getDetailAddr());
 		place2.setPlaceName(place.getPlaceName());

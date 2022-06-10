@@ -9,12 +9,8 @@
 		<title>Insert index-title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
-		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 		<style type="text/css">
 			#placeRegion {display: flex; justify-content: space-between; padding: 40px 0 0;}
 			#placeRegion a {font-size: 30px; font-weight: 700; border-radius: 50px; width: 100px; height: 100px; line-height: 80px; border-width: 2.5px;}

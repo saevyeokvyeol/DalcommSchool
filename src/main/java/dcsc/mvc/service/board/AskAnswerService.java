@@ -2,6 +2,9 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
 
@@ -40,6 +43,17 @@ public interface AskAnswerService {
 	 * @return List<Ask>
 	 * */
 	List<Ask> selectAll();
+	
+	/**
+	 * 1대1문의 전체리스트 조회기능 페이징처리(관리자)
+	 * */
+	Page<Ask> selectAll(Pageable pageable);
+	
+	/**
+	 * 내가 쓴 1대1 문의 리스트 조회기능 페이징 처리
+	 * */
+	
+	//Page<Ask> selectById(String id, Pageable pageable);
 	
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회기능(강사&회원)
