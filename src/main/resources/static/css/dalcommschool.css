@@ -93,6 +93,53 @@
 	margin: 100px auto; max-width: 1200px; position: relative;
 }
 
+#sidebar-layout {
+	margin: 150px auto 100px; max-width: 1200px; position: relative;
+	display: flex; justify-content: space-between;
+}
+
+#sidebar {
+	width: 180px;
+}
+
+#sidebar #inner-sidebar {
+	position: fixed;
+}
+
+#sidebar h4 {
+	font-weight: 600; margin-bottom: 20px; padding-bottom: 15px;
+	border-bottom: 1px solid #888; display: inline-block;
+}
+
+#sidebar h5 {
+	font-weight: 700; font-size: 18px;
+}
+
+#sidebar ul {
+	margin: 10px 0 30px;
+}
+
+#sidebar li {
+	margin: 5px 0; list-style: none;
+}
+
+#sidebar a {
+	text-decoration: none;
+}
+
+#sidebar-content {
+	width: 970px;
+}
+
+#sidebar-content h3 {
+	font-weight: 600;
+	margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #ddd;
+}
+
+#sidebar-content #calendar {
+	padding: 30px 0;
+}
+
 .index-title {
 	font-weight: 600; color: #333;
 	padding: 50px 0 0;
@@ -118,11 +165,11 @@
 	color: black;
 }
 
-.classBox img {
+.classBox .classBoxImg img {
 	width: 380px; height: 253px; transform: scale(1.0); transition: transform .5s;
 }
 
-.classBox img:hover {
+.classBox .classBoxImg img:hover {
     transform: scale(1.2); transition: transform .5s;
 }
 
@@ -179,7 +226,7 @@
 }
 			
 .orderTable tr, .orderTable td {
-	height: 10px;
+	height: 10px; vertical-align: middle;
 }
 
 .fc-daygrid-day-frame {
@@ -230,5 +277,39 @@
 	padding: 80px 0 0;
 }
 
-.classBoxName {
+#bookForm {
+	width: 100%; display: flex; justify-content: space-between; 
+}
+
+#bookForm table {
+	margin: 0;
+}
+
+#bookForm .book-title {
+	font-weight: 600; color: #333;
+	padding: 0 0 10px;
+}
+
+#bookForm > .bookInfoBox > div {
+	width: 570px; padding: 20px;
+}
+
+#bookForm th, #bookForm td {
+	vertical-align: middle;
+}
+
+#bookForm #order {
+	display: block; width: 100%;
+}
+
+#bookComplete {
+	text-align: center; margin: 50px 100px; padding: 50px;
+}
+
+#bookComplete h4 {
+	padding: 50px 0;
+}
+
+#bookComplete .bookComplete-btn {
+	margin: 10px;
 }

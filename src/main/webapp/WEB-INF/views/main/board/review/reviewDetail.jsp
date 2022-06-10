@@ -114,7 +114,6 @@ $(function(){
     	<th>내용</th>
     	<td>${review.reviewContent}</td>
   	</tr>
-
   	<form id="requestForm">
   	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
   		<input type="button" id="updateBtn" value="수정하기">
