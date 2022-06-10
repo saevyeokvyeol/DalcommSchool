@@ -10,39 +10,55 @@
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <title>QnA: 전체보기 - 관리자</title>
 
+<style type="text/css">
+	
+	a{
+		text-decoration: none;
+	}
+	table,th,td{
+		text-align: center;
+	}
+	table{
+		width: 1500px;
+	}
+
+</style>
+
 <script type="text/javascript">
-	$(function(){
-		
-		
-		$("button").click(function(){
-			var target =$(this).attr("name")
-			
-			$.ajax({
-	        url: "${pageContext.request.contextPath}/admin/board/qna/qnaBlind" , //서버요청주소
-	        type: "post" , //요청방식 (get,post...)
-	        data: {"${_csrf.parameterName}": "${_csrf.token}", qnaId: target, blindState: 'T'} , //서버에게 보낼 데이터정보(parameter정보)
-	        
-	        success: function(result){
-	            alert("블라인드 처리되었습니다.")
-	            location.reload()
-	        },
+$(function(){
 	
-	        error: function(err){//실패했을 때 콜백함수
-	            alert(err+"오류가 발생했습니다.")
-	        } 
-	
-	        })
-		})
+	$("button").click(function(){
+		var target =$(this).attr("name")
+		
+		$.ajax({
+        url: "${pageContext.request.contextPath}/admin/board/qna/qnaBlind" , //서버요청주소
+        type: "post" , //요청방식 (get,post...)
+        data: {"${_csrf.parameterName}": "${_csrf.token}", qnaId: target, blindState: 'T'} , //서버에게 보낼 데이터정보(parameter정보)
+        
+        success: function(result){
+            alert("블라인드 처리되었습니다.")
+            location.reload()
+        },
+
+        error: function(err){//실패했을 때 콜백함수
+            alert(err+"오류가 발생했습니다.")
+        } 
+
+        })
 	})
+})
 </script>
 </head>
 <body>
 
+<div class="main-content">
+	<section>
     <div>
         <table>
             <thead>
@@ -77,7 +93,7 @@
                                 <td><span>${qna.classes.classId}</span></td>
                                 <td><span>${qna.student.studentId}</span></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/main/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
+                                    <a href="${pageContext.request.contextPath}/admin/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
                                 </td>
                                 <td>
 		                        	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
@@ -106,8 +122,9 @@
             </tbody>
         </table>
     </div>
-    <hr>
-     
+    
+	</section>
+</div>     
 
 
 </body>
