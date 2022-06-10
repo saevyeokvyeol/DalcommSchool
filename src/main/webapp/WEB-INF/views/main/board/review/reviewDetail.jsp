@@ -79,7 +79,7 @@ $(function(){
   	</tr>
   	<input type="button" id="updateBtn" value="수정하기">
   	<input type="button" id="deleteBtn" value="삭제하기">
-  	<input type="button" id="cancelBtn" value="취소"
+  	<input type="button" id="cancelBtn" value="취소">
 </table>
 
 

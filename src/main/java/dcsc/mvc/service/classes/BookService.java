@@ -8,8 +8,9 @@ public interface BookService {
 	/**
 	 * 클래스 예약 등록
 	 * @param Book(학생ID, 클래스ID, 일정ID, 쿠폰번호, 인원 수, 수강자 이름, 전화번호)
+	 * @return
 	 * */
-	void insert(Book book);
+	Book insert(Book book);
 
 	/**
 	 * 클래스 예약 일정 변경
@@ -34,7 +35,7 @@ public interface BookService {
 	 * @param Long bookId
 	 * @return Book
 	 * */
-	Book selectByStudentId(Long bookId);
+	Book selectByBookId(Long bookId);
 
 	/**
 	 * 학생ID로 예약 조회
