@@ -2,6 +2,9 @@ package dcsc.mvc.service.coupon;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 
@@ -27,6 +30,11 @@ public interface CouponService {
 	 * @return List<Coupon>
 	 * */
 	List<Coupon> selectByTeacherId(String teacherId);
+	
+	/**
+	 * 전체 발급 쿠폰 조회 기능 ; 선생님 - 페이징처리
+	 * */
+	Page<Coupon> selectByTeacherId(String teacherId, Pageable pageable);
 	
 	/**
 	 * 쿠폰 상세조회
@@ -72,6 +80,13 @@ public interface CouponService {
 	 * @return List<Coupon>
 	 * */
 	List<Coupon> selectAll();
+	
+	/**
+	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자 - 페이징처리
+	 * @param 
+	 * @return List<Coupon>
+	 * */
+	Page<Coupon> selectAll(Pageable pageable);
 	
 	
 	/**

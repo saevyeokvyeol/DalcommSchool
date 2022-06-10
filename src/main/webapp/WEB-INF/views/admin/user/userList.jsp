@@ -6,9 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	
@@ -19,9 +21,6 @@
 	}
 	table,th,td{
 		text-align: center;
-	}
-	table{
-		width: 1500px;
 	}
 
 	</style>
@@ -36,11 +35,12 @@
 </head>
 <body>
 <h2>관리자용 회원 조회 페이지 입니다</h2>
-	
+
+<div class="main-content">
 <div class="col-sm-12">	
 	<form action="${pageContext.request.contextPath}/admin/user/userSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-	       <select name = "keyfield">
+	       <select name = "keyfield" class="selectpicker">
 	          <option value = "studentID" selected>아이디</option>
 	          <option value = "studentName">이름</option>
 	          <option value = "studentPhone">연락처</option>
@@ -49,10 +49,9 @@
 	       <input type="text" id="keyword" name="keyword">
      	  <input type="submit" id="search" value="검색">
     </form>
-    
     <hr><!-- 구분선 -->
     
-  <table>
+  <table class="table table-striped table-hover">
         <thead>
             <tr>
              <th>아이디</th>
@@ -85,8 +84,8 @@
 		                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
 		                            </span></td>
 		                            <td><span>${student.studentEmail}</span></td>
-		                            <td><span><fmt:parseDate value="${student.studentInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
-		                            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
+		                            <td><span><fmt:parseDate value="${student.studentInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                            <span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
 		                            <td><span>${student.studentQuit}</span></td>
 		                        </tr>
                     	</c:forEach>
@@ -171,6 +170,7 @@
 	      </div>
 	    </div>
 	  </div>
+</div>
 </div>
 </div>
 </body>

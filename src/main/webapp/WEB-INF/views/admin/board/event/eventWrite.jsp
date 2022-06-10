@@ -6,8 +6,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -67,43 +68,49 @@
 
 </head>
 <body>
-	<h1>이벤트 작성 페이지 입니다</h1>
+
+<div class="main-content">
+
+	<h4> 관리자 > 이벤트 작성 </h4><br>
 	
 <form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
 enctype="multipart/form-data">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-	<table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
+	<table class="table">
 
     <tr>
-        <td width="150" height="20" >
-            <p align="right"><b><span style="font-size:9pt;">제목</span></b></p>
+        <td>
+            제목
         </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type=text name="eventTitle" size="30"></span></b></td>
+        <td>
+			<input type=text name="eventTitle" >
+		</td>
     </tr>
     <tr>
-        <td width="150" height="20">
-            <p align="right"><b><span style="font-size:9pt;">내용</span></b></p>
+        <td>
+           내용
         </td>
-        <td width="450" height="20" ><b><span style="font-size:9pt;">
-		<textarea name="eventContent" id="summernote" rows="20" cols="20"></textarea></span></b>
+        <td>
+			<textarea name="eventContent" id="summernote"></textarea>
 		</td>
     </tr>
    <tr>
-        <td width="150" height="20" >
-            <p align="right"><b><span style="font-size:9pt;">파일 첨부</span></b></p>
+        <td>
+          파일 첨부
         </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type="file" name="file" size="30"></span></b></td>
+        <td>
+			<input type="file" name="file" size="30">
+		</td>
     </tr>
    
     <tr>
-        <td width="450" height="20" colspan="2" align="center"><b><span style="font-size:9pt;"><input type=submit value=글쓰기> 
-        <input type=reset value=다시쓰기></span></b></td>
+        <td>
+	        <input type=submit value=글쓰기> 
+	        <input type=reset value=다시쓰기>
+        </td>
     </tr>
 </table>
 </form>
-	
-	
+</div>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 
 	@Override
 	public void delete(Long reviewId) {
-		// TODO Auto-generated method stub
+		reviewRep.deleteById(reviewId);
 
 	}
 	/**
