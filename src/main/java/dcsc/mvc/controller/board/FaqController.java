@@ -120,11 +120,26 @@ public class FaqController {
 	/**
 	 * 카테고리 별로 정렬
 	 * */
-	@RequestMapping("/faqCategoryId")
-	public List<Faq> selectByfaqCategoryId(){
-		List<Faq> list = faqService.selectByfaqCategoryId(null);
+	@RequestMapping("/faqCategoryId/{FaqCategoryId}")
+	public String selectByfaqCategoryId(@PathVariable Long FaqCategoryId, Model model){
+		System.out.println("FaqCategoryId Controller....... = "+FaqCategoryId); 
 		
-		return list;
+		List<Faq> faqlist = faqService.selectByfaqCategoryId(FaqCategoryId);
+		model.addAttribute("faqlist",faqlist);
+		
+		return "admin/board/FAQ/faqList" ;
 	}
+	/**
+	 * 검색 하기
+	 * */
+	@RequestMapping("/faqSearch")
+	public ModelAndView selectByKeyword(String keyword) {
+		System.out.println("keyfield : " +" / " + "keyword : "+ keyword);
+		List<Faq> list = faqService.selectBykeyword(keyword);
+		
+		return new ModelAndView("/admin/board/FAQ/faqList","faqlist",list);
+		
+	}
+	
 	
 }

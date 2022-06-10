@@ -7,8 +7,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -25,7 +26,11 @@
 
 </head>
 <body>
-	<h1>이벤트 리스트 페이지 입니다</h1>
+	
+<div class="main-content">
+	
+	<h5> 관리자 > 이벤트 관리 </h5>
+	
 	
 	<form action="${pageContext.request.contextPath}/admin/board/event/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -36,7 +41,7 @@
     <hr><!-- 구분선 -->
 
 	
-	 <table>
+	 <table class="table">
         <thead>
             <tr>
              <th>글번호</th>
@@ -117,9 +122,9 @@
 	</nav>  
 </div>
 
-<div align=right>
-<span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/admin/board/event/eventWrite">글쓰기</a>&gt;</span></div>
-
+	<div align=right>
+		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a></div>
+	</div>
 
 </body>
 </html>

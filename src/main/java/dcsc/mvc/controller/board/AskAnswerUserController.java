@@ -1,62 +1,108 @@
 package dcsc.mvc.controller.board;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.AskAnswerService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/main/board/askanswer")
+@RequestMapping("/")
 public class AskAnswerUserController {
 
-	private final AskAnswerService askAnswerService; 
+	private final AskAnswerService askAnswerService;  
 	
-	
-	 
-	@RequestMapping("/askAnswer") 
-	public String selectById(String studentId, Model model) {
+	private final static int PAGE_COUNT=8;
+	private final static int BLOCK_COUNT=4;
+	       
+	 /**
+	  * 학생 ID로 자신 1대1문의 조회 
+	  * */
+	@RequestMapping("main/board/askanswer/askAnswerStudent") 
+	public String selectByStudentId(String studentId, Model model,@RequestParam(defaultValue = "1") int nowPage) {
 		
 		studentId = "jang1234"; 
 		   
-		List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
+		
+		  List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
+		  
+		  model.addAttribute("askSelectByIdList", askSelectByIdList);
+		 
+		
+		//페이징 처리
+	/*	Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "askNo");
+		Page<Ask> askList = askAnswerService.selectById(page);
+		
+		model.addAttribute("askSelectByIdList", askSelectByIdList);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		*/
+		return "/main/board/askanswer/askAnswerSelectById"; 
+	} 
+	
+	 /**
+	  * 선생님 ID로 자신 1대1문의 조회 
+	  * */
+	@RequestMapping("teacher/board/askanswer/askAnswerTeacher") 
+	public String selectByTeacherId(String teacherId, Model model) {
+		
+		teacherId = "Tjang1234"; 
+		   
+		List<Ask> askSelectByIdList=askAnswerService.selectById(teacherId);
 		 
 		model.addAttribute("askSelectByIdList", askSelectByIdList);
 		
-		return "/main/board/askanswer/askAnswerSelectById"; 
-	} 
+		return "/teacher/board/askanswer/askAnswerSelectById"; 
+	}
 	   
 	/** 
-	 * 등록폼  
+	 * 등록폼(학생)  
 	 * */
-	@RequestMapping("/askAnswerWrite")
-	public void askAnswerWrite() {}
+	@RequestMapping("main/board/askanswer/askAnswerWriteStudent")
+	public void askAnswerWriteStudent() {}
 	 
 	 
-	@RequestMapping("/insert")
+	/**
+	 * 등록하기 (학생)
+	 * */
+	@RequestMapping("main/board/askanswer/insertStudent")
 	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
+		
+		String askComplete="F";
+		
 		ask.setAskCategory(askCategory);
 		ask.setStudent(student);
+		ask.setAskComplete(askComplete);
 		
 		
 
 		//파일이 첨부되었다면 fname, fsize를 설정한다.
 		//MultipartFile mfile=elect.getFile();
-		 
+		     
 //		MultipartFile mfile = ask.getAskImg();
 //		
 //		if(mfile.getSize() > 0 ) { //첨부된 파일에 용량이 있다면..
@@ -69,9 +115,10 @@ public class AskAnswerUserController {
 //		ask.setFsize(mfile.getSize());
 //			
 //		} 
-		
+		  
 		if(file.getSize() > 0) {
-			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
+
 			file.transferTo(img);
 			
 			ask.setAskImg(file.getOriginalFilename());
@@ -80,42 +127,126 @@ public class AskAnswerUserController {
 		  
 		askAnswerService.insertAsk(ask);
 		
-		return "/main/board/askanswer/askAnswerTest";
+		return "/teacher/board/askanswer/askAnswerTest";
 	} 
 	  
+	
+	/** 
+	 * 등록폼(선생님)  
+	 * */			
+	@RequestMapping("teacher/board/askanswer/askAnswerWriteTeacher")
+	public void askAnswerWriteTeacher() {}
+	 
+	/**
+	 * 등록하기(선생님
+	 * */		
+	@RequestMapping("teacher/board/askanswer/insertTeacher")
+	public String insertTeacher(Ask ask, AskCategory askCategory,Teacher teacher, MultipartFile file,HttpSession session)throws Exception {
+		
+		String askComplete="F";
+		
+		ask.setAskCategory(askCategory);
+		ask.setTeacher(teacher);
+		ask.setAskComplete(askComplete); 
+		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
+
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		  
+		askAnswerService.insertAsk(ask);
+		
+		return "/teacher/board/askanswer/askAnswerTest";
+	} 
+	
 	  
 	/**
-	 * 수정폼
+	 * 수정폼(학생)
 	 * */
-	@RequestMapping("/updateForm") 
-	public ModelAndView updateForm(Long askNo) {
+	@RequestMapping("main/board/askanswer/updateFormStudent") 
+	public ModelAndView updateFormStudent(Long askNo) {
 		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
 		return new ModelAndView("/main/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
-
+	
 	/** 
-	 * 1대1 문의 수정하기 
-	 * */
-	@RequestMapping("/update")
-	public String update(Ask ask) {
+	 * 1대1 문의 수정하기(학생)     
+	 * */ 
+	@RequestMapping("main/board/askanswer/updateStudent")
+	public String updateStudent(Ask ask, MultipartFile file)throws Exception {
 		
 		Ask dbAsk=askAnswerService.updateAsk(ask);
 		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		
 		
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
-		return "redirect:/main/board/askanswer/askAnswer";
+		return "redirect:/main/board/askanswer/askAnswerStudent";
 	}
-	  
-	/** 
-	 * 1대1 문의 삭제하기 
+					
+	/**
+	 * 수정폼(선생님)
 	 * */
-	@RequestMapping("/delete")
-	public String delete(Long askNo) {
+	@RequestMapping("teacher/board/askanswer/updateFormTeacher") 
+	public ModelAndView updateFormTeacher(Long askNo) {
+		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
+		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
+		return new ModelAndView("/teacher/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
+	}
+	 
+	/** 
+	 * 1대1 문의 수정하기(선생님)     
+	 * */ 
+	@RequestMapping("teacher/board/askanswer/updateTeacher")
+	public String updateTeacher(Ask ask, MultipartFile file)throws Exception {
+		
+		Ask dbAsk=askAnswerService.updateAsk(ask);
+		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			ask.setAskImg(file.getOriginalFilename());
+			
+		} 
+		
+		
+	
+		return "redirect:/teacher/board/askanswer/askAnswerTeacher";
+	}
+	
+	
+	/**   
+	 * 1대1 문의 삭제하기 (학생)
+	 * */
+	@RequestMapping("main/board/askanswer/deleteStudent")
+	public String deleteStudent(Long askNo) {
+		
+		askAnswerService.deleteAsk(askNo); 
+		
+		return "redirect:/main/board/askanswer/askAnswerStudent";
+	} 
+	
+	/** 
+	 * 1대1 문의 삭제하기 (선생님)
+	 * */
+	@RequestMapping("teacher/board/askanswer/deleteTeacher")
+	public String deleteTeacher(Long askNo) {
 		
 		askAnswerService.deleteAsk(askNo);
 		
-		return "redirect:/main/board/askanswer/askAnswer";
+		return "redirect:/main/board/askanswer/askAnswerTeacher";
 	}
 
 	

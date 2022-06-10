@@ -5,17 +5,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+	#askCategory{width: 150px;}
+</style>
 </head>
 <body>
 
-	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insert?${_csrf.parameterName}=${_csrf.token}" 
+	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insertStudent?${_csrf.parameterName}=${_csrf.token}" 
 	enctype="multipart/form-data">
 	
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 	
-	 <select name="askCategoryId">
+	 <select name="askCategoryId" id="askCategory" class="form-select" aria-label="Default select example">
 		  <option value="">카테고리 종류</option>
 		  <option value="1">클래스</option>
 		  <option value="2">결제</option>

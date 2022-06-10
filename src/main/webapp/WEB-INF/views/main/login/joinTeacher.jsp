@@ -327,21 +327,43 @@
 // 				alert("이메일을 형식에 맞게 입력해주세요.");
 				event.preventDefault();
 			}	 
+			
+			alert("강사 회원가입에 성공하셨습니다. 로그인해주세요")
 		})
 	})	
 	
+</script>
+<script type="text/javascript">
+function setThumbnail(event){
+	var reader=new FileReader();
 	
-		
+	reader.onload=function(event){
+		var img = document.createElement("img");
+		img.setAttribute("src", event.target.result);
+		img.setAttribute("class", "col-lg-6");
+		document.querySelector("div#image_container").appendChild(img);
+	}
+	reader.readAsDataURL(event.target.files[0]);
+}
 </script>
 
 </head>
 <body>
 <h1> 강사 회원가입 </h1>
   <section>
-	<form id="insertForm" name="insertForm" method="post" action="${pageContext.request.contextPath}/main/login/insert">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+	<form id="insertForm" name="insertForm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/main/login/insert?${_csrf.parameterName}=${_csrf.token}">
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
+	      <tr>
+	        <th>프로필 이미지</th>
+			<td>
+			  <div id="image_container"></div>
+			  <div class="form-group">
+				<input class="form-control form-control-user" type="file" 
+				name="file" id="product_image" onchange="setThumbnail(event);">
+			  </div>
+			</td>
+		  </tr>
 	      <tr>
 	          <th>* 강사 ID</th>
 	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>

@@ -2,6 +2,9 @@ package dcsc.mvc.service.classes;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.classes.Adjust;
 import dcsc.mvc.domain.classes.AdjustState;
 
@@ -43,6 +46,13 @@ public interface AdjustService {
 	 * */
 	List<Adjust> selectByTeacherId(String teacherId);
 	
+	/**
+	 * 정산 내역 조회 기능 - 페이징처리
+	 * @param String teacherId(검색기준)
+	 * @return List<Adjust>
+	 * */
+	Page<Adjust> selectByTeacherId(String teacherId, Pageable pageable);
+	
 	
 	/**
 	 * 정산 내역 전체 조회 - 관리자
@@ -50,6 +60,11 @@ public interface AdjustService {
 	 * */
 	List<Adjust> selectAll();
 	
+	/**
+	 * 정산 내역 전체 조회(페이징처리) - 관리자
+	 * @return List<Adjust>
+	 * */
+	Page<Adjust> selectAll(Pageable pageable);
 	
 }
  

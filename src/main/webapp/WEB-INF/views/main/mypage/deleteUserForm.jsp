@@ -7,15 +7,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <title>Insert title here</title>
+
+<style type="text/css">
+	
+	a{
+		text-decoration: none;
+	}
+	th{
+		text-align: center;
+		vertical-align: middle;
+	}
+	
+	td{
+		vertical-align: middle;
+	}
+</style>
+
+<script type="text/javascript">
+
+	function clickDel(deleteInfo) {
+		deleteInfo.action = "${pageContext.request.contextPath}/main/mypage/deleteUser";
+		deleteInfo.method = "post";
+		deleteInfo.submit();
+	}
+
+</script>
+
 </head>
 <body>
-<h2> 탈퇴 페이지 입니다 ^^ </h2>
 
-	
-	<h3 class="h3tit01">회원탈퇴사유</h3>
+	<div class="main-content">
+	<h3 class="h3tit01">회원 탈퇴</h3>
 	<div class="bk_box mgt0">회원 탈퇴 신청 전, 탈퇴 사유를 체크해주세요.</div>
-	<table class="sy_tbl">
+	<table class="table">
 		<colgroup>
 			<col style="width:210px;" />
 			<col  />
@@ -129,7 +159,7 @@
 		<div class="ad_tbl_box">
 		<sec:authorize access="isAuthenticated()">
  		<sec:authentication property="principal" var="student"/>
-		<form id="delete" action="${pageContext.request.contextPath}/main/mypage/deleteUser" method="post">
+		<form id="delete" name="deleteInfo" action="${pageContext.request.contextPath}/main/mypage/deleteUser" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 			<table>
 				<colgroup>
@@ -147,13 +177,37 @@
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" value="탈퇴하기" name="delete"> <input type="reset" value="나가기">
 	    </form>
+	    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">탈퇴하기</button>
+		<input type="reset" value="나가기">
 		</sec:authorize>
 		</div>
 	</div>
 <input type="hidden" id="contents" name="contents" value=""  />
 <input type="hidden" id="userid" name="userid" value=""  />
-		
+</div>
+
+
+
+	 <!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		       정말 탈퇴하시겠습니까?
+		       * 탈퇴 신청 후, 1개월 동안 재가입이 불가능합니다
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="clickDel(deleteInfo)">탈퇴하기</button>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
 </body>
 </html>

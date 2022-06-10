@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -35,6 +37,9 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		  
 		System.out.println("============dbAsk : "+dbAsk); 
 	}
+	
+	
+	
 	/**
 	 * 1대1 문의 수정하기 (학생&선생님)
 	 * */ 
@@ -69,8 +74,16 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 	 * 1대1문의 답변하는 기능(관리자)
 	 * */
 	@Override
-	public void insertAnswer(Answer answer) {
-		// TODO Auto-generated method stub
+	public Answer insertAnswer(Answer answer) {
+		
+		Answer dbAnswer=answerRep.save(answer);
+		if(dbAnswer==null)throw new RuntimeException();
+		
+		
+		Ask dbAsk=askRep.findById(answer.getAsk().getAskNo()).orElse(null);
+		dbAsk.setAskComplete("T");
+		
+		return dbAnswer;
 
 	}
 
@@ -82,6 +95,15 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		
 		return askRep.findAll();
 	}
+	
+	/**
+	 * 1대1문의 전체리스트 조회 페이징 처리(관리자)
+	 * */
+	@Override
+	public Page<Ask> selectAll(Pageable pageable) {
+		return askRep.findAll(pageable);
+	}
+	
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회하기 기능(학생&선생님)
 	 * --------동적쿼리
@@ -102,6 +124,31 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		
 		return list;
 	} 
+	
+	/**
+	 * 내가 쓴 1대1 문의 리스트 조회하기 기능(학생&선생님)
+	 * --------동적쿼리(페이징처리)
+	 * */
+	/*@Override  
+	public Page<Ask> selectById(String id, Pageable pageable) {
+		
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QAsk ask = QAsk.ask;
+		
+		booleanBuilder.and(ask.teacher.teacherId.eq(id));
+		booleanBuilder.or(ask.student.studentId.eq(id));
+		
+		Iterable<Ask> iterable = askRep.findAll(booleanBuilder);
+		 
+		List<Ask> list = Lists.newArrayList(iterable);
+		
+	
+		
+		return list;
+	} */
+	
+	
 	/**
 	 * 1대1 문의 상세보기  기능(학생&선생님)
 	 * */

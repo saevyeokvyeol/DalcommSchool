@@ -40,7 +40,7 @@ public class PlaceController {
 		place.setPlaceRegion(placeRegion);
 		teacherService.insertPlace(place);
 		
-		return "redirect:/teacher/teacherMypage/myPlace";
+		return "redirect:/teacher/teacherMypage/place/placeDetail";
 	}
 	
 	/**
@@ -48,19 +48,22 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/updateForm")
 	public ModelAndView updateForm(Long placeId) {
+		placeId=4L;
 		Place place = teacherService.selectByPlaceId(placeId);
 		
-		return new ModelAndView("teacher/teacherMypage/updateForm", "place", place);
+		return new ModelAndView("teacher/teacherMypage/place/updateForm", "place", place);
 	}
 	
 	/**
 	 * 공방 수정하기
 	 * */
 	@RequestMapping("/update")
-	public ModelAndView updatePlace(Place place) {
-		Place place2 = teacherService.updatePlace(place);
+	public String updatePlace(Place place) {
+		teacherService.updatePlace(place);
 		
-		return new ModelAndView("redirect:/teacher/teacherMypage/myPlace", "place", place2);
+		return "redirect:/teacher/teacherMypage/place/detail";
+		//redirect:/ 는 오른쪽의 주소로 URL요청을 다시 하는 것. 즉 매핑 주소를 입력.(컨트롤러 재사용)
+		//ModelAndView에 들어오는 view는 viewname 그대로 받음.
 	}
 	
 	/**

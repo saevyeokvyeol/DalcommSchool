@@ -15,9 +15,21 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 <style type="text/css">
-	section {width: 1200px; margin: auto;}
-	table {width: 1200px;}
-	th, td {border: 1px solid black;}
+	
+	a{
+		text-decoration: none;
+	}
+	table,th,td{
+		text-align: center;
+	}
+	table{
+		width: 1500px;
+	}
+	.pagination{
+		display: block;
+		text-align: center;
+	}
+
 </style>
 
 <script type="text/javascript">
@@ -72,7 +84,7 @@
 					</thead>
 					<tbody>
 						<c:choose>
-		                    <c:when test ="${empty requestScope.list}">
+		                    <c:when test ="${empty requestScope.couponList}">
 		                        <tr>
 		                            <th colspan="8">
 		                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>
@@ -80,7 +92,7 @@
 		                        </tr>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <c:forEach items="${requestScope.list}" var="coupon">
+		                        <c:forEach items="${requestScope.couponList.content}" var="coupon">
 		                            <tr>
 		                            	<td>${coupon.classes.classId}</td>
 		                                <td>${coupon.couponId}</td>
@@ -144,8 +156,52 @@
 					</tfoot>
 					
 				</table>
-				<hr>
-				<a class="btn btn-dark" href="${pageContext.request.contextPath}/teacher/coupon/couponForm">쿠폰등록하기</a>
+				
+				<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
+				<div style="text-align: center">
+					
+						<!--  블럭당  -->
+				 <nav class="pagination-container">
+					<div class="pagination">
+					<c:set var="doneLoop" value="false"/>
+						
+						  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+						      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon?nowPage=${startPage-1}">PREV</a>
+						  </c:if>
+						  
+								<span class="pagination-inner"> 
+								  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+								  
+									<c:if test="${(i-1)>=pageList.getTotalPages()}">
+									       <c:set var="doneLoop" value="true"/>
+									</c:if> 
+								     
+								    <c:if test="${not doneLoop}" >
+								         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/teacher/coupon/couponAllList?nowPage=${i}">${i}</a> 
+								    </c:if>
+								   
+								  </c:forEach>
+								</span> 
+								<!-- 
+								[다음]
+				 
+									  if( (시작페이지+한블록당뿌려질[]개수)<= 총페이지수){
+									      [다음]출력;
+									  }  
+									
+									  ex)if( (startPage+blockCount) <= pageCount){
+									
+									      }
+								 -->
+								 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+								     <a class="pagination-older" href="${pageContext.request.contextPath}/teacher/coupon/couponAllList?nowPage=${startPage+blockCount}">NEXT</a>
+								 </c:if>
+						
+						</div>
+					</nav>  
+				</div>
+				
+				<div style="text-align: right"><a class="btn btn-dark" href="${pageContext.request.contextPath}/teacher/coupon/couponForm">쿠폰등록하기</a></div>
 				
 		</section>
 		

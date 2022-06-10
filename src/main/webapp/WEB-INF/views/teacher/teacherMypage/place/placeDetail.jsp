@@ -103,7 +103,7 @@ codeAddress();
 	
 	function codeAddress() {
 	    var address = document.getElementById('placeAddr').value;
-	    alert(address)
+// 	    alert(address)
 	    geocoder.geocode( { 'address': address}, function(results, status) {
 	      if (status == 'OK') {
 	    	  
@@ -169,10 +169,10 @@ codeAddress();
     <td>
       <div id="map"></div>
 	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly" defer></script>
-	  
-      
+	        
     </td>
   </tr>
+  <a href="${pageContext.request.contextPath }/teacher/teacherMypage/place/updateForm">수정하기</a>
 <!--   <tr> -->
 <!--     <th>공방 편의시설</th> -->
 <!--     <td> -->

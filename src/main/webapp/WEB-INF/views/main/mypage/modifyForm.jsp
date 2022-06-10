@@ -6,6 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <title>Insert title here</title>
 
 <style type="text/css">
@@ -26,13 +32,20 @@
 
 </style>
 
+<script type="text/javascript">
+	function alert() {
+		var result = "${msg}";
+		if(result === "modSuccess" ) {
+			alert('회원 정보가 성공적으로 수정되었습니다.');
+		}
+	});
+</script>
 
 
 <script type="text/javascript">
 
-
 $(function(){
-	
+
 	/*
 	핸드폰 번호 형식 체크
 	*/
@@ -52,6 +65,7 @@ $(function(){
 			return true;
 		}
 	}
+
 	
 	/*
 	이메일 형식 체크
@@ -74,7 +88,7 @@ $(function(){
 			return true;
 		}
 	}
-
+	
 <!-- 중복 체크 -->
 
 	isIdChecked = false;
@@ -139,7 +153,7 @@ $(function(){
 			isValidEmail();
 		})	
 
-})	
+});
 
 
 </script>
@@ -187,6 +201,7 @@ $(function(){
 	  	<a href="${pageContext.request.contextPath}/main/mypage/myPage" id="cancelBtn">뒤로가기</a>
 	  	</div>
 	</form>
+
 	</sec:authorize>
   </section>
 </body>

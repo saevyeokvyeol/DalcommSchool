@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.classes.Adjust;
@@ -45,8 +47,8 @@ public class AdjustServiceImpl implements AdjustService {
 		int adjustPrice = adjust.getAdjustPrice();
 		
 		Teacher teacher = teacherRepository.findById(adjust.getTeacher().getTeacherId()).orElse(null);
-		teacher.setAdjustable(teacher.getTotalProfit() - adjustPrice);
-		System.out.println("teacher.getTotalProfit()=" + teacher.getTotalProfit());
+		teacher.setAdjustable(teacher.getAdjustable() - adjustPrice);
+		System.out.println("teacher.getAdjustable()=" + teacher.getAdjustable());
 		System.out.println("adjustPrice = "+ adjustPrice);
 		adjustRepository.save(adjust);
 		
@@ -89,6 +91,17 @@ public class AdjustServiceImpl implements AdjustService {
 	}
 	
 	/**
+	 * 정산 내역 조회 기능 - 페이징처리
+	 * @param String teacherId(검색기준)
+	 * @return List<Adjust>
+	 * */
+	@Override
+	public Page<Adjust> selectByTeacherId(String teacherId, Pageable pageable) {
+		
+		return adjustRepository.findByTeacherTeacherIdEquals(teacherId, pageable);
+	}
+	
+	/**
 	 * 정산 내역 전체 조회 - 관리자
 	 * @return List<Adjust>
 	 * */
@@ -97,5 +110,17 @@ public class AdjustServiceImpl implements AdjustService {
 		List<Adjust> list = adjustRepository.findAll();
 		return list;
 	}
+	
+	/**
+	 * 정산 내역 전체 조회(페이징처리) - 관리자
+	 * @return List<Adjust>
+	 * */
+	@Override
+	public Page<Adjust> selectAll(Pageable pageable) {
+		
+		return adjustRepository.findAll(pageable);
+	}
+
+	
 
 }
