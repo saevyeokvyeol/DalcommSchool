@@ -116,6 +116,13 @@
 	                <div class="loginbox-textbox">
 	                    비밀번호<br><input type="password" name="pwd" class="form-control">
 	                </div>
+	                <span>
+						<c:if test="${not empty param.error}">
+							<div class="alert alert-danger" role="alert">
+								${exception}
+							</div>	 
+						</c:if>
+	                </span>
 	                <div class="loginbox-forgot">
 	                    <a href="">아이디</a>&ensp;/&ensp;
 	                    <a href="">비밀번호 찾기</a>
