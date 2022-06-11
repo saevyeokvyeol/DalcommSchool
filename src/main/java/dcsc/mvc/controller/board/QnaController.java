@@ -121,14 +121,26 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 수정폼
+	 * Q&A 수정폼 - 포워드방식
 	 * */
-	@RequestMapping("main/board/qna/qnaUpdateForm")
+	/*@RequestMapping("main/board/qna/qnaUpdateForm")
 	public ModelAndView qnaUpdateForm(Long qnaId) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
 		return new ModelAndView("main/board/qna/qnaUpdate", "qna", classQna);
+	}*/
+	
+	/**
+	 * Q&A 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaUpdateForm")
+	@ResponseBody
+	public ClassQna qnaUpdateFormModal(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		return classQna;
 	}
+	
 	
 	/**
 	 * Q&A 수정하기

@@ -67,29 +67,25 @@
                 <th>내용</th>
                 <td>${qna.qnaContent}</td>
             </tr>
-            <tr>
-		        <td height="20" colspan="3" align="center" valign="middle">
-					<!-- 답변시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-					<form name="requestForm" method="post" id="requestForm">
-						<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-						<input type=hidden name="qnaId" value="${qna.qnaId}">
-						<input type=hidden name="classId" value="${qna.classes.classId}" id="classId">
-						<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
-						<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
-						<c:choose>
-							<c:when test="${qna.qnaComplete eq 'T'}">
-								<input type=hidden value="답변하기" >
-							</c:when>
-							<c:otherwise>
-								<input type=button value="답변하기" >
-							</c:otherwise>
-						</c:choose>
-						
-					 </form>
-				 </td>
-		     </tr>
-            
         </table>
+        
+        <!-- 답변시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
+		<form name="requestForm" method="post" id="requestForm">
+			<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+			<input type=hidden name="qnaId" value="${qna.qnaId}">
+			<input type=hidden name="classId" value="${qna.classes.classId}" id="classId">
+			<input type=hidden name="studentId" value="${qna.student.studentId}" id="studentId">
+			<input type=hidden name="qnaComplete" value="${qna.qnaComplete}" id="qnaComplete">
+			<c:choose>
+				<c:when test="${qna.qnaComplete eq 'T'}">
+					<input type=hidden value="답변하기" >
+				</c:when>
+				<c:otherwise>
+					<input class="btn btn-outline-primary"  type=button value="답변하기" >
+				</c:otherwise>
+			</c:choose>
+		 </form>
+        
     </div>
     
     <hr>
@@ -117,8 +113,8 @@
 		            </tr>
 		            <tr>
 		            	<td>
-		            		<a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/qnaReplyUpdateForm/${qnaReply.replyId}">답글 수정하기</a>
-		            		<a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/qnaReplyDelete/${qnaReply.replyId}">답글 삭제하기</a>
+		            		<a class="btn btn-outline-primary"  href="${pageContext.request.contextPath}/qnaReplyUpdateForm/${qnaReply.replyId}">답글 수정하기</a>
+		            		<a class="btn btn-outline-primary"  href="${pageContext.request.contextPath}/qnaReplyDelete/${qnaReply.replyId}">답글 삭제하기</a>
 		            	<td>
 		            </tr>
             	</c:when>

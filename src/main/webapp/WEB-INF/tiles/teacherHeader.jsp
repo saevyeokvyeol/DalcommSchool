@@ -103,14 +103,14 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustForm" class="menu-link">
                 <i class="fa-solid fa-hand-holding-dollar menu-icon"></i>
                 <div data-i18n="Basic">정산 신청하기</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustList" class="menu-link">
                 <i class="fa-solid fa-file-invoice-dollar menu-icon"></i>
                 <div data-i18n="User interface">정산 신청 내역</div>
               </a>
