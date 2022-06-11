@@ -1,5 +1,7 @@
 package dcsc.mvc.controller.user;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import dcsc.mvc.domain.classes.Book;
+import dcsc.mvc.domain.classes.BookDTO;
 import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
+import dcsc.mvc.domain.user.PlaceInfraDTO;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.user.TeacherService;
@@ -25,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class PlaceController {
 	
 	public final TeacherService teacherService;
+	
 	
 	/**
 	 * 공방 등록 폼
@@ -49,7 +55,7 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/updateForm")
 	public ModelAndView updateForm(Long placeId) {
-		placeId=4L;
+		placeId=24L;
 		Place place = teacherService.selectByPlaceId(placeId);
 		
 		return new ModelAndView("teacher/teacherMypage/place/updateForm", "place", place);
@@ -74,7 +80,7 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/detail")
 	public ModelAndView readPlace(Long placeId) {
-		placeId=4L;
+		placeId=24L;
 		
 		Place place = teacherService.selectByPlaceId(placeId);
 		return new ModelAndView("teacher/teacherMypage/place/placeDetail", "place", place);
@@ -101,4 +107,22 @@ public class PlaceController {
 		
 		return list;
 	}
+	
+	/**
+	 * 공방 아이디로 공방 인프라 가져오기
+	 * */
+	@RequestMapping("/selectInfra")
+	@ResponseBody
+	public List<PlaceInfraDTO> selectInfraByPlaceId(Long placeId){
+		List<PlaceInfra> list = teacherService.selectInfraByPlaceId(placeId);
+		List<PlaceInfraDTO> dtolist = new ArrayList<PlaceInfraDTO>();
+		
+		for(PlaceInfra p : list) {
+			PlaceInfraDTO placeInfraDTO = new PlaceInfraDTO(p.getPlaceInfraId(),p.getInfra().getInfraId(),
+															p.getPlace().getPlaceId(), p.getInfra().getInfraName());
+		dtolist.add(placeInfraDTO);
+		}
+		return dtolist;
+	}
+	
 }

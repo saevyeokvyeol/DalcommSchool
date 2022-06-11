@@ -13,6 +13,7 @@
 <script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<sec:csrfMetaTags/>
 <style type="text/css">
 
 	a{
@@ -37,6 +38,43 @@
 	}
 
 </style>
+<script type="text/javascript">
+	
+		var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+		var csrfToken = $('meta[name="_csrf"]').attr('content');
+		
+		var id  = $('input#id').val();
+		var pwd = $('input#pwd').val();
+	
+		$('#login').click(function() {
+		
+		
+			$.ajax({
+				type:"POST",
+				url:"${pageContext.request.contextPath}/ajax/login",	
+				beforeSend : function(xhr)
+	            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					xhr.setRequestHeader(header, token);
+	            },
+				dataType : "text", // success 시 받아올 데이터 형
+				data:{loginId : $("#id").val()}, {loginPwd : $("#pwd").val()}
+				/* data:{
+					"${_csrf.parameterName}":"${_csrf.token}"
+				} ,*/
+				success: function(response){	
+						console.log(response);
+					}, 
+				error : function(err) {
+					alert(err+"에러발생");
+				}
+			
+				}//callback			
+			});//ajax
+
+</script>
+
+
+
 </head>
 <body>
 
@@ -65,10 +103,10 @@
 
 <br><br><br>
 
-
+<!-- ----------------------- 모달 버튼 ------------------ -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
 
-<!-- Modal -->
+<!----------------------- Modal ------------------------------->
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -108,20 +146,28 @@
                     <div class="or">OR</div>
                 </div><br>
                 <!-- 로그인 폼 -->
-                <form name="login" method="post" action="${pageContext.request.contextPath}/main/login/login">
+                <form name="login" method="post" action="${pageContext.request.contextPath}/ajax/login">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	                <div class="loginbox-textbox"> 
-	                    아이디<br><input type="text" name="id" class="form-control">
+	                    아이디<br><input type="text" name="id" id="id" class="form-control" value="${id}">
 	                </div>
 	                <div class="loginbox-textbox">
-	                    비밀번호<br><input type="password" name="pwd" class="form-control">
+	                    비밀번호<br><input type="password" name="pwd" id="pwd" class="form-control" value="${pwd}">
 	                </div>
+	                <span>
+						<c:if test="${requestScope.errorMessage != null}">
+							<div class="alert alert-danger" role="alert">
+								${requestScope.errorMessage}
+							</div>	 
+						</c:if>
+	                </span>
+	                <br><br>
 	                <div class="loginbox-forgot">
 	                    <a href="">아이디</a>&ensp;/&ensp;
 	                    <a href="">비밀번호 찾기</a>
 	                </div>
 	                <div class="loginbox-submit">
-	                    <input type="submit" class="btn btn-primary btn-block" value="로그인">
+	                    <input type="submit" id="login" class="btn btn-primary btn-block" value="로그인">
 	                </div>
 	                <div class="loginbox-signup">
 	                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&ensp;or&ensp;

@@ -104,7 +104,7 @@
 		<span class="pagination-inner"> 
 		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
 		  
-			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
+			    <c:if test="${(i-1)>=eventList.getTotalPages()}">
 			       <c:set var="doneLoop" value="true"/>
 			    </c:if> 
 		    
@@ -115,7 +115,7 @@
 		</c:forEach>
 		</span> 
 				
-		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
 		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">NEXT</a>
 		 </c:if>
 		</div>

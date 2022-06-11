@@ -13,6 +13,7 @@
   width: 800px;
   
 }
+section{margin: auto; width: 1200px;}
 
 	#placeRoute{ height: 100px; width: 800px;}
 	#etc{height: 50px; width: 800px;}
@@ -81,37 +82,63 @@ function sample6_execDaumPostcode() {
 	
 <script type="text/javascript">
 
-
+/*
+공방 인프라 리스트 가져오기 
+*/
 	
-	/*
-	공방 지역 정보 가져오기
-	*/
-	$(function(){
-		function selectPlaceRegion(){
-			$.ajax({
-				url: "/teacher/teacherMypage/place/selectPlaceRegion",
-				type: "post",
-				data: {"${_csrf.parameterName}": "${_csrf.token}"},
-				dataType: "json",
-				success: function(result){
-// 					alert(result);
-					text = ""
-					$.each(result, function(index, item){
-						text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;
+$(function(){
+
+	function selectPlaceInfra(){
+		$.ajax({
+			url:"/teacher/teacherMypage/place/selectPlaceInfra",
+			type: "post",
+			data : {"${_csrf.parameterName}": "${_csrf.token}"},
+			dataType: "json",
+			success: function(result){
+//					alert(result);
+				text=""
+				$.each(result, function(index,item){
+					text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>&nbsp\${item.infraName}&nbsp`;
 					})
-					text += ""
-					$("select[name = placeRegion]").append(text);
-				},
-				error: function(err){
-					
-					alert("지역정보를 가져올 수 없습니다.")
-				}
-			})
-		}
-		
-		
-		selectPlaceRegion();
-	})
+				text += ""
+				$("fieldset[id=field]").after(text);
+			},
+			error: function(err){
+				alert("인프라 정보를 가져올 수 없습니다.")
+			}
+		})
+	}
+	selectPlaceInfra();
+})
+
+/*
+공방 지역 정보 가져오기
+*/
+$(function(){
+	function selectPlaceRegion(){
+		$.ajax({
+			url: "/teacher/teacherMypage/place/selectPlaceRegion",
+			type: "post",
+			data: {"${_csrf.parameterName}": "${_csrf.token}"},
+			dataType: "json",
+			success: function(result){
+//					alert(result);
+				text = ""
+				$.each(result, function(index, item){
+					text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;
+				})
+				text += ""
+				$("select[name = placeRegion]").append(text);
+			},
+			error: function(err){
+				
+				alert("지역정보를 가져올 수 없습니다.")
+			}
+		})
+	}
+
+	selectPlaceRegion();
+})
 	 
 	
 	var geocoder;
@@ -146,6 +173,10 @@ function sample6_execDaumPostcode() {
 			      }
 			    });
 	  }
+	
+// 	function checkInfra(){
+// 		if()
+// 	}
 	
 </script>
 </head>
@@ -191,19 +222,14 @@ function sample6_execDaumPostcode() {
       <tr>
         <th>공방 편의 시설</th>
           <td>
-            <fieldset>
-              <input type="checkbox" name="parking" value="T">주차공간 &nbsp;
-              <input type="checkbox" name="wifi" value="T">와이파이 &nbsp;
-              <input type="checkbox" name="elevator" value="T">엘레베이터 &nbsp;
-              <input type="checkbox" name="genderToilet" value="T">남녀 화장실 분리 &nbsp;
-              <input type="checkbox" name="kidsfriendly" value="T">어린이 동반 가능 <br>
-              <textarea id="etc" name="etc" class="textbox" placeholder="기타, 추가시설을 입력해주세요."></textarea>
+            <fieldset id="field">
+
             </fieldset>
           </td>
       </tr>
       <tr>
         <td>
-          <input type="submit" value="등록">
+          <input type="submit" value="수정">
           <input type="reset" value="취소">
         </td>
       </tr>

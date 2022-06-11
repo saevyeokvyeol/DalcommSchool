@@ -3,14 +3,21 @@ package dcsc.mvc.repository.board;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import dcsc.mvc.domain.board.Notice;
 
-public interface NoticeRepository extends JpaRepository<Notice, Long>{
+public interface NoticeRepository extends JpaRepository<Notice, Long> , QuerydslPredicateExecutor<Notice>{
+	
 	
 	/**
-	 * 컬럼명에 따라 다른 메소드 호출
+	 * 조회수 증가
 	 * */
-	List<Notice> findByNoticeTitleIsLike(String noticeTitle);
-	List<Notice> findByNoticeContentIsLike(String noticeContent);
+	@Query("update Notice n set n.noticeViews = n.noticeViews + 1 where n.noticeNo=?1")
+	@Modifying //DML
+	void updateReadNum(Long noticeNo);
+	
+	
 }

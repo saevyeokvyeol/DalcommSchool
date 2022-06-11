@@ -17,13 +17,13 @@
 			</ul>
 			<h5>쿠폰 관리</h5>
 			<ul>
-				<li><a href="">나의 쿠폰 목록</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/couponList">나의 쿠폰 목록</a></li>
 			</ul>
 			<h5>나의 글 관리</h5>
 			<ul>
 				<li><a href="">1:1 문의</a></li>
 				<li><a href="">클래스 후기</a></li>
-				<li><a href="">클래스 Q&A</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/qnaList">클래스 Q&A</a></li>
 			</ul>
 			<h5>회원 정보</h5>
 			<ul>
