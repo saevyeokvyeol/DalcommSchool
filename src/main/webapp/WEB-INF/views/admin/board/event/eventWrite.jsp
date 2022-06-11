@@ -44,28 +44,17 @@
 			});
 		});
 
-    	function sendFile(file, editor) { //썸머노트 파일 첨부
-    		var form_data = new FormData();
-    		form_data.append('file', file);
-    		$.ajax({
-    			data : form_data,
-    			type : "POST",
-    			url : '${pageContext.request.contextPath}/resources/static/img/event',
-    			cache : false,
-    			contentType : false,
-    			enctype : 'multipart/form-data',
-    			processData : false,
-    			success : function(url) {
-    				$(editor).summernote('insertImage', url, function($image) {
-    					$image.css('width', "25%");
-    				});
-    			}
-    		});
-    	}
-    	
     </script>
+    <script type="text/javascript">
     
-
+	$(function() {
+  		$("#writeForm").submit(function(event){
+  				alert("게시글이 등록되었습니다.")
+  			}
+  		})
+	});
+    
+    </script>
 </head>
 <body>
 

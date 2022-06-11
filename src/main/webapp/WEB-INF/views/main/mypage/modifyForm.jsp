@@ -16,9 +16,9 @@
 
 <style type="text/css">
 	
-	h3 {
-		text-align: center;
-	}
+/* 	h3 { */
+/* 		text-align: center; */
+/* 	} */
 
 	.idCheck_success, .pwdCheck_success, .phoneCheck_success, .phoneCheck_success {
 		color: blue;
@@ -33,21 +33,11 @@
 		background-color: #D3D3D3;
 	}
 
-	.joinNotice {
-		text-align: center;
-	}
+/* 	.joinNotice { */
+/* 		text-align: center; */
+/* 	} */
 
 </style>
-
-<script type="text/javascript">
-	function alert() {
-		var result = "${msg}";
-		if(result === "modSuccess" ) {
-			alert('회원 정보가 성공적으로 수정되었습니다.');
-		}
-	});
-</script>
-
 
 <script type="text/javascript">
 
@@ -173,24 +163,17 @@ $(function(){
 
 
 </script>
-
-
-
-
 </head>
 <body>
-
-<div class="main-content">
-
-<br><br><br>
+<div id="sidebar-content">
  <section>
   <sec:authorize access="isAuthenticated()">
  	<sec:authentication property="principal" var="student"/>
 	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/main/mypage/modify">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		
-	  <h3> 학생 회원정보 수정페이지 </h3>
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><br><hr>
+	  <h3>회원정보 수정</h3>
+	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><hr>
 	    <table class="table">
 	      <tr>
 	          <th>아이디</th>
@@ -199,7 +182,7 @@ $(function(){
 	      </tr>
 	      <tr>
 	          <th>비밀번호</th>
-	          <td><a href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정하러 가기</a></td>
+	          <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정하러 가기</a></td>
 	      </tr>
 	      <tr>
 	          <th>이름</th>
@@ -209,7 +192,7 @@ $(function(){
 	          <th>* 핸드폰 번호</th>
 	          <td><input type="text" id="studentPhone" name="studentPhone" class="" value="${student.studentPhone}" />
 	          <button type="button" id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone" class="notValidPhone">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span><br>
+	          <span id="notValidPhone" class="notValidPhone"></span><br>
 	          <span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
 	          <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td>
 	      </tr>
@@ -228,8 +211,8 @@ $(function(){
 
 	</sec:authorize>
   </section>
-  
-</div>
+  </div>
+
   
 </body>
 </html>
