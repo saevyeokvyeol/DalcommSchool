@@ -24,7 +24,7 @@
 		text-align: center;
 	}
 	table{
-		width: 1000px;
+		width: 1500px;
 	}
 	
 
@@ -75,7 +75,7 @@
         </table>
     </div>
         <hr>
-    <div >
+    <div>
         <table>
             <c:choose>
             	<c:when test="${qna.qnaComplete eq 'T'}">

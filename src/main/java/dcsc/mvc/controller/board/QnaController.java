@@ -2,6 +2,8 @@ package dcsc.mvc.controller.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class QnaController {
 	 * Q&A 상세조회
 	 * */
 	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
-	public String qnaRead(@PathVariable Long qnaId, Model model ) {
+	public String qnaRead(@PathVariable Long qnaId, Model model ,HttpServletRequest request) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
 		model.addAttribute("qna", classQna);
@@ -159,7 +161,7 @@ public class QnaController {
 	}
 	
 	/**
-	 * 선생님 QnA전체조회
+	 * 선생님 QnA전체조회 -- 사이트내 전체 QnA 글 보기
 	 * */
 	@RequestMapping("teacher/board/qna/qnaList")
 	public void qnaSelectAll(Model model) {
