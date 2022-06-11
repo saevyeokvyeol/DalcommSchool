@@ -251,6 +251,17 @@ public class QnaController {
 	}
 	
 	/**
+	 * 선생님 Q&A 답변 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaReplyUpdateForm")
+	@ResponseBody
+	public ClassReply qnaReplyUpdateFormModal(Long replyId){
+		ClassReply classReply= classQnaService.selectByReplyId(replyId);
+		
+		return classReply;
+	}
+	
+	/**
 	 * 선생님 Q&A 답변 수정하기
 	 * */
 	@RequestMapping("qnaReplyUpdate")

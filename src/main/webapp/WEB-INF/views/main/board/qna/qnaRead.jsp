@@ -39,7 +39,7 @@
 				},
 				success : function(result) {
 					//alert(result)
-					//$("#qna-main-insert .qnaId").val(`\${result.qnaId}`);
+					//$("#qna-main-update .qnaId").val(`\${result.qnaId}`);
 					$("#qna-main-update .qnaTitle").val(`\${result.qnaTitle}`);
 					$("#qna-main-update .qnaContent").val(`\${result.qnaContent}`);
 					$("#qna-main-update .secretState").val(`\${result.secretState}`);
