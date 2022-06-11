@@ -96,11 +96,15 @@ $(function(){
 		}
 	}
 	
-<!-- 중복 체크 -->
+	
+<!--------------------------중복체크-------------------------->
+	
+	isPhoneChecked=true;
+	
+	$("#teacherPhone").keyup(function(){
+		isPhoneChecked=false;
+	})
 
-	isIdChecked = false;
-	isPhoneChecked = false;
-	isNickChecked = false;
 	
 	/*
 	핸드폰 번호 중복 체크
@@ -134,32 +138,37 @@ $(function(){
 		})
 	})
 		
-	/*
-	아이디, 핸드폰번호, 닉네임 값 변경 시 중복 체크 리셋
-	*/
-	$("#studentId").keyup(function(){
-		isIdChecked = false;
+	<!--------------------------핸드폰 번호, 이메일 형식 체크 함수 호출-------------------------->	
+	
+	$("#teacherPhone").focusout(function(){
+		isValidPhone();
 	})
-	$("#studentPhone").keyup(function(){
-		isPhoneChecked = false;
-		})
-		$("#studentNick").keyup(function(){
-			isNickChecked = false;
-		})
+	
+	$("#teacherEmail").focusout(function(){
+		isValidEmail();
+	})
+	
+<!--------------------------submit 하기 전 체크-------------------------->	
+	
+	$("#updateForm").submit(function(event){
 		
-		$(function(){
-		$("#updateForm").submit(function(){			
-			/*
-			중복체크 여부
-			*/
-			if(!isPhoneChecked){
-				alert("핸드폰 번호 중복체크를 진행해주세요")
-				return false;
-			}
-			isValidPhone();
-			isValidEmail();
-		})	
-
+		/*
+		중복체크 여부
+		*/
+		if(!isPhoneChecked){
+			alert("핸드폰 번호 중복체크를 진행해주세요")
+			event.preventDefault();
+		}else if(!isValidPhone()){
+			alert("핸드폰 번호를 형식에 맞게 입력해주세요.");
+			event.preventDefault();
+		}else if(!isValidEmail()){
+			alert("이메일을 형식에 맞게 입력해주세요.");
+			event.preventDefault();
+		}else{
+			alert("회원정보가 수정되었습니다.")
+		}
+	})
+	
 });
 
 
@@ -187,6 +196,10 @@ $(function(){
 	          <th>아이디</th>
 	          <td class=""><input type="text" id="studentId" class="id" name="studentId" value="${student.studentId}" readonly="readonly"/>
 
+	      </tr>
+	      <tr>
+	          <th>비밀번호</th>
+	          <td><a href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정하러 가기</a></td>
 	      </tr>
 	      <tr>
 	          <th>이름</th>
