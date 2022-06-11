@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div id="inner-sidebar">
-			<a href="${pageContext.request.contextPath}/main/mypage"><h4>마이페이지</h4></a>
+			<h4>마이페이지</h4>
 			<h5>나의 예약 내역</h5>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/main/mypage/bookCalendar">나의 예약 캘린더</a></li>

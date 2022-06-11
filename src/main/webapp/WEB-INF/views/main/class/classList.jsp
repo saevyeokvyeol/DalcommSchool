@@ -221,14 +221,14 @@
 						</li>
 					</c:if>
 						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
-							<c:if test="${(i-1)>=pageList.getTotalPages()}">
+							<c:if test="${(i-1)>=list.getTotalPages()}">
 								<c:set var="doneLoop" value="true" />
 							</c:if>
 							<c:if test="${not doneLoop}">
 								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/main/class/classList?page=${i}">${i}</a></li>
 							</c:if>
 						</c:forEach>
-					<c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+					<c:if test="${(startPage+blockCount)<=list.getTotalPages()}">
 						<li class="page-item">
 							<a class="page-link" href="#">Next</a>
 						</li>

@@ -2,6 +2,9 @@ package dcsc.mvc.service.classes;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.classes.Book;
 
 public interface BookService {
@@ -43,6 +46,13 @@ public interface BookService {
 	 * @return List<Book>
 	 * */
 	List<Book> selectByStudentId(String studentId);
+
+	/**
+	 * 학생ID로 예약 조회
+	 * @param String studentId
+	 * @return Page<Book>
+	 * */
+	Page<Book> selectPageByStudentId(String studentId, Pageable pageable);
 
 	/**
 	 * 강사ID로 예약 조회

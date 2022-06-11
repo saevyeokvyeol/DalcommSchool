@@ -44,15 +44,17 @@ public interface ClassesService {
 
 	/**
 	 * 클래스 전체 보기
+	 * @param Pageable pageable
 	 * @return List<Classes> 클래스 전체 목록 반환
 	 * */
-	List<Classes> selectAll();
+	Page<Classes> selectAll(Pageable pageable);
 
 	/**
 	 * 강사ID로 클래스 조회
+	 * @param String teacherId, Pageable pageable
 	 * @return List<Classes> 클래스 전체 목록 반환
 	 * */
-	List<Classes> selectByTeacherId(String teacherId);
+	Page<Classes> selectByTeacherId(String teacherId, Pageable pageable);
 
 	/**
 	 * 클래스 검색 및 필터링
