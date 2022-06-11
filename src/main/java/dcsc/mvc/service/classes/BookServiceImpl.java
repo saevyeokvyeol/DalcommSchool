@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -137,6 +139,17 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> selectByStudentId(String studentId) {
 		List<Book> list = bookRepository.findByStudentStudentIdEquals(studentId);
+		return list;
+	}
+
+	/**
+	 * 학생ID로 예약 조회
+	 * @param String studentId
+	 * @return Page<Book>
+	 * */
+	@Override
+	public Page<Book> selectPageByStudentId(String studentId, Pageable pageable) {
+		Page<Book> list = bookRepository.findByStudentStudentIdEquals(studentId, pageable);
 		return list;
 	}
 	

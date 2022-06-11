@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -93,34 +94,96 @@
 		</script>
 	</head>
 	<body>
-		<!-- 모달창 -->
-		<div class="modal fade" id="updateSchedule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">예약 일정 변경</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form id="updateScheduleForm" method="post" action="">
-							<div class="mb-3">
-								<input type="hidden" id="bookIdBox" value="">
-								<label for="recipient-name" class="col-form-label">남은 수강 인원</label>
-								<select class="form-select" id="scheduleSelect" aria-label="Default select example">
-								</select>
-							</div>
-							<div class="modal-footer">
-								<input type="button" class="btn btn-primary" id="updateScheduleSubmit" value="일정 변경">
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
 		
 		<h3>예약 목록</h3>
-		
-		<div id='calendar'></div>
-		
+		<div id="bookListBox">
+				
+			<div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								예약일
+							</th>
+							<th>
+								클래스명
+							</th>
+							<th>
+								수강일
+							</th>
+							<th>
+								인원
+							</th>
+							<th>
+								결제금액
+							</th>
+							<th>
+								예약상태
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${list.content.size() == 0}">
+								<tr>
+									<td id="none" colspan="6">
+										<h4>예약한 클래스가 없어요</h4>
+										<a href="${pageContext.request.contextPath}/main/class/classList" class="btn btn-primary">클래스 예약하러 가기</a>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${list.content}" var="book">
+									<tr>
+										<td>
+											${book.bookInsertDate.toString().substring(0, 10)}
+										</td>
+										<td>
+											<a href="${pageContext.request.contextPath}/main/mypage/book/${book.bookId}">${book.classes.className}</a>
+										</td>
+										<td>
+											${book.classSchedule.scheduleDate.toString().substring(0, 10)}
+										</td>
+										<td>
+											${book.bookSeat}명
+										</td>
+										<td>
+											<fmt:formatNumber value="${book.totalPrice}" pattern="#,###" />원
+										</td>
+										<td>
+											${book.bookState.bookStateName}
+										</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:set var="doneLoop" value="false" />
+					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+						</li>
+					</c:if>
+						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+							<c:if test="${(i-1)>=list.getTotalPages()}">
+								<c:set var="doneLoop" value="true" />
+							</c:if>
+							<c:if test="${not doneLoop}">
+								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+					<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
 	</body>
 </html>

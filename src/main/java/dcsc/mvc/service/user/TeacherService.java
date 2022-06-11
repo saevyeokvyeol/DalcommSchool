@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
+import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Teacher;
 
@@ -125,6 +126,10 @@ public interface TeacherService {
 	 * */
 	List<PlaceRegion> selectPlaceRegion();
 
+	/**
+	 * 공방 아이디로 공방 인프라 가져오기
+	 * */
+	List<PlaceInfra> selectInfraByPlaceId(Long placeId);
 	
 	/**
 	 * 아이디, 이름 등등으로 강사 조회하기

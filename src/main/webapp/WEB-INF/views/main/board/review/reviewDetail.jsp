@@ -116,7 +116,7 @@ $(function(){
   	</tr>
 
   	<form id="requestForm">
-  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId}">
   		<input type="button" id="updateBtn" value="수정하기">
 	  	<input type="button" id="deleteBtn" value="삭제하기">
 	  	<input type="button" id="cancelBtn" value="취소">

@@ -175,7 +175,7 @@
 					<c:set var="doneLoop" value="false" />
 					<c:if test="${(startPage-blockCount) > 0}">
 						<li class="page-item disabled">
-							<a class="page-link">Previous</a>
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
 						</li>
 					</c:if>
 						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
@@ -188,7 +188,7 @@
 						</c:forEach>
 					<c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
 						<li class="page-item">
-							<a class="page-link" href="#">Next</a>
+							<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
 						</li>
 					</c:if>
 				</ul>
