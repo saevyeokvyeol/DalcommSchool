@@ -53,6 +53,19 @@ public class QnaController {
 	}
 	
 	/**
+	 * Q&A 상세조회 - 관리자
+	 * */
+	@RequestMapping("admin/board/qna/qnaRead/{qnaId}")
+	public String qnaReadAdmin(@PathVariable Long qnaId, Model model ) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
+		model.addAttribute("qna", classQna);
+		model.addAttribute("qnaReply", classReply);
+		
+		return "admin/board/qna/qnaRead";
+	}
+	
+	/**
 	 * 선생님 - Q&A 상세조회
 	 * */
 	/*@RequestMapping("teacher/board/qna/qnaRead/{qnaId}")
@@ -138,7 +151,7 @@ public class QnaController {
 	/**
 	 * 관리자 QnA전체조회
 	 * */
-	@RequestMapping("admin/board/qna/qnaListBI")
+	@RequestMapping("admin/board/qna/qnaListBlind")
 	public void qnaAll(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
 		

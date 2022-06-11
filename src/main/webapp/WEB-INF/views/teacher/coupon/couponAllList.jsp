@@ -135,7 +135,7 @@
 				</thead>
 				<tbody>
 					<c:choose>
-	                    <c:when test ="${empty requestScope.couponList}">
+	                    <c:when test ="${empty requestScope.couponList.content}">
 	                        <tr>
 	                            <th colspan="8">
 	                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>

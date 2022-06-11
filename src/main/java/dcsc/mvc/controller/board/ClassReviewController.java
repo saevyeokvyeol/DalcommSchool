@@ -109,7 +109,7 @@ public class ClassReviewController {
 	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
-		studentId="kim1234";
+		studentId="park1234";
 		
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, page);
@@ -131,7 +131,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/read/{reviewId}")
 	public ModelAndView readReview(@PathVariable Long reviewId) {
-		reviewId=2L;
+//		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return new ModelAndView("main/board/review/reviewDetail", "review", review);
