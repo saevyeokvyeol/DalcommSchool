@@ -10,4 +10,5 @@ import dcsc.mvc.domain.classes.Classes;
 public interface ClassesRepository extends JpaRepository<Classes, Long>, QuerydslPredicateExecutor<Classes> {
 	
 	List<Classes> findByTeacherTeacherIdEquals(String teacherId);
+	
 }

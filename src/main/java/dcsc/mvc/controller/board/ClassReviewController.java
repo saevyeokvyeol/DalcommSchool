@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/main/board/review")
 public class ClassReviewController {
 	
 	public final ClassReviewService reviewService;
@@ -35,7 +34,7 @@ public class ClassReviewController {
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/reviewList/classId")
+	@RequestMapping("/main/board/review/reviewList/classId")
 	public String selectByClassId(Model model, Long classId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByClassId(classId);
 		
@@ -60,9 +59,9 @@ public class ClassReviewController {
 	/**
 	 * 강사 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/teacher")
+	@RequestMapping("/teacher/mypage/reviewList")
 	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int nowPage){
-		teacherId = "Tpark1234";
+		teacherId = "Tlee1234";
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
@@ -78,14 +77,15 @@ public class ClassReviewController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage",nowPage);
 		
-		return "teacher/teacherMypage/classReview";
+		
+		return "teacher/teacherMypage/reviewList";
 	}
 	
 	/**
 	 * 전체 후기 가져오기(관리자)
 	 * */
-	@RequestMapping("/list")
-	public String selectAll(Model model, @RequestParam(defaultValue="1") int nowPage){
+	@RequestMapping("/admin/board/review/list")
+	public String selectAllAdmin(Model model, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectAll();
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectAll(page);
@@ -103,13 +103,34 @@ public class ClassReviewController {
 	}
 	
 	/**
+	 * 전체 후기 가져오기(메인페이지)
+	 * */
+	@RequestMapping("/main/board/review/list")
+	public String selectAllUser(Model model, @RequestParam(defaultValue="1") int nowPage){
+//		List<ClassReview> list = reviewService.selectAll();
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectAll(page);
+		
+		model.addAttribute("classReviews", pageList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		return "main/board/review/reviewList";
+	}
+	
+	/**
 	 * 학생 ID로 리스트 가져오기
 	 * */
-	@RequestMapping("/student")
+	@RequestMapping("/main/mypage/reviewList")
 	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
-		studentId="park1234";
+		studentId="kim1234";
 		
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, page);
@@ -127,10 +148,10 @@ public class ClassReviewController {
 	}
 	
 	/**
-	 * 후기 상세 보기
+	 * 후기 상세 보기(메인, 강사)
 	 * */
-	@RequestMapping("/read/{reviewId}")
-	public ModelAndView readReview(@PathVariable Long reviewId) {
+	@RequestMapping("/main/board/review/read/{reviewId}")
+	public ModelAndView readReviewUser(@PathVariable Long reviewId) {
 //		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
@@ -138,28 +159,52 @@ public class ClassReviewController {
 	}
 	
 	/**
-	 * 클래스 후기 등록 폼
+	 * 후기 상세 보기(학생 마이페이지)
 	 * */
-	@RequestMapping("/insertForm")
-	public String insertForm(Long classId, Model model) {
-		model.addAttribute("classId", classId);
+	@RequestMapping("/main/mypage/review/read/{reviewId}")
+	public ModelAndView readReviewStudent(@PathVariable Long reviewId) {
+		reviewId=2L;
+		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
-		return "main/board/review/insertReview";
+		return new ModelAndView("main/mypage/reviewDetail", "review", review);
 	}
 	
 	/**
-	 * 클래스 후기 등록 폼(테스트)
+	 * 후기 상세 보기(관리자)
 	 * */
-	@RequestMapping("/insertTest")
+	@RequestMapping("/admin/board/review/read/{reviewId}")
+	public ModelAndView readReviewAdmin(@PathVariable Long reviewId) {
+//		reviewId=2L;
+		ClassReview review = reviewService.selectByReviewId(reviewId);
+		
+		return new ModelAndView("admin/board/review/reviewDetail", "review", review);
+	}
+	
+	/**
+	 * 클래스 후기 등록 폼
+	 * */
+//	@RequestMapping("/main/mypage/review/writeForm")
+//	public String insertForm(Long classId, Model model) {
+//		
+////		classId=2L;
+//		model.addAttribute("classId", classId);
+//		
+//		return "main/mypage/review/insertReview";
+//	}
+	
+	/**
+	 * 클래스 후기 등록 폼(마이페이지에서 작성)
+	 * */
+	@RequestMapping("/main/mypage/writeReview")
 	public void insertForm() {
 		
 		
 	}
 	
 	/**
-	 * 클래스 후기 등록 (별점)
+	 * 클래스 후기 등록
 	 * */
-	@RequestMapping("/insert")
+	@RequestMapping("/main/mypage/review/insert")
 	public void insertReview(ClassReview review, MultipartFile file, Long classId) throws Exception{
 		
 		review.setClasses(new Classes(classId));
@@ -179,18 +224,18 @@ public class ClassReviewController {
 	/**
 	 * 클래스 후기 수정 폼
 	 * */
-	@RequestMapping("/updateForm")
+	@RequestMapping("/review/updateForm")
 	public ModelAndView updateReviewForm(Long reviewId) {
-//		reviewId=11L;
+		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
-		return new ModelAndView("main/board/review/updateForm", "review", review);
+		return new ModelAndView("main/mypage/reviewUpdate", "review", review);
 	}
 	
 	/**
 	 * 클래스 후기 수정
 	 * */
-	@RequestMapping("/update")
+	@RequestMapping("/main/mypage/review/update")
 	public String updateReview(ClassReview review, MultipartFile file) throws Exception{
 		if(file.getSize()>0) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
@@ -200,30 +245,37 @@ public class ClassReviewController {
 		}		
 		ClassReview newReview = reviewService.update(review);
 		
-		return "redirect:/main/board/review/read/" + newReview.getReviewId();
+		return "redirect:/main/mypage/review/read/" + newReview.getReviewId();
 	}
-	
 	/**
 	 * 클래스 후기 삭제
 	 * */
-	@RequestMapping("/delete")
+	@RequestMapping("/review/delete")
 	@ResponseBody
-	public void deleteReview(Long reviewId) {
+	public String deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
 		
-		
+		return "redirect:/main/board/review/list";
 	}
 	
 	/**
 	 * 클래스 후기 블라인드 처리
 	 * */
-	@RequestMapping("/blind")
+	@RequestMapping("/main/board/review/blind")
 	@ResponseBody
 	public String reviewBlind(Long reviewId, String reviewBlindState) {
 		
 		reviewService.updateBlind(reviewId, reviewBlindState);
 		
 		return "redirect:/";
+	}
+	
+	/**
+	 * 학생 아이디로 수강한 클래스 목록 가져오기
+	 * */
+	@RequestMapping("/main/mypage/classList")
+	public List<Classes> selectStudentClassList(String studentId){
+		return null;
 	}
 	
 	/**

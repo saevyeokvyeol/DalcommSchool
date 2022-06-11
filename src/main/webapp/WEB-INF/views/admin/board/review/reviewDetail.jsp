@@ -6,12 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>학생 마이페이지용 후기 리스트</title>
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
-
+<title>클래스 후기 상세보기입니다.</title>
 <style type="text/css">
 	fieldset input[type=radio]{display: none;}
 	fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
@@ -23,42 +18,100 @@
 	
 	textarea{width:100%; height:6.25em; resize:none;}
 </style>
-
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
 $(function(){
+// 	alert($("#reviewId").val());
+
+	/*
+	블라인드 처리
+	*/
+	$("button").click(function(){
+			var target =$(this).attr("name")
+			
+			$.ajax({
+	        url: "${pageContext.request.contextPath}/main/board/review/blind" , //서버요청주소
+	        type: "post" , //요청방식 (get,post...)
+	        data: {"${_csrf.parameterName}": "${_csrf.token}", reviewId: target, reviewBlindState: 'true'} , //서버에게 보낼 데이터정보(parameter정보)
+	        
+	        success: function(result){
+	            alert("블라인드 처리되었습니다.")
+	            location.reload()
+	        },
 	
+	        error: function(err){//실패했을 때 콜백함수
+	            alert(err+"오류가 발생했습니다.")
+	        } 
+	
+	        })
+		})
+	
+	$("#deleteBtn").on("click",function(){
+		var result = confirm("정말로 삭제하시겠습니까?");
+		
+		if(result){
+			$.ajax({
+				url:"/main/board/review/delete",
+				data:{reviewId : $("#reviewId").val(),
+					  "${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				type:"post",
+				success: function(){
+					 alert("삭제되었습니다.")
+				},
+				error: function(err){
+					alert(err + "에러 발생")
+				}
+			})
+		}else{
+			
+		}
+	})
+	
+	$("#updateBtn").on("click",function(){
+		$("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/review/updateForm");
+		$("#requestForm").submit();
+	})
+	
+// 	$("#updateBtn").on("click",function(){
+// 		alert(${review.reviewId} + "번 게시물 수정 페이지로 이동합니다.")
+		
+// 		$.ajax({
+// 			url:"/main/board/review/updateForm",
+// 			data:{reviewId : $("#reviewId").val(),
+// 				"${_csrf.parameterName}" : "${_csrf.token}"	
+// 			},
+// 			type:"post",
+// 			success: function(){
+// 				alert("수정페이지로 이동하는 데 성공하였습니다.")
+// 			},
+// 			error: function(err){
+// 				alert(err + "에러 발생")
+// 			}
+// 		})
+// 	})
 })
 </script>
 </head>
 <body>
-<h2>내가 쓴 후기</h2>
-	 <table>
-	  <thead>
-	    <tr>
-<!-- 	      <th>아이디</th> -->
-		  <th>클래스 이름</th>
-	      <th>별점</th>
-	      <th>내용</th>
-	      <th>작성 날짜</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <c:choose>
-	      <c:when test="${empty requestScope.classReviews.content}">
-	        <tr>
-	          <th colspan="4">
-	            <span>등록된 후기가 없습니다.</span>
-	          </th>
-	        </tr>
-	      </c:when>
-	      <c:otherwise>
-	        <c:forEach items="${classReviews.content}" var="review">
-	          <div id="review">
-	          <tr>
-<%-- 	            <td><span>${review.student.studentId}</span></td> --%>
-				<td><span>${review.classes.className}</span>
-	            <td>
+관리자용 클래스 후기 상세보기
+      
+	        <table>
+				<tr>
+			    	<th>글번호</th>
+			    	<td>${review.reviewId}</td>
+			  	</tr>
+			  	<tr>
+			    	<th>작성자</th>
+			    	<td>${review.student.studentId}</td>
+			  	</tr>
+			  	<tr>
+			    	<th>별점</th>
+			    	<td>
 			    	<fieldset>
 					  <c:choose>
 					  	<c:when test="${review.reviewRate==1}">
@@ -98,61 +151,52 @@ $(function(){
 					  	</c:when>
 					  </c:choose>
 					</fieldset>
-				</td>
-	            <td>
-	            	<c:choose>
-	            		<c:when test="${review.reviewBlindState eq 'true'}">
-	            			<a>이 후기는 비공개 상태입니다.</a>
-	            		</c:when>
-	            		<c:when test="${review.reviewBlindState eq 'false'}">
-	            			<a href="${pageContext.request.contextPath}/main/mypage/review/read/${review.reviewId}" id="readReview" >${review.reviewContent}</a>
-	            		</c:when>
-	            	</c:choose>
-	            </td>
-<%-- 	            <td><a href="${pageContext.request.contextPath}/main/mypage/review/read/${review.reviewId}" id="readReview" >${review.reviewContent}</a></td> --%>
-	            <input type="hidden" name="reviewId" value="${reviewId}">
-	            <td><span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
-	            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
-	          </tr>
-			  </div>
-	        </c:forEach>
-	      </c:otherwise>
-	    </c:choose>
-	  </tbody>
-	  <tfoot>
-		<input type="button" value="후기 남기기" onclick="location.href='${pageContext.request.contextPath}/main/mypage/review/writeForm'">
-	  </tfoot>
-	</table>
-	
-	<!-- 페이징 처리 -->
-	<div>
-	  <nav class="pagination-container">
-	    <div class="pagination">
-	      <c:set var="doneLoop" value="false"/>
-	      		<c:if test="${(startPage-blockCount)>0 }">
-	      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${startPage-1}">이전</a>	      		
-	      		</c:if>
-	      		
-	      		<span class="pagination-inner">
-	      		  <c:forEach var='i' begin="${startPage}" end="${(startPage-1)+blockCount}">
-	      		    
-	      		    <c:if test="${(i-1)>=classReviews.getTotalPages()}">
-	      		      <c:set var="doneLoop" value="true"/>
-	      		    </c:if>
-	      		    <c:if test="${not doneLoop}">
-	      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${i}">${i}</a>
-	      		    </c:if>
-	      		    
-	      		  </c:forEach>
-	      		</span>
-	      		
-	      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}">
-	      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${startPage+blockCount}">다음</a>
-	      		</c:if>
-	    </div>
-	  
-	  </nav>
-	</div>
-	
+					</td>
+			  	</tr>
+			  	<tr>
+			    	<th>작성 날짜</th>
+			    	<td>
+			    		<fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="insertDate"/>
+			    		<fmt:formatDate value="${insertDate}" pattern="yyyy-mm-dd"/>
+			    	</td>
+			  	</tr>
+			  	<tr>
+			    	<th>수정 날짜</th>
+			    	<td>
+			    		<fmt:parseDate value="${review.reviewUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/>
+			    		<fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/>
+			    	</td>
+			  	</tr>
+			  	<tr>
+				     <td colspan="2" style="text-align: center;">
+						<img alt="" src="${pageContext.request.contextPath}/img/classReview/${requestScope.review.reviewImg}">
+			<%-- 			<span style="font-size:9pt;"><b><pre>${requestScope.review.reviewContent}</pre></b></span> --%>
+				     </td>
+				</tr>
+				
+			  	<tr>
+			    	<th>내용</th>
+			    	<td>${review.reviewContent}</td>
+			  	</tr>
+			
+			  	<form id="requestForm">
+			  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+<%-- 			  	  <td><span>${review.reviewBlindState}</span></td> --%>
+		            <td>
+                   	  <c:choose>
+                         <c:when test="${review.reviewBlindState eq 'false'}">
+                             <button type="button" class="btn btn-danger" name="${review.reviewId}" value="false">게시글 숨기기</button>
+                         </c:when>
+                         <c:when test="${review.reviewBlindState eq 'true'}">
+                             <button type="button" class="btn btn-secondary" name="${review.reviewId}" value="true">블라인드 처리됨</button>
+                         </c:when>
+                      </c:choose>
+	                </td>
+				  	<input type="button" id="cancelBtn" value="취소">
+				</form>
+			
+			</table>
+
+
 </body>
 </html>
