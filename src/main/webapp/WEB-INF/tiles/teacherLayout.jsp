@@ -16,7 +16,11 @@
 			<tiles:insertAttribute name="header"/>
 		</header>
 		<section>
-			<tiles:insertAttribute name="content"/>
+			<div id="teacher-main">
+				<div id="teacher-main-content">
+					<tiles:insertAttribute name="content"/>
+				</div>
+			</div>
 		</section>
 	</body>
 </html>

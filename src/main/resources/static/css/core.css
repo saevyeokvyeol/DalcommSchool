@@ -228,7 +228,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #5f61e6;
+  color: #EB5353;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -15084,6 +15084,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 .menu-vertical .menu-inner > .menu-item .menu-link {
   margin: 0rem 1rem;
+  border-radius: 0.375rem;
 }
 .menu-vertical .menu-item .menu-link,
 .menu-vertical .menu-block {
@@ -15292,7 +15293,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 .layout-navbar.navbar-detached {
   width: calc(100% - (1.625rem * 2));
-  margin: 0.75rem auto 0;
+  margin: 20px auto 0;
   border-radius: 0.375rem;
   padding: 0 1.5rem;
 }

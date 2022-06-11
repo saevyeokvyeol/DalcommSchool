@@ -7,6 +7,10 @@
 	font-weight: 450;
 }
 
+a {
+	text-decoration: none;
+}
+
 /* 헤더 */
 #index-header {
 	width: 100%; position: fixed; z-index: 1040; 
@@ -51,7 +55,7 @@
 }
 
 #inner-main-header a {
-	font-size: 17px; font-weight: 700; text-decoration: none; color: #690000;
+	font-size: 17px; font-weight: 700; color: #690000;
 }
 
 #inner-main-header a:hover {
@@ -68,7 +72,7 @@
 }
 
 #inner-main-footer {
-	 margin: 0 auto; max-width: 1200px; height: 240px; padding: 50px 0;
+	 margin: 0 auto; max-width: 1200px; padding: 30px 0;
 	 display: flex; justify-content: space-between;
 }
 
@@ -78,7 +82,7 @@
 
 #main-footer span {
 	display: table-cell;
-	color: #b2b2b2; font-size: 15px; font-weight: 300; text-decoration: none; vertical-align: middle;
+	color: #b2b2b2; font-size: 15px; font-weight: 300; vertical-align: middle;
 }
 
 #main-footer span.incInfo {
@@ -94,12 +98,12 @@
 }
 
 #sidebar-layout {
-	margin: 150px auto 100px; max-width: 1200px; position: relative;
+	margin: 150px auto 80px; max-width: 1200px; min-height: 507px; position: relative;
 	display: flex; justify-content: space-between;
 }
 
 #sidebar {
-	width: 180px;
+	width: 180px; color: #333;
 }
 
 #sidebar #inner-sidebar {
@@ -116,15 +120,11 @@
 }
 
 #sidebar ul {
-	margin: 10px 0 30px;
+	margin: 5px 0 20px;
 }
 
 #sidebar li {
 	margin: 5px 0; list-style: none;
-}
-
-#sidebar a {
-	text-decoration: none;
 }
 
 #sidebar-content {
@@ -146,19 +146,15 @@
 }
 
 .classList {
-	display: flex; justify-content: space-between; flex-wrap: wrap;
+	display: flex; justify-content: flex-start; flex-wrap: wrap;
 }
 
 .classBox {
-	 padding: 20px 0;
+	 padding: 10px;
 }
 
 .classBox .classBoxImg {
 	width: 380px; height: 253px; border-radius: 10px; overflow: hidden;
-}
-
-.classBox a {
-	text-decoration: none;
 }
 
 .classBox a:hover {
@@ -203,10 +199,6 @@
 
 .classMore {
 	text-align: right; font-size: 18px;
-}
-
-.classMore a {
-	text-decoration: none;
 }
 
 .title {
@@ -298,10 +290,6 @@
 	vertical-align: middle;
 }
 
-#bookForm #order {
-	display: block; width: 100%;
-}
-
 #bookComplete {
 	text-align: center; margin: 50px 100px; padding: 50px;
 }
@@ -312,4 +300,97 @@
 
 #bookComplete .bookComplete-btn {
 	margin: 10px;
+}
+
+#bookListBox {
+	padding: 0 0 30px;
+}
+
+#bookListBox #none {
+	padding: 100px;
+}
+
+#bookListBox #none h4 {
+	font-weight: 600; color: #555; padding: 20px;
+}
+
+#bookListBox #searchBox select {
+	display: inline; width: 200px;
+}
+
+#bookListBox .table {
+	text-align: center; 
+}
+
+#bookListBox .table th, #bookListBox .table td {
+	height: 60px; vertical-align: middle; font-size: 16px;
+}
+
+#bookListBox .table th {
+	font-weight: 700px;
+}
+
+#sidebar-content #bookForm > .bookInfoBox > div {
+	width: 470px; padding: 10px;
+}
+
+.bookerInfo td {
+	height: 50px; vertical-align: middle; font-size: 16px;
+}
+
+#flex {
+	display: flex; justify-content: space-around; 
+}
+
+/* 선생님 관리 페이지 */
+#teacher-main {
+    padding-left: 260px;
+}
+
+#teacher-main-content {
+	width: 1384px;
+    margin: 30px auto;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 0.375rem 0.25rem rgb(161 172 184 / 15%);
+}
+
+#navbar-collapse h4 {
+	font-weight: 700; margin: auto 30px;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+.teacherClassBox {
+	 padding: 5px; margin: 5px; border-radius: 5px; background-color: white;
+}
+
+.teacherClassBox .classBoxImg {
+	width: 300px; height: 200px; border-radius: 10px; overflow: hidden;
+}
+
+.teacherClassBox .classBoxImg img {
+	width: 300px; height: 200px; transform: scale(1.0); transition: transform .5s;
+}
+
+.teacherClassBox .classBoxImg img:hover {
+    transform: scale(1.2); transition: transform .5s;
+}
+
+.teacherClassBox .classBoxContent {
+	padding: 10px 0;
+}
+
+.teacherClassBox .classBoxName {
+	display: flex; justify-content: space-between; line-height: 40px;
+}
+
+.teacherClassBox .classBoxName span {
+	font-weight: 700; color: #333;
+}
+
+.teacherClassBox .classBoxInfo {
+	display: flex; justify-content: space-between;
 }
