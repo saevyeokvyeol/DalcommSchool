@@ -1,5 +1,6 @@
 package dcsc.mvc.controller.board;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -7,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.FaqCategory;
 import dcsc.mvc.service.board.FaqService;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -36,7 +39,6 @@ public class FaqController {
 	@RequestMapping("/faqCategoryList")
 	private String faqCategoryList(Model model,Long faqCategoryId) {
 		
-		System.out.println(faqCategoryId);
 		List<Faq> faqlist=faqService.selectByfaqCategoryId(faqCategoryId);
 		model.addAttribute("faqlist",faqlist);
 		return "redirect:/admin/board/FAQ/faqList";
@@ -47,6 +49,7 @@ public class FaqController {
 	 * */
 	@RequestMapping("/write")
 	public String write() {
+		System.out.println();
 		
 		return "admin/board/FAQ/faqWrite";
 	}
@@ -55,7 +58,14 @@ public class FaqController {
 	 * 등록하기
 	 * */
 	@RequestMapping("/faqWrite")
-	public String insertFAQ(Faq faq, FaqCategory faqCategory) {
+	public String insertFAQ(Faq faq, FaqCategory faqCategory,MultipartFile file) throws Exception {
+		System.out.println("dddddddddddddd");
+		System.out.println("faq + faqCategory = " + faq + faqCategory);
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.FAQ_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			faq.setFaqImg(file.getOriginalFilename());
+		}
 		faq.setFaqCategory(faqCategory);
 		faqService.insertFAQ(faq);
 		
@@ -88,12 +98,18 @@ public class FaqController {
 	 * 수정하기
 	 * */
 	@RequestMapping("/faqUpdate")
-	public String updateFAQ(Faq faq,FaqCategory faqCategory) {
-		faq.setFaqCategory(faqCategory);
-		faqService.updateFAQ(faq, faqCategory);
-	System.out.println("faqCategory" + faqCategory);
+	public ModelAndView updateFAQ(Faq faq,FaqCategory faqCategory, MultipartFile file)throws Exception {
 		
-		return "redirect:/admin/board/FAQ/faqRead/" + faq.getFaqNo();
+		  if(file.getSize() > 0) { 
+			 File img = new File(ImageLink.FAQ_IMG + file.getOriginalFilename()); 
+			 file.transferTo(img);
+			 faq.setFaqImg(file.getOriginalFilename()); 
+			 
+			 } 
+		  	faqService.updateFAQ(faq, faqCategory);
+		 
+		return new ModelAndView ("admin/board/FAQ/faqRead","faq",faq) ;
+		
 	}
 	
 	/**
