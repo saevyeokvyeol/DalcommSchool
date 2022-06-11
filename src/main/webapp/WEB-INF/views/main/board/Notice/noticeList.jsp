@@ -31,7 +31,7 @@ a{
 	<h5> 고객센터 > 공지사항 </h5>
 	
 	
-	<form action="${pageContext.request.contextPath}/admin/board/FAQ/noticeSearch" method="post">
+	<form action="${pageContext.request.contextPath}/main/board/Notice/noticeSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <input type="text" id="keyword" name="keyword">
    	  <input type="submit" id="search" value="검색">
@@ -46,15 +46,14 @@ a{
              <th>글번호</th>
              <th>작성자</th>
              <th>글제목</th>
-             <th>카테고리</th>
              <th>작성일</th>
-            
+             <th>조회수</th>
             </tr>
         </thead>
 	
 	<tbody>
 	<c:choose>
-	<c:when test="${empty requestScope.faqlist}">
+	<c:when test="${empty requestScope.noList}">
 		<tr>
           <th colspan="10">
           <span> 조회가능한 이벤트가 없습니다.</span>
@@ -62,27 +61,26 @@ a{
        </tr>
 	</c:when>
 	<c:otherwise>
-		<c:forEach items="${requestScope.faqlist.content}" var="notice">
+		<c:forEach items="${requestScope.noList.content}" var="notice">
 			<tr>
 				<td>
-					${faq.faqNo}
+					${notice.noticeNo}
 				</td>
 				<td>
 					관리자
 				</td>
 				<td>
-				<a href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
-				   ${faq.faqTitle}
+				<a href="${pageContext.request.contextPath}/main/board/Notice/noticeRead/${notice.noticeNo}">
+				   ${notice.noticeTitle}
 				</a>
 				</td>
 				<td>
-					${faq.faqCategory.faqCategoryName}
-				</td>
-				<td>
-					<fmt:parseDate value="${faq.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+					<fmt:parseDate value="${notice.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				</td>
-				
+				<td>
+					${notice.noticeViews}
+				</td>
 			</tr>		
 			</c:forEach>
 		</c:otherwise>
@@ -98,34 +96,29 @@ a{
 	<c:set var="doneLoop" value="false"/>
 		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${startPage-1}">PREV</a>
+		      <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/Notice/noticeList?nowPage=${startPage-1}">PREV</a>
 		  </c:if>
 		  
 		<span class="pagination-inner"> 
 		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
 		  
-			    <c:if test="${(i-1)>=faqlist.getTotalPages()}">
+			    <c:if test="${(i-1)>=noList.getTotalPages()}">
 			       <c:set var="doneLoop" value="true"/>
 			    </c:if> 
 		    
 		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${i}">${i}</a> 
+		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${i}">${i}</a> 
 		  </c:if>
 		   
 		</c:forEach>
 		</span> 
 				
-		 <c:if test="${(startPage+blockCount)<=faqlist.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage+blockCount}">&nbsp;NEXT</a>
+		 <c:if test="${(startPage+blockCount)<=noList.getTotalPages()}">
+		     <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/Notice/noticeList?nowPage=${startPage+blockCount}">&nbsp;NEXT</a>
 		 </c:if>
 		</div>
 	</nav>  
 </div>
-
-	<div align=right>
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/FAQ/write" role="button">글쓰기</a></div>
-	</div>
-	
 
 </body>
 

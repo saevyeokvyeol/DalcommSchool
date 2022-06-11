@@ -43,6 +43,32 @@
 	}
 
 </style>
+
+
+<script type="text/javascript">
+
+	function loginCheck() {
+		if(!document.login.id.value){
+			
+			alert("아이디를 입력해 주세요");
+			document.login.id.focus();
+			return;
+			
+		} if (!document.login.pwd.value) {
+			
+			alert("비밀번호를 입력해 주세요");
+			document.login.pwd.focus();
+			return;
+		}
+		event.preventDefault();
+		document.login.submit();
+	}
+
+</script>
+
+
+
+
 </head>
 <body>
 
@@ -82,10 +108,10 @@
               <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                <div class="loginbox-textbox"> 
-                   아이디<br><input type="text" name="id" id="id" class="form-control" value="${id}">
+                   아이디<br><input type="text" name="id" id="id" class="form-control">
                </div>
                <div class="loginbox-textbox">
-                   비밀번호<br><input type="password" name="pwd" id="pwd" class="form-control" value="${pwd}">
+                   비밀번호<br><input type="password" name="pwd" id="pwd" class="form-control">
                </div>
                <span><br>
 				<c:if test="${sessionScope.msg != null}">
@@ -100,7 +126,7 @@
                    <a href="${pageContext.request.contextPath}/main/login/findPwd">비밀번호 찾기</a>
                </div>
                <div class="loginbox-submit">
-                   <input type="submit" id="login" class="btn btn-primary btn-block" value="로그인">
+                   <input type="button" id="login" class="btn btn-primary btn-block" value="로그인" onclick="loginCheck()">
                </div>
                <div class="loginbox-signup">
                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&ensp;or&ensp;

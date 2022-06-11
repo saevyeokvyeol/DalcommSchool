@@ -2,6 +2,9 @@ package dcsc.mvc.service.board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.FaqCategory;
 
@@ -36,15 +39,22 @@ public interface FaqService {
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능
+	 * @return List<FAQ> - 유저
+	 * */
+	List<Faq> userselectAllfqa();
+	
+	/**
+	 * FAQ 게시판 전체 조회 기능
 	 * @return List<FAQ>
 	 * */
-	List<Faq> selectAllfqa();
+	Page<Faq> selectAllfqa(Pageable pageable);
 	
 	
 	/**
-	 * 카테고리 조회하기
+	 * 카테고리 조회하기 
 	 * */
 	List<FaqCategory> selectfaqCategory();
+	
 	
 	/**
 	 * FAQ 게시판 검색 기능

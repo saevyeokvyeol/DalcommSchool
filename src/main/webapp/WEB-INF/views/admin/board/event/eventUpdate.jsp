@@ -26,6 +26,7 @@
     <!-- include plugin -->
     <script src="[folder where script is located]/[plugin script].js"></script>
     
+    
     <script type="text/javascript">
     	$(document).ready(function() {
 			$('#summernote').summernote({
@@ -38,7 +39,17 @@
 			
 			});
 		});
-    	
+
+    </script>
+    <script type="text/javascript">
+    
+	$(function() {
+		$("#updateForm").submit(function(event){
+				alert("게시글이 수정되었습니다.")
+			}
+		})
+	});
+	
     </script>
 </head>
 <body>
@@ -62,7 +73,7 @@
             제목
         </td>
         <td>
-			<input type=text name="eventTitle" size="30" value="${event.eventTitle}">
+			<input type=text name="eventTitle" value="${event.eventTitle}">
 		</td>
     </tr>
     <tr>

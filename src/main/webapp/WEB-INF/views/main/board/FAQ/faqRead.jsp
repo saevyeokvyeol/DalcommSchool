@@ -16,22 +16,7 @@
 
 <script type="text/javascript">
 
-	function clickDel(faqInfo) {
-		faqInfo.action = "${pageContext.request.contextPath}/admin/board/FAQ/deleteFAQ";
-		faqInfo.method = "post";
-		faqInfo.submit();
-	}
-
-	$(function() {
-
-		$("input[value=수정하기]").click(function() {
-
-							$("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/updateForm");
-							$("#requestForm").submit();
-
-       })
-
-	});
+	
 </script>
 <title>Insert title here</title>
 
@@ -92,19 +77,15 @@
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 					<input type=hidden name="faqNo" value="${faq.faqNo}">
 					
-					<input type=button class="btn btn-primary" value="수정하기" >
 				</form>
 			</div>
 		</td>
 		<td>
-	        <div class="col-6 col-md-4">
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
-			</div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" role="button" >목록으로</a>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqList" role="button" >목록으로</a>
 		</td>
 	</tr>
     </table>
@@ -114,25 +95,6 @@
 		<input type=hidden name="faqNo" value="${faq.faqNo}">
 	</form>
     
-
-    <!-- Modal -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">게시물 삭제</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	       게시물을 정말 삭제하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" onclick="clickDel(faqInfo)">삭제하기</button>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
     </div>
     
 

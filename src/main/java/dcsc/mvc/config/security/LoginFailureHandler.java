@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,7 +62,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 
 		}
 		
-		new DefaultRedirectStrategy().sendRedirect(request, response, "/");
+		new DefaultRedirectStrategy().sendRedirect(request, response, "/");	
+		
 		//url 한글 인코딩
 		//errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
 		//request.setAttribute("errorMessage", errorMessage);

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -43,8 +43,8 @@ $(function() {
 <body>
 
 
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/FAQ/faqWrite"  >
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/FAQ/faqWrite?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" >
+
 <table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
 
     <tr>
@@ -84,7 +84,7 @@ $(function() {
             <p align="right"><b><span style="font-size:9pt;">파일 첨부</span></b></p>
         </td>
         <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type="file" name="faqImg" size="30"></span></b></td>
+		<input type="file" name="file" size="30"></span></b></td>
     </tr>
    
     <tr>
