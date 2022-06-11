@@ -44,17 +44,18 @@ public interface NoticeService {
 	 * */
 	List<Notice> selectAllNotice();
 	
+	/**
+	 * 공지사항 게시판 조회 - 페이징 처리
+	 * */
+	Page<Notice> selectAllNotice(Pageable pageable) ;
 	
 	/**
 	 * 공지사항 게시판 검색 기능(제목/내용)(강사&회원)
 	 * @param String keyword
 	 * @return List<Notice>
 	 * */
-	List<Notice> selectByKeyword(String keyfield, String keyword);
+	Page<Notice> selectByKeyword(String keyword, Pageable pageable);
 	
-	/**
-	 * 공지사항 게시판 조회 - 페이징 처리
-	 * */
-	Page<Notice> selectAllNotice(Pageable pageable) ;
+
 	
 }

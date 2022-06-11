@@ -42,10 +42,6 @@
   </div>
 </nav>
 
-<%-- <form action="${pageContext.request.contextPath}/admin/board/Notice/noticeSearch" method="post">
-	       <input type="text" id="keyword" name="keyword">
-     	  <input type="submit" id="search" value="검색">
-    </form> --%>
 <hr>
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -81,6 +77,7 @@
 					<div id="flush-collapseOne${faq.faqNo}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 						<div class="accordion-body">
 							<a href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
+								<img alt="" src="${pageContext.request.contextPath}/img/FAQ/${requestScope.FAQ.faqImg}">
 								${faq.faqContent}
 								<p>
 							</a>
