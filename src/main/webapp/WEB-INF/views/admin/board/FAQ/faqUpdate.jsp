@@ -16,7 +16,7 @@
 $(function() {
 	function selectfaqCategory() {
 		$.ajax({
-			url: "/admin/board/FAQ/faqCategory",
+			url: "/admin/board/main/faqCategory",
 			type: "post",
 			data: {"${_csrf.parameterName}": "${_csrf.token}"},
 			dataType: "json",
@@ -41,7 +41,7 @@ $(function() {
 
 </head>
 <body>
-<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/FAQ/faqUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/main/faqUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
     <input type='hidden' name=faqNo value="${faq.faqNo}">
 	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>

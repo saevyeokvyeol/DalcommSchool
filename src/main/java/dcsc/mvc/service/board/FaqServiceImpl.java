@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -71,11 +73,16 @@ public class FaqServiceImpl implements FaqService {
 			return faq;
 	}
 
-
 	@Override
-	public List<Faq> selectAllfqa() {
+	public List<Faq> userselectAllfqa() {
 		return faqRepository.findAll();
 	}
+
+	@Override
+	public Page<Faq> selectAllfqa(Pageable pageable) {
+		return faqRepository.findAll(pageable);
+	}
+
 
 	@Override
 	public List<Faq> selectBykeyword(String keyword) {
@@ -112,6 +119,8 @@ public class FaqServiceImpl implements FaqService {
 		
 		return list;
 	}
+
+	
 	
 
 }
