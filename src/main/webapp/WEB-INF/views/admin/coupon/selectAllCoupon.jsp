@@ -113,7 +113,7 @@
 				</thead>
 				<tbody>
 					<c:choose>
-	                    <c:when test ="${empty requestScope.couponList}">
+	                    <c:when test ="${empty requestScope.couponList.content}">
 	                        <tr>
 	                            <th colspan="10">
 	                                <span> 등록된 쿠폰이 없습니다.</span>

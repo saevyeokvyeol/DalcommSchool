@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA :상세보기</title>
+<title>관리자 QnA :상세보기</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -49,7 +49,7 @@
         <table>
         	<tr>
                 <th>작성자</th>
-                <td>${qna.student.studentId}</td>
+                <td><span>${qna.student.studentId}</span></td>
                 <th>등록일자</th>
                 <td>
                 	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
