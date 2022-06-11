@@ -62,7 +62,7 @@
 				</thead>
 				<tbody>
 					<c:choose>
-	                    <c:when test ="${empty requestScope.adjustList}">
+	                    <c:when test ="${empty requestScope.adjustList.content}">
 	                        <tr>
 	                            <th colspan="8">
 	                                <span> 정산 신청한 내역이 없습니다.</span>

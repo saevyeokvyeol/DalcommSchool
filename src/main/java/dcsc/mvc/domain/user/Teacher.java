@@ -48,9 +48,9 @@ public class Teacher {
 	@CreationTimestamp
 	private LocalDateTime teacherInsertDate;
 	
-	private String teacherQuit;
+	private String teacherQuit = "F";
 
-	private String role = "TEACHER";
+	private String role = "ROLE_TEACHER";
 	
 	@OneToOne(mappedBy = "teacher")
 	@JsonIgnore

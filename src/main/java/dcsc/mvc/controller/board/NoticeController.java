@@ -37,9 +37,9 @@ public class NoticeController {
 		 
 		//페이징 처리하기
 		 Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "noticeNo");
-         Page<Notice> pageList = noticeService.selectAllNotice(page);
+         Page<Notice> noList = noticeService.selectAllNotice(page);
 		 
-		 model.addAttribute("pageList",pageList);
+		 model.addAttribute("noList",noList);
 		 
 		 
 		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
@@ -103,7 +103,13 @@ public class NoticeController {
 	 * */
 	
 	@RequestMapping("/noticeUpdate")
-	public ModelAndView updateNotice(Notice notice) {
+	public ModelAndView updateNotice(Notice notice,MultipartFile file)throws Exception {
+		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.NOTICE_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			notice.setNoticeImg(file.getOriginalFilename());
+		}
 		noticeService.updateNotice(notice);
 		
 		return new ModelAndView("admin/board/Notice/noticeRead","notice",notice);
@@ -114,6 +120,7 @@ public class NoticeController {
 	 * */
 	@RequestMapping("/deleteNotice")
 	public String deleteNotice(Long noticeNo) {
+		
 		noticeService.deleteNotice(noticeNo);
 		return "redirect:/admin/board/Notice/noticeList";
 	}
@@ -122,10 +129,21 @@ public class NoticeController {
 	 * 검색 하기
 	 * */
 	@RequestMapping("/noticeSearch")
-	public ModelAndView selectByKeyword(String keyfield , String keyword) {
-		System.out.println("keyfield : " + keyfield +" / " + "keyword : "+ keyword);
-		List<Notice> list = noticeService.selectByKeyword(keyfield, keyword);
+	public String selectByKeyword(String keyword,Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
-		return new ModelAndView("/admin/board/Notice/noticeList","notice",list);
+		//페이징 처리
+		 Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "noticeNo");
+         Page<Notice> noList = noticeService.selectByKeyword(keyword,page);
+		 
+		 model.addAttribute("noList",noList);
+		 
+		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
+		 int startPage = nowPage-temp;
+		 
+		 model.addAttribute("blockCount", BLOCK_COUNT);
+		 model.addAttribute("startPage", startPage);
+		 model.addAttribute("nowPage", nowPage);
+		 
+		return "admin/board/Notice/noticeList";
 	}
 }
