@@ -81,7 +81,9 @@ function sample6_execDaumPostcode() {
 	
 <script type="text/javascript">
 
-
+	/*
+	공방 인프라 리스트 가져오기 
+ 	*/
 	$(function(){
 
 		function selectPlaceInfra(){

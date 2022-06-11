@@ -295,8 +295,14 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 	
 	/**
-	 * 
+	 * 공방 아이디로 공방 인프라 가져오기
 	 * */
+	@Override
+	public List<PlaceInfra> selectInfraByPlaceId(Long placeId) {
+		
+		List<PlaceInfra> list = placeInfraRep.findByPlacePlaceId(placeId);
+		return list;
+	}
 	
 	/**
 	 * 강사 정보로 강사 검색하기

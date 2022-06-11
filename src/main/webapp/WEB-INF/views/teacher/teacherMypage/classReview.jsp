@@ -18,12 +18,24 @@ fieldset{display: inline-block; direction: rtl; border: 0;}
 .star:hover~label{text-shadow: 0 0 0 #EB5353;} 
 	
 textarea{width:100%; height:6.25em; resize:none;} 
+
+table{margin: auto; width: 1200px;}
+
 </style>
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+$(function(){
+	function readReview(){
+		
+	}
+})
+</script>
 </head>
 <body>
 <h2>내 클래스 후기 리스트!</h2>
@@ -39,7 +51,7 @@ textarea{width:100%; height:6.25em; resize:none;}
 	  </thead>
 	  <tbody>
 	    <c:choose>
-	      <c:when test="${empty requestScope.classReviews}" >
+	      <c:when test="${empty requestScope.classReviews.content}" >
 	        <tr>
 	          <th>
 	            <span>등록된 후기가 없습니다.</span>
