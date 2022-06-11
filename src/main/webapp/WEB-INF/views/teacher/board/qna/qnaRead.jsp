@@ -7,13 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>선생님 : Q&A 상세보기</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<title>선생님 : Q&A 상세보기</title>
 
 <script type="text/javascript">
 	$(function() {
@@ -33,9 +34,15 @@
 </head>
 <body>
 
-    <div>
+<div class="main-content">
+	
+	<div>
         <table>
-            
+        
+            <tr>
+            	<th>클래스 ID</th>
+                <td>${qna.classes.classId}</td>
+            </tr>
         	<tr>
                 <th>작성자</th>
                 <td>${qna.student.studentId}</td>
@@ -49,8 +56,6 @@
                 	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
                 	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
                 </td>
-                <th>클래스 아이디</th>
-                <td>${qna.classes.classId}</td>
             </tr>
             <tr>
                 <th>제목</th>
@@ -121,12 +126,17 @@
         	
             
         </table>
+        
+    	
     </div>
+    
     <hr>
     
    
-	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaList">목록으로 돌아가기</a>&gt;</span></div>
-
+	<div align=right><span>&lt;<a href="${pageContext.request.contextPath}/teacher/teacherMypage/qnaListAll">목록으로 돌아가기</a>&gt;</span></div>
+	
+    
+</div>
 
 </body>
 </html>

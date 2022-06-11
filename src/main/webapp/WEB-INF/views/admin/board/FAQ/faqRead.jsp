@@ -1,104 +1,139 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
-	
+
 <script type="text/javascript">
-	$(function(){
-	 $("input[value=수정하기]").click(function(){
-		   alert(1)
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/updateForm");
-		   $("#requestForm").submit();
-		   
-	   })
-	
-	   $("input[value=삭제하기]").click(function(){
-		
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/deleteFAQ");
-			   $("#requestForm").submit();
-		  	alert("삭제되었습니다.")
-	   })
-	   
-	})
+
+	function clickDel(faqInfo) {
+		faqInfo.action = "${pageContext.request.contextPath}/admin/board/FAQ/deleteFAQ";
+		faqInfo.method = "post";
+		faqInfo.submit();
+	}
+
+	$(function() {
+
+		$("input[value=수정하기]").click(function() {
+
+							$("#requestForm").attr("action", "${pageContext.request.contextPath}/admin/board/FAQ/updateForm");
+							$("#requestForm").submit();
+
+       })
+
+	});
 </script>
 <title>Insert title here</title>
 
 <head>
 
+<div class="main-content">
 
-
-<table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
-    <tr>
-        <td width="1220" height="20" colspan="4" bgcolor="#00cc00">
-            <p align="center"><font color="white" size="3"><b>
-             게시물 자세히보기</b></font></p>
-        </td>
-    </tr>
-    <tr>
-        <td width="100" height="20" >
-            <p align="right"><b><span style="font-size:9pt;">번호</span></b></p>
-        </td>
-        <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${faq.faqNo}</b></span>
-        </td>
-    </tr>
-     <tr>
-        <td width="100" height="20" >
-            <p align="right"><b><span style="font-size:9pt;">카테고리</span></b></p>
-        </td>
-        <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${faq.faqCategory.faqCategoryName}</b></span>
-        </td>
-    </tr>
-    <tr>
-        
-        <td width="100" height="20" >
-			<p align="right"><b><span style="font-size:9pt;">조회수</span></b></p>
+	<h5> 고객센터 > 공지사항 </h5><br><hr>
+	
+<table align="center" class="table">
+  
+	<tr> 
+		 <td> <!-- 글 제목 -->
+	    	제목
+	    </td>
+	    <td> <!-- 글 제목 -->
+	    	${requestScope.faq.faqTitle}
+	    </td>
+	</tr>
+	<tr> 
+		 <td> <!-- 글 제목 -->
+	    	작성자
+	    </td>
+	    <td> <!-- 글 제목 -->
+	    	관리자
+	    </td>
+	</tr>
+	<tr> 
+		 <td> <!-- 글 제목 -->
+	    	작성일
+	    </td>
+		<td>
+			<fmt:parseDate value="${faq.faqInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+			<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 		</td>
-        <td width="100" height="20">
-			<p><b><span style="font-size:9pt;"></span>${requestScope.board.readnum}</b></p>
-		</td>
-    </tr>
-    <tr>
-        <td width="100" height="20">
-            <p align="right"><b><span style="font-size:9pt;">제목</span></b></p>
+	</tr>
+	<tr> 
+		 <td><!-- 글 제목 -->
+            카테고리
         </td>
-        <td width="450" height="20" colspan="3">
-        	<span style="font-size:9pt;"><b>${requestScope.faq.faqTitle}</b></span>
+        <td>
+        	${faq.faqCategory.faqCategoryName}
         </td>
-    </tr>
-    <tr>
-		<td width="100" height="200" valign="top">
-            <p align="right"><b><span style="font-size:9pt;">내용</span></b></p>
-        </td>
+	</tr>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
-        <td width="450" height="200" valign="top" colspan="3">
-        <span style="font-size:9pt;"><b><pre>${requestScope.faq.faqContent}</pre></b></span></td>
+	<tr>
+	     <td colspan="2" style="text-align: center;">
+			<img alt="" src="${pageContext.request.contextPath}/img/faq/${requestScope.faq.faqImg}">
+			<span style="font-size:9pt;"><b><pre>${requestScope.faq.faqContent}</pre></b></span>
+	     </td>
     </tr>
     
-      <tr>
-        <td height="20" colspan="2" align="center" valign="middle">
-			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-			<form name="requestForm" method="post" id="requestForm">
-				 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<input type=hidden name="faqNo" value="${faq.faqNo}">
-				<input type=button value="수정하기" >
-				<input type=button value="삭제하기" >
-			</form>
+	<tr>
+        <td>
+        <!-- 관리자 버튼 권한-->
+	        <div class="col-6 col-md-4">
+				<form name="requestForm" method="post" id="requestForm">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+					<input type=hidden name="faqNo" value="${faq.faqNo}">
+					
+					<input type=button class="btn btn-primary" value="수정하기" >
+				</form>
+			</div>
 		</td>
-    </tr>
+		<td>
+	        <div class="col-6 col-md-4">
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" role="button" >목록으로</a>
+		</td>
+	</tr>
     </table>
-
-
     
+    <form name="faqInfo" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+		<input type=hidden name="faqNo" value="${faq.faqNo}">
+	</form>
+    
+
+    <!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">게시물 삭제</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	       게시물을 정말 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" onclick="clickDel(faqInfo)">삭제하기</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    </div>
     
 
 </head>

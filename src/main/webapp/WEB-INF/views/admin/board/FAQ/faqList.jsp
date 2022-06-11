@@ -7,6 +7,7 @@
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8"> 
@@ -59,6 +60,7 @@
 					<div id="flush-collapseOne${faq.faqNo}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 						<div class="accordion-body">
 							<a href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
+								<img alt="" src="${pageContext.request.contextPath}/img/faq/${requestScope.faq.faqImg}">
 								${faq.faqContent}
 								<p>
 							</a>
@@ -77,9 +79,9 @@
 					<div id="flush-collapseOne${faq.faqNo}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 						<div class="accordion-body">
 							<a href="${pageContext.request.contextPath}/admin/board/FAQ/faqRead/${faq.faqNo}">
-								<img alt="" src="${pageContext.request.contextPath}/img/FAQ/${requestScope.FAQ.faqImg}">
 								${faq.faqContent}
 								<p>
+								<img alt="" src="${pageContext.request.contextPath}/img/faq/${requestScope.faq.faqImg}">
 							</a>
 						</div>
 
@@ -101,7 +103,6 @@
 
 
 <button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/admin/board/FAQ/write'">등록하기</button>
-<button type="button" class="btn btn-danger" onclick="">삭제</button>
 </head>
 </body>
 

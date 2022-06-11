@@ -12,9 +12,8 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.board.Faq;
-import dcsc.mvc.domain.board.QFaq;
-
 import dcsc.mvc.domain.board.FaqCategory;
+import dcsc.mvc.domain.board.QFaq;
 import dcsc.mvc.repository.board.FAQRepository;
 import dcsc.mvc.repository.board.FaqCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,8 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public void insertFAQ(Faq faq) {
 		Faq saveFree= faqRepository.save(faq);
-		
+		System.out.println("saveFree = " + saveFree);
+		System.out.println("faq +  = " + faq );
 	}
 
 	@Override
@@ -46,6 +46,8 @@ public class FaqServiceImpl implements FaqService {
 		dbFaq.setFaqTitle(faq.getFaqTitle());
 		dbFaq.setFaqCategory(faq.getFaqCategory());
 		dbFaq.setFaqContent(faq.getFaqContent());
+		dbFaq.setFaqImg(faq.getFaqImg());
+		dbFaq.setFaqUpdateDate(faq.getFaqUpdateDate());
 		
 		return dbFaq;
 	}
