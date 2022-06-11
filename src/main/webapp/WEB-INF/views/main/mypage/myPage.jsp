@@ -14,10 +14,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div class="main-content">
-
-	<h2> 마이페이지 </h2><br><hr>
-	
+<div id="sidebar-content">
 
     <div class="view-account">
         <section class="module">
@@ -27,8 +24,7 @@
                 <div class="side-bar">
                     <div class="user-info">
                         <ul class="meta list list-unstyled">
-                            <span class="fa fa-user"> &nbsp;${student.studentId} 님 로그인 </span>
-                            <input type="hidden" name="studentId" value="${studentId}">
+							<h5><i class="fa fa-user"></i>&nbsp; ${student.studentId} 님 환영합니다 :) </h5><hr>
                         </ul>
                     </div>
                     <nav class="side-menu">

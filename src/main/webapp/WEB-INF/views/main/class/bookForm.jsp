@@ -80,9 +80,7 @@
 											</c:if>
 											<div class="classBoxContent">
 												<h5 class="classBoxName">
-													<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-														<span>${classes.className}</span>
-													</a>
+													<span>${classes.className}</span>
 												</h5>
 												<div class="classBoxInfo">
 													<h6>${classes.teacher.teacherNickname} 선생님</h6>

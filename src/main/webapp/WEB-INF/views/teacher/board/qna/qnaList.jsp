@@ -7,16 +7,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<title>QnA: 전체보기</title>
+<style type="text/css">
+	
+	a{
+		text-decoration: none;
+	}
+	table,th,td{
+		text-align: center;
+	}
+	table{
+		width: 1500px;
+	}
+
+</style>
+
+<title>클래스별 QnA: 전체보기</title>
 </head>
 <body>
-
+<div class="main-content">
+	<section>
     <div>
         <table>
             <thead>
@@ -49,7 +64,7 @@
 	                                        <a>이 글은 관리자의 권한으로 블라인드처리가 되었습니다.</a>
 	                                    </c:when>
 	                                    <c:otherwise>
-	                                    	<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead_th/${qna.qnaId}">${qna.qnaTitle}</a>
+	                                    	<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
 	                                    </c:otherwise>
                                     </c:choose>
                                 </td>
@@ -69,6 +84,8 @@
             </tbody>
         </table>
     </div>
+    </section>
+</div>
 
 
 </body>

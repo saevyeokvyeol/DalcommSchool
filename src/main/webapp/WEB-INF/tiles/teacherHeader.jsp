@@ -48,6 +48,15 @@
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+	<script type="text/javascript">
+	
+		function logout() {
+			document.getElementById('logout').submit();
+		}
+	
+	</script>
+  
+  
   </head>
 
   <body>
@@ -71,31 +80,25 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
-              <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">교무실</div>
-              </a>
-            </li>
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">클래스 관리</span>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              	<i class="fa-solid fa-circle-plus menu-icon"></i>
                 <div data-i18n="Account Settings">새 클래스 만들기</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+              <a href="${pageContext.request.contextPath}/teacher/class/classList" class="menu-link">
+                <i class="fa-solid fa-list menu-icon"></i>
                 <div data-i18n="Authentications">내 클래스 조회</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                <i class="fa-solid fa-people-line menu-icon"></i>
                 <div data-i18n="Misc">클래스 수강 조회</div>
               </a>
             </li>
@@ -104,20 +107,20 @@
             <!-- Cards -->
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+                <i class="fa-solid fa-coins menu-icon"></i>
                 <div data-i18n="User interface">내 수익 조회</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustForm" class="menu-link">
+                <i class="fa-solid fa-hand-holding-dollar menu-icon"></i>
                 <div data-i18n="Basic">정산 신청하기</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustList" class="menu-link">
+                <i class="fa-solid fa-file-invoice-dollar menu-icon"></i>
                 <div data-i18n="User interface">정산 신청 내역</div>
               </a>
             </li>
@@ -125,21 +128,21 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">회원 관리</span></li>
             <!-- Forms -->
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/updateForm" class="menu-link">
+                <i class="fa-solid fa-user menu-icon"></i>
                 <div data-i18n="Form Elements">내 정보 수정</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="fa-solid fa-address-card menu-icon"></i>
                 <div data-i18n="Form Elements">선생님 프로필 수정</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Form Elements">교실 정보 수정</div>
+                <i class="fa-solid fa-location-dot menu-icon"></i>
+                <div data-i18n="Form Elements">공방 정보 수정</div>
               </a>
             </li>
           </ul>
@@ -150,18 +153,18 @@
         <div class="layout-page">
           <!-- Navbar -->
 
-          <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-            id="layout-navbar"
-          >
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            
+              
               <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                 <i class="bx bx-menu bx-sm"></i>
               </a>
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
+			  <h4>${title}</h4>
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
                 <li class="nav-item lh-1 me-3">
@@ -193,8 +196,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block">${teacher.teacherId}</span>
+                            <small class="text-muted">선생님</small>
                           </div>
                         </div>
                       </a>
@@ -227,9 +230,9 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="#" onclick="logout()">
                         <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
+                        <span class="align-middle">로그아웃</span>
                       </a>
                     </li>
                   </ul>
@@ -253,5 +256,13 @@
 
     <!-- Main JS -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    
+    <div class="form">	<!-- 로그아웃 폼 -->
+	 <form action="${pageContext.request.contextPath}/logout" method="post" id="logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+	</form>
+	</div>
+    
+    
   </body>
 </html>
