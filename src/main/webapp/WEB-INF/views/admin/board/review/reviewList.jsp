@@ -80,7 +80,7 @@
 		            <td><span>${review.student.studentId}</span></td>
 		            <td>
 				    	<fieldset>
-						  <c:if>
+						  <c:choose>
 						  	<c:when test="${review.reviewRate==1}">
 						  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
 						  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
