@@ -19,6 +19,9 @@
 	<definition name="teacherLayout" template="/WEB-INF/tiles/teacherLayout.jsp">
 		<put-attribute name="header" value="/WEB-INF/tiles/teacherHeader.jsp"/>
 	</definition>
+	<definition name="adminLayout" template="/WEB-INF/tiles/adminLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/adminHeader.jsp"/>
+	</definition>
 	
 	<definition name="*" extends="indexLayout">
 		<put-attribute name="content" value="/WEB-INF/views/index.jsp"/>
@@ -31,5 +34,8 @@
 	</definition>
 	<definition name="teacher/**" extends="teacherLayout">
 		<put-attribute name="content" value="/WEB-INF/views/teacher/{1}.jsp"/>
+	</definition>
+	<definition name="admin/**" extends="teacherLayout">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp"/>
 	</definition>
 </tiles-definitions>
