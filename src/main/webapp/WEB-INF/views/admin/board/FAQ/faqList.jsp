@@ -31,7 +31,7 @@ a{
 	<h5> 고객센터 > 공지사항 </h5>
 	
 	
-	<form action="${pageContext.request.contextPath}/admin/board/FAQ/noticeSearch" method="post">
+	<form action="${pageContext.request.contextPath}/admin/board/FAQ/faqSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <input type="text" id="keyword" name="keyword">
    	  <input type="submit" id="search" value="검색">
@@ -62,7 +62,7 @@ a{
        </tr>
 	</c:when>
 	<c:otherwise>
-		<c:forEach items="${requestScope.faqlist.content}" var="notice">
+		<c:forEach items="${requestScope.faqlist.content}" var="faq">
 			<tr>
 				<td>
 					${faq.faqNo}
@@ -79,7 +79,7 @@ a{
 					${faq.faqCategory.faqCategoryName}
 				</td>
 				<td>
-					<fmt:parseDate value="${faq.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+					<fmt:parseDate value="${faq.faqInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				</td>
 				
@@ -98,7 +98,7 @@ a{
 	<c:set var="doneLoop" value="false"/>
 		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/Notice/noticeList?nowPage=${startPage-1}">PREV</a>
+		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage-1}">PREV</a>
 		  </c:if>
 		  
 		<span class="pagination-inner"> 
