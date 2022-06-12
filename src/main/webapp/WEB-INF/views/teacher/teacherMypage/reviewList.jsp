@@ -9,13 +9,12 @@
 <title>강사 마이페이지용 리뷰 리스트</title>
 
 <style type="text/css">
-fieldset input[type=radio]{display: none;}
-fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
-fieldset{display: inline-block; direction: rtl; border: 0;}
-	
-.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
-.star:hover{text-shadow: 0 0 0 #EB5353;} 
-.star:hover~label{text-shadow: 0 0 0 #EB5353;} 
+fieldset{display: inline-block; border: 0;}
+
+.fa-star{font-size: 2em; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}	
+.checked {color: #EB5353;}
+/* .star:hover{text-shadow: 0 0 0 #EB5353;}  */
+/* .star:hover~label{text-shadow: 0 0 0 #EB5353;}  */
 	
 textarea{width:100%; height:6.25em; resize:none;} 
 
@@ -104,7 +103,47 @@ $(function(){
 	            <td><span>${review.classes.className}</span></td>
 	            <td><span>${review.student.studentId}</span></td>
 				<td><a data-bs-toggle="modal" data-bs-target="#readModal" class="readReview" value="${review.reviewId}  id="readReview">${review.reviewContent}</a></td>
-	            <td><span>${review.reviewRate}</span></td>
+	            <td>
+			    	<fieldset>
+					  <c:choose>
+					  	<c:when test="${review.reviewRate==1}">
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					  		<i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==2}">
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==3}">
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==4}">
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm"></i>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==5}">
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					  		<i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					        <i class="fa-solid fa-star fa-sm checked"></i>
+					  	</c:when>
+					  </c:choose>
+					</fieldset>
+				</td>
 <%-- 	            <input type="hidden" id="reviewId" class="reviewId" name="reviewId" value="${review.reviewId}"> --%>
 	            <td><span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
 	            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>

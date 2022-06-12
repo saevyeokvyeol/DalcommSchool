@@ -354,16 +354,16 @@ function setThumbnail(event){
 	<form id="insertForm" name="insertForm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/main/login/insert?${_csrf.parameterName}=${_csrf.token}">
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
 	    <table>
-	      <tr>
-	        <th>프로필 이미지</th>
-			<td>
-			  <div id="image_container"></div>
-			  <div class="form-group">
-				<input class="form-control form-control-user" type="file" 
-				name="file" id="product_image" onchange="setThumbnail(event);">
-			  </div>
-			</td>
-		  </tr>
+<!-- 	      <tr> -->
+<!-- 	        <th>프로필 이미지</th> -->
+<!-- 			<td> -->
+<!-- 			  <div id="image_container"></div> -->
+<!-- 			  <div class="form-group"> -->
+<!-- 				<input class="form-control form-control-user" type="file"  -->
+<!-- 				name="file" id="product_image" onchange="setThumbnail(event);"> -->
+<!-- 			  </div> -->
+<!-- 			</td> -->
+<!-- 		  </tr> -->
 	      <tr>
 	          <th>* 강사 ID</th>
 	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>

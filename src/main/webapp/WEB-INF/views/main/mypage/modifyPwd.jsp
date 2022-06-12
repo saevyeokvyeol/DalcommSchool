@@ -13,7 +13,7 @@
 
 <style type="text/css">
 
-.message{display: none}
+.message{display: none; position: fixed; color: red;}
 
 </style>
 <script type="text/javascript">
@@ -129,7 +129,7 @@ $(function(){
     <tr>
       <th>새 비밀번호</th>
       <td><input type="password" id="newUserPwd" name="newUserPwd" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required>
-      <span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
+      <span id="notValidPwd" class="message"> &nbsp 비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
     </tr>
     <tr>
       <th>새 비밀번호 확인</th>

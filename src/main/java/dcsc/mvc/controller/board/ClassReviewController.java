@@ -163,7 +163,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/main/mypage/review/read/{reviewId}")
 	public ModelAndView readReviewStudent(@PathVariable Long reviewId) {
-		reviewId=2L;
+//		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
 		return new ModelAndView("main/mypage/reviewDetail", "review", review);
@@ -252,10 +252,10 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/review/delete")
 	@ResponseBody
-	public String deleteReview(Long reviewId) {
+	public void deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
 		
-		return "redirect:/main/board/review/list";
+//		return "redirect:/";
 	}
 	
 	/**

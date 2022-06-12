@@ -14,7 +14,7 @@
 
 <style type="text/css">
 
-	.message{display: none}
+	.message{display: none; position: fixed;}
 	
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
