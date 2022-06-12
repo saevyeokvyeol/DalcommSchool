@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		<style type="text/css">
-			.mainImgCon {
+			.mainFileBtn {
 				display: none;
 			}
 		</style>
@@ -26,7 +26,11 @@
 						success : function(result) {
 							text = ""
 							$.each(result, function(index, item) {
-								text += `<option value='\${item.categoryId}'>\${item.categoryName}</option>`;
+								if(${classes.classCategory.categoryId} == item.categoryId){
+									text += `<option selected value='\${item.categoryId}'>\${item.categoryName}</option>`;
+								} else {
+									text += `<option value='\${item.categoryId}'>\${item.categoryName}</option>`;
+								}
 							})
 							$("#categoryId").append(text);
 						},
@@ -74,14 +78,15 @@
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/teacher/class/insert?${_csrf.parameterName}=${_csrf.token}"
+		<form action="${pageContext.request.contextPath}/teacher/class/update?${_csrf.parameterName}=${_csrf.token}"
 			enctype="multipart/form-data" method="post">
+			<input type="hidden" name="classId" value="${classes.classId}">
 			<table id="classTable">
 				<tr>
 					<td>
 						<div class="mb-3">
 							<div class="image-container mainImgCon">
-							    <a><img id="preview-image" src=""></a>
+							    <a><img id="preview-image" src="${pageContext.request.contextPath}/img/class/${classes.classImage}"></a>
 							</div>
 							<button type="button" class="fileBtn mainFileBtn">
 								<i class="fa-regular fa-image fa-2xl"></i>
@@ -111,7 +116,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className">
+							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className" value="${classes.className}">
 							<label for="className">클래스명</label>
 						</div>
 					</td>
@@ -119,7 +124,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" style="height: 100px"></textarea>
+							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" style="height: 100px">${classes.classInfo}</textarea>
 							<label for="classInfo">클래스 소개글</label>
 						</div>
 					</td>
@@ -127,14 +132,16 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice">
+							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" value="${classes.classPrice}" name="classPrice">
 							<label for="classPrice">클래스 금액</label>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="submit" value="클래스 등록">
+						<div class="d-grid gap-2">
+							<input type="submit" class="btn btn-primary" value="클래스 수정">
+						</div>
 					</td>
 				</tr>
 			</table>

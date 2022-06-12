@@ -77,9 +77,7 @@ public class Classes {
 	@JsonIgnore
 	private List<ClassSchedule> classSchedules;
 	
-	@OneToMany(mappedBy = "classes")
-	@JsonIgnore
-	private List<ClassImage> classImages;
+	private String classImage;
 	
 	@OneToMany(mappedBy = "classes")
 	@JsonIgnore

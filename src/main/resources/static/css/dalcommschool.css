@@ -348,7 +348,7 @@ a {
 }
 
 #teacher-main-content {
-	width: 1384px;
+	max-width: calc(1440px - calc(1.625rem * 2));
     margin: 30px auto;
     padding: 50px;
     border-radius: 8px;
@@ -392,5 +392,33 @@ a {
 }
 
 .teacherClassBox .classBoxInfo {
-	display: flex; justify-content: space-between;
+	display: flex; justify-content: flex-end;
+}
+
+.teacherClassBox .classBoxInfo .btn {
+	margin-left: 10px;
+}
+
+#classTable {
+	text-align: center; margin: auto;
+}
+
+#classTable .image-container, .fileBtn {
+	width: 750px; height: 500px; margin: auto; border: 1px solid #CED4DA; border-radius: 5px; background-color: transparent;
+}
+
+#classTable .image-container img {
+	max-width: 750px; max-height: 500px; border-radius: 5px; margin: auto; vertical-align: middle;
+}
+
+#classTable #input-image {
+	display: none;
+}
+
+.fileBtn i {
+	display: block; padding: 30px;
+}
+
+.bootstrap-timepicker-widget.dropdown-menu {
+    z-index: 1050!important;
 }

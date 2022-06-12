@@ -62,7 +62,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/teacher")
 	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int nowPage){
-		teacherId = "Tpark1234";
+		teacherId = "Tlee1234";
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");

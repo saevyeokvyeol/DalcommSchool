@@ -1,28 +1,22 @@
 package dcsc.mvc.controller.classes;
 
 import java.io.File;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.classes.ClassCategory;
-import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.Classes;
-import dcsc.mvc.domain.classes.Likes;
-import dcsc.mvc.domain.classes.Search;
-import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
-import dcsc.mvc.util.FileLink;
+import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -61,46 +55,58 @@ public class TeacherClassController {
 	 * 클래스 등록폼으로 이동
 	 * */
 	@RequestMapping("/createClass")
-	public void createClass() {}
+	public void createClass(Model model) {
+		model.addAttribute("title", "새 클래스 만들기");
+	}
 	
 	/**
 	 * 클래스 등록하기
 	 * */
 	@RequestMapping("/insert")
-	public String insert(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file, List<MultipartFile> files) throws Exception {
+	public String insert(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file) throws Exception {
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
 		
-		ClassImage mainImage = new ClassImage();
-		
 		if(file.getSize() > 0) {
-			File img = new File(FileLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 		   	
-			mainImage.setImageName(file.getOriginalFilename());
-			mainImage.setThumbnailState("T");
+			classes.setClassImage(file.getOriginalFilename());
 		}
-		//하나만 받는 거 
-		ClassImage[] subImages = new ClassImage[3];
-		int index = 0;
 		
-		if(files.size() != 0) {
-			for(MultipartFile f : files) {
-				System.out.println(f);
-				if(f.getSize() > 0) {
-					File imgs = new File(FileLink.CLASS_IMG + f.getOriginalFilename());
-					f.transferTo(imgs);
-		 			
-					subImages[index] = new ClassImage(null, null, f.getOriginalFilename(), null, null); 
-					index++;
-				}
-			}
-		}
-		//여러개 받는거 유다센세 나이스 yuda nice 감사합니다!
-		classesService.insert(classes, mainImage, subImages);
+		classesService.insert(classes);
+		
 		return "redirect:/teacher/class/classList";
 	}
 	
+	@RequestMapping("/update")
+	public String update(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file) throws Exception {
+		classes.setTeacher(teacher);
+		classes.setClassCategory(category);
+		
+		if(file.getSize() > 0) {
+			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+		   	
+			classes.setClassImage(file.getOriginalFilename());
+		}
+		
+		classesService.update(classes);
+		
+		return "redirect:/teacher/class/classList";
+	}
+	
+	/**
+	 * 클래스 수정폼으로 이동
+	 * */
+	@RequestMapping("/updateClass")
+	public void updateClass(Model model, Long classId) {
+		Classes classes = classesService.selectByClassId(classId);
+		
+		model.addAttribute("title", "클래스 수정");
+		model.addAttribute("classes", classes);
+	}
+
 	/**
 	 * 클래스 상세 페이지
 	 * */

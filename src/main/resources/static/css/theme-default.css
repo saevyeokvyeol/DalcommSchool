@@ -135,7 +135,6 @@ a.bg-primary:hover, a.bg-primary:focus {
   border-color: #EB5353;
   background-color: #EB5353;
   color: #fff;
-  box-shadow: 0 0.125rem 0.25rem rgba(105, 108, 255, 0.4);
 }
 
 .progress-bar {
@@ -156,7 +155,6 @@ button.list-group-item-primary {
 a.list-group-item-primary:hover, a.list-group-item-primary:focus,
 button.list-group-item-primary:hover,
 button.list-group-item-primary:focus {
-  background-color: #d6d7f2;
   color: #EB5353;
 }
 a.list-group-item-primary.active,
@@ -209,13 +207,9 @@ button.list-group-item-primary.active {
   color: #fff;
   background-color: #EB5353;
   border-color: #EB5353;
-  box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
-  transform: translateY(-1px);
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-primary.focus {
   color: #fff;
@@ -243,10 +237,6 @@ button.list-group-item-primary.active {
 }
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
-  box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
-  transform: translateY(-1px);
 }
 .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
   color: #fff;

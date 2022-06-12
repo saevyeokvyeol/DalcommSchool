@@ -52,7 +52,6 @@
 							text = ""
 							$.each(result, function(index, item){
 								text += `<input type="radio" class="btn-check shadow-none" name="classCategory" id="\${item.categoryName}" value="\${item.categoryId}"><label class="btn btn-outline-primary shadow-none" for="\${item.categoryName}">\${item.categoryName}</label>`;
-								
 							})
 							text += ""
 							$("#classCategory").append(text);

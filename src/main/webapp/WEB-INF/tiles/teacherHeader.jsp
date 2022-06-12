@@ -36,9 +36,10 @@
     <meta name="description" content="" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/demo.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/perfect-scrollbar.css" />
 
 
     <!-- Page CSS -->
@@ -54,7 +55,7 @@
     <!-- Layout wrapper -->
         <!-- Menu -->
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -69,14 +70,14 @@
 
           <div class="menu-inner-shadow"></div>
 
-          <ul class="menu-inner py-1">
+          <ul class="menu-inner py-1 ps ps--active-y">
             <!-- Dashboard -->
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">클래스 관리</span>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/class/createClass" class="menu-link">
               	<i class="fa-solid fa-circle-plus menu-icon"></i>
                 <div data-i18n="Account Settings">새 클래스 만들기</div>
               </a>
@@ -91,6 +92,18 @@
               <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
                 <i class="fa-solid fa-people-line menu-icon"></i>
                 <div data-i18n="Misc">클래스 수강 조회</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                <i class="fa-solid fa-pen menu-icon"></i>
+                <div data-i18n="Misc">클래스 리뷰 조회</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                <i class="fa-solid fa-circle-question menu-icon"></i>
+                <div data-i18n="Misc">클래스 Q&A 조회</div>
               </a>
             </li>
             <!-- Components -->
@@ -115,6 +128,21 @@
                 <div data-i18n="User interface">정산 신청 내역</div>
               </a>
             </li>
+            <!-- Components -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">쿠폰 관리</span></li>
+            <!-- Cards -->
+            <li class="menu-item">
+              <a href="javascript:void(0)" class="menu-link">
+                <i class="fa-solid fa-ticket menu-icon"></i>
+                <div data-i18n="User interface">새 쿠폰 만들기</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="cards-basic.html" class="menu-link">
+                <i class="fa-solid fa-table-list menu-icon"></i>
+                <div data-i18n="Basic">내 쿠폰 조회</div>
+              </a>
+            </li>
             <!-- Forms & Tables -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">회원 관리</span></li>
             <!-- Forms -->
@@ -122,6 +150,12 @@
               <a href="javascript:void(0);" class="menu-link">
                 <i class="fa-solid fa-user menu-icon"></i>
                 <div data-i18n="Form Elements">내 정보 수정</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="fa-solid fa-key menu-icon"></i>
+                <div data-i18n="Form Elements">비밀번호 수정</div>
               </a>
             </li>
             <li class="menu-item">
@@ -136,6 +170,16 @@
                 <div data-i18n="Form Elements">공방 정보 수정</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="fa-solid fa-arrow-right-from-bracket menu-icon"></i>
+                <div data-i18n="Form Elements">회원 탈퇴</div>
+              </a>
+            </li>
+            <div class="ps__rail-y" style="top: 0px; height: 429px; right: 4px;">
+<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
+</div>
+</div>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -242,6 +286,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/css/bootstrap.js"></script>
 
+    <script src="${pageContext.request.contextPath}/js/helpers.js"></script>
+    <script src="${pageContext.request.contextPath}/js/perfect-scrollbar.js"></script>
     <script src="${pageContext.request.contextPath}/js/menu.js"></script>
     <!-- endbuild -->
 
