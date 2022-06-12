@@ -33,7 +33,7 @@ body{margin: auto; width: 1200px;}
 		<ul>
 		  <li><a href="${pageContext.request.contextPath}/main/teacher/teacherId">프로필 보기</a></li>
 		  <li><a href ="${pageContext.request.contextPath}/teacher/teacherMypage/updateForm">내 정보 수정</a></li>
-		  <li><a href ="updatePwd">비밀번호 수정</a></li>
+		  <li><a href ="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정</a></li>
 		  <li>클래스 관리</li>
 		  <li><a href ="">수강 신청 조회</a></li>
 		  <li><a href ="">내 클래스 조회</a></li>

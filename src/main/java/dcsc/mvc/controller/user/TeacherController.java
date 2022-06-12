@@ -42,15 +42,8 @@ public class TeacherController {
 	 * 강사 회원가입
 	 * */
 	@RequestMapping("/main/login/insert")
-	public String insert(Teacher teacher, MultipartFile file) throws Exception{
-		
-		
-		if(file.getSize()>0) {
-			File img = new File(ImageLink.TEACHER_IMG + file.getOriginalFilename());
-			file.transferTo(img);
-			
-			teacher.setTeacherImg(file.getOriginalFilename());
-		}
+	public String insert(Teacher teacher) throws Exception{
+
 		
 		teacherService.insertTeacher(teacher);
 		
