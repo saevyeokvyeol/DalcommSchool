@@ -42,45 +42,45 @@
 <script type="text/javascript">
 
 	$(function() {
-		alert("확인!!!")
+// 		alert("확인!!!")
 		
-		//비밀번호 일치 여부
-		isSamePwd = false;
+// 		//비밀번호 일치 여부
+// 		isSamePwd = false;
 		
-		$("#userPwd2").focusout(function(){
-			let pwd1 = $("#userPwd").val();
-			let pwd2 = $("#userPwd2").val();
+// 		$("#userPwd2").focusout(function(){
+// 			let pwd1 = $("#userPwd").val();
+// 			let pwd2 = $("#userPwd2").val();
 			
-			if(pwd1!="" && pwd2!=""){
-				if(pwd1 == pwd2){
-					$('.pwdCheck_Fail').css("display", "none");
-					$('.pwdCheck_success').css("display", "inline-block");
-					isSamePwd = true;
-				}else{
-					$('.pwdCheck_success').css("display", "none");
-					$('.pwdCheck_Fail').css("display", "inline-block");
-					isSamePwd = false;
-				}
-			}else if(pwd1 != "" && pwd2 == ""){
-				$('.pwdCheck_success').css("display", "none");
-				$('.pwdCheck_Fail').css("display", "none");
-				isSamePwd = false;
-			}else{
-				$('.pwdCheck_success').css("display", "none");
-				$('.pwdCheck_Fail').css("display", "none");
-				isSamePwd = false;
-			}
-		})
+// 			if(pwd1!="" && pwd2!=""){
+// 				if(pwd1 == pwd2){
+// 					$('.pwdCheck_Fail').css("display", "none");
+// 					$('.pwdCheck_success').css("display", "inline-block");
+// 					isSamePwd = true;
+// 				}else{
+// 					$('.pwdCheck_success').css("display", "none");
+// 					$('.pwdCheck_Fail').css("display", "inline-block");
+// 					isSamePwd = false;
+// 				}
+// 			}else if(pwd1 != "" && pwd2 == ""){
+// 				$('.pwdCheck_success').css("display", "none");
+// 				$('.pwdCheck_Fail').css("display", "none");
+// 				isSamePwd = false;
+// 			}else{
+// 				$('.pwdCheck_success').css("display", "none");
+// 				$('.pwdCheck_Fail').css("display", "none");
+// 				isSamePwd = false;
+// 			}
+// 		})
 		
-		$("#userPwd2").focusout(function(){
-			let pwd1 = $("#userPwd").val();
-			let pwd2 = $("#userPwd2").val();
+// 		$("#userPwd2").focusout(function(){
+// 			let pwd1 = $("#userPwd").val();
+// 			let pwd2 = $("#userPwd2").val();
 			
-			if(pwd1=="" && pwd2!=""){
-				$('.pwdCheck_Fail').css("display", "inline-block");
-				isSamePwd = false;
-			}
-		})
+// 			if(pwd1=="" && pwd2!=""){
+// 				$('.pwdCheck_Fail').css("display", "inline-block");
+// 				isSamePwd = false;
+// 			}
+// 		})
 		
 		
 		$(document).ready(function(){
@@ -92,11 +92,11 @@
 
 				  }
 				  
-				  if($("#userPwd2").val() == ''){
-					  alert("비밀번호를 확인해주세요");
-					  return false;
+// 				  if($("#userPwd2").val() == ''){
+// 					  alert("비밀번호를 확인해주세요");
+// 					  return false;
 
-				  }
+// 				  }
 		 	 });
 		});// ready(); 
 
@@ -202,29 +202,21 @@
 	<ul class="gsm_list">
 		<li>
 			<div class="gsm_left">
-				<input type="checkbox" id="gsm01" class="gsm_ck"  name="gsm_ck"/>
-				<label for="gsm01"></label>
 				<span>회원 탈퇴를 신청하시면 해당 아이디는 즉시 탈퇴 처리되며,<br />이후 영구적으로 사용이 중지되므로 새로운 아이디로만 재가입이 가능합니다.</span>
 			</div>
 		</li>
 		<li>
 			<div class="gsm_left">
-				<input type="checkbox" id="gsm02" class="gsm_ck" name="gsm_ck" />
-				<label for="gsm02"></label>
 				<span>회원 탈퇴 신청 후, 1개월 동안 재가입이 불가능합니다.</span>
 			</div>
 		</li>
 		<li>
 			<div class="gsm_left">
-				<input type="checkbox" id="gsm03" class="gsm_ck"  name="gsm_ck"/>
-				<label for="gsm03"></label>
 				<span>고객님께서 소유한 쿠폰, 구매내역 등은 복원 불가합니다.</span>
 			</div>
 		</li>
 		<li>
 			<div class="gsm_left">
-				<input type="checkbox" id="gsm04" class="gsm_ck" name="gsm_ck" />
-				<label for="gsm04"></label>
 				<span>사이트 게시판에 등록된 게시물은 탈퇴 후에도 삭제되지 않습니다.<br />게시물 등의 삭제를 원하시는 경우에는 반드시 탈퇴 전 삭제하시기 바랍니다.</span>
 			</div>
 		</li>
@@ -247,19 +239,18 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<th scope="row">아이디</th>
-						<td class="id"><input type="text" id="userId" name="userId" value="${student.studentId}" /><span></span></td>
+						<td class="id"><input type="hidden" id="userId" name="userId" value="${student.studentId}" /><span></span></td>
 					</tr>
 					<tr>
 						<th scope="row">비밀번호</th>
 						<td><input type="password" id="userPwd" name="userPwd" required="required"/></td>
 					</tr>
-					<tr>
-						<th scope="row">비밀번호 확인</th>
-						<td><input type="password" id="userPwd2" name="userPwd2" required="required"/><br>
-						 <span id="pwdCheck_success" class="pwdCheck_success">비밀번호가 일치합니다.</span>
-	      	  			<span id="pwdCheck_Fail" class="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th scope="row">비밀번호 확인</th> -->
+<!-- 						<td><input type="password" id="userPwd2" name="userPwd2" required="required"/><br> -->
+<!-- 						 <span id="pwdCheck_success" class="pwdCheck_success">비밀번호가 일치합니다.</span> -->
+<!-- 	      	  			<span id="pwdCheck_Fail" class="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td> -->
+<!-- 					</tr> -->
 				</tbody>
 			</table>
 	    </form><br><br>

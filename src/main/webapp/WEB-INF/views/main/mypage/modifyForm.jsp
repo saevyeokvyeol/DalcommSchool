@@ -177,16 +177,12 @@ $(function(){
 	    <table class="table">
 	      <tr>
 	          <th>아이디</th>
-	          <td class=""><input type="text" id="studentId" class="id" name="studentId" value="${student.studentId}" readonly="readonly"/>
+	          <td><b>${student.studentId}"</b></td>
 
 	      </tr>
 	      <tr>
-	          <th>비밀번호</th>
-	          <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정하러 가기</a></td>
-	      </tr>
-	      <tr>
 	          <th>이름</th>
-	          <td><input type="text" id="studentName" name="studentName" class="name" value="${student.studentName}" readonly="readonly"/>
+	          <td><b>${student.studentName}</b></td>
 	      </tr>
 	      <tr>
 	          <th>* 핸드폰 번호</th>

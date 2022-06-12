@@ -168,10 +168,18 @@ public class TeacherController {
 	}
 	
 	/**
-	 * 비밀번호 수정 폼(session O)
+	 * 비밀번호 수정 폼(session O) - 학생 마이페이지 
 	 * */
 	@RequestMapping("/main/mypage/modifyPwd")
 	public void updatePwdForm() {}
+	
+	
+	/**
+	 * 비밀번호 수정 폼(session O) - 학생 마이페이지 
+	 * */
+	@RequestMapping("/teacher/teacherMypage/modifyPwd")
+	public void updatePwdTeacherForm() {}
+	
 	
 	/**
 	 * 비밀번호 수정(session O)

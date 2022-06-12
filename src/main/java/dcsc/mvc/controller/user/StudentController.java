@@ -142,7 +142,7 @@ public class StudentController {
 		
 		ra.addFlashAttribute("msg", "modSuccess");
 		
-		return "redirect:/main/mypage/myPage";
+		return "redirect:/main/mypage/modifyForm";
 	}
 	
 	//회원 탈퇴 페이지
@@ -162,12 +162,12 @@ public class StudentController {
 		
 		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
 		
-		return "redirect:/main/mypage/deleteOk";
+		return "redirect:/main/login/deleteOk";
 	}
 	
 	
 	//회원 탈퇴 완료
-	@RequestMapping("/main/mypage/deleteOk")
+	@RequestMapping("/main/login/deleteOk")
 	public void deleteUser() {
 	
 	}

@@ -13,6 +13,7 @@ import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 
 public interface TeacherService {
@@ -140,7 +141,7 @@ public interface TeacherService {
 	 * @param: String keyword(검색어), String keyfield(컬럼명)
 	 * @return: List<Teacher>
 	 * */
-	List<Teacher> selectByTeacherId (String keyfield, String keyword);
+	Page<Teacher> selectByTeacherId (String keyfield, String keyword, Pageable pageable);
 	
 	/**
 	 * 강사 조회 페이징처리
