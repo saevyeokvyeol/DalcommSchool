@@ -45,7 +45,6 @@ public class LikeServiceImpl implements LikeService {
 	@Override
 	public void deleteByStudentId(String studentId) {
 		likeRepository.deleteByStudentId(studentId);
-
 	}
 
 	/**

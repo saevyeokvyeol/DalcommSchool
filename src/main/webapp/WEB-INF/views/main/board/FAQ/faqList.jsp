@@ -34,7 +34,7 @@
            <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">결제</a>
         </li>
       </ul>
-      <form class="d-flex" action="${pageContext.request.contextPath}/main/board/FAQ/faqSearch" method="post">
+      <form class="d-flex" action="${pageContext.request.contextPath}/main/board/FAQ/userfaqSearch" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyword" name="keyword">
         <button class="btn btn-outline-success" type="submit" id="search">Search</button>

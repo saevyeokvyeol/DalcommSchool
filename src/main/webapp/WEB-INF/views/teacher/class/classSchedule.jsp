@@ -42,7 +42,19 @@
 						selectable: true, // 달력 일자 드래그 설정가능
 						nowIndicator: true, // 현재 시간 마크
 						dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+						navLinks: false,
 						locale: 'ko', // 한국어 설정
+						bootstrapFontAwesome: {
+							close: 'fa-times',
+							prev: 'fa-chevron-left',
+							next: 'fa-chevron-right',
+							prevYear: 'fa-angle-double-left',
+							nextYear: 'fa-angle-double-right'
+						},
+						themeSystem: 'bootstrap',
+						eventColor: '#EB5353',
+						eventDisplay: 'block',
+						displayEventTime: 'true',
 						eventClick: function(obj) {
 							
 							$.ajax({
@@ -231,7 +243,9 @@
 					}
 					if(difference > 0){
 						alert("수강 신청자가 있을 경우 일정을 삭제할 수 없습니다.")
+						return false
 					}
+					
 					$.ajax({
 						url : "${pageContext.request.contextPath}/teacher/class/deleteSchedule",
 						type : "post",
@@ -336,36 +350,52 @@
 			</div>
 		</div>
 	
-	
-	
-		${classes.classId}
-		 | ${classes.className}
-		 | ${classes.classInfo}
-		 | ${classes.classOpenDate}
-		 | ${classes.classCategory.categoryName}
-		 | ${classes.teacher.teacherNickname}
-		 | ${classes.classState.stateName}
-		 <p>
-		 <p>
-		 ${classes.teacher.teacherNickname} | 
-		 ${classes.teacher.teacherTel} | 
-		 ${classes.teacher.teacherImg} | 
-		 ${classes.teacher.teacherInfo}
-		 <p>
-		 ${classes.teacher.place.placeId}
-		 <p>
-		 
-		 <form action="" method="post"></form>
-		 
 		 <div id='calendar'></div>
 		 
-		 <c:forEach items="${classes.classSchedules}" var="schedule">
-		 	클래스 체험일 : ${schedule.scheduleDate} | 
-		 	클래스 시작 시간 : ${schedule.startTime} | 
-		 	클래스 종료 시간 : ${schedule.endTime} | 
-		 	총 체험 인원 : ${schedule.totalSeat} | 
-		 	남은 체험 인원 : ${schedule.leftSeat}<br>
-		 </c:forEach>
+		 <%-- <div id="scheduleBox">
+		 	<table class="table">
+		 		<thead>
+		 			<tr>
+		 				<th>
+		 					클래스 체험일
+		 				</th>
+		 				<th>
+		 					클래스 시작 시간
+		 				</th>
+		 				<th>
+		 					클래스 종료 시간
+		 				</th>
+		 				<th>
+		 					총 수강 가능 인원
+		 				</th>
+		 				<th>
+		 					남은 수강 가능 인원
+		 				</th>
+		 			</tr>
+		 		</thead>
+		 		<tbody>
+					<c:forEach items="${classes.classSchedules}" var="schedule">
+						<tr>
+							<td>
+								${schedule.scheduleDate.toString().substring(0, 10)}
+							</td>
+							<td>
+								${schedule.startTime}
+							</td>
+							<td>
+								${schedule.endTime}
+							</td>
+							<td>
+								${schedule.totalSeat}명
+							</td>
+							<td>
+								${schedule.leftSeat}명
+							</td>
+						</tr>
+					</c:forEach>
+		 		</tbody>
+		 	</table>
+		 </div> --%>
 		 
 		 
 		

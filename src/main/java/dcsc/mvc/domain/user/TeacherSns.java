@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -23,13 +21,23 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class Sns {
+public class TeacherSns {
 
 	@Id
-	@NonNull
-	private Long snsId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "sns_code_seq")
+	@SequenceGenerator(sequenceName = "sns_code_seq" , allocationSize = 1 , name = "sns_code_seq")
+	private Long teacherSnsCode;
 	
-	private String snsName;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacher_id")
+	@JsonIgnore
+	private Teacher teacher;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sns_id")
+	@JsonIgnore
+	private Sns sns;
+	
+	private String teacherSnsId;
 	
 }

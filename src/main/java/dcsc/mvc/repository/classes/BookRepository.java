@@ -16,7 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	
 	List<Book> findByClassesTeacherTeacherIdEquals(String teacherId);
 	
-	List<Book> findByClassesClassIdEquals(Long classId);
+	Page<Book> findByClassesTeacherTeacherIdEquals(String teacherId, Pageable pageable);
 	
 	List<Book> findByClassScheduleScheduleIdEquals(Long scheduleId);
 }

@@ -229,7 +229,7 @@
 	<div class="ad_box">
 		<div class="ad_tbl_box">
 		<sec:authorize access="isAuthenticated()">
- 		<sec:authentication property="principal" var="student"/>
+ 		<sec:authentication property="principal" var="teacher"/>
 		<form id="delete" name="deleteInfo" action="${pageContext.request.contextPath}/main/mypage/deleteUser" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 			<table>
@@ -239,7 +239,7 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<td class="id"><input type="hidden" id="userId" name="userId" value="${student.studentId}" /><span></span></td>
+						<td class="id"><input type="hidden" id="userId" name="userId" value="${teacher.teacherId}" /><span></span></td>
 					</tr>
 					<tr>
 						<th scope="row">비밀번호</th>

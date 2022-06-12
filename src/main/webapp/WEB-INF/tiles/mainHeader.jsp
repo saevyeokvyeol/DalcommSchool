@@ -20,15 +20,38 @@
 
 	</head>
 	<body>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">찜 목록</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    ...
-  </div>
-</div>
+	
+	
+		<div class="form">	
+			<form action="${pageContext.request.contextPath}/logout" method="post" id="logout">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+			</form>
+		</div>	
+		
+		
+		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="">
+			<div class="offcanvas-header">
+				<h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+			 	...
+			</div>
+		</div>
+				
+		<!-- ---------------------------------로그인 모달--------------------------------------- -->
+		<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body"><!-- 모달 본문 -->
+		      <jsp:include page="/WEB-INF/views/main/login/login.jsp"/>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<div id="main-header">
 			<div id="inner-main-header">
 				<div id="logo_menu">
@@ -52,32 +75,14 @@
 						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_TEACHER')">
-						<li><a href="${pageContext.request.contextPath}/teacher/teacherMypage/teacherMypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="${pageContext.request.contextPath}/teacher/mypage/mypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 				</ul>
 			</div>
 		</div>
 		
-<div class="form">	
- <form action="${pageContext.request.contextPath}/logout" method="post" id="logout">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
-</form>
-</div>	
 		
-<!-- ---------------------------------로그인 모달--------------------------------------- -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body"><!-- 모달 본문 -->
-      <jsp:include page="/WEB-INF/views/main/login/login.jsp"/>
-      </div>
-    </div>
-  </div>
-</div>
 	
 	</body>
 </html>
