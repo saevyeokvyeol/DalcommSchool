@@ -8,18 +8,15 @@
 		<title>Insert title here</title>
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
 		<style type="text/css">
-			.bootstrap-timepicker-widget.dropdown-menu {
-    z-index: 1050!important;
-}
 			#scheduleUpdateForm h6 {display: none;}
 		</style>
 		<script>
@@ -349,11 +346,6 @@
 		 | ${classes.teacher.teacherNickname}
 		 | ${classes.classState.stateName}
 		 <p>
-		 <c:if test="${classes.classImages != null}">
-		 	<c:forEach items="${classes.classImages}" var="classImage">
-		 		<img alt="" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-		 	</c:forEach>
-		 </c:if>
 		 <p>
 		 ${classes.teacher.teacherNickname} | 
 		 ${classes.teacher.teacherTel} | 

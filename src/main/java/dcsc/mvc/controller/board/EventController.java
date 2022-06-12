@@ -84,6 +84,8 @@ public class EventController {
 	 * */
 	@RequestMapping("/admin/board/event/eventRead/{eventNo}")
 	public ModelAndView selectByEventNo(@PathVariable Long eventNo, String flag) {
+		
+		eventNo=1L;
 		 boolean state = flag==null ? true : false;
 		 
 		Event event = eventService.selectByEventNo(eventNo, state); //true면 글 조회수 증가

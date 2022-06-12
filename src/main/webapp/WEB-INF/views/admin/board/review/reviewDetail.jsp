@@ -25,8 +25,30 @@
 
 <script type="text/javascript">
 $(function(){
-	alert($("#reviewId").val());
+// 	alert($("#reviewId").val());
+
+	/*
+	블라인드 처리
+	*/
+	$("button").click(function(){
+			var target =$(this).attr("name")
+			
+			$.ajax({
+	        url: "${pageContext.request.contextPath}/main/board/review/blind" , //서버요청주소
+	        type: "post" , //요청방식 (get,post...)
+	        data: {"${_csrf.parameterName}": "${_csrf.token}", reviewId: target, reviewBlindState: 'true'} , //서버에게 보낼 데이터정보(parameter정보)
+	        
+	        success: function(result){
+	            alert("블라인드 처리되었습니다.")
+	            location.reload()
+	        },
 	
+	        error: function(err){//실패했을 때 콜백함수
+	            alert(err+"오류가 발생했습니다.")
+	        } 
+	
+	        })
+		})
 	
 	$("#deleteBtn").on("click",function(){
 		var result = confirm("정말로 삭제하시겠습니까?");
@@ -76,9 +98,7 @@ $(function(){
 </script>
 </head>
 <body>
-
-<div class="main-content">
-메인페이지용 클래스 후기 상세보기입니다
+관리자용 클래스 후기 상세보기
       
 	        <table>
 				<tr>
@@ -153,56 +173,30 @@ $(function(){
 			<%-- 			<span style="font-size:9pt;"><b><pre>${requestScope.review.reviewContent}</pre></b></span> --%>
 				     </td>
 				</tr>
+				
 			  	<tr>
 			    	<th>내용</th>
 			    	<td>${review.reviewContent}</td>
 			  	</tr>
 			
+			  	<form id="requestForm">
+			  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+<%-- 			  	  <td><span>${review.reviewBlindState}</span></td> --%>
+		            <td>
+                   	  <c:choose>
+                         <c:when test="${review.reviewBlindState eq 'false'}">
+                             <button type="button" class="btn btn-danger" name="${review.reviewId}" value="false">게시글 숨기기</button>
+                         </c:when>
+                         <c:when test="${review.reviewBlindState eq 'true'}">
+                             <button type="button" class="btn btn-secondary" name="${review.reviewId}" value="true">블라인드 처리됨</button>
+                         </c:when>
+                      </c:choose>
+	                </td>
+				  	<input type="button" id="cancelBtn" value="취소">
+				</form>
 			
 			</table>
-			<form id="requestForm">
-			  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
-				  	<input type="button" id="cancelBtn" value="취소" onclick="location.href='${pageContext.request.contextPath}/main/board/review/list'">
-				</form>
 
 
-
-
-<!--   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 	<div class="modal-dialog modal-dialog-centered"> -->
-<!-- 		<div class="modal-content"> -->
-<!-- 			<div class="modal-header"> -->
-<!-- 				<h5 class="modal-title" id="exampleModalLabel">클래스 후기</h5> -->
-<!-- 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-body"> -->
-<!-- 				<form id="reviewForm" enctype="multipart/form-data" method="post" action=""> -->
-<%-- 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
-<!-- 				<input type="hidden" name="classId" value="1"> -->
-					
-<%-- 					<c:if test="${review.reviewImg != null}"> --%>
-<%-- 					  <c:forEach items = "${review.reviewImg}" var="reviewImg" }> --%>
-<%-- 					    <img alt="" src="${pageContext.request.contextPath}/img/classReview/${reviewImg}"> --%>
-<%-- 					  </c:forEach> --%>
-<%-- 					</c:if> --%>
-<!-- 					<div class="mb-3"> -->
-<%-- 						${review.student.studentId} --%>
-<%-- 						 <input type="radio" name="reviewRate" value="${review.reviewRate}" id="rate" checked onclick="return(false)"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label> --%>
-<%-- 						${review.reviewContent} --%>
-<%--                         ${review.reviewImg} --%>
-<!--                     </div> -->
-<!-- 					<div class="modal-footer"> -->
-<!-- 						<input type="button" class="btn btn-primary" id="updateReview" value="수정하기"> -->
-<!-- 						<input type="button" class="btn btn-primary" id="deleteReview" value="삭제하기"> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!--   </div> -->
-
-
-
-</div>
 </body>
 </html>

@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dcsc.mvc.domain.board.ClassReview;
+import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.repository.board.ClassReviewReposiroty;
+import dcsc.mvc.repository.classes.ClassesRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class ClassReviewServiceImpl implements ClassReviewService {
 
 	private final ClassReviewReposiroty reviewRep;
+	private final ClassesRepository classRep;
 	
 	@Override
 	public void insert(ClassReview classReview) {
@@ -135,6 +138,15 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 			throw new RuntimeException("블라인드 처리에 실패하였습니다.");
 		}
 		review.setReviewBlindState(reviewBlindState);
+	}
+	
+	/**
+	 * 학생 아이디로 수강한 클래스 가져오기
+	 * */
+	@Override
+	public List<Classes> selectStudentClassList(String studentId) {
+//		List<Classes> list = classRep.findByStudentStudentIdEquals(studentId);
+		return null;
 	}
 
 }
