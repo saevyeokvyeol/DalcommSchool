@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		<script type="text/javascript">
 			$(function() {
 				
@@ -73,46 +73,47 @@
 				<div class="classList">
 					<c:forEach items="${list.content}" var="classes">
 						<div class="teacherClassBox">
-							<c:if test="${classes.classImages != null}">
-								<c:forEach items="${classes.classImages}" var="classImage">
-									<div class="classBoxImg">
-										<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-											<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-										</a>
-									</div>
-									<div class="classBoxContent">
-										<h6 class="classBoxName">
-											<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-												<span>${classes.className}</span>
-											</a>
-										</h6>
-										<div class="classBoxInfo">
-											<form action="${pageContext.request.contextPath}/teacher/class/classUpdate" method="post">
+							<div class="classBoxImg">
+								<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+									<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+								</a>
+							</div>
+							<div class="classBoxContent">
+								<h6 class="classBoxName">
+									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+										<span>${classes.className}</span>
+									</a>
+									<form action="${pageContext.request.contextPath}/teacher/class/updateClass" method="post">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+										<input type="hidden" name="classId" value="${classes.classId}">
+										<button href="submit" class="btn btn-outline-primary btn-sm"><i class="fa-regular fa-calendar-plus"></i></button>
+									</form>
+								</h6>
+								<div class="classBoxInfo">
+									<c:choose>
+										<c:when test="${classes.classState.stateId == 1}">
+											<form action="${pageContext.request.contextPath}/teacher/class/updateClass" method="post">
 												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 												<input type="hidden" name="classId" value="${classes.classId}">
 												<button href="submit" class="btn btn-outline-primary btn-sm">클래스 수정</button>
 											</form>
-											<c:choose>
-												<c:when test="${classes.classState.stateId == 1}">
-													<button href="button" name="${classes.classId}" value="2" class="btn btn-outline-primary btn-sm state_update">공개 신청</button>
-												</c:when>
-												<c:when test="${classes.classState.stateId == 2}">
-													<button href="button" name="${classes.classId}" value="1" class="btn btn-outline-primary btn-sm state_update">공개 신청 취소</button>
-												</c:when>
-												<c:when test="${classes.classState.stateId == 3}">
-													<button href="button" name="${classes.classId}" value="4" class="btn btn-outline-primary btn-sm state_update">클래스 비공개</button>
-												</c:when>
-												<c:when test="${classes.classState.stateId == 4}">
-													<button href="button" name="${classes.classId}" value="3" class="btn btn-outline-primary btn-sm state_update">클래스 공개</button>
-												</c:when>
-											</c:choose>
-											<c:if test="${classes.classState.stateId != 3}">
-												<button href="button" name="${classes.classId}" class="btn btn-outline-primary btn-sm delete">클래스 삭제</button>
-											</c:if>
-										</div>
-									</div>
-								</c:forEach>
-							</c:if>
+											<button href="button" name="${classes.classId}" value="2" class="btn btn-outline-primary btn-sm state_update">공개 신청</button>
+										</c:when>
+										<c:when test="${classes.classState.stateId == 2}">
+											<button href="button" name="${classes.classId}" value="1" class="btn btn-outline-primary btn-sm state_update">공개 신청 취소</button>
+										</c:when>
+										<c:when test="${classes.classState.stateId == 3}">
+											<button href="button" name="${classes.classId}" value="4" class="btn btn-outline-primary btn-sm state_update">클래스 비공개</button>
+										</c:when>
+										<c:when test="${classes.classState.stateId == 4}">
+											<button href="button" name="${classes.classId}" value="3" class="btn btn-outline-primary btn-sm state_update">클래스 공개</button>
+										</c:when>
+									</c:choose>
+									<c:if test="${classes.classState.stateId != 3}">
+										<button href="button" name="${classes.classId}" class="btn btn-outline-primary btn-sm delete">클래스 삭제</button>
+									</c:if>
+								</div>
+							</div>
 						</div>
 					</c:forEach>
 				</div>

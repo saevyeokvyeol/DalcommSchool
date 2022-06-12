@@ -19,7 +19,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.ClassCategory;
-import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.ClassState;
 import dcsc.mvc.domain.classes.Classes;
@@ -28,7 +27,6 @@ import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.repository.classes.BookRepository;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
-import dcsc.mvc.repository.classes.ClassImageRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
 import dcsc.mvc.repository.classes.ClassesRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClassesServiceImpl implements ClassesService {
 	private final ClassesRepository classesRepository;
-	private final ClassImageRepository classImageRepository;
 	private final ClassScheduleRepository classScheduleRepository;
 	private final ClassCategoryRepository classCategoryRepository;
 	private final JPAQueryFactory jpaQueryFactory;
@@ -49,20 +46,9 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @param Class(선생님ID, 클래스명, 클래스 소개글, 클래스 금액, 카테고리);
 	 * */
 	@Override
-	public void insert(Classes classes, ClassImage mainImage, ClassImage[] subImages) {
+	public void insert(Classes classes) {
 		classes.setClassState(new ClassState(1L, null));
-		Classes dbClass = classesRepository.save(classes);
-		System.out.println(dbClass.getClassId());
-		
-		mainImage.setClasses(dbClass);
-		classImageRepository.save(mainImage);
-		
-		for(ClassImage subImage : subImages) {
-			if(subImage != null) {
-				subImage.setClasses(classes);
-				classImageRepository.save(subImage);
-			}
-		}
+		classesRepository.save(classes);
 	}
 
 	/**
@@ -79,6 +65,10 @@ public class ClassesServiceImpl implements ClassesService {
 		dbClass.setClassInfo(classes.getClassInfo());
 		dbClass.setClassPrice(classes.getClassPrice());
 		dbClass.getClassCategory().setCategoryId(classes.getClassCategory().getCategoryId());
+		
+		if(classes.getClassImage() != null) {
+			dbClass.setClassInfo(classes.getClassImage());
+		}
 	}
 
 	/**

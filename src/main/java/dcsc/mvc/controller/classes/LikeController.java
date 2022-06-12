@@ -3,13 +3,11 @@ package dcsc.mvc.controller.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dcsc.mvc.domain.classes.ClassDTO;
-import dcsc.mvc.domain.classes.ClassImage;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.user.Student;
@@ -71,14 +69,7 @@ public class LikeController {
 		List<ClassDTO> dtoList = new ArrayList<ClassDTO>();
 		
 		for(Likes l : list) {
-			Classes classes = l.getClasses();
-			List<ClassImage> Imgs = classes.getClassImages();
-			String img = null;
-			
-			for(ClassImage i : Imgs) {
-				if(i.getThumbnailState().equals("T")) img = i.getImageName();
-			}
-			ClassDTO classDTO = new ClassDTO(classes.getClassId(), classes.getClassName(), classes.getClassPrice(), classes.getTeacher().getTeacherNickname(), classes.getClassState().getStateId(), img);
+			ClassDTO classDTO = new ClassDTO(l.getClasses().getClassId(), l.getClasses().getClassName(), l.getClasses().getClassPrice(), l.getClasses().getTeacher().getTeacherNickname(), l.getClasses().getClassState().getStateId(), l.getClasses().getClassImage());
 			
 			dtoList.add(classDTO);
 		}
