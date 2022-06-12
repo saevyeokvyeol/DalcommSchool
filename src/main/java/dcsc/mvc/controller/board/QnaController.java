@@ -5,11 +5,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +34,9 @@ public class QnaController {
 	
 	@Autowired
 	private ClassQnaService classQnaService;
+	
+	private final static int PAGE_COUNT=10;
+	private final static int BLOCK_COUNT=3;
 	
 	/**
 	 * Q&A 전체조회
@@ -108,6 +116,10 @@ public class QnaController {
 		String blindState = "F";
 		String qnaComplete = "F";
 		
+		if(classQna.getSecretState()==null) {
+			classQna.setSecretState("T");
+		}
+		
 		classQna.setClasses(classes);
 		classQna.setStudent(student);
 		//classQna.setBlindState(classQna.getBlindState());
@@ -163,17 +175,41 @@ public class QnaController {
 	}
 	
 	/**
-	 * 관리자 QnA전체조회
+	 * 관리자 QnA전체조회 
 	 * */
-	@RequestMapping("admin/board/qna/qnaListBlind")
+	/*@RequestMapping("admin/board/qna/qnaListBlind")
 	public void qnaAll(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
-		
 		model.addAttribute("list", list);
+		
+	}*/
+	
+	/**
+	 * 관리자 QnA전체조회 - 페이징처리
+	 * */
+	@RequestMapping("admin/board/qna/qnaListBlind")
+	public void qnaAll(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+
+		//페이징처리하기
+		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectAllQna(page);
+		
+		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		
+		model.addAttribute("pageList", pageList);
+		
+		
+		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = nowPage-temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
 	}
 	
 	/**
-	 * 선생님 QnA전체조회 -- 사이트내 전체 QnA 글 보기
+	 * 선생님 QnA전체조회 -- 사이트내 전체 QnA 글 보기 필요?
 	 * */
 	@RequestMapping("teacher/board/qna/qnaList")
 	public void qnaSelectAll(Model model) {
@@ -198,23 +234,72 @@ public class QnaController {
 	/**
 	 * 클래스ID로 클래스 Q&A 검색
 	 * */
-	@RequestMapping("main/board/qna/qnaList")
+	/*@RequestMapping("main/board/qna/qnaList")
 	public void selectByClassId(Long classId , Model model) {
 		classId = 2L;
 		
 		List<ClassQna> list= classQnaService.selectByClassId(classId);
 		model.addAttribute("list", list);
+	}*/
+	
+	/**
+	 * 클래스ID로 클래스 Q&A 검색 - 페이징
+	 * */
+	@RequestMapping("main/board/qna/qnaList")
+	public void selectByClassId(Long classId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		classId = 2L;
+		
+		//페이징처리하기
+		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByClassId(classId, page);
+		
+		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		
+		model.addAttribute("pageList", pageList);
+		
+		
+		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = nowPage-temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
 	}
 	
 	/**
 	 * 강사ID로 클래스 Q&A 검색
 	 * */
-	@RequestMapping("teacher/teacherMypage/qnaListAll")
+	/*@RequestMapping("teacher/teacherMypage/qnaListAll")
 	public void selectByteacherId(String teacherId , Model model) {
 		teacherId = "Tann1234";
 		
 		List<ClassQna> list = classQnaService.selectByTeacherId(teacherId);
 		model.addAttribute("list", list);
+	}*/
+	
+	/**
+	 * 강사ID로 클래스 Q&A 검색 - 페이징
+	 * */
+	@RequestMapping("teacher/teacherMypage/qnaListAll")
+	public void selectByteacherId(String teacherId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		teacherId = "Tann1234";
+		
+		//페이징처리하기
+		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByTeacherId(teacherId, page);
+		
+		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		
+		model.addAttribute("pageList", pageList);
+		
+		
+		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = nowPage-temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
 	}
 	
 	
@@ -284,13 +369,37 @@ public class QnaController {
 	/**
 	 * 학생ID로 클래스 Q&A 검색
 	 * */
-	@RequestMapping("main/mypage/qnaList")
+	/*@RequestMapping("main/mypage/qnaList")
 	public void selectByStudentId(String studentId, Model model) {
 		studentId="lee1234";
 		
 		List<ClassQna> list = classQnaService.selectByStudentId(studentId);
 		model.addAttribute("list", list);
 		
-	}
+	}*/
 	
+	/**
+	 * 학생ID로 클래스 Q&A 검색 -페이징처리
+	 * */
+	@RequestMapping("main/mypage/qnaList")
+	public void selectByStudentId(String studentId, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		studentId="lee1234";
+		
+		//페이징처리하기
+		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByStudentId(studentId, page);
+		
+		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		
+		model.addAttribute("pageList", pageList);
+		
+		
+		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = nowPage-temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
+	}
 }
