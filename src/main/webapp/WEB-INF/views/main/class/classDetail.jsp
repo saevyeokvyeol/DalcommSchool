@@ -230,6 +230,7 @@
 					<div class="classInfoBox" id="teacher">
 						<h4 class="classBoxName">강사 소개</h4>
 					<hr>
+						<!-- 여기부터 지도 -->
 					</div>
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">클래스 후기</h4>
