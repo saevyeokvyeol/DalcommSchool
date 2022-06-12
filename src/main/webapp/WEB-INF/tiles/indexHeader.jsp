@@ -68,7 +68,7 @@
 						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_TEACHER')">
-						<li><a href="${pageContext.request.contextPath}/teacher/teacherMypage/teacherMypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="${pageContext.request.contextPath}/teacher/mypage/mypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 				</ul>
