@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import dcsc.mvc.domain.classes.Book;
+import dcsc.mvc.domain.classes.Classes;
 
 public interface BookService {
 	/**
@@ -57,16 +58,9 @@ public interface BookService {
 	/**
 	 * 강사ID로 예약 조회
 	 * @param String teacherId
-	 * @return List<Book>
+	 * @return Page<Book>
 	 * */
-	List<Book> selectByTeacherId(String teacherId);
-
-	/**
-	 * 클래스ID로 예약 조회
-	 * @param Long classId
-	 * @return List<Book>
-	 * */
-	List<Book> selectByClassId(Long classId);
+	Page<Book> selectByTeacherId(String teacherId, Pageable pageable);
 
 	/**
 	 * 일정ID로 예약 조회

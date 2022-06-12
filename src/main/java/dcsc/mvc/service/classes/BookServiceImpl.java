@@ -159,19 +159,8 @@ public class BookServiceImpl implements BookService {
 	 * @return List<Book>
 	 * */
 	@Override
-	public List<Book> selectByTeacherId(String teacherId) {
-		List<Book> list = bookRepository.findByClassesTeacherTeacherIdEquals(teacherId);
-		return list;
-	}
-	
-	/**
-	 * 클래스ID로 예약 조회
-	 * @param Long classId
-	 * @return List<Book>
-	 * */
-	@Override
-	public List<Book> selectByClassId(Long classId) {
-		List<Book> list = bookRepository.findByClassesClassIdEquals(classId);
+	public Page<Book> selectByTeacherId(String teacherId, Pageable pageable) {
+		Page<Book> list = bookRepository.findByClassesTeacherTeacherIdEquals(teacherId, pageable);
 		return list;
 	}
 	

@@ -74,7 +74,6 @@
 					},
 					themeSystem: 'bootstrap',
 					eventColor: '#EB5353',
-					eventDisplay: 'block',
 					displayEventTime: 'true',
 					eventClick: function(obj) {
 						$.ajax({
@@ -110,6 +109,12 @@
 								successCallback(result);
 							}
 						})
+					},
+					eventRender: function(event, element) {
+					    var limit = 20;
+					    if (event.title.length > limit) {
+					        element.find('.fc-event-title').text(event.title.substr(0,limit)+'...').parent().attr('title', event.title);
+					    }
 					},
 					eventTimeFormat: {
 						hour: 'numeric',

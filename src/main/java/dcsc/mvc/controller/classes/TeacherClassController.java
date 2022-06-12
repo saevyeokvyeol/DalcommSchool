@@ -28,6 +28,8 @@ public class TeacherClassController {
 	private final int SIZE = 9;
 	private final int BLOCK_COUNT = 5;
 	
+	private final int SCHEDULE_SIZE = 20;
+	
 	/**
 	 * 선생님 클래스 리스트
 	 * */
@@ -108,21 +110,13 @@ public class TeacherClassController {
 	}
 
 	/**
-	 * 클래스 상세 페이지
+	 * 클래스 일정
 	 * */
-	@RequestMapping("/{classId}")
-	public String selectByClassId(@PathVariable Long classId, Model model) {
+	@RequestMapping("/classSchedule")
+	public String selectByClassId(Long classId, Model model) {
 		Classes classes = classesService.selectByClassId(classId);
 		model.addAttribute("classes", classes);
-		return "teacher/class/classDetail";
-	}
-	
-	/**
-	 * 클래스 예약자 목록 페이지
-	 * */
-	@RequestMapping("/bookList")
-	public String bookList(Model model) {
-		model.addAttribute("title", "클래스 수강 조회");
-		return "teacher/class/bookList";
+		model.addAttribute("title", classes.getClassName() + " 일정 조회");
+		return "teacher/class/classSchedule";
 	}
 }

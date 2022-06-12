@@ -20,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 public class AjaxClassController {
 	private final ClassesService classesService;
 	
+	private final int SIZE = 9;
+	private final int BLOCK_COUNT = 5;
+	
 	/**
 	 * 클래스 카테고리 가져오기
 	 * */
@@ -136,7 +139,7 @@ public class AjaxClassController {
 	}
 	
 	/**
-	 * 클래스 일정 수정
+	 * 클래스 일정 삭제
 	 * */
 	@RequestMapping("/teacher/class/deleteSchedule")
 	public void deleteSchedule(Long scheduleId) {

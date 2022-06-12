@@ -426,3 +426,39 @@ a {
 .bootstrap-timepicker-widget.dropdown-menu {
     z-index: 1050!important;
 }
+
+#teacherBookList .table {
+	text-align: center; margin-top: 50px;
+}
+
+#teacherBookList .table th, #bookListBox .table td {
+	height: 60px; vertical-align: middle; font-size: 16px;
+}
+
+#teacherBookList .table th {
+	font-weight: 700px;
+}
+
+#teacherBookList .table h3 {
+	margin: 100px 0;
+}
+
+#allBookList .table {
+	text-align: center;
+}
+
+#allBookList .table th, #bookListBox .table td {
+	height: 60px; vertical-align: middle; font-size: 16px;
+}
+
+#allBookList .table th {
+	font-weight: 700px;
+}
+
+#allBookList .table h3 {
+	margin: 100px 0;
+}
+
+#pagenation {
+	margin-top: 50px;
+}
