@@ -169,7 +169,6 @@ public class ClassesServiceImpl implements ClassesService {
 			booleanBuilder.or(classes.teacher.teacherNickname.like("%" + search.getKeyword() + "%"));
 		}
 		
-
 		JPQLQuery<Classes> jpqlQuery = jpaQueryFactory.selectFrom(classes)
 									.where(booleanBuilder)
 									.offset(pageable.getOffset())

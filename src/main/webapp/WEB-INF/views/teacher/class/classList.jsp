@@ -83,7 +83,7 @@
 									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
 										<span>${classes.className}</span>
 									</a>
-									<form action="${pageContext.request.contextPath}/teacher/class/updateClass" method="post">
+									<form action="${pageContext.request.contextPath}/teacher/class/classSchedule" method="post">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 										<input type="hidden" name="classId" value="${classes.classId}">
 										<button href="submit" class="btn btn-outline-primary btn-sm"><i class="fa-regular fa-calendar-plus"></i></button>
@@ -122,9 +122,9 @@
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 				<c:set var="doneLoop" value="false" />
-				<c:if test="${(startPage-blockCount) > 0}">
-					<li class="page-item disabled">
-						<a class="page-link">Previous</a>
+				<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+					<li class="page-item">
+						<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
 					</li>
 				</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
@@ -132,12 +132,12 @@
 							<c:set var="doneLoop" value="true" />
 						</c:if>
 						<c:if test="${not doneLoop}">
-							<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/main/class/classList?page=${i}">${i}</a></li>
+							<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
 						</c:if>
 					</c:forEach>
-				<c:if test="${(startPage+blockCount)<=list.getTotalPages()}">
+				<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
 					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
+						<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
 					</li>
 				</c:if>
 			</ul>

@@ -100,10 +100,27 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-people-line menu-icon"></i>
-                <div data-i18n="Misc">클래스 수강 조회</div>
+                <div data-i18n="Account Settings">클래스 수강 조회</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">전체 수강 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">일정별 수강 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">지난 수강 완료 신청</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
               <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
@@ -188,9 +205,9 @@
               </a>
             </li>
             <div class="ps__rail-y" style="top: 0px; height: 429px; right: 4px;">
-<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
-</div>
-</div>
+				<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
+				</div>
+			</div>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -298,7 +315,6 @@
                     </li>
                   </ul>
                 </li>
-                <!--/ User -->
               </ul>
             </div>
           </nav>
