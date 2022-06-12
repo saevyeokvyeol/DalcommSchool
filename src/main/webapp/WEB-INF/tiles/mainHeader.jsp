@@ -10,7 +10,7 @@
 		
 		<script type="text/javascript">
 			
-			$("#form").hide();
+			//$("#form").hide();
 		
 			function logout() {
 				document.getElementById('logout').submit();
@@ -45,11 +45,15 @@
 					<li><a href=""><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
 					<li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
 					<sec:authorize access="isAnonymous()">
-					<li><a href="#" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="#" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 					</sec:authorize>
-					<sec:authorize access="isAuthenticated()">
-					<li><a href="${pageContext.request.contextPath}/main/mypage/myPage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
-					<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+					<sec:authorize access="hasRole('ROLE_STUDENT')">
+						<li><a href="${pageContext.request.contextPath}/main/mypage/myPage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_TEACHER')">
+						<li><a href="${pageContext.request.contextPath}/teacher/teacherMypage/teacherMypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 				</ul>
 			</div>

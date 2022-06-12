@@ -229,10 +229,6 @@ public class TeacherController {
 		return new ModelAndView("/teacher/teacherMypage/teacherDetail", "teacher", teacher);
 	}
 	
-//	@RequestMapping("/mypage")
-//	public void teacherMypage(){}
-//	
-
 
 	
 	

@@ -27,24 +27,99 @@
 	td{
 		vertical-align: middle;
 	}
+	
+	.pwdCheck_success {
+		color: blue;
+		display: none;
+	}
+	.pwdCheck_Fail {
+		color:red;
+		display: none;
+	}
+	
 </style>
 
 <script type="text/javascript">
 
-	function clickDel(deleteInfo) {
-		deleteInfo.action = "${pageContext.request.contextPath}/main/mypage/deleteUser";
-		deleteInfo.method = "post";
-		deleteInfo.submit();
-	}
+	$(function() {
+		alert("확인!!!")
+		
+		//비밀번호 일치 여부
+		isSamePwd = false;
+		
+		$("#userPwd2").focusout(function(){
+			let pwd1 = $("#userPwd").val();
+			let pwd2 = $("#userPwd2").val();
+			
+			if(pwd1!="" && pwd2!=""){
+				if(pwd1 == pwd2){
+					$('.pwdCheck_Fail').css("display", "none");
+					$('.pwdCheck_success').css("display", "inline-block");
+					isSamePwd = true;
+				}else{
+					$('.pwdCheck_success').css("display", "none");
+					$('.pwdCheck_Fail').css("display", "inline-block");
+					isSamePwd = false;
+				}
+			}else if(pwd1 != "" && pwd2 == ""){
+				$('.pwdCheck_success').css("display", "none");
+				$('.pwdCheck_Fail').css("display", "none");
+				isSamePwd = false;
+			}else{
+				$('.pwdCheck_success').css("display", "none");
+				$('.pwdCheck_Fail').css("display", "none");
+				isSamePwd = false;
+			}
+		})
+		
+		$("#userPwd2").focusout(function(){
+			let pwd1 = $("#userPwd").val();
+			let pwd2 = $("#userPwd2").val();
+			
+			if(pwd1=="" && pwd2!=""){
+				$('.pwdCheck_Fail').css("display", "inline-block");
+				isSamePwd = false;
+			}
+		})
+		
+		
+		$(document).ready(function(){
+			  $("#bt").click(function(){
+			   
+				  if($("#userPwd").val() == ''){
+					  alert("비밀번호를 입력해주세요");
+					  return false;
+
+				  }
+				  
+				  if($("#userPwd2").val() == ''){
+					  alert("비밀번호를 확인해주세요");
+					  return false;
+
+				  }
+		 	 });
+		});// ready(); 
+
+	}); //function();
+	
+</script>
+
+<script type="text/javascript">
+
+		function clickDel(deleteInfo) {
+			deleteInfo.action = "${pageContext.request.contextPath}/main/mypage/deleteUser";
+			deleteInfo.method = "post";
+			deleteInfo.submit();
+		}
 
 </script>
 
 </head>
 <body>
 
-	<div class="main-content">
+<div id="sidebar-content">
 	<h3 class="h3tit01">회원 탈퇴</h3>
-	<div class="bk_box mgt0">회원 탈퇴 신청 전, 탈퇴 사유를 체크해주세요.</div>
+	<h6>* 회원 탈퇴 신청 전, 탈퇴 사유를 체크해주세요.</h6>
 	<table class="table">
 		<colgroup>
 			<col style="width:210px;" />
@@ -154,7 +229,11 @@
 			</div>
 		</li>
 	</ul>
-	<div class="bk_box mgt60">마지막으로, 회원 탈퇴를 위한 고객님의 회원 정보를 입력해 주세요.</div>
+	<hr>
+	
+	<!--       -----------------------------탈퇴 폼------------------------------------         -->
+	
+	<div class="bk_box mgt60">마지막으로, 회원 탈퇴를 위한 고객님의 회원 정보를 입력해 주세요.</div><br>
 	<div class="ad_box">
 		<div class="ad_tbl_box">
 		<sec:authorize access="isAuthenticated()">
@@ -173,23 +252,30 @@
 					</tr>
 					<tr>
 						<th scope="row">비밀번호</th>
-						<td><input type="password" id="userPwd" name="userPwd" /></td>
+						<td><input type="password" id="userPwd" name="userPwd" required="required"/></td>
+					</tr>
+					<tr>
+						<th scope="row">비밀번호 확인</th>
+						<td><input type="password" id="userPwd2" name="userPwd2" required="required"/><br>
+						 <span id="pwdCheck_success" class="pwdCheck_success">비밀번호가 일치합니다.</span>
+	      	  			<span id="pwdCheck_Fail" class="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td>
 					</tr>
 				</tbody>
 			</table>
-	    </form>
-	    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">탈퇴하기</button>
+	    </form><br><br>
+	    
+  <!-- ----------------------------- 탈퇴하기 버튼 ------------------------ -->
+	    <button type="button" class="btn btn-primary" id="bt" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="deleteCheck()">탈퇴하기</button>
 		<input type="reset" value="나가기">
 		</sec:authorize>
 		</div>
 	</div>
-<input type="hidden" id="contents" name="contents" value=""  />
-<input type="hidden" id="userid" name="userid" value=""  />
-</div>
+		<input type="hidden" id="contents" name="contents" value=""  />
+		<input type="hidden" id="userid" name="userid" value=""  />
+	</div>
 
-
-
-	 <!-- Modal -->
+	 <!-- ------------------------------------------모달------------------------------- -->
+	 
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -202,8 +288,8 @@
 		       * 탈퇴 신청 후, 1개월 동안 재가입이 불가능합니다
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" onclick="clickDel(deleteInfo)">탈퇴하기</button>
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+		        <button type="button" class="btn btn-primary" onclick="clickDel(deleteInfo)">탈퇴</button>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 		      </div>
 		    </div>
 		  </div>

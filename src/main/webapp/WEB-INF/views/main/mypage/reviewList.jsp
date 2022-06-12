@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>학생 마이페이지용 후기 리스트</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 
@@ -18,8 +18,8 @@
 	fieldset{display: inline-block; direction: rtl; border: 0;}
 	
 	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
-	.star:hover{text-shadow: 0 0 0 #EB5353;}
-	.star:hover~label{text-shadow: 0 0 0 #EB5353;}
+/* 	.star:hover{text-shadow: 0 0 0 #EB5353;} */
+/* 	.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
 	
 	textarea{width:100%; height:6.25em; resize:none;}
 </style>
@@ -58,8 +58,58 @@ $(function(){
 	          <tr>
 <%-- 	            <td><span>${review.student.studentId}</span></td> --%>
 				<td><span>${review.classes.className}</span>
-	            <td><span>${review.reviewRate}</span></td>
-	            <td><a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="readReview" >${review.reviewContent}</a></td>
+	            <td>
+			    	<fieldset>
+					  <c:choose>
+					  	<c:when test="${review.reviewRate==1}">
+					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled checked><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==2}">
+					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled checked><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==3}">
+					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled checked><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==4}">
+					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled checked><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  	</c:when>
+					  	<c:when test="${review.reviewRate==5}">
+					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled checked><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+					  	</c:when>
+					  </c:choose>
+					</fieldset>
+				</td>
+	            <td>
+	            	<c:choose>
+	            		<c:when test="${review.reviewBlindState eq 'true'}">
+	            			<a>이 후기는 비공개 상태입니다.</a>
+	            		</c:when>
+	            		<c:when test="${review.reviewBlindState eq 'false'}">
+	            			<a href="${pageContext.request.contextPath}/main/mypage/review/read/${review.reviewId}" id="readReview" >${review.reviewContent}</a>
+	            		</c:when>
+	            	</c:choose>
+	            </td>
+<%-- 	            <td><a href="${pageContext.request.contextPath}/main/mypage/review/read/${review.reviewId}" id="readReview" >${review.reviewContent}</a></td> --%>
 	            <input type="hidden" name="reviewId" value="${reviewId}">
 	            <td><span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span></td>
 	            <td><span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
@@ -69,6 +119,9 @@ $(function(){
 	      </c:otherwise>
 	    </c:choose>
 	  </tbody>
+	  <tfoot>
+		<input type="button" value="후기 남기기" onclick="location.href='${pageContext.request.contextPath}/main/mypage/review/writeForm'">
+	  </tfoot>
 	</table>
 	
 	<!-- 페이징 처리 -->
@@ -77,7 +130,7 @@ $(function(){
 	    <div class="pagination">
 	      <c:set var="doneLoop" value="false"/>
 	      		<c:if test="${(startPage-blockCount)>0 }">
-	      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/review/student?nowPage=${startPage-1}">이전</a>	      		
+	      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${startPage-1}">이전</a>	      		
 	      		</c:if>
 	      		
 	      		<span class="pagination-inner">
@@ -87,14 +140,14 @@ $(function(){
 	      		      <c:set var="doneLoop" value="true"/>
 	      		    </c:if>
 	      		    <c:if test="${not doneLoop}">
-	      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/review/student?nowPage=${i}">${i}</a>
+	      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${i}">${i}</a>
 	      		    </c:if>
 	      		    
 	      		  </c:forEach>
 	      		</span>
 	      		
 	      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}">
-	      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/review/student?nowPage=${startPage+blockCount}">다음</a>
+	      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/mypage/reviewList?nowPage=${startPage+blockCount}">다음</a>
 	      		</c:if>
 	    </div>
 	  

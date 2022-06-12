@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>클래스 후기 상세보기입니다.</title>
+<title>학생 마이페이지용 클래스 후기 상세보기입니다.</title>
 <style type="text/css">
 	fieldset input[type=radio]{display: none;}
 	fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
@@ -25,7 +25,7 @@
 
 <script type="text/javascript">
 $(function(){
-	alert($("#reviewId").val());
+// 	alert($("#reviewId").val());
 	
 	
 	$("#deleteBtn").on("click",function(){
@@ -33,7 +33,7 @@ $(function(){
 		
 		if(result){
 			$.ajax({
-				url:"/main/board/review/delete",
+				url:"/review/delete",
 				data:{reviewId : $("#reviewId").val(),
 					  "${_csrf.parameterName}" : "${_csrf.token}"
 				},
@@ -51,7 +51,7 @@ $(function(){
 	})
 	
 	$("#updateBtn").on("click",function(){
-		$("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/review/updateForm");
+		$("#requestForm").attr("action", "${pageContext.request.contextPath}/review/updateForm");
 		$("#requestForm").submit();
 	})
 	
@@ -76,9 +76,7 @@ $(function(){
 </script>
 </head>
 <body>
-
-<div class="main-content">
-메인페이지용 클래스 후기 상세보기입니다
+학생용 클래스 후기 상세보기
       
 	        <table>
 				<tr>
@@ -158,51 +156,13 @@ $(function(){
 			    	<td>${review.reviewContent}</td>
 			  	</tr>
 			
-			
 			</table>
-			<form id="requestForm">
+			  	<form id="requestForm">
 			  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
-				  	<input type="button" id="cancelBtn" value="취소" onclick="location.href='${pageContext.request.contextPath}/main/board/review/list'">
+			  		<input type="button" id="updateBtn" value="수정하기">
+				  	<input type="button" id="deleteBtn" value="삭제하기">
+				  	<input type="button" id="cancelBtn" value="취소" onclick="location.href='${pageContext.request.contextPath}/main/mypage/review/student'">
 				</form>
 
-
-
-
-<!--   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 	<div class="modal-dialog modal-dialog-centered"> -->
-<!-- 		<div class="modal-content"> -->
-<!-- 			<div class="modal-header"> -->
-<!-- 				<h5 class="modal-title" id="exampleModalLabel">클래스 후기</h5> -->
-<!-- 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-body"> -->
-<!-- 				<form id="reviewForm" enctype="multipart/form-data" method="post" action=""> -->
-<%-- 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
-<!-- 				<input type="hidden" name="classId" value="1"> -->
-					
-<%-- 					<c:if test="${review.reviewImg != null}"> --%>
-<%-- 					  <c:forEach items = "${review.reviewImg}" var="reviewImg" }> --%>
-<%-- 					    <img alt="" src="${pageContext.request.contextPath}/img/classReview/${reviewImg}"> --%>
-<%-- 					  </c:forEach> --%>
-<%-- 					</c:if> --%>
-<!-- 					<div class="mb-3"> -->
-<%-- 						${review.student.studentId} --%>
-<%-- 						 <input type="radio" name="reviewRate" value="${review.reviewRate}" id="rate" checked onclick="return(false)"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label> --%>
-<%-- 						${review.reviewContent} --%>
-<%--                         ${review.reviewImg} --%>
-<!--                     </div> -->
-<!-- 					<div class="modal-footer"> -->
-<!-- 						<input type="button" class="btn btn-primary" id="updateReview" value="수정하기"> -->
-<!-- 						<input type="button" class="btn btn-primary" id="deleteReview" value="삭제하기"> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!--   </div> -->
-
-
-
-</div>
 </body>
 </html>

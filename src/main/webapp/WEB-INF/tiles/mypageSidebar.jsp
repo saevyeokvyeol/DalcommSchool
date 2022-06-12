@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div id="inner-sidebar">
-			<a href="${pageContext.request.contextPath}/main/mypage"><h4>마이페이지</h4></a>
+			<a href="${pageContext.request.contextPath}/main/mypage/myPage"><h4>마이페이지</h4></a>
 			<h5>나의 예약 내역</h5>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/main/mypage/bookCalendar">나의 예약 캘린더</a></li>
@@ -27,9 +27,9 @@
 			</ul>
 			<h5>회원 정보</h5>
 			<ul>
-				<li><a href="">회원정보 수정</a></li>
-				<li><a href="">비밀번호 수정</a></li>
-				<li><a href="">회원 탈퇴</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/modifyForm">회원정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/deleteUserForm">회원 탈퇴</a></li>
 			</ul>
 		</div>
 	</body>

@@ -2,6 +2,8 @@ package dcsc.mvc.controller.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class QnaController {
 	 * Q&A 상세조회
 	 * */
 	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
-	public String qnaRead(@PathVariable Long qnaId, Model model ) {
+	public String qnaRead(@PathVariable Long qnaId, Model model ,HttpServletRequest request) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
 		model.addAttribute("qna", classQna);
@@ -119,14 +121,26 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 수정폼
+	 * Q&A 수정폼 - 포워드방식
 	 * */
-	@RequestMapping("main/board/qna/qnaUpdateForm")
+	/*@RequestMapping("main/board/qna/qnaUpdateForm")
 	public ModelAndView qnaUpdateForm(Long qnaId) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
 		return new ModelAndView("main/board/qna/qnaUpdate", "qna", classQna);
+	}*/
+	
+	/**
+	 * Q&A 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaUpdateForm")
+	@ResponseBody
+	public ClassQna qnaUpdateFormModal(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		return classQna;
 	}
+	
 	
 	/**
 	 * Q&A 수정하기
@@ -159,7 +173,7 @@ public class QnaController {
 	}
 	
 	/**
-	 * 선생님 QnA전체조회
+	 * 선생님 QnA전체조회 -- 사이트내 전체 QnA 글 보기
 	 * */
 	@RequestMapping("teacher/board/qna/qnaList")
 	public void qnaSelectAll(Model model) {
@@ -234,6 +248,17 @@ public class QnaController {
 		ClassReply classReply= classQnaService.selectByReplyId(replyId);
 		
 		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
+	}
+	
+	/**
+	 * 선생님 Q&A 답변 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaReplyUpdateForm")
+	@ResponseBody
+	public ClassReply qnaReplyUpdateFormModal(Long replyId){
+		ClassReply classReply= classQnaService.selectByReplyId(replyId);
+		
+		return classReply;
 	}
 	
 	/**

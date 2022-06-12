@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import dcsc.mvc.domain.board.ClassReview;
+import dcsc.mvc.domain.classes.Classes;
 
 public interface ClassReviewService {
 	/**
@@ -82,4 +83,9 @@ public interface ClassReviewService {
 	 * @param Long reviewId
 	 * */
 	void updateBlind(Long reviewId, String reviewBlindState);
+	
+	/**
+	 * 학생 아이디로 수강한 클래스 리스트 가져오기
+	 * */
+	List<Classes> selectStudentClassList(String studentId);
 }

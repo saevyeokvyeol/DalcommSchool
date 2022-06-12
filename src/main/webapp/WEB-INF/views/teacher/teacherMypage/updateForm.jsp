@@ -170,9 +170,7 @@ $(function(){
 <title>강사 회원정보 수정 페이지입니다.</title>
 </head>
 <body>
-<div class="main-content">
-
-<br><br><br>
+<div id="main-content">
 <h3> 강사정보 수정 페이지 </h3>
 <section>
   <sec:authorize access="isAuthenticated()">

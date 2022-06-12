@@ -49,6 +49,15 @@
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+	<script type="text/javascript">
+	
+		function logout() {
+			document.getElementById('logout').submit();
+		}
+	
+	</script>
+  
+  
   </head>
 
   <body>
@@ -116,14 +125,14 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustForm" class="menu-link">
                 <i class="fa-solid fa-hand-holding-dollar menu-icon"></i>
                 <div data-i18n="Basic">정산 신청하기</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustList" class="menu-link">
                 <i class="fa-solid fa-file-invoice-dollar menu-icon"></i>
                 <div data-i18n="User interface">정산 신청 내역</div>
               </a>
@@ -147,7 +156,7 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">회원 관리</span></li>
             <!-- Forms -->
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/updateForm" class="menu-link">
                 <i class="fa-solid fa-user menu-icon"></i>
                 <div data-i18n="Form Elements">내 정보 수정</div>
               </a>
@@ -231,8 +240,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block">${teacher.teacherId}</span>
+                            <small class="text-muted">선생님</small>
                           </div>
                         </div>
                       </a>
@@ -265,9 +274,9 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="#" onclick="logout()">
                         <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
+                        <span class="align-middle">로그아웃</span>
                       </a>
                     </li>
                   </ul>
@@ -293,5 +302,13 @@
 
     <!-- Main JS -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    
+    <div class="form">	<!-- 로그아웃 폼 -->
+	 <form action="${pageContext.request.contextPath}/logout" method="post" id="logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+	</form>
+	</div>
+    
+    
   </body>
 </html>
