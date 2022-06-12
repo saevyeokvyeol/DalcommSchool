@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
@@ -63,7 +64,8 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-
+  <sec:authorize access="isAuthenticated()">
+ 	<sec:authentication property="principal" var="teacher"/>
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -162,7 +164,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/modifyPwd" class="menu-link">
                 <i class="fa-solid fa-key menu-icon"></i>
                 <div data-i18n="Form Elements">비밀번호 수정</div>
               </a>
@@ -219,7 +221,7 @@
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >Star</a
+                    >${teacher.teacherNickname}</a
                   >
                 </li>
 
@@ -249,30 +251,30 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-user me-2"></i> -->
+<!--                         <span class="align-middle">My Profile</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-cog me-2"></i> -->
+<!--                         <span class="align-middle">Settings</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <span class="d-flex align-items-center align-middle"> -->
+<!--                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i> -->
+<!--                           <span class="flex-grow-1 align-middle">Billing</span> -->
+<!--                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span> -->
+<!--                         </span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <div class="dropdown-divider"></div> -->
+<!--                     </li> -->
                     <li>
                       <a class="dropdown-item" href="#" onclick="logout()">
                         <i class="bx bx-power-off me-2"></i>
@@ -309,6 +311,6 @@
 	</form>
 	</div>
     
-    
+ </sec:authorize>
   </body>
 </html>

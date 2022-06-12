@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,10 +16,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.JPQLQueryFactory;
+
 import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
+import dcsc.mvc.domain.user.QTeacher;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.user.InfraRepository;
@@ -40,6 +46,8 @@ public class TeacherServiceImpl implements TeacherService {
 	private final PlaceRegionRepository regionRep;
 	private final PlaceInfraRepository placeInfraRep;
 	private final InfraRepository infraRep;
+	
+	private final JPQLQueryFactory jpqlQueryFactory;
 	
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 //	private final Student student;
@@ -308,29 +316,37 @@ public class TeacherServiceImpl implements TeacherService {
 	 * 강사 정보로 강사 검색하기
 	 * */
 	@Override
-	public List<Teacher> selectByTeacherId(String keyfield, String keyword) {
-		List<Teacher> list = null;
+	public Page<Teacher> selectByTeacherId(String keyfield, String keyword,Pageable pageable) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QTeacher teacher = QTeacher.teacher;
+		
 		switch(keyfield) {
 				case "teacherID" :
-					System.out.println("teacherID...");
-					list = teacherRep.findByTeacherIdIsLike(keyword);
+					booleanBuilder.and(teacher.teacherId.like("%" + keyword + "%"));
 					break;
 					
 				case "teacherName" :
-					System.out.println("teacherName...");
-					list = teacherRep.findByTeacherNameIsLike(keyword);
+					booleanBuilder.and(teacher.teacherName.like("%" + keyword + "%"));
 					break;	
 					
 				case "teacherPhone" :
-					System.out.println("teacherPhone...");
-					list = teacherRep.findByTeacherIdIsLike(keyword);
+					booleanBuilder.and(teacher.teacherPhone.like("%" + keyword + "%"));
 					break;	
 					
 				case "teacherEmail" :
-					System.out.println("teacherEmail...");
-					list = teacherRep.findByTeacherIdIsLike(keyword);
+					booleanBuilder.and(teacher.teacherEmail.like("%" + keyword + "%"));
 					break;	
 		}
+		
+		JPQLQuery<Teacher> query = jpqlQueryFactory.selectFrom(teacher)
+				.where(booleanBuilder)
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		
+		Page<Teacher> list = new PageImpl<Teacher>(query.fetch(), pageable, query.fetch().size());
+		
+		
 		return list;
 	}
 

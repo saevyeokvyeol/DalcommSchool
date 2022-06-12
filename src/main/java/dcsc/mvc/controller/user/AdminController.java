@@ -30,10 +30,9 @@ public class AdminController {
 	private final static int PAGE_COUNT=8;
 	private final static int BLOCK_COUNT=4;
 	
-	//관리자페이지
+	//관리자페이지 학생
 	@RequestMapping("/user/userList")
 	public ModelAndView adminStudent(Model model, @RequestParam(defaultValue = "1") int nowPage) {
-		System.out.println("admin 호출...");
 		
 		//페이징 처리
 		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentId");
@@ -48,25 +47,36 @@ public class AdminController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
 		
-		return new ModelAndView("/admin/user/userList","studentList",studentList);
+		return new ModelAndView("admin/user/userList","studentList",studentList);
 	}
 
 	
 	//관리자페이지에서 특정 회원 검색
 	@RequestMapping("/user/userSearch")
-	public ModelAndView studentInquiry(String keyfield , String keyword) {
-		System.out.println("keyfield : " + keyfield +" / " + "keyword : "+ keyword);
-		System.out.println("memberInquiry 호출...");
-		List<Student> list = studentService.selectByStudentId(keyfield , keyword);
+	public String studentInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
-		return new ModelAndView("/admin/user/userList","studentList",list);
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Student> list = studentService.selectByStudentId(keyfield, keyword, page);
+
+		
+		model.addAttribute("studentList",list);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
+		
+		return "admin/user/userList";
 	}
 	
 	
-	//관리자페이지
+	//관리자페이지 강사
 	@RequestMapping("/user/teacherList")
 	public ModelAndView adminTeacher(Model model, @RequestParam(defaultValue = "1") int nowPage) {
-		System.out.println("admin 강사 조회 호출...");
 		
 		//페이징 처리
 		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherId");
@@ -84,14 +94,25 @@ public class AdminController {
 		return new ModelAndView("admin/user/teacherList","teacherList",teacherList);
 	}
 	
+	
 	//관리자페이지에서 특정 강사 검색
 	@RequestMapping("/user/teacherSearch")
-	public ModelAndView techerInquiry(String keyfield , String keyword) {
-		System.out.println("keyfield : " + keyfield +" / " + "keyword : "+ keyword);
-		System.out.println("teacherInquiry 호출...");
-		List<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword);
+	public String techerInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
-		return new ModelAndView("admin/user/teacherList","teacherList",list);
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword, page);
+		
+		model.addAttribute("teacherList",list);
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage - temp;
+		
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage", nowPage);
+		
+		return "admin/user/teacherList";
 	}
 
 }

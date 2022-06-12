@@ -185,10 +185,6 @@ $(function(){
 	          <td><b>${teacher.teacherId}</b></td>
 	      </tr>
 	      <tr>
-	          <th>강사 비밀번호</th>
-	          <td><a href="${pageContext.request.contextPath}/main/mypage/modifyPwd">비밀번호 수정하러 가기</a></td>
-	      </tr>
-	      <tr>
 	          <th>강사 이름</th>
 	          <td><b>${teacher.teacherName}</b></td>
 	      </tr>
