@@ -143,4 +143,28 @@ public class BookController {
 		model.addAttribute("title", "일정별 수강 조회");
 		return "teacher/class/scheduleBookList";
 	}
+	
+	/**
+	 * 체험일이 지난 클래스 조회
+	 * */
+	@RequestMapping("/teacher/class/pastBookList")
+	public String pastBookList(Model model, @RequestParam(defaultValue = "1") int page) {
+		// 로그인 했을 경우
+		Teacher teacher = new Teacher("Tkim1234");
+		
+		Pageable pageable = PageRequest.of(page - 1, SIZE, Direction.DESC, "bookInsertDate");
+		
+		// ID에 해당하는 클래스 가져오기
+		Page<Book> list = bookService.selectByDateAndState(teacher.getTeacherId(), pageable);
+		
+		int temp = (page - 1) % BLOCK_COUNT;
+		int startPage = page - temp;
+
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("page", page);
+		model.addAttribute("list", list);
+		model.addAttribute("title", "지난 수강 완료 신청");
+		return "teacher/class/pastBookList";
+	}
 }

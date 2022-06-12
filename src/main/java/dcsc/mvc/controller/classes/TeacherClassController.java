@@ -87,7 +87,7 @@ public class TeacherClassController {
 		classes.setClassCategory(category);
 		
 		if(file.getSize() > 0) {
-			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.TEACHER_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 		   	
 			classes.setClassImage(file.getOriginalFilename());

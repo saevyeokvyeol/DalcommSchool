@@ -50,6 +50,12 @@ public interface TeacherService {
 	void updateTeacher (Teacher teacher);
 	
 	/**
+	 * 강사 프로필 수정
+	 * @param: Teacher teacher
+	 * */
+	void updateTeacherProfile(Teacher teacher);
+	
+	/**
 	 * 비밀번호 찾기 성공 후 수정
 	 * */
 	void updateUserPwd(String userId, String newUserPwd);
@@ -60,7 +66,6 @@ public interface TeacherService {
 	 * @return:
 	 * */
 	void updateLoginUserPwd (String userPwd, String newUserPwd);
-	
 	
 	/**
 	 * 아이디 중복체크
@@ -94,7 +99,6 @@ public interface TeacherService {
 	 * @return List<Teacher>
 	 * */
 	List<Teacher> selectAllTeacher ();
-	
 	
 	/**
 	 * 공방 등록
@@ -142,6 +146,5 @@ public interface TeacherService {
 	 * 강사 조회 페이징처리
 	 * */
 	Page<Teacher> selectAllTeacher(Pageable pageable);
-	
 	
 }

@@ -113,6 +113,11 @@
                     <div data-i18n="Notifications">일정별 수강 조회</div>
                   </a>
                 </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">지난 수강 완료 신청</div>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="menu-item">

@@ -1,26 +1,27 @@
 package dcsc.mvc.service.classes;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookState;
 import dcsc.mvc.domain.classes.ClassSchedule;
-import dcsc.mvc.domain.coupon.Coupon;
+import dcsc.mvc.domain.classes.QBook;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.classes.BookRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
-import dcsc.mvc.repository.coupon.CouponRepository;
 import dcsc.mvc.repository.coupon.IssueCouponRepository;
 import dcsc.mvc.repository.user.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class BookServiceImpl implements BookService {
 	private final IssueCouponRepository issueCouponRepository;
 	private final TeacherRepository teacherRepository;
 
+	private final JPAQueryFactory jpaQueryFactory;
+	
 	/**
 	 * 클래스 예약 등록
 	 * @param Book(학생ID, 클래스ID, 일정ID, 쿠폰번호, 인원 수, 수강자 이름, 전화번호)
@@ -116,6 +119,19 @@ public class BookServiceImpl implements BookService {
 
 		book.setBookState(new BookState(3L, null));
 	}
+
+	/**
+	 * 클래스 예약 취소
+	 * @param String bookId
+	 * */
+	@Override
+	public void updateFinishSubscript(Long bookId) {
+		Book book = bookRepository.findById(bookId).orElse(null);
+		
+		if(book == null) throw new RuntimeException("예약 내역이 존재하지 않습니다.");
+
+		book.setBookState(new BookState(4L, null));
+	}
 	
 	/**
 	 * 예약ID로 예약 조회
@@ -160,7 +176,17 @@ public class BookServiceImpl implements BookService {
 	 * */
 	@Override
 	public Page<Book> selectByTeacherId(String teacherId, Pageable pageable) {
-		Page<Book> list = bookRepository.findByClassesTeacherTeacherIdEquals(teacherId, pageable);
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QBook book = QBook.book;
+		
+		JPQLQuery<Book> jpaQuery = jpaQueryFactory.selectFrom(book)
+				.orderBy(book.classSchedule.scheduleDate.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		
+		Page<Book> list = new PageImpl<Book>(jpaQuery.fetch(), pageable, jpaQuery.fetchCount());
+		
 		return list;
 	}
 	
@@ -172,6 +198,32 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> selectByScheduleId(Long scheduleId) {
 		List<Book> list = bookRepository.findByClassScheduleScheduleIdEquals(scheduleId);
+		return list;
+	}
+	
+	/**
+	 * 지난 수강 목록 중 수강 완료되지 않은 예약 조회
+	 * @param Pageable pageable
+	 * @return Page<Book>
+	 * */
+	@Override
+	public Page<Book> selectByDateAndState(String teacherId, Pageable pageable) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QBook book = QBook.book;
+		
+		booleanBuilder.and(book.classSchedule.scheduleDate.before(new Date()));
+		booleanBuilder.and(book.bookState.bookStateId.eq(1L));
+		booleanBuilder.and(book.classes.teacher.teacherId.eq(teacherId));
+		
+		JPQLQuery<Book> jpaQuery = jpaQueryFactory.selectFrom(book)
+				.where(booleanBuilder)
+				.orderBy(book.classSchedule.scheduleDate.asc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		
+		Page<Book> list = new PageImpl<Book>(jpaQuery.fetch(), pageable, jpaQuery.fetchCount());
+		
 		return list;
 	}
 

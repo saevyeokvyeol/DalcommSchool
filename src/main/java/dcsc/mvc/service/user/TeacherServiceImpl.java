@@ -21,12 +21,14 @@ import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.domain.user.TeacherSns;
 import dcsc.mvc.repository.user.InfraRepository;
 import dcsc.mvc.repository.user.PlaceInfraRepository;
 import dcsc.mvc.repository.user.PlaceRegionRepository;
 import dcsc.mvc.repository.user.PlaceRepository;
 import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.repository.user.TeacherRepository;
+import dcsc.mvc.repository.user.TeacherSnsRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -40,6 +42,7 @@ public class TeacherServiceImpl implements TeacherService {
 	private final PlaceRegionRepository regionRep;
 	private final PlaceInfraRepository placeInfraRep;
 	private final InfraRepository infraRep;
+	private final TeacherSnsRepository teacherSnsRepository;
 	
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 //	private final Student student;
@@ -111,9 +114,28 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		newTeacher.setTeacherPhone(teacher.getTeacherPhone());
 		newTeacher.setTeacherEmail(teacher.getTeacherEmail());
-		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
-		newTeacher.setTeacherTel(teacher.getTeacherTel());
 
+	}
+	
+	/**
+	 * 강사 프로필 수정
+	 * @param: Teacher teacher
+	 * */
+	@Override
+	public void updateTeacherProfile(Teacher teacher) {
+		Teacher dbTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(teacher);
+		
+		if(dbTeacher == null) throw new RuntimeException("계정이 존재하지 않아 프로필을 변경할 수 없습니다.");
+		
+		dbTeacher.setTeacherNickname(teacher.getTeacherNickname());
+		dbTeacher.setTeacherTel(teacher.getTeacherTel());
+		dbTeacher.setTeacherImg(teacher.getTeacherImg());
+		
+		teacherSnsRepository.deleteByTeacherId(teacher.getTeacherId());
+		for(TeacherSns s : teacher.getTeacherSns()) {
+			s.setTeacher(dbTeacher);
+			teacherSnsRepository.save(s);
+		}
 	}
 	
 	@Override

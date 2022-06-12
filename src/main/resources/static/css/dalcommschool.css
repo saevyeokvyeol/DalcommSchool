@@ -447,7 +447,7 @@ a {
 	text-align: center;
 }
 
-#allBookList .table th, #bookListBox .table td {
+#allBookList .table th, #allBookList .table td {
 	height: 60px; vertical-align: middle; font-size: 16px;
 }
 

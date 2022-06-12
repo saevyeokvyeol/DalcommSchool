@@ -68,4 +68,17 @@ public interface BookService {
 	 * @return List<Book>
 	 * */
 	List<Book> selectByScheduleId(Long scheduleId);
+
+	/**
+	 * 지난 수강 목록 중 수강 완료되지 않은 예약 조회
+	 * @param Pageable pageable
+	 * @return Page<Book>
+	 * */
+	Page<Book> selectByDateAndState(String teacherId, Pageable pageable);
+
+	/**
+	 * 클래스 예약 취소
+	 * @param String bookId
+	 * */
+	void updateFinishSubscript(Long bookId);
 }
