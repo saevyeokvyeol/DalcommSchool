@@ -131,39 +131,35 @@
 				<div class="classList">
 					<c:forEach items="${popularList.content}" var="classes">
 						<div class="classBox">
-							<c:if test="${classes.classImages != null}">
-								<c:forEach items="${classes.classImages}" var="classImage">
-									<div class="classBoxImg">
-										<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-											<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-										</a>
-									</div>
-									<div class="classBoxContent">
-										<h5 class="classBoxName">
-											<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-												<span>${classes.className}</span>
-											</a>
-											<c:choose>
-												<c:when test="${classes.likeId != null}">
-													<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
-														<i class="fa-solid fa-heart fa-lg"></i>
-													</button>
-												</c:when>
-												<c:otherwise>
-													<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
-														<i class="fa-regular fa-heart fa-lg"></i>
-													</button>
-												</c:otherwise>
-											</c:choose>
-										</h5>
-										<div class="classBoxInfo">
-											<h6>${classes.teacher.teacherNickname} 선생님</h6>
-											<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
-										</div>
-										<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
-									</div>
-								</c:forEach>
-							</c:if>
+							<div class="classBoxImg">
+								<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+									<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+								</a>
+							</div>
+							<div class="classBoxContent">
+								<h5 class="classBoxName">
+									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+										<span>${classes.className}</span>
+									</a>
+									<c:choose>
+										<c:when test="${classes.likeId != null}">
+											<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
+												<i class="fa-solid fa-heart fa-lg"></i>
+											</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
+												<i class="fa-regular fa-heart fa-lg"></i>
+											</button>
+										</c:otherwise>
+									</c:choose>
+								</h5>
+								<div class="classBoxInfo">
+									<h6>${classes.teacher.teacherNickname} 선생님</h6>
+									<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
+								</div>
+								<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
+							</div>
 						</div>
 					</c:forEach>
 				</div>
@@ -174,39 +170,35 @@
 				<div class="classList">
 					<c:forEach items="${newList.content}" var="classes">
 						<div class="classBox">
-							<c:if test="${classes.classImages != null}">
-								<c:forEach items="${classes.classImages}" var="classImage">
-									<div class="classBoxImg">
-										<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-											<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-										</a>
-									</div>
-									<div class="classBoxContent">
-										<h5 class="classBoxName">
-											<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-												<span>${classes.className}</span>
-											</a>
-											<c:choose>
-												<c:when test="${classes.likeId != null}">
-													<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
-														<i class="fa-solid fa-heart fa-lg"></i>
-													</button>
-												</c:when>
-												<c:otherwise>
-													<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
-														<i class="fa-regular fa-heart fa-lg"></i>
-													</button>
-												</c:otherwise>
-											</c:choose>
-										</h5>
-										<div class="classBoxInfo">
-											<h6>${classes.teacher.teacherNickname} 선생님</h6>
-											<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
-										</div>
-										<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
-									</div>
-								</c:forEach>
-							</c:if>
+							<div class="classBoxImg">
+								<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+									<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+								</a>
+							</div>
+							<div class="classBoxContent">
+								<h5 class="classBoxName">
+									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+										<span>${classes.className}</span>
+									</a>
+									<c:choose>
+										<c:when test="${classes.likeId != null}">
+											<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
+												<i class="fa-solid fa-heart fa-lg"></i>
+											</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
+												<i class="fa-regular fa-heart fa-lg"></i>
+											</button>
+										</c:otherwise>
+									</c:choose>
+								</h5>
+								<div class="classBoxInfo">
+									<h6>${classes.teacher.teacherNickname} 선생님</h6>
+									<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
+								</div>
+								<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
+							</div>
 						</div>
 					</c:forEach>
 				</div>

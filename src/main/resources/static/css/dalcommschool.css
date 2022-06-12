@@ -213,6 +213,10 @@ a {
 	width: 750px;
 }
 
+#classInfomation .classImageBox img {
+	border-radius: 15px;
+}
+
 #classOrderCalendar {
 	width: 430px;
 }
