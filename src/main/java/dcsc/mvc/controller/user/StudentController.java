@@ -145,10 +145,18 @@ public class StudentController {
 		return "redirect:/main/mypage/modifyForm";
 	}
 	
-	//회원 탈퇴 페이지
+	//회원 탈퇴 페이지 - 학생
 	@RequestMapping("/main/mypage/deleteUserForm")
 	public void deleteUserForm() {
 		System.out.println("회원 탈퇴 페이지");
+		
+	}
+	
+	
+	//회원 탈퇴 페이지 - 강사
+	@RequestMapping("/teacher/teacherMypage/deleteUserForm")
+	public void deleteTeacherForm() {
+		System.out.println("강사 탈퇴 페이지");
 		
 	}
 
