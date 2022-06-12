@@ -189,7 +189,7 @@
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<input class="btn btn-danger" type="submit" value="삭제하기">
+											<input class="btn btn-primary" type="submit" value="삭제하기">
 											
 										</form>
 									</td>
