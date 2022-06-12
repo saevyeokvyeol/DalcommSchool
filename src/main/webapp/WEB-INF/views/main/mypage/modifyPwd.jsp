@@ -13,7 +13,7 @@
 
 <style type="text/css">
 
-.message{display: none}
+.message{display: none; position: fixed; color: red;}
 
 </style>
 <script type="text/javascript">
@@ -115,10 +115,9 @@ $(function(){
 </head>
 <body>
 		
-<div class="main-content">
-		
-<br><br><br>
-<h3>비밀번호 수정 페이지입니다.</h3>
+<div id="sidebar-content">
+
+<h3> 회원 비밀번호 수정</h3>
 <span id="notice">*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</span><br><br><hr>
 <form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -130,7 +129,7 @@ $(function(){
     <tr>
       <th>새 비밀번호</th>
       <td><input type="password" id="newUserPwd" name="newUserPwd" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required>
-      <span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
+      <span id="notValidPwd" class="message"> &nbsp 비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
     </tr>
     <tr>
       <th>새 비밀번호 확인</th>

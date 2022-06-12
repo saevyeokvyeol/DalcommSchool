@@ -32,7 +32,7 @@
 </head>
 <body>
 
-<div class="main-content">
+<div class="teacher-main-content">
 	<section>
     <div>
         <table>

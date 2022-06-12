@@ -195,35 +195,8 @@
 		<div class="main-content">
 			<div id="classDetail">
 				<div id="classInfomation">
-					<div id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
-						<div class="carousel-indicators">
-							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-						</div>
-						<div class="carousel-inner">
-							<c:if test="${classes.classImages != null}">
-								<c:forEach items="${classes.classImages}" var="classImage">
-									<div class="carousel-item ${classImage.thumbnailState == 'T'?'active':no}">
-										<img src="${pageContext.request.contextPath}/img/class/${classImage.imageName}" class="d-block w-100" alt="...">
-									</div>
-								</c:forEach>
-							</c:if>
-							<div class="carousel-item">
-								<img src="${pageContext.request.contextPath}/img/class/class_3.jpg" class="d-block w-100" alt="...">
-							</div>
-							<div class="carousel-item">
-								<img src="${pageContext.request.contextPath}/img/class/class_4.jpg" class="d-block w-100" alt="...">
-							</div>
-						</div>
-						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
+					<div class="classImageBox">
+						<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
 					</div>
 					
 					<div id="classBox">
@@ -257,6 +230,7 @@
 					<div class="classInfoBox" id="teacher">
 						<h4 class="classBoxName">강사 소개</h4>
 					<hr>
+						<!-- 여기부터 지도 -->
 					</div>
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">클래스 후기</h4>

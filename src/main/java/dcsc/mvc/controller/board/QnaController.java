@@ -121,14 +121,26 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 수정폼
+	 * Q&A 수정폼 - 포워드방식
 	 * */
-	@RequestMapping("main/board/qna/qnaUpdateForm")
+	/*@RequestMapping("main/board/qna/qnaUpdateForm")
 	public ModelAndView qnaUpdateForm(Long qnaId) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
 		return new ModelAndView("main/board/qna/qnaUpdate", "qna", classQna);
+	}*/
+	
+	/**
+	 * Q&A 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaUpdateForm")
+	@ResponseBody
+	public ClassQna qnaUpdateFormModal(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		return classQna;
 	}
+	
 	
 	/**
 	 * Q&A 수정하기
@@ -236,6 +248,17 @@ public class QnaController {
 		ClassReply classReply= classQnaService.selectByReplyId(replyId);
 		
 		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
+	}
+	
+	/**
+	 * 선생님 Q&A 답변 수정폼 - 모달
+	 * */
+	@RequestMapping("qnaReplyUpdateForm")
+	@ResponseBody
+	public ClassReply qnaReplyUpdateFormModal(Long replyId){
+		ClassReply classReply= classQnaService.selectByReplyId(replyId);
+		
+		return classReply;
 	}
 	
 	/**

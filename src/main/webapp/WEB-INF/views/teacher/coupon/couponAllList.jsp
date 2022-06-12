@@ -59,6 +59,7 @@
 		
 		//선생님이 보유한 클래스명 가져오기
 		$(".insertForm").click(function() {
+			//alert(1);
 			
 			$.ajax({
 				url: "/teacher/selectByTeacherId",
@@ -101,8 +102,8 @@
 				error : function(error) {
 					alert("쿠폰번호를 가져올 수 없습니다.");
 				}
-			}); // 아작스 종료
-		})//$(".updateForm").click 끝
+			}) // 아작스 종료
+		});//$(".updateForm").click 끝
 		
 		
 	}); //ready 끝	
@@ -113,7 +114,7 @@
 </head>
 <body>
 
-<div class="main-content">
+<div class="teacher-main-content">
 	<section>
 
 			<h1>전체쿠폰조회 </h1>
@@ -188,7 +189,7 @@
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<input class="btn btn-danger" type="submit" value="삭제하기">
+											<input class="btn btn-primary" type="submit" value="삭제하기">
 											
 										</form>
 									</td>

@@ -9,8 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<style type="text/css">
+			.mainImgCon {
+				display: none;
+			}
+		</style>
 		<script type="text/javascript">
 			$(function() {
 				function selectAllCategory() {
@@ -32,6 +36,17 @@
 					}); // 아작스 종료
 				} // 카테고리 가져오기 종료
 				
+				$(".mainFileBtn").click(function() {
+					$("#input-image").click()
+				})
+				
+				$("img").click(function() {
+				    $(".mainImgCon").css("display", "none")
+				    $("#preview-image").attr("src", "")
+				    $(".mainFileBtn").css("display", "block")
+				    $("#input-image").val("")
+				})
+				
 				function readImage(input) {
 				    // 인풋 태그에 파일이 있는 경우
 				    if(input.files && input.files[0]) {
@@ -50,102 +65,9 @@
 				var inputImage = document.getElementById("input-image")
 				inputImage.addEventListener("change", e => {
 				    readImage(e.target)
+				    $(".mainImgCon").css("display", "block")
+				    $(".mainFileBtn").css("display", "none")
 				})
-				
-				var fileNo = 0;
-				var filesArr = new Array();
-
-				/* 첨부파일 추가 */
-				$("[name=files]").on("change", function() {
-				    var maxFileCnt = 3;   // 첨부파일 최대 개수
-				    var attFileCnt = document.querySelectorAll('.filebox').length;    // 기존 추가된 첨부파일 개수
-				    var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
-				    var curFileCnt = this.files.length;  // 현재 선택된 첨부파일 개수
-
-				    // 첨부파일 개수 확인
-				    if (curFileCnt > remainFileCnt) {
-				        alert("더 이상 추가 이미지를 등록할 수 없습니다");
-				    }
-
-				    for (var i = 0; i < Math.min(curFileCnt, remainFileCnt); i++) {
-
-				        const file = this.files[i];
-
-				        // 첨부파일 검증
-				        if (validation(file)) {
-				            // 파일 배열에 담기
-				            var reader = new FileReader();
-				            reader.onload = function () {
-				                filesArr.push(file);
-				            };
-				            reader.readAsDataURL(file)
-
-				            // 목록 추가
-				            let htmlData = '';
-				            htmlData += '<div id="file' + fileNo + '" class="filebox">';
-				            htmlData += '   <p class="name">' + file.name + '</p>';
-				            htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
-				            htmlData += '</div>';
-				            $('.file-list').append(htmlData);
-				            fileNo++;
-				        } else {
-				            continue;
-				        }
-				    }
-				    // 초기화
-				    document.querySelector("input[type=file]").value = "";
-				})
-				
-				/* 첨부파일 검증 */
-				function validation(obj){
-				    const fileTypes = ['image/gif', 'image/jpg', 'image/png'];
-				    if (obj.name.lastIndexOf('.') == -1) {
-				        alert("확장자가 없는 파일은 등록할 수 없습니다.");
-				        return false;
-				    } else if (!fileTypes.includes(obj.type)) {
-				        alert("클래스 이미지는 gif, jpg, png 파일만 등록할 수 있습니다.");
-				        return false;
-				    } else {
-				        return true;
-				    }
-				}
-
-				/* 첨부파일 삭제 */
-				function deleteFile(num) {
-				    document.querySelector("#file" + num).remove();
-				    filesArr[num].is_delete = true;
-				}
-
-				/* 폼 전송 */
-				function submitForm() {
-				    // 폼데이터 담기
-				    var form = document.querySelector("form");
-				    var formData = new FormData(form);
-				    for (var i = 0; i < filesArr.length; i++) {
-				        // 삭제되지 않은 파일만 폼데이터에 담기
-				        if (!filesArr[i].is_delete) {
-				            formData.append("attach_file", filesArr[i]);
-				        }
-				    }
-
-				    $.ajax({
-				        method: 'POST',
-				        url: '/register',
-				        dataType: 'json',
-				        data: formData,
-				        async: true,
-				        timeout: 30000,
-				        cache: false,
-				        headers: {'cache-control': 'no-cache', 'pragma': 'no-cache'},
-				        success: function () {
-				            alert("파일업로드 성공");
-				        },
-				        error: function (xhr, desc, err) {
-				            alert('에러가 발생 하였습니다.');
-				            return;
-				        }
-				    })
-				}
 				
 				selectAllCategory();
 			})
@@ -154,53 +76,60 @@
 	<body>
 		<form action="${pageContext.request.contextPath}/teacher/class/insert?${_csrf.parameterName}=${_csrf.token}"
 			enctype="multipart/form-data" method="post">
-			<table>
+			<table id="classTable">
 				<tr>
 					<td>
-						<label class="form-label">선생님ID</label>
-						<input type="text" placeholder="선생님ID" name="teacherId" value="Tkim1234">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="form-label">클래스명</label>
-						<input type="text" placeholder="클래스명" name="className">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="form-label">클래스 소개글</label>
-						<textarea rows="5" cols="50" name="classInfo"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="form-label">클래스 금액</label>
-						<input type="number" placeholder="클래스명" name="classPrice">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="image-container">
-						    <img style="width: 500px;" id="preview-image" src="">
+						<div class="mb-3">
+							<div class="image-container mainImgCon">
+							    <a><img id="preview-image" src=""></a>
+							</div>
+							<button type="button" class="fileBtn mainFileBtn">
+								<i class="fa-regular fa-image fa-2xl"></i>
+								대표 이미지 추가
+							</button>
+							<input type="file" id="input-image" name="file">
 						</div>
-						<label class="form-label">대표 이미지</label>
-						<input type="file" id="input-image" name="file">
-					</td>
-				</tr>
-				<tr>
-					<td class="insert">
-						<div class="file-list"></div>
-						<label class="form-label">추가 이미지</label>
-						<input type="file" multiple="multiple" name="files">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label class="form-label">카테고리</label>
-						<select name='categoryId' id="categoryId">
-							<option value='0'>클래스 카테고리 선택</option>
-						</select>
+						<div class="mb-3">
+							<select name='categoryId' id="categoryId" class="form-select" aria-label="Default select example">
+								<option value='0'>클래스 카테고리 선택</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="teacherId" name="teacherId" value="Tkim1234" placeholder="선생님ID">
+							<label for="teacherId">선생님ID</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className">
+							<label for="className">클래스명</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" style="height: 100px"></textarea>
+							<label for="classInfo">클래스 소개글</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-floating mb-3">
+							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice">
+							<label for="classPrice">클래스 금액</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
