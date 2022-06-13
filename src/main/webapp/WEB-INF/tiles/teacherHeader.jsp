@@ -187,7 +187,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/updateProfile" class="menu-link">
                 <i class="fa-solid fa-address-card menu-icon"></i>
                 <div data-i18n="Form Elements">선생님 프로필 수정</div>
               </a>
