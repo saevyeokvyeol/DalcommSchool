@@ -82,6 +82,20 @@ public class TeacherController {
 	}
 	
 	/**
+	 * 강사 정보 수정폼
+	 * */
+	@RequestMapping("/teacher/mypage/updateProfile")
+	public ModelAndView updateProfile() {
+		String teacherId = "Tkim1234" /*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
+		
+		Teacher teacher = teacherService.selectById(teacherId);
+		
+		ModelAndView modelAndView = new ModelAndView("teacher/mypage/updateProfile","teacher", teacher);
+		modelAndView.addObject("title", "");
+		return modelAndView;
+	}
+	
+	/**
 	 * 강사 프로필 수정
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacherProfile")
