@@ -65,12 +65,7 @@ public class TeacherController {
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacher")
 	public String updateTeacher(Teacher teacher,HttpServletRequest request) {
-		
-		System.out.println(teacher.getTeacherId());
-		System.out.println(teacher.getTeacherNickname());
-		System.out.println(teacher.getTeacherPhone());
-		
-		
+		System.out.println("강사정보 수정하기");
 		teacherService.updateTeacher(teacher);
 		
 		Teacher tea = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -177,7 +172,7 @@ public class TeacherController {
 	/**
 	 * 비밀번호 수정 폼(session O) - 학생 마이페이지 
 	 * */
-	@RequestMapping("/teacher/teacherMypage/modifyPwd")
+	@RequestMapping("/teacher/mypage/modifyPwd")
 	public void updatePwdTeacherForm() {}
 	
 	
@@ -192,7 +187,8 @@ public class TeacherController {
 				
 		//서비스 호출
 		teacherService.updateLoginUserPwd(userPwd, encodePassword);
-				
+		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
+
 		return "redirect:/";
 	}
 	

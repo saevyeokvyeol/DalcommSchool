@@ -32,11 +32,11 @@
 	  	padding: 5px;
 	}
 	
-	.logo{
-	    width: auto; height: auto;
-	    max-width: 100px;
-	    max-height: 100px;
-	}
+/* 	.logo{ */
+/* 	    width: auto; height: auto; */
+/* 	    max-width: 100px; */
+/* 	    max-height: 100px; */
+/* 	} */
 	
 	.loginbox bg-white , .title {
 		text-align: center;
@@ -72,9 +72,9 @@
 </head>
 <body>
 
-<div class="logo">
-<img src="${pageContext.request.contextPath}/img/main/mainLogoBlack.png" class="d-block w-100" alt="...">
-</div>
+<!-- <div class="logo"> -->
+<%-- <img src="${pageContext.request.contextPath}/img/main/mainLogoBlack.png" class="d-block w-100" alt="..."> --%>
+<!-- </div> -->
 <h4 class="title" id="myModalLabel" style="text-align: center;">달콤스쿨 회원 로그인</h4>
 
 

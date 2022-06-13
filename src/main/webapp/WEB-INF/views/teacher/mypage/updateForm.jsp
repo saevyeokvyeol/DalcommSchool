@@ -175,14 +175,15 @@ $(function(){
 <section>
   <sec:authorize access="isAuthenticated()">
  	<sec:authentication property="principal" var="teacher"/>
-	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/updateTeacher">
+	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/mypage/updateTeacher">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-		<input type="hidden" name=teacherId value="${teacher.teacherId}">
 	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><br><hr>
 	    <table class="table">
 	      <tr>
 	          <th>강사 ID</th>
-	          <td><b>${teacher.teacherId}</b></td>
+	          <td>
+	          <input type="hidden" id="teacherId" name="teacherId" class="" value="${teacher.teacherId}" />
+	          <b>${teacher.teacherId}</b></td>
 	      </tr>
 	      <tr>
 	          <th>강사 이름</th>
