@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassQna;
+import dcsc.mvc.domain.board.ClassQnaReplyDTO;
 import dcsc.mvc.domain.board.ClassReply;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
@@ -50,16 +51,44 @@ public class QnaController {
 	
 	
 	/**
-	 * Q&A 상세조회
+	 * Q&A 상세조회(메인)
 	 * */
-	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
-	public String qnaRead(@PathVariable Long qnaId, Model model ,HttpServletRequest request) {
+	/*@RequestMapping("main/board/qna/qnaRead/{qnaId}")
+	public String qnaRead(@PathVariable Long qnaId, Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
 		model.addAttribute("qna", classQna);
 		model.addAttribute("qnaReply", classReply);
 		
 		return "main/board/qna/qnaRead";
+	}*/
+	
+	/**
+	 * Q&A 상세조회(메인) -모달 - 아작스
+	 * */
+	@RequestMapping("main/board/qna/qnaRead")
+	@ResponseBody
+	public ClassQnaReplyDTO qnaRead(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
+		
+		ClassQnaReplyDTO qnaReplyDTO = new ClassQnaReplyDTO();
+		
+		if(classReply!=null) {
+			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
+											classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
+											classQna.getQnaContent(), classReply.getReplyId(), classReply.getTeacher().getTeacherNickname(), 
+											classReply.getReplyInsertDate(), classReply.getReplyContent());
+			
+		}else if(classReply==null) {
+			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
+					classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
+					classQna.getQnaContent(), null, null, 
+					null, null);
+		}
+		
+		
+		return qnaReplyDTO;
 	}
 	
 	/**
