@@ -173,67 +173,63 @@
 					<div class="classList">
 						<c:forEach items="${list.content}" var="classes">
 							<div class="classBox">
-								<c:if test="${classes.classImages != null}">
-									<c:forEach items="${classes.classImages}" var="classImage">
-										<div class="classBoxImg">
-											<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-												<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-											</a>
-										</div>
-										<div class="classBoxContent">
-											<h5 class="classBoxName">
-												<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-													<span>${classes.className}</span>
-												</a>
-												<c:choose>
-													<c:when test="${classes.likeId != null}">
-														<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
-															<i class="fa-solid fa-heart fa-lg"></i>
-														</button>
-													</c:when>
-													<c:otherwise>
-														<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
-															<i class="fa-regular fa-heart fa-lg"></i>
-														</button>
-													</c:otherwise>
-												</c:choose>
-											</h5>
-											<div class="classBoxInfo">
-												<h6>${classes.teacher.teacherNickname} 선생님</h6>
-											<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
-											</div>
-											<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
-										</div>
-									</c:forEach>
-								</c:if>
+								<div class="classBoxImg">
+									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+										<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+									</a>
+								</div>
+								<div class="classBoxContent">
+									<h5 class="classBoxName">
+										<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+											<span>${classes.className}</span>
+										</a>
+										<c:choose>
+											<c:when test="${classes.likeId != null}">
+												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
+													<i class="fa-solid fa-heart fa-lg"></i>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
+													<i class="fa-regular fa-heart fa-lg"></i>
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</h5>
+									<div class="classBoxInfo">
+										<h6>${classes.teacher.teacherNickname} 선생님</h6>
+									<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
+									</div>
+									<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
+								</div>
 							</div>
 						</c:forEach>
 					</div>
 				</c:otherwise>
 			</c:choose>
 			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<c:set var="doneLoop" value="false" />
-					<c:if test="${(startPage-blockCount) > 0}">
-						<li class="page-item disabled">
-							<a class="page-link">Previous</a>
-						</li>
-					</c:if>
-						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
-							<c:if test="${(i-1)>=list.getTotalPages()}">
-								<c:set var="doneLoop" value="true" />
-							</c:if>
-							<c:if test="${not doneLoop}">
-								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/main/class/classList?page=${i}">${i}</a></li>
-							</c:if>
-						</c:forEach>
-					<c:if test="${(startPage+blockCount)<=list.getTotalPages()}">
-						<li class="page-item">
-							<a class="page-link" href="#">Next</a>
-						</li>
-					</c:if>
-				</ul>
-			</nav>
+			<ul class="pagination justify-content-center">
+				<c:set var="doneLoop" value="false" />
+				<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+					<li class="page-item">
+						<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+					</li>
+				</c:if>
+					<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+						<c:if test="${(i-1)>=list.getTotalPages()}">
+							<c:set var="doneLoop" value="true" />
+						</c:if>
+						<c:if test="${not doneLoop}">
+							<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+						</c:if>
+					</c:forEach>
+				<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+					<li class="page-item">
+						<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+					</li>
+				</c:if>
+			</ul>
+		</nav>
 		</div>
 	</body>
 </html>

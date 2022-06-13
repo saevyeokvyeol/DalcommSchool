@@ -1,9 +1,11 @@
 package dcsc.mvc.domain.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -55,4 +57,8 @@ public class Teacher {
 	@OneToOne(mappedBy = "teacher")
 	@JsonIgnore
 	private Place place;
+	
+	@OneToMany(mappedBy = "teacher")
+	@JsonIgnore
+	private List<TeacherSns> teacherSns;
 }

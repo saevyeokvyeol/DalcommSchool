@@ -40,16 +40,32 @@ public class CouponController {
 	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생
 	 * */
 	@RequestMapping("main/mypage/couponList")
-	public void selectAllIssueCouponByStudentId(String studentId, Model model) {
-		studentId = "kim1234";
+	public void selectAllIssueCouponByStudentId(String couponUseable, Model model, @RequestParam(defaultValue="1") int nowPage) {
+		String studentId = "kim1234";
 		
-		List<IssueCoupon> list = couponService.selectByStudentId(studentId);
-		model.addAttribute("list", list);
+		if(couponUseable == null) couponUseable = "useable";
+		
+		//페이징 처리하기
+		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT);
+		Page<IssueCoupon> issueCouponList = couponService.selectByStudentId(studentId, couponUseable, page);
+		model.addAttribute("issueCouponList", issueCouponList);
+		
+		int temp=(nowPage-1)%BLOCK_COUNT;
+		int startPage = nowPage-temp;
+	
+		model.addAttribute("blockCount",BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("nowPage",nowPage);
+		
+		System.out.println(BLOCK_COUNT);
+		System.out.println(startPage);
+		System.out.println(nowPage);
+			
 	
 	}
 	
 	/**
-	 * 클래스 발급 쿠폰 조회 기능 ; 선생님
+	 * 클래스 발급 쿠폰 조회 기능 ; 선생님 -클래스별 쿠폰 
 	 * */
 	@RequestMapping("teacher/coupon/couponList")
 	public void selectAllCouponByClassId(Long classId, Model model) {

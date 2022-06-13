@@ -1,4 +1,4 @@
-package dcsc.mvc.controller.board;
+package dcsc.mvc.controller;
 
 import java.util.List;
 

@@ -15,15 +15,22 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		
-		<style type="text/css">
-			.bootstrap-timepicker-widget.dropdown-menu {
-    z-index: 1050!important;
-}
-			#scheduleUpdateForm h6 {display: none;}
-		</style>
 		<script>
 			$(function() {
-				
+				$(".subscript").click(function() {
+					$.ajax({
+						url : "${pageContext.request.contextPath}/book/updateFinishSubscript",
+						type : "post",
+						data : {"bookId" : $(this).val(), "${_csrf.parameterName}" : "${_csrf.token}"},
+						success : function() {
+							location.reload();
+						},
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.message);
+						}
+					});
+				})
 			})
 		</script>
 	</head>
@@ -54,7 +61,7 @@
 		 					결제 금액
 		 				</th>
 		 				<th>
-		 					수강 상태
+		 					수강 완료 신청
 		 				</th>
 		 			</tr>
 		 		</thead>
@@ -62,13 +69,13 @@
 		 			<c:forEach items="${list.content}" var="book">
 		 				<tr>
 		 					<td>${book.classes.className}</td>
-		 					<td>${book.classSchedule.scheduleDate.toString().substring(0, 10)} ${book.classSchedule.startTime} ~ ${book.classSchedule.endTime}</td>
+		 					<td>${book.classSchedule.scheduleDate.toString().substring(0, 10)}</td>
 		 					<td>${book.student.studentId}</td>
 		 					<td>${book.bookName}</td>
 		 					<td>${book.bookPhone}</td>
 		 					<td>${book.bookSeat}명</td>
 		 					<td>${book.totalPrice}원</td>
-		 					<td>${book.bookState.bookStateName}</td>
+		 					<td><button class="btn btn-primary subscript" value="${book.bookId}">수강 완료 신청</button></td>
 		 				</tr>
 		 			</c:forEach>
 		 		</tbody>
@@ -92,7 +99,7 @@
 					</c:forEach>
 				<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
 					<li class="page-item">
-						<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+						<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
 					</li>
 				</c:if>
 			</ul>
