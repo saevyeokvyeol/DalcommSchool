@@ -291,7 +291,7 @@
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >${teacher.teacherNickname} 선생님</a
+                    >${teacher.teacherNickname} 관리자</a
                   >
                 </li>
 
@@ -299,14 +299,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                    <c:choose>
-                    <c:when test="${teacher.teacherImg == null}">
-						<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
-                    </c:when>
-                    <c:otherwise>
-						<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
-                    </c:otherwise>
-                    </c:choose>
+						<img src="${pageContext.request.contextPath}/img/teacher/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -315,20 +308,13 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                             <c:choose>
-			                    <c:when test="${teacher.teacherImg == null}">
-									<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
-			                    </c:when>
-			                    <c:otherwise>
-									<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
-		                    </c:otherwise>
-	                    	</c:choose>
+								<img src="${pageContext.request.contextPath}/img/teacher/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
 <!--                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> -->
                             </div>
                           </div>
                           <div class="flex-grow-1">
                             <span class="fw-semibold d-block">${teacher.teacherId}</span>
-                            <small class="text-muted">선생님</small>
+                            <small class="text-muted">관리자</small>
                           </div>
                         </div>
                       </a>

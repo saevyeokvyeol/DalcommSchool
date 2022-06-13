@@ -13,9 +13,9 @@
 		<script type="text/javascript">
 			$(function() {
 				//$("#form").hide();
-				function logout() {
+				$(".logout").click(function name() {
 					document.getElementById('logout').submit();
-				}
+				})
 				
 				$(".like").click(function() {
 					$.ajax({
@@ -74,6 +74,13 @@
 				})
 			})
 		</script>
+		
+		<style type="text/css">
+			.modal-dialog-centered {
+				text-align: center;
+			}
+		</style>
+		
 	</head>
 	<body>
 		<div class="form">	
@@ -91,11 +98,12 @@
 			<div class="offcanvas-body"></div>
 		</div>
 				
-		<!-- ---------------------------------로그인 모달--------------------------------------- -->
+		<!-- 로그인 모달 -->
 		<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
+              		<h5 class="modal-title modal-title-centered"></h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body"><!-- 모달 본문 -->
@@ -120,15 +128,15 @@
 					<li><a href=""><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
 					<li><a class="like" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
 					<sec:authorize access="isAnonymous()">
-						<li><a href="#" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_STUDENT')">
 						<li><a href="${pageContext.request.contextPath}/main/mypage/myPage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
-						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+						<li><a class="logout"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_TEACHER')">
 						<li><a href="${pageContext.request.contextPath}/teacher/mypage/mypage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
-						<li><a href="#" onclick="logout()"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+						<li><a class="logout"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 				</ul>
 			</div>

@@ -64,6 +64,7 @@
 					nowIndicator: true, // 현재 시간 마크
 					dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
 					navLinks: false,
+					eventDisplay: 'block',
 					locale: 'ko', // 한국어 설정
 					bootstrapFontAwesome: {
 						close: 'fa-times',
@@ -161,6 +162,8 @@
 					$("#calendar").css("display", "");
 				})
 				
+				
+				// 좋아요 버튼
 				$(document).on("click", "button[name=none-like]", function() {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/like/insert",
@@ -177,6 +180,7 @@
 					})
 				})
 
+				// 좋아요 버튼
 				$(document).on("click", "button[name=like]", function() {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/like/deleteByLikeId",
@@ -193,6 +197,98 @@
 						}
 					})
 				})
+				
+				
+				// 클래스 문의글 아작스
+				function classQna(num) {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/selectByClassId",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}, "page": num},
+						dataType : "json",
+						success: function(result){
+							text = "<tbody>"
+							
+							if(result.list.length == 0){
+								text = "<tr><td><h5 class='no-record'>아직 질문이 없어요!</h5></td></tr>"
+							} else {
+								$.each(result.list, function(index, item){
+									if(item.blindState == 'T'){
+										text += "<tr>"
+										text += "<td colspan='3'>"
+										text += "블라인드된 글입니다"
+										text += "</td>"
+										text += "</tr>"
+										
+									} else {
+										text += "<tr>"
+										text += "<td>"
+										if(item.qnaComplete == 'F'){
+											text += `<span class="badge bg-secondary">미답변</span>`
+										} else {
+											text += `<span class="badge bg-primary">답변 완료</span>`
+										}
+										text += "</td>"
+										text += "<td>"
+										text += `\${item.qnaTitle}`
+										if(item.secretState == "F"){
+											text += ' <i class="fa-solid fa-lock"></i>'
+										}
+										text += "</td>"
+										text += "<td>"
+										text += `\${item.qnaInsertDate.toString().substring(0, 10)}`
+										text += "</td>"
+										text += "</tr>"
+										
+									}
+								})
+							}
+							text += "</tbody>"
+							$("#qnaTable").html(text);
+							
+							pageText = ""
+							
+							let doneLoop = false;
+							let startPage = result.startPage;
+							let blockCount = result.blockCount;
+							let endPage = startPage + blockCount - 1
+							if(endPage > result.totalPage){
+								endPage = result.totalPage
+							}
+							
+							if((startPage - blockCount) > 0 && result.list.length != 0){
+								pageText += '<li class="page-item">'
+								pageText += `<button class="page-link" value="\${startPage - 1}">이전</button>`
+								pageText += '</li>'
+							}
+							for(i = startPage; i <= endPage; i++){
+								if((i - 1) >= endPage){
+									doneLoop = true
+								}
+								if(!doneLoop){
+									pageText += '<li class="page-item">'
+									pageText += `<button class="page-link" value="\${i}">\${i}</button>`
+									pageText += '</li>'
+								}
+							}
+							if((startPage + blockCount) <= result.totalPage){
+								pageText += '<li class="page-item">'
+								pageText += `<button class="page-link" value="\${startPage + blockCount}">이후</button>`
+								pageText += '</li>'
+							}
+							$(".qnaPaging").html(pageText)
+						},
+						error: function(err){
+							alert(123)
+						}
+					})
+				} // 클래스 문의글 아작스 함수 종료
+				
+				$(document).on("click", ".qnaPaging > li > button", function() {
+					classQna($(this).val())
+				})
+				
+				classQna(1)
 			})
 		</script>
 	</head>
@@ -238,12 +334,36 @@
 						<!-- 여기부터 지도 -->
 					</div>
 					<div class="classInfoBox" id="review">
-						<h4 class="classBoxName">클래스 후기</h4>
-					<hr>
+						<h4 class="classBoxName">
+							클래스 후기
+							<button type="button" class="btn btn-outline-primary">후기 등록</button>
+						</h4>
+						<hr>
+						<div class="boardTable">
+							<table class="table">
+							
+							</table>
+						</div>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+							</ul>
+						</nav>
 					</div>
 					<div class="classInfoBox" id="QnA">
-						<h4 class="classBoxName">클래스 Q&A</h4>
-					<hr>
+						<h4 class="classBoxName">
+							클래스 Q&A
+							<button type="button" class="btn btn-outline-primary">Q&A 등록</button>
+						</h4>
+						<hr>
+						<div class="boardTable">
+							<table class="table" id="qnaTable">
+								
+							</table>
+						</div>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center qnaPaging">
+							</ul>
+						</nav>
 					</div>
 				</div>
 				<div id="classOrderCalendar">
