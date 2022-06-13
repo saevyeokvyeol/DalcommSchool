@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.JPQLQueryFactory;
+
+import dcsc.mvc.domain.user.QStudent;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.repository.user.TeacherRepository;
@@ -28,9 +34,8 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentRepository studentRep;
 	private final TeacherRepository teacherRep;
 	
-	//private final Student student;
-	//private final Teacher teacher;
-	
+	private final JPQLQueryFactory jpqlQueryFactory;
+
 	private final BCryptPasswordEncoder getBCryptPasswordEncoder;
 
 	
@@ -130,29 +135,36 @@ public class StudentServiceImpl implements StudentService {
 	 * keyword(검색어), key field(컬럼명)
 	 * */
 	@Override
-	public List<Student> selectByStudentId(String keyfield, String keyword) { 
-		List<Student> list = null;
+	public Page<Student> selectByStudentId(String keyfield, String keyword, Pageable pageable) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QStudent student = QStudent.student;
+		
 		switch(keyfield) {
 				case "studentID" :
-					System.out.println("studentID...");
-					list = studentRep.findByStudentIdIsLike(keyword);
+					booleanBuilder.and(student.studentId.like("%" + keyword + "%"));
 					break;
 					
 				case "studentName" :
-					System.out.println("studentName...");
-					list = studentRep.findByStudentNameIsLike(keyword);
+					booleanBuilder.and(student.studentName.like("%" + keyword + "%"));
 					break;	
 					
 				case "studentPhone" :
-					System.out.println("studentPhone...");
-					list = studentRep.findByStudentIdIsLike(keyword);
+					booleanBuilder.and(student.studentPhone.like("%" + keyword + "%"));
 					break;	
 					
 				case "studentEmail" :
-					System.out.println("studentEmail...");
-					list = studentRep.findByStudentIdIsLike(keyword);
+					booleanBuilder.and(student.studentEmail.like("%" + keyword + "%"));
 					break;	
 		}
+		
+		JPQLQuery<Student> query = jpqlQueryFactory.selectFrom(student)
+				.where(booleanBuilder)
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		
+		Page<Student> list = new PageImpl<Student>(query.fetch(), pageable, query.fetch().size());
+		
 		return list;
 	}
 

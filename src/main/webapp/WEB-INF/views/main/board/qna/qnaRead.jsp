@@ -60,7 +60,7 @@
 <div class="main-content">
 
     <div >
-        <table>
+        <table class="table">
         	<tr>
             	<th></th>
         		<td><input type="hidden" name="qnaId" value="${qna.qnaId}"></td>

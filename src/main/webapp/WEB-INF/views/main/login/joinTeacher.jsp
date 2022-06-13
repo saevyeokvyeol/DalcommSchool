@@ -402,10 +402,10 @@ function setThumbnail(event){
 	          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
 	          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
 	      </tr>
-	      <tr>
-	          <th>강사 공개 연락처</th>
-	          <td><input type="text" id="teacherNick" class="" name="teacherTel" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td>
-	      </tr>
+<!-- 	      <tr> -->
+<!-- 	          <th>강사 공개 연락처</th> -->
+<!-- 	          <td><input type="text" id="teacherNick" class="" name="teacherTel" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td> -->
+<!-- 	      </tr> -->
 	      <tr>
 	          <th>*강사 이메일</th>
 	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required="required"/>

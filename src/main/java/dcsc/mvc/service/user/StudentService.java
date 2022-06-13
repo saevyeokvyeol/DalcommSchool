@@ -65,7 +65,7 @@ public interface StudentService {
 	 * @param: String keyword(검색어), String keyfield(컬럼명)
 	 * @return: List<Student>
 	 * */
-	List<Student> selectByStudentId (String keyfield, String keyword);
+	Page<Student> selectByStudentId (String keyfield, String keyword, Pageable pageable);
 	
 	
 }

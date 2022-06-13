@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
@@ -63,7 +64,6 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -98,10 +98,27 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-people-line menu-icon"></i>
-                <div data-i18n="Misc">클래스 수강 조회</div>
+                <div data-i18n="Account Settings">클래스 수강 조회</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">전체 수강 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">일정별 수강 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">지난 수강 완료 신청</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
               <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
@@ -110,7 +127,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll" class="menu-link">
                 <i class="fa-solid fa-circle-question menu-icon"></i>
                 <div data-i18n="Misc">클래스 Q&A 조회</div>
               </a>
@@ -147,7 +164,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList" class="menu-link">
                 <i class="fa-solid fa-table-list menu-icon"></i>
                 <div data-i18n="Basic">내 쿠폰 조회</div>
               </a>
@@ -162,13 +179,13 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/modifyPwd" class="menu-link">
                 <i class="fa-solid fa-key menu-icon"></i>
                 <div data-i18n="Form Elements">비밀번호 수정</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/updateProfile" class="menu-link">
                 <i class="fa-solid fa-address-card menu-icon"></i>
                 <div data-i18n="Form Elements">선생님 프로필 수정</div>
               </a>
@@ -180,15 +197,15 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/deleteUserForm" class="menu-link">
                 <i class="fa-solid fa-arrow-right-from-bracket menu-icon"></i>
                 <div data-i18n="Form Elements">회원 탈퇴</div>
               </a>
             </li>
             <div class="ps__rail-y" style="top: 0px; height: 429px; right: 4px;">
-<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
-</div>
-</div>
+				<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
+				</div>
+			</div>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -214,20 +231,27 @@
                 <li class="nav-item lh-1 me-3">
                   <a
                     class="github-button"
-                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    href="#"
                     data-icon="octicon-star"
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >Star</a
+                    >${teacher.teacherNickname} 선생님</a
                   >
                 </li>
 
-                <!-- User -->
+   <!-- -------------------강사 정보------------  -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="${pageContext.request.contextPath}/img/class/class_4.jpg" alt class="w-px-40 h-auto rounded-circle" />
+                    <c:choose>
+                    <c:when test="${teacher.teacherImg == null}">
+						<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:when>
+                    <c:otherwise>
+						<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:otherwise>
+                    </c:choose>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -236,7 +260,15 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                             <c:choose>
+			                    <c:when test="${teacher.teacherImg == null}">
+									<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+			                    </c:when>
+			                    <c:otherwise>
+									<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+		                    </c:otherwise>
+	                    	</c:choose>
+<!--                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> -->
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -249,30 +281,30 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-user me-2"></i> -->
+<!--                         <span class="align-middle">My Profile</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-cog me-2"></i> -->
+<!--                         <span class="align-middle">Settings</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <span class="d-flex align-items-center align-middle"> -->
+<!--                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i> -->
+<!--                           <span class="flex-grow-1 align-middle">Billing</span> -->
+<!--                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span> -->
+<!--                         </span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <div class="dropdown-divider"></div> -->
+<!--                     </li> -->
                     <li>
                       <a class="dropdown-item" href="#" onclick="logout()">
                         <i class="bx bx-power-off me-2"></i>
@@ -281,7 +313,6 @@
                     </li>
                   </ul>
                 </li>
-                <!--/ User -->
               </ul>
             </div>
           </nav>
@@ -308,7 +339,6 @@
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
 	</form>
 	</div>
-    
     
   </body>
 </html>

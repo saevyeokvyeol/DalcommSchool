@@ -38,7 +38,6 @@ public class AjaxBookController {
 		bookService.updateFinish(bookId);
 	}
 	
-	
 	/**
 	 * 클래스 예약 취소
 	 * */
@@ -48,27 +47,11 @@ public class AjaxBookController {
 	}
 	
 	/**
-	 * 강사ID로 예약 조회
+	 * 클래스 예약 취소
 	 * */
-	@RequestMapping("/book/selectByTeacherId")
-	public List<BookDTO> selectByTeacherId() {
-		String teacherId = "Tkim1234"; 
-		List<Book> list = bookService.selectByTeacherId(teacherId);
-		List<BookDTO> dtoList = new ArrayList<BookDTO>();
-		
-		for(Book b : list) {
-			Date bookDate = b.getClassSchedule().getScheduleDate();
-			bookDate.setHours(Integer.parseInt(b.getClassSchedule().getStartTime().substring(0, 2)));
-			bookDate.setMinutes(Integer.parseInt(b.getClassSchedule().getStartTime().substring(3, 5)));
-			
-			BookDTO bookDTO = new BookDTO(b.getBookId(), b.getStudent().getStudentId(),
-					b.getClasses().getClassName(), bookDate.toString().substring(0, 16),
-					b.getBookState().getBookStateName(), b.getBookSeat(), b.getTotalPrice(),
-					b.getBookName(), b.getBookPhone());
-			dtoList.add(bookDTO);
-		}
-		
-		return dtoList;
+	@RequestMapping("/book/updateFinishSubscript")
+	public void updateFinishSubscript(Long bookId) {
+		bookService.updateFinishSubscript(bookId);
 	}
 	
 	/**

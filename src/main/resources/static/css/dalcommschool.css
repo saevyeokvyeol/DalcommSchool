@@ -111,16 +111,16 @@ a {
 }
 
 #sidebar h4 {
-	font-weight: 600; margin-bottom: 20px; padding-bottom: 15px;
+	font-weight: 600; padding-bottom: 15px;
 	border-bottom: 1px solid #888; display: inline-block;
 }
 
 #sidebar h5 {
-	font-weight: 700; font-size: 18px;
+	font-weight: 700; font-size: 18px; margin-top: 20px;
 }
 
 #sidebar ul {
-	margin: 5px 0 20px;
+	margin: 5px 0 0;
 }
 
 #sidebar li {
@@ -404,7 +404,11 @@ a {
 }
 
 #classTable {
-	text-align: center; margin: auto;
+	text-align: center; width: 750px; margin: auto;
+}
+
+#classTable h5 {
+	text-align: left; margin-top: 20px;
 }
 
 #classTable .image-container, .fileBtn {
@@ -413,6 +417,14 @@ a {
 
 #classTable .image-container img {
 	max-width: 750px; max-height: 500px; border-radius: 5px; margin: auto; vertical-align: middle;
+}
+
+#classTable .profileImgCon {
+	width: 200px; height: 200px; margin: auto; border: 1px solid #CED4DA; border-radius: 5px; background-color: transparent;
+}
+
+#classTable .profileImgCon img {
+	width: 200px; height: 200px; border-radius: 5px; margin: auto; vertical-align: middle;
 }
 
 #classTable #input-image {
@@ -425,4 +437,40 @@ a {
 
 .bootstrap-timepicker-widget.dropdown-menu {
     z-index: 1050!important;
+}
+
+#teacherBookList .table {
+	text-align: center; margin-top: 50px;
+}
+
+#teacherBookList .table th, #bookListBox .table td {
+	height: 60px; vertical-align: middle; font-size: 16px;
+}
+
+#teacherBookList .table th {
+	font-weight: 700px;
+}
+
+#teacherBookList .table h3 {
+	margin: 100px 0;
+}
+
+#allBookList .table {
+	text-align: center;
+}
+
+#allBookList .table th, #allBookList .table td {
+	height: 60px; vertical-align: middle; font-size: 16px;
+}
+
+#allBookList .table th {
+	font-weight: 700px;
+}
+
+#allBookList .table h3 {
+	margin: 100px 0;
+}
+
+#pagenation {
+	margin-top: 50px;
 }
