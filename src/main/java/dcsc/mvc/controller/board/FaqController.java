@@ -139,17 +139,19 @@ public class FaqController {
 	 * 수정하기
 	 */
 	@RequestMapping("/admin/board/FAQ/faqUpdate")
-	public ModelAndView updateFAQ(Faq faq, FaqCategory faqCategory, MultipartFile file) throws Exception {
+	public String updateFAQ(Faq faq, FaqCategory faqCategory, MultipartFile file) throws Exception {
 		if (file.getSize() > 0) {
 			File img = new File(ImageLink.FAQ_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			faq.setFaqImg(file.getOriginalFilename());
 
 		}
-		faqService.updateFAQ(faq, faqCategory);
-		System.out.println("faq + 카테코리 :"+faq+" = "+faqCategory);
+		faq.setFaqCategory(faqCategory);
+		
+		Faq newFaq = faqService.updateFAQ(faq);
+		System.out.println("faq + 카테코리 :"+faq+" = "+faqCategory.getFaqCategoryId());
 
-		return new ModelAndView("admin/board/FAQ/faqRead", "faq", faq);
+		return "redirect:/admin/board/FAQ/faqRead/" + newFaq.getFaqNo();
 
 	}
 
@@ -210,14 +212,14 @@ public class FaqController {
 	}
 
 	/**
-	 * 검색 하기 -
+	 * 검색 하기 - 관리자
 	 */
 	@RequestMapping("/admin/board/FAQ/faqSearch") 
 	public String selectByKeyword(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
-
+		System.out.println("keyword 넘어가나? = " + keyword);
 	// 페이징 처리
 		Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "faqNo");
-		Page<Faq> faqlist = faqService.selectAllfqa(page);
+		Page<Faq> faqlist = faqService.selectBykeyword(keyword,page);
 
 		model.addAttribute("faqlist", faqlist);
 
