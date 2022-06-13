@@ -122,12 +122,11 @@
 			<table class="table" id="couponTable">
 				<thead>
 					<tr>
-						<th>클래스아이디</th>
-						<th>쿠폰아이디</th>
+						<th>클래스명</th>
+						<th>쿠폰ID</th>
 						<th>쿠폰명</th>
 						<th>할인금액</th>
 						<th>등록일자</th>
-						<th>수정일자</th>
 						<th>사용기간</th>
 						<th>쿠폰상태</th>
 						<th>수정하기</th>
@@ -138,7 +137,7 @@
 					<c:choose>
 	                    <c:when test ="${empty requestScope.couponList.content}">
 	                        <tr>
-	                            <th colspan="8">
+	                            <th colspan="9">
 	                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>
 	                            </th>
 	                        </tr>
@@ -146,17 +145,13 @@
 	                    <c:otherwise>
 	                        <c:forEach items="${requestScope.couponList.content}" var="coupon">
 	                            <tr>
-	                            	<td>${coupon.classes.classId}</td>
+	                            	<td>${coupon.classes.className}</td>
 	                                <td>${coupon.couponId}</td>
 	                                <td>${coupon.couponName}</td>
-	                                <td>${coupon.couponDc}</td>
+	                                <td>${coupon.couponDc}원</td>
 	                                <td>
 			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-			                        <td>
-			                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
-			                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
 			                        </td>
 	                                <td>${coupon.couponEndDate}일</td>
 	                                <td>
@@ -165,18 +160,11 @@
 											<c:when test="${coupon.couponState.couponStateId == '1'}">
 												<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
 												<option name="couponStateId" value="2">발급중지</option>
-												<option name="couponStateId" value="3">삭제</option>
 											</c:when>
 											<c:when test="${coupon.couponState.couponStateId == '2'}">
 												<option name="couponStateId" value="2">${coupon.couponState.couponStateName}</option>
 												<option name="couponStateId" value="1">발급</option>
-												<option name="couponStateId" value="3">삭제</option>
 											</c:when>
-											<c:otherwise>
-												<option name="couponStateId" value="3">${coupon.couponState.couponStateName}</option>
-												<option name="couponStateId" value="1">발급</option>
-												<option name="couponStateId" value="2">발급중지</option> 
-											</c:otherwise>
 											</c:choose>	        
 	        							</select>
 	        						</td>
@@ -272,7 +260,7 @@
 			           <form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/couponInsert"">
 			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			             <div>
-			             	선생님ID
+			             	<!-- 선생님ID -->
 			             	<input type="hidden" name="teacherId" value="Tkim1234" id="teacherId" required readonly="readonly">
 			           		<%-- <input type="hidden" name="teacherId" value="${coupon.teacher.teacherId}" id="teacherId"> --%>
 			             </div>
@@ -284,12 +272,8 @@
 			             </div>
 			             <div>
 			               쿠폰상태 
-			              <select name="couponStateId" id="couponStateId" class="form-select">
-			                <option value="0">-쿠폰상태 선택-</option>
-			                <option value="1">발급</option>
-			                <option value="2">발급중지</option>
-			                <option value="3">삭제</option>          
-			              </select>	
+			              <input class="form-control" type="hidden" name="couponStateId" id="couponStateId" value="2" >
+			              <input  class="form-control" type="text" value="발급중지" readonly="readonly">
 			             </div>
 			             <div>
 			               쿠폰명 
@@ -330,8 +314,8 @@
 			           <form name="coupon-teacher-update" method="post" id="coupon-teacher-update" action="${pageContext.request.contextPath}/teacher/coupon/couponUpdate"">
 			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			             <div>
-			               쿠폰ID 
-			              <input class="form-control couponId" type="text" name="couponId" id="couponId" required readonly="readonly">	
+			               <!-- 쿠폰ID --> 
+			              <input class="form-control couponId" type="hidden" name="couponId" id="couponId" required readonly="readonly">	
 			             </div>
 			             <div>
 			               쿠폰명 

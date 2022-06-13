@@ -166,7 +166,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList" class="menu-link">
                 <i class="fa-solid fa-table-list menu-icon"></i>
                 <div data-i18n="Basic">내 쿠폰 조회</div>
               </a>
@@ -199,7 +199,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/deleteUserForm" class="menu-link">
                 <i class="fa-solid fa-arrow-right-from-bracket menu-icon"></i>
                 <div data-i18n="Form Elements">회원 탈퇴</div>
               </a>
@@ -233,20 +233,27 @@
                 <li class="nav-item lh-1 me-3">
                   <a
                     class="github-button"
-                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    href="#"
                     data-icon="octicon-star"
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >${teacher.teacherNickname}</a
+                    >${teacher.teacherNickname} 선생님</a
                   >
                 </li>
 
-                <!-- User -->
+   <!-- -------------------강사 정보------------  -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="${pageContext.request.contextPath}/img/class/class_4.jpg" alt class="w-px-40 h-auto rounded-circle" />
+                    <c:choose>
+                    <c:when test="${teacher.teacherImg == null}">
+						<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:when>
+                    <c:otherwise>
+						<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:otherwise>
+                    </c:choose>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -255,7 +262,15 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                             <c:choose>
+			                    <c:when test="${teacher.teacherImg == null}">
+									<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+			                    </c:when>
+			                    <c:otherwise>
+									<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+		                    </c:otherwise>
+	                    	</c:choose>
+<!--                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> -->
                             </div>
                           </div>
                           <div class="flex-grow-1">

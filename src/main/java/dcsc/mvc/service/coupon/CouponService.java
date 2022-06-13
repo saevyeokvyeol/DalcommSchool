@@ -14,6 +14,8 @@ public interface CouponService {
 	 * @param studentId (검색 기준)
 	 * @return List<IssueCoupon>
 	 * */
+	Page<IssueCoupon> selectByStudentId(String studentId, String couponUseable, Pageable pageable);
+	
 	List<IssueCoupon> selectByStudentId(String studentId);
 	
 	/**

@@ -44,6 +44,13 @@ public interface ClassQnaService {
 	 * @return List<ClassQna>
 	 * */
 	List<ClassQna> selectByClassId(Long classId);
+	
+	/**
+	 * 클래스ID로 클래스 Q&A 검색 - 페이징
+	 * @param Long classId
+	 * @return List<ClassQna>
+	 * */
+	Page<ClassQna> selectByClassId(Long classId, Pageable pageable);
 
 	/**
 	 * 강사ID로 클래스 Q&A 검색
@@ -51,6 +58,13 @@ public interface ClassQnaService {
 	 * @return List<ClassQna>
 	 * */
 	List<ClassQna> selectByTeacherId(String teacherId);
+	
+	/**
+	 * 강사ID로 클래스 Q&A 검색 -페이징
+	 * @param String teacherId
+	 * @return List<ClassQna>
+	 * */
+	Page<ClassQna> selectByTeacherId(String teacherId, Pageable pageable);
 
 	/**
 	 * 클래스 QnA 상세 보기
@@ -100,4 +114,11 @@ public interface ClassQnaService {
 	 * @return List<ClassQna>
 	 * */
 	List<ClassQna> selectByStudentId(String studentId);
+	
+	/**
+	 * 학생ID로 클래스 Q&A 검색 - 페이징처리
+	 * @param String studentId
+	 * @return List<ClassQna>
+	 * */
+	Page<ClassQna> selectByStudentId(String studentId, Pageable pageable);
 }

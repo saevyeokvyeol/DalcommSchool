@@ -39,61 +39,122 @@
 
 <div class="main-content">
 	<section>
-		<form>
-
-			<h1>쿠폰조회 </h1>
-			
-			<table class="table" id="couponTable">
-				<thead>
-					<tr>
-						<th>쿠폰번호</th>
-						<th>쿠폰아이디</th>
-						<th>쿠폰명</th>
-						<th>쿠폰사용여부</th>
-						<th>쿠폰발행일</th>
-						<th>쿠폰만료일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-	                    <c:when test ="${empty requestScope.list}">
-	                        <tr>
-	                            <th colspan="6">
-	                                <span> 보유한 쿠폰이 없습니다.</span>
-	                            </th>
-	                        </tr>
-	                    </c:when>
-	                    <c:otherwise>
-	                        <c:forEach items="${requestScope.list}" var="issueCoupon">
-	                            <tr>
-	                                <td>${issueCoupon.issueNo}</td>
-	                                <td>${issueCoupon.coupon.couponId}</td>
-	                                <td>${issueCoupon.coupon.couponName}</td>
-	                                <td>${issueCoupon.issueUsable}</td>
-	                                <td>
-			                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
-			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-			                        <td>
-			                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
-			                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-	                            </tr>
-	                        </c:forEach>
-	                    </c:otherwise>
-	                </c:choose>
+			<div><h1>쿠폰조회</h1></div>
+			<table>
+		
+			<div class="btn-group" role="group" aria-label="Basic outlined example">
+				<form action="${pageContext.request.contextPath}/main/mypage/couponList">
+					<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+					<input type="hidden" name="couponUseable" value="useable">
+			  		<button type="submit" class="btn btn-outline-primary couponbtn" value="useable">사용가능한 쿠폰</button>
+				</form>
+				<form action="${pageContext.request.contextPath}/main/mypage/couponList">
+					<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+					<input type="hidden" name="couponUseable" value="used">
+					<button type="submit" class="btn btn-outline-primary couponbtn" value="used">사용한 쿠폰</button>
+				</form>
+			  	<form action="${pageContext.request.contextPath}/main/mypage/couponList">
+					<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+					<input type="hidden" name="couponUseable" value="expired">
+					<button type="submit" class="btn btn-outline-primary couponbtn" value="expired">만료된 쿠폰</button>
+				</form>
+			  
+			</div>
+		
+			<thead>
+				<tr>
+					<th>쿠폰아이디</th>
+					<th>쿠폰명</th>
+					<th>할인금액</th>
+					<th>쿠폰사용여부</th>
+					<th>쿠폰발행일</th>
+					<th>쿠폰만료일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+                    <c:when test ="${empty requestScope.issueCouponList.content}">
+                        <tr>
+                            <th colspan="6">
+                                <span> 보유한 쿠폰이 없습니다.</span>
+                            </th>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${requestScope.issueCouponList.content}" var="issueCoupon">
+                            <tr>
+                                <td>${issueCoupon.coupon.couponId}</td>
+                                <td>${issueCoupon.coupon.couponName}</td>
+                                <td>${issueCoupon.coupon.couponDc}원</td>
+                                <td>${issueCoupon.issueUsable}</td>
+                                <td>
+		                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
+		                        <td>
+		                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+				
+			</tbody>
+			<tfoot>
+				<tr>
 					
-				</tbody>
-				<tfoot>
-					<tr>
-						
-					</tr>
-				</tfoot>
+				</tr>
+			</tfoot>
 				
 			</table>
+		
+		<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
+			<div style="text-align: center">
+				
+					<!--  블럭당  -->
+			 <nav class="pagination-container">
+				<div class="pagination">
+				<c:set var="doneLoop" value="false"/>
+					
+					  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+					      <a class="pagination-newer" href="${pageContext.request.contextPath}/main/mypage/couponList?nowPage=${startPage-1}">PREV</a>
+					  </c:if>
+					  
+							<span class="pagination-inner"> 
+							  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+							  
+								<c:if test="${(i-1)>=pageList.getTotalPages()}">
+								       <c:set var="doneLoop" value="true"/>
+								</c:if> 
+							     
+							    <c:if test="${not doneLoop}" >
+							         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/mypage/couponList?nowPage=${i}">${i}</a> 
+							    </c:if>
+							   
+							  </c:forEach>
+							</span> 
+							<!-- 
+							[다음]
+			 
+								  if( (시작페이지+한블록당뿌려질[]개수)<= 총페이지수){
+								      [다음]출력;
+								  }  
+								
+								  ex)if( (startPage+blockCount) <= pageCount){
+								
+								      }
+							 -->
+							 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+							     <a class="pagination-older" href="${pageContext.request.contextPath}/main/mypage/couponList?nowPage=${startPage+blockCount}">NEXT</a>
+							 </c:if>
+					
+					</div>
+				</nav>  
+			</div>
 			
-		</form>
-	</section>
+			
+		</section>
 
 </div>
 		
