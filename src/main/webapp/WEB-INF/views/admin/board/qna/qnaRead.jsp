@@ -32,7 +32,7 @@
     <div class="card" style="width: 70rem;">
 		<div class="card-body">
 		
-        <table>
+        <table class="table">
         	<tr>
                 <th>작성자</th>
                 <td><span>${qna.student.studentId}</span></td>

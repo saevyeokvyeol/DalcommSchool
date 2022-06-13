@@ -99,7 +99,7 @@
 			<c:set var="doneLoop" value="false"/>
 				
 				  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-				      <a class="pagination-newer" href="${pageContext.request.contextPath}/teacher/teacherMypage/qnaListAll?nowPage=${startPage-1}">PREV</a>
+				      <a class="pagination-newer" href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll?nowPage=${startPage-1}">PREV</a>
 				  </c:if>
 				  
 						<span class="pagination-inner"> 
@@ -110,7 +110,7 @@
 							</c:if> 
 						     
 						    <c:if test="${not doneLoop}" >
-						         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/teacher/teacherMypage/qnaListAll?nowPage=${i}">${i}</a> 
+						         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll?nowPage=${i}">${i}</a> 
 						    </c:if>
 						   
 						  </c:forEach>
@@ -127,7 +127,7 @@
 							      }
 						 -->
 						 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-						     <a class="pagination-older" href="${pageContext.request.contextPath}/teacher/teacherMypage/qnaListAll?nowPage=${startPage+blockCount}">NEXT</a>
+						     <a class="pagination-older" href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll?nowPage=${startPage+blockCount}">NEXT</a>
 						 </c:if>
 						 
 					

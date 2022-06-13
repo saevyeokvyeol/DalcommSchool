@@ -63,7 +63,7 @@ $(function(){
 <div class="main-content">
 	<section>
     <div>
-        <table>
+        <table class="table">
             <thead>
             	<tr>
             		

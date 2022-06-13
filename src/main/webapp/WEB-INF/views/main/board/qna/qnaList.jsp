@@ -41,7 +41,7 @@
 	    <div>
 	    	<h1>QnA</h1>
 	    	
-	        <table>
+	        <table class="table">
 	            <thead>
 	            	<tr>
 	            		<th colspan="6">

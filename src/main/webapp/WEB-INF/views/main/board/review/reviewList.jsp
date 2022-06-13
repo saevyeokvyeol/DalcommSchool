@@ -11,7 +11,7 @@
 <style type="text/css">
 	fieldset{display: inline-block; border: 0;}
 	
-	.fa-star{font-size: 2em; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
+	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
 	.checked {color: #EB5353;}
 /* 	.star:hover{text-shadow: 0 0 0 #EB5353;} */
 /* 	.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
@@ -50,6 +50,82 @@
 // 	        })
 // 		})
 //   })
+$(function(){
+	
+	$(".reviewContent").click(function(){
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/main/board/review/read",
+			type: "post",
+			data:{"${_csrf.parameterName}": "${_csrf.token}",
+				  "reviewId" : $(this).val()	
+			},
+			dataType:"json",
+// 				alert(result.reviewImg.toString());
+				
+				let text = "";
+				let rate = result.reviewRate;
+				if(rate==1) {
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text +=	'<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+				}else if(rate==2){
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+				}else if(rate==3){
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+				}else if(rate==4){
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm"></i>';
+				}else if(rate==5){
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+				}
+				
+// 				let image = result.reviewImg.toString();
+// 				let str="";
+// 				if(image!=null){
+// 					str+= '<td><div id="reviewImg"></div></td>';
+// 				}
+// 				$("#reviewDetail-form th:eq(7)").after(str);
+				$("#reviewDetail-form #reviewRate").html(text);
+				
+				$("#reviewDetail-form #reviewId").html(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
+				$("#reviewDetail-form #studentId").html(`\${result.studentId}`);
+				$("#reviewDetail-form #reviewInsertDate").html(`\${result.reviewInsertDate.toString().substring(0, 10)}`);
+				$("#reviewDetail-form #reviewUpdateDate").html(`\${result.reviewUpdateDate.toString().substring(0, 10)}`);
+				$("#reviewDetail-form #className").html(`\${result.className}`);
+				$("#reviewDetail-form #reviewImg").html(`\${result.reviewImg}`);
+				$("#reviewDetail-form #reviewContent").html(`\${result.reviewContent}`);
+			},
+			error: function(err){
+				alert(err + "에러 발생");
+			}
+		})
+	})
+	
+// 	$(".updateBtn").click(function(){
+// 		$.ajax({
+// 			url:
+// 		})
+// 	})
+	
+})
 </script>
 </head>
 <body>
@@ -78,6 +154,7 @@
 		        <c:forEach items="${classReviews.content}" var="review">
 		          <div id="review">
 		          <tr>
+		          	<input type="hidden" class="reviewId" name="reviewId" value="${review.reviewId}">
 		            <td><span>${review.student.studentId}</span></td>
 		            <td>
 				    	<fieldset>
@@ -127,11 +204,11 @@
 		            			<a>이 후기는 비공개 상태입니다.</a>
 		            		</c:when>
 		            		<c:when test="${review.reviewBlindState eq 'false'}">
-		            			<a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}">${review.reviewContent}</a>
+		            			<button class="reviewContent" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${review.reviewId}">${review.reviewContent}</button>
 		            		</c:when>
 		            	</c:choose>
 		            </td>
-<%-- 		            <td><a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}">${review.reviewContent}</a></td> --%>
+<%-- 		            <td><a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}" class="reviewContent">${review.reviewContent}</a></td> --%>
 		            <td>
 		            	<span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 		            	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
@@ -143,14 +220,162 @@
 		    </c:choose>
 		  </tbody>
 		</table>
+	
 		
-		<!-- 페이징 처리 -->
+	<!---------------------상세보기 모달 ------------------------------->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">후기 상세보기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      
+		      	<form id="reviewDetail-form">
+			        <table id="table">
+						<tr>
+					    	<th>글번호</th>
+					    	<td>
+					    	  <div id="reviewId" ></div>
+					    	</td>
+					  	</tr>
+					  	<tr>
+					    	<th>작성자</th>
+					    	<td>
+					    	  <div id="studentId"></div>
+					    	</td>
+					  	</tr>
+					  	<tr>
+					    	<th>클래스 이름</th>
+					    	<td>
+					    	  <div id="className"></div>
+					    	</td>
+					  	</tr>
+					  	<tr>
+					    	<th>작성 날짜</th>
+					    	<td>
+					    	  <div id="reviewInsertDate"></div>
+					    	</td>
+					  	</tr>
+					  	<tr>
+					    	<th>수정 날짜</th>
+					    	<td>
+					    	  <div id="reviewUpdateDate"></div>
+					    	</td>
+					  	</tr>
+					  	<tr>
+					    	<th>별점</th>
+					    	<td>
+					    	  <div id="reviewRate"></div>
+					    	</td>
+					  	</tr>
+<!-- 					  	<tr> -->
+<!-- 					    	<th rowspan="2">후기</th> -->
+	<!-- 				    	<td> -->
+	<!-- 				    	  <div id="reviewImg"></div> -->
+	<!-- 				    	</td> -->
+<!-- 					    </tr> -->
+					    <tr>
+					    	<th>후기</th>
+					    	<td>
+					    	 <div id="reviewContent"></div>
+					    	</td>
+					  	</tr>
+					</table>
+				</form>
+			
+			<form id="requestForm">
+		  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+		  	  <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal" class="updateBtn" id="updateBtn" value="수정하기" ">
+			</form>
+		      </div> <!-- modal body 끝 -->
+		      
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
+	<!--------------------- 수정하기 모달-------------------->
+	
+	<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">후기 수정하기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        
+	        <form id="updateForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/mypage/review/update?${_csrf.parameterName}=${_csrf.token}">
+				<input type="hidden" name=reviewId value="${review.reviewId}">
+				<table>
+			  		<tr>
+				    	<th>글번호</th>
+				    	<td>
+				    	  <div id="reviewId" ></div>
+				    	</td>
+				  	</tr>
+				  	<tr>
+				    	<th>작성자</th>
+				    	<td>
+				    	  <div id="studentId"></div>
+				    	</td>
+				  	</tr>
+				  	<tr>
+				    	<th>클래스 이름</th>
+				    	<td>
+				    	  <div id="className"></div>
+				    	</td>
+				  	</tr>
+				  	<tr>
+				    	<th>별점</th>
+				    	<td>
+				    		<fieldset>
+							  <label for="recipient-name" class="col-form-label">별점</label>
+						        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+							</fieldset>
+				    	</td>
+				  	</tr>
+				  	<tr>
+				  		<th>사진 첨부</th>
+				  		<input class="form-control" type="file" id="formFileMultiple" value="${review.reviewImg}" name="file" multiple>
+				  	</tr>
+				  	<tr>
+				    	<th>내용</th>
+				    	<td>
+				    		 <textarea name="reviewContent" id="summernote" placeholder="후기를 자유롭게 입력해주세요. 욕설 / 비방은 관리자에 의한 비공개 처리 및 처벌될 수 있습니다.">${review.reviewContent}</textarea>	    	</td>
+				  	</tr>
+				</table>
+				<input type="submit" id="updateBtn" value="수정하기">
+				<a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}">취소</a>
+			</form>
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+		
+	<!-- 페이징 처리 -->
 		<div>
 		  <nav class="pagination-container">
 		    <div class="pagination">
 		      <c:set var="doneLoop" value="false"/>
 		      		<c:if test="${(startPage-blockCount)>0 }">
-		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/review/list?nowPage=${startPage-1}">이전</a>	      		
+		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/review/list?nowPage=${startPage-1}">이전</a>	      		
 		      		</c:if>
 		      		
 		      		<span class="pagination-inner">
@@ -160,14 +385,14 @@
 		      		      <c:set var="doneLoop" value="true"/>
 		      		    </c:if>
 		      		    <c:if test="${not doneLoop}">
-		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/review/list?nowPage=${i}">${i}</a>
+		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/review/list?nowPage=${i}">${i}</a>
 		      		    </c:if>
 		      		    
 		      		  </c:forEach>
 		      		</span>
 		      		
 		      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}">
-		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/review/list?nowPage=${startPage+blockCount}">다음</a>
+		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/review/list?nowPage=${startPage+blockCount}">다음</a>
 		      		</c:if>
 		    </div>
 		  

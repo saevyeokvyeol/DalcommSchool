@@ -281,7 +281,7 @@ public class QnaController {
 	/**
 	 * 강사ID로 클래스 Q&A 검색 - 페이징
 	 * */
-	@RequestMapping("teacher/teacherMypage/qnaListAll")
+	@RequestMapping("teacher/mypage/qnaListAll")
 	public void selectByteacherId(String teacherId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		teacherId = "Tann1234";
 		

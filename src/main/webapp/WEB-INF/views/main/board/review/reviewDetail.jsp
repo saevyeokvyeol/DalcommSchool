@@ -8,11 +8,12 @@
 <meta charset="UTF-8">
 <title>클래스 후기 상세보기입니다.</title>
 <style type="text/css">
-	fieldset input[type=radio]{display: none;}
-	fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
-	fieldset{display: inline-block; direction: rtl; border: 0;}
+
+	fieldset{display: inline-block; border: 0;}
 	
-	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
+	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
+	.checked {color: #EB5353;}
+	
 /* 	.star:hover{text-shadow: 0 0 0 #EB5353;} */
 /* 	.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
 	
@@ -94,42 +95,42 @@ $(function(){
 			    	<td>
 			    	<fieldset>
 					  <c:choose>
-					  	<c:when test="${review.reviewRate==1}">
-					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled checked><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  	</c:when>
-					  	<c:when test="${review.reviewRate==2}">
-					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled checked><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  	</c:when>
-					  	<c:when test="${review.reviewRate==3}">
-					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled checked><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  	</c:when>
-					  	<c:when test="${review.reviewRate==4}">
-					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled checked><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  	</c:when>
-					  	<c:when test="${review.reviewRate==5}">
-					  		<input type="radio" name="reviewRate" value="5" id="rate1" disabled checked><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  		<input type="radio" name="reviewRate" value="4" id="rate2" disabled><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3" disabled><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4" disabled><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5" disabled><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					  	</c:when>
-					  </c:choose>
+						  	<c:when test="${review.reviewRate==1}">
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						  		<i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						  	</c:when>
+						  	<c:when test="${review.reviewRate==2}">
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						  	</c:when>
+						  	<c:when test="${review.reviewRate==3}">
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						  	</c:when>
+						  	<c:when test="${review.reviewRate==4}">
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm"></i>
+						  	</c:when>
+						  	<c:when test="${review.reviewRate==5}">
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						  		<i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						        <i class="fa-solid fa-star fa-sm checked"></i>
+						  	</c:when>
+						  </c:choose>
 					</fieldset>
 					</td>
 			  	</tr>
