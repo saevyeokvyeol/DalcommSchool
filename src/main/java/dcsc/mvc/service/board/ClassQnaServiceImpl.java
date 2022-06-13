@@ -28,7 +28,7 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	
 	
 	/**
-	 * 전체검색
+	 * 전체검색(관리자)
 	 * */
 	@Override
 	public List<ClassQna> selectAllQna() {
@@ -38,12 +38,12 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	}
 	
 	/**
-	 * 전체검색 - 페이징처리
+	 * 전체검색(관리자) - 페이징처리
 	 * */
 	@Override
 	public Page<ClassQna> selectAllQna(Pageable Pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return classQnaRep.findAll(Pageable);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	}
 
 	/**
-	 * classId 로 Q&A 전체조회
+	 * 클래스ID로 Q&A 전체조회
 	 * */
 	@Override
 	public List<ClassQna> selectByClassId(Long classId) {
@@ -99,6 +99,15 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		return list;
 	}
 
+	/**
+	 * 클래스ID로 Q&A 전체조회 - 페이징
+	 * */
+	@Override
+	public Page<ClassQna> selectByClassId(Long classId, Pageable pageable) {
+		
+		return classQnaRep.findByClassesClassIdEquals(classId, pageable);
+	}
+	
 	/**
 	 * 강사ID 로 Q&A 전체조회
 	 * */
@@ -110,6 +119,15 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		
 		List<ClassQna> list = classQnaRep.findByClassesTeacherTeacherIdEquals(teacherId);
 		return list;
+	}
+	
+	/**
+	 * 강사ID 로 Q&A 전체조회 - 페이징
+	 * */
+	@Override
+	public Page<ClassQna> selectByTeacherId(String teacherId, Pageable pageable) {
+		
+		return classQnaRep.findByClassesTeacherTeacherIdEquals(teacherId, pageable);
 	}
 
 	/**
@@ -206,6 +224,7 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		return classReply;
 	}
 
+
 	/**
 	 * 학생ID로 클래스 Q&A 검색
 	 * */
@@ -214,6 +233,21 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 		List<ClassQna> list = classQnaRep.findByStudentStudentIdEquals(studentId);
 		return list;
 	}
+
+	/**
+	 * 학생ID로 클래스 Q&A 검색 - 페이징처리
+	 * */
+	@Override
+	public Page<ClassQna> selectByStudentId(String studentId, Pageable pageable) {
+		
+		return classQnaRep.findByStudentStudentIdEquals(studentId, pageable);
+	}
+
+	
+
+	
+
+	
 
 	
 	

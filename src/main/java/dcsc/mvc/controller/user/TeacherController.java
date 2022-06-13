@@ -77,16 +77,30 @@ public class TeacherController {
 	}
 	
 	/**
+	 * 강사 정보 수정폼
+	 * */
+	@RequestMapping("/teacher/mypage/updateProfile")
+	public ModelAndView updateProfile() {
+		String teacherId = "Tkim1234" /*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
+		
+		Teacher teacher = teacherService.selectById(teacherId);
+		
+		ModelAndView modelAndView = new ModelAndView("teacher/mypage/updateProfile","teacher", teacher);
+		modelAndView.addObject("title", "");
+		return modelAndView;
+	}
+	
+	/**
 	 * 강사 프로필 수정
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacherProfile")
-	public void updateTeacherProfile(Teacher teacher, String youtude, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
+	public String updateTeacherProfile(Teacher teacher, String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
 
 		List<TeacherSns> list = new ArrayList<TeacherSns>();
-		if(youtude != null) list.add(new TeacherSns(null, teacher, new Sns(1L), youtude));
-		if(instagram != null) list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
-		if(twitter != null) list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
-		if(facebook != null) list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
+		list.add(new TeacherSns(null, teacher, new Sns(1L), youtube));
+		list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
+		list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
+		list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
 		
 		teacher.setTeacherSns(list);
 		
@@ -98,6 +112,8 @@ public class TeacherController {
 		}
 		
 		teacherService.updateTeacherProfile(teacher);
+		
+		return "redirect:/teacher/mypage/updateProfile";
 	}
 	
 	/**

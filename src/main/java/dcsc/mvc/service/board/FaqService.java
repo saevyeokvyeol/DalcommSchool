@@ -62,7 +62,15 @@ public interface FaqService {
 	 * @param String keyword
 	 * @return List<FAQ>
 	 * */
-	List<Faq> selectBykeyword(String keyword);
+	List<Faq> userselectBykeyword(String keyword);
+	
+	/**
+	 * FAQ 게시판 검색 기능 - 관리자
+	 * 1개 이상 나올수 있어서 List로 했다 제목또는 내용으로 검색하는 거여서 keyword로 받는다.
+	 * @param String keyword
+	 * @return List<FAQ>
+	 * */
+	Page<Faq> selectBykeyword(Pageable pageable);
 	
 	/**
 	 * 카테고리 리스트

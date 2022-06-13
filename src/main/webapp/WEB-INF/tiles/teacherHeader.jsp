@@ -64,8 +64,6 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-  <sec:authorize access="isAuthenticated()">
- 	<sec:authentication property="principal" var="teacher"/>
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -129,7 +127,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll" class="menu-link">
                 <i class="fa-solid fa-circle-question menu-icon"></i>
                 <div data-i18n="Misc">클래스 Q&A 조회</div>
               </a>
@@ -166,7 +164,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList" class="menu-link">
                 <i class="fa-solid fa-table-list menu-icon"></i>
                 <div data-i18n="Basic">내 쿠폰 조회</div>
               </a>
@@ -187,7 +185,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/updateProfile" class="menu-link">
                 <i class="fa-solid fa-address-card menu-icon"></i>
                 <div data-i18n="Form Elements">선생님 프로필 수정</div>
               </a>
@@ -342,6 +340,5 @@
 	</form>
 	</div>
     
- </sec:authorize>
   </body>
 </html>

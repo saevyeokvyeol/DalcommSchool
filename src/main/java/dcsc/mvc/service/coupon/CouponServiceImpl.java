@@ -8,14 +8,18 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.coupon.QCoupon;
+import dcsc.mvc.domain.coupon.QIssueCoupon;
 import dcsc.mvc.repository.coupon.CouponRepository;
 import dcsc.mvc.repository.coupon.IssueCouponRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +32,43 @@ public class CouponServiceImpl implements CouponService {
 	private final CouponRepository couponRep;
 	private final IssueCouponRepository issueCouponRep;
 	
+	private final JPAQueryFactory factory;
+	
 	/**
 	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생
 	 * @param studentId (검색 기준)
 	 * @return List<IssueCoupon>
+	 * */
+	@Override
+	public Page<IssueCoupon> selectByStudentId(String studentId, String couponUseable, Pageable pageable) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QIssueCoupon issueCoupon = QIssueCoupon.issueCoupon;
+		
+		booleanBuilder.and(issueCoupon.student.studentId.eq(studentId));
+		
+		if(couponUseable.equals("useable")) {
+			booleanBuilder.and(issueCoupon.issueUsable.eq("T"));
+			booleanBuilder.and(issueCoupon.issueEndDate.after(LocalDateTime.now()));
+		} else if(couponUseable.equals("used")) {
+			booleanBuilder.and(issueCoupon.issueUsable.eq("F"));
+		} else if(couponUseable.equals("expired")) {
+			booleanBuilder.and(issueCoupon.issueUsable.eq("T"));
+			booleanBuilder.and(issueCoupon.issueEndDate.before(LocalDateTime.now()));
+		}
+		
+		JPQLQuery<IssueCoupon> jpqlQuery = factory.selectFrom(issueCoupon)
+				.where(booleanBuilder)
+				.orderBy(issueCoupon.issueEndDate.asc())
+				.limit(pageable.getPageSize());
+		
+		Page<IssueCoupon> list = new PageImpl<IssueCoupon>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
+
+		return list;
+	}
+	
+	/**
+	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생 -ajax
 	 * */
 	@Override
 	public List<IssueCoupon> selectByStudentId(String studentId) {
@@ -229,6 +266,10 @@ public class CouponServiceImpl implements CouponService {
 		issueCouponRep.save(issueCoupon);
 		
 	}
+
+	
+
+	
 
 	
 	

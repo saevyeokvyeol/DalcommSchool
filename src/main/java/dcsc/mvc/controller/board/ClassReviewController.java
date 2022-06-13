@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassReview;
+import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.service.board.ClassReviewService;
 import dcsc.mvc.util.FileLink;
@@ -34,7 +35,7 @@ public class ClassReviewController {
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/main/board/review/reviewList/classId")
+	@RequestMapping("/main/reviewList/classId")
 	public String selectByClassId(Model model, Long classId, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectByClassId(classId);
 		
@@ -84,7 +85,7 @@ public class ClassReviewController {
 	/**
 	 * 전체 후기 가져오기(관리자)
 	 * */
-	@RequestMapping("/admin/board/review/list")
+	@RequestMapping("/admin/review/list")
 	public String selectAllAdmin(Model model, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectAll();
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
@@ -105,7 +106,7 @@ public class ClassReviewController {
 	/**
 	 * 전체 후기 가져오기(메인페이지)
 	 * */
-	@RequestMapping("/main/board/review/list")
+	@RequestMapping("/main/review/list")
 	public String selectAllUser(Model model, @RequestParam(defaultValue="1") int nowPage){
 //		List<ClassReview> list = reviewService.selectAll();
 		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
@@ -147,15 +148,33 @@ public class ClassReviewController {
 		return "main/mypage/reviewList";
 	}
 	
+//	/**
+//	 * 후기 상세 보기(메인, 강사)
+//	 * */
+//	@RequestMapping("/main/board/review/read/{reviewId}")
+//	public ModelAndView readReviewUser(@PathVariable Long reviewId) {
+////		reviewId=2L;
+//		ClassReview review = reviewService.selectByReviewId(reviewId);
+//		
+//		return new ModelAndView("main/board/review/reviewDetail", "review", review);
+//	}
+	
 	/**
-	 * 후기 상세 보기(메인, 강사)
+	 * 후기 상세 보기(메인, 강사 - 아작스)
 	 * */
-	@RequestMapping("/main/board/review/read/{reviewId}")
-	public ModelAndView readReviewUser(@PathVariable Long reviewId) {
+	@RequestMapping("/main/board/review/read")
+	@ResponseBody
+	public ClassReviewDTO readReviewUser(Long reviewId) {
 //		reviewId=2L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
+
+		ClassReviewDTO reviewDTO = new ClassReviewDTO();
 		
-		return new ModelAndView("main/board/review/reviewDetail", "review", review);
+		reviewDTO = new ClassReviewDTO(review.getStudent().getStudentId(), review.getReviewContent(), review.getReviewId(),
+										review.getReviewImg(), review.getReviewInsertDate(), review.getReviewRate(),
+										review.getReviewUpdateDate(), review.getReviewBlindState(), review.getClasses().getClassName());
+			
+		return reviewDTO;
 	}
 	
 	/**
@@ -224,13 +243,26 @@ public class ClassReviewController {
 	/**
 	 * 클래스 후기 수정 폼
 	 * */
+//	@RequestMapping("/review/updateForm")
+//	public ModelAndView updateReviewForm(Long reviewId) {
+////		reviewId=1L;
+//		ClassReview review = reviewService.selectByReviewId(reviewId);
+//		
+//		return new ModelAndView("main/mypage/reviewUpdate", "review", review);
+//	}
+	
+	/**
+	 * 클래스 후기 수정 폼(아작스)
+	 * */
 	@RequestMapping("/review/updateForm")
-	public ModelAndView updateReviewForm(Long reviewId) {
-		reviewId=2L;
+	@ResponseBody
+	public ClassReview updateReviewForm(Long reviewId) {
+//		reviewId=1L;
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 		
-		return new ModelAndView("main/mypage/reviewUpdate", "review", review);
+		return review;
 	}
+	
 	
 	/**
 	 * 클래스 후기 수정

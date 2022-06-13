@@ -19,9 +19,9 @@ public class ClassReviewDTO {
 	private String reviewContent;
 	private Long reviewId;
 	private String reviewImg;
-	private String reviewInsertDate;
-	private String reviewRate;
+	private LocalDateTime reviewInsertDate;
+	private int reviewRate;
+	private LocalDateTime reviewUpdateDate;
 	private String reviewBlindState;
-	private Classes classes;
-	private String student;
+	private String className;
 }

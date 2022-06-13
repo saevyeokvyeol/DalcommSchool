@@ -85,7 +85,7 @@ public class FaqServiceImpl implements FaqService {
 
 
 	@Override
-	public List<Faq> selectBykeyword(String keyword) {
+	public List<Faq> userselectBykeyword(String keyword) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		QFaq faq = QFaq.faq;
 		booleanBuilder.and(faq.faqContent.like("%"+keyword+"%"));
@@ -97,6 +97,12 @@ public class FaqServiceImpl implements FaqService {
 		
 		List<Faq> list = jpqlQuery.fetch();
 		return list;
+	}
+	
+	@Override
+	public Page<Faq> selectBykeyword(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -119,6 +125,8 @@ public class FaqServiceImpl implements FaqService {
 		
 		return list;
 	}
+
+	
 
 	
 	

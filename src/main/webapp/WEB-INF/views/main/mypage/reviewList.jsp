@@ -15,7 +15,7 @@
 <style type="text/css">
 	fieldset{display: inline-block; border: 0;}
 	
-	.fa-star{font-size: 2em; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
+	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
 	.checked {color: #EB5353;}
 /* 	.star:hover{text-shadow: 0 0 0 #EB5353;} */
 /* 	.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
