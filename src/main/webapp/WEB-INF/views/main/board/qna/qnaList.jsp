@@ -37,7 +37,7 @@
 $(function() {
 	
 	$(".qnaTitle").click(function(){
-			alert($(this).val());
+			//alert($(this).val());
 			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
@@ -306,20 +306,13 @@ $(function() {
         <div class="card" style="width: 29rem;" id="qnaDtail-Card-body">
           <div class="card-body">
 			<form id="qnaDetail-form">
-			    <div>글번호</div>
-			    <div id="qnaId" ></div>
-			    <div>작성자</div>
-			    <div id="studentId"></div>
-			    <div>클래스 이름</div>
-			    <div id="className"></div>
-			    <div>작성 날짜</div>
-			    <div id="qnaInsertDate"></div>
-			    <div>제목</div>
-			    <div id="qnaTitle"></div>
-			    <div>답변완료</div>
-			    <div id="qnaComplete"></div>
-			    <div>내용</div>
-			    <div id="qnaContent"></div>
+				<div>답변완료&nbsp;&nbsp;<span id="qnaComplete"></span></div>
+			    <div>글번호&nbsp;&nbsp;<span id="qnaId"></span></div>
+			    <div>작성자&nbsp;&nbsp;<span id="studentId"></span></div>
+			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
+			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
+			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
+			    <div>내용&nbsp;&nbsp;<span id="qnaContent"></span></div>
 			</form>
 
 		  </div>
@@ -380,7 +373,6 @@ $(function() {
                 <%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
                 <input type="hidden" name="studentId" value="${qna.student.studentId}">
                 --%>
-                <input type="hidden" name=qnaId value="${qna.qnaId}">
                 <input type="hidden" name="classId" value="2">
                 <input type="hidden" name="studentId" value="lee1234">
                 <div>

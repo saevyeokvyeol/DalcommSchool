@@ -51,9 +51,9 @@ public class QnaController {
 	
 	
 	/**
-	 * Q&A 상세조회(메인)
+	 * Q&A 상세조회(메인) - 포워드
 	 * */
-	/*@RequestMapping("main/board/qna/qnaRead/{qnaId}")
+	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
 	public String qnaRead(@PathVariable Long qnaId, Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
@@ -61,7 +61,7 @@ public class QnaController {
 		model.addAttribute("qnaReply", classReply);
 		
 		return "main/board/qna/qnaRead";
-	}*/
+	}
 	
 	/**
 	 * Q&A 상세조회(메인) -모달 - 아작스
@@ -125,7 +125,9 @@ public class QnaController {
 		model.addAttribute("qna", classQna);
 		model.addAttribute("qnaReply", classReply);
 		
+
 		return "teacher/board/qna/qnaRead";
+		
 	}
 	
 	/**
