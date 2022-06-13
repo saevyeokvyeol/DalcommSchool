@@ -111,18 +111,29 @@ public class TeacherServiceImpl implements TeacherService {
 			return true;
 		}
 	}
-
+	
+	/**
+	 * 강사 회원정보 수정
+	 * */
 	@Override
 	public void updateTeacher(Teacher teacher) {
 		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(null);
-		System.out.println(teacher.getTeacherId());
 		
-		if(newTeacher==null) {
-			throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");
-		}
+		if(newTeacher==null) throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");
+		
 		
 		newTeacher.setTeacherPhone(teacher.getTeacherPhone());
 		newTeacher.setTeacherEmail(teacher.getTeacherEmail());
+		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
+		newTeacher.setTeacherTel(teacher.getTeacherTel());
+		newTeacher.setTeacherImg(teacher.getTeacherImg());
+		
+		teacherSnsRepository.deleteByTeacherId(teacher.getTeacherId());
+		for(TeacherSns s : teacher.getTeacherSns()) {
+			s.setTeacher(newTeacher);
+			teacherSnsRepository.save(s);
+		}
+		
 
 	}
 	

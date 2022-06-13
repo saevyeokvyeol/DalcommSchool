@@ -20,7 +20,6 @@ import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.service.board.ClassReviewService;
-import dcsc.mvc.util.FileLink;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 

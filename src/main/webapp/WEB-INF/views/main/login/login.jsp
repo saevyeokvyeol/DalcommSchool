@@ -25,21 +25,27 @@
 	}
 	
 	.kakao, .naver, .google{
-	
 		float:left;
 		width: 70px;
 	  	height: 70px;
 	  	padding: 5px;
 	}
 	
-/* 	.logo{ */
-/* 	    width: auto; height: auto; */
-/* 	    max-width: 100px; */
-/* 	    max-height: 100px; */
-/* 	} */
+	.logo-img{ 
+	    width: auto; height: auto;
+	    max-width: 150px;
+	    max-height: 150px;
+	    text-align: center;
+   		vertical-align: middle;
+	} 
 	
 	.loginbox bg-white , .title {
 		text-align: center;
+	}
+
+	img{
+		display: block;
+		margin: auto;
 	}
 
 </style>
@@ -72,16 +78,18 @@
 </head>
 <body>
 
-<!-- <div class="logo"> -->
-<%-- <img src="${pageContext.request.contextPath}/img/main/mainLogoBlack.png" class="d-block w-100" alt="..."> --%>
-<!-- </div> -->
-<h4 class="title" id="myModalLabel" style="text-align: center;">달콤스쿨 회원 로그인</h4>
-
-
 <!--        <div class="loginbox-title">로그인</div> -->
+<<<<<<< HEAD
 <!--  sns 로그인 -->
+=======
+<!--------------------------------- sns 로그인 ------------------------------------>
+		<br>
+>>>>>>> 705f331d59c75c9c058f0bae2304d9ab93fa0d8e
           <div class="loginbox-social">
-              <div class="social-title ">SNS계정으로 10초만에 로그인</div>
+			<div class="logo">
+					<img src="${pageContext.request.contextPath}/img/main/login_logo.png" class="logo-img" alt="...">
+			</div><br><br>
+              <div class="social-title ">SNS계정으로 10초만에 로그인</div><br>
               <div class="social-buttons">
               	<div class="kakao">
                    <a href="/oauth2/authorization/kakao" class="button-kakao">
@@ -107,31 +115,34 @@
 
               <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-               <div class="loginbox-textbox"> 
-                   아이디<br><input type="text" name="id" id="id" class="form-control">
-               </div>
-               <div class="loginbox-textbox">
-                   비밀번호<br><input type="password" name="pwd" id="pwd" class="form-control">
-               </div>
-               <span><br>
+	               <div class="form-floating mb-3"> 
+		                 <input type="text" name="id" id="id" class="form-control">
+		             	<label for="id">아이디</label>
+	               </div>
+	               <div class="form-floating mb-3">
+	                   <input type="password" name="pwd" id="pwd" class="form-control">
+         		       <label for="pwd">비밀번호</label>
+	               </div>
+               <span>
 				<c:if test="${sessionScope.msg != null}">
 					<div class="alert alert-danger" role="alert">
 						${sessionScope.msg}
 					</div>	 
 				</c:if>
                </span>
-               <br><br>
+               <br>
                <div class="loginbox-forgot">
                    <a href="${pageContext.request.contextPath}/main/login/findId">아이디</a>&ensp;/&ensp;
                    <a href="${pageContext.request.contextPath}/main/login/findPwd">비밀번호 찾기</a>
-               </div>
+               </div><br>
                <div class="loginbox-submit">
                    <input type="button" id="login" class="btn btn-primary btn-block" value="로그인" onclick="loginCheck()">
-               </div>
+               </div><br>
                <div class="loginbox-signup">
                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&ensp;or&ensp;
                    <a href="${pageContext.request.contextPath}/main/login/joinTeacher">강사 회원가입</a>
-               </div>
+               </div><br>
               </form>
+              </div>
 </body>
 </html>
