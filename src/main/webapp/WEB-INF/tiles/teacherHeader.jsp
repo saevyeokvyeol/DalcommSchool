@@ -64,8 +64,6 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-  <sec:authorize access="isAuthenticated()">
- 	<sec:authentication property="principal" var="teacher"/>
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -342,6 +340,5 @@
 	</form>
 	</div>
     
- </sec:authorize>
   </body>
 </html>

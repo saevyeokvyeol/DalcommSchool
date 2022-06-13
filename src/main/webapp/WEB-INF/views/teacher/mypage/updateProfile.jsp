@@ -17,38 +17,8 @@
 		</style>
 		<script type="text/javascript">
 			$(function() {
-				function selectAllCategory() {
-					$.ajax({
-						url : "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
-						type : "post",
-						data : {"${_csrf.parameterName}" : "${_csrf.token}"},
-		    			dataType: "json",
-						success : function(result) {
-							text = ""
-							$.each(result, function(index, item) {
-								if(${classes.classCategory.categoryId} == item.categoryId){
-									text += `<option selected value='\${item.categoryId}'>\${item.categoryName}</option>`;
-								} else {
-									text += `<option value='\${item.categoryId}'>\${item.categoryName}</option>`;
-								}
-							})
-							$("#categoryId").append(text);
-						},
-						error : function(error) {
-							alert("카테고리 정보를 가져올 수 없습니다.");
-						}
-					}); // 아작스 종료
-				} // 카테고리 가져오기 종료
-				
-				$(".mainFileBtn").click(function() {
-					$("#input-image").click()
-				})
-				
 				$("img").click(function() {
-				    $(".mainImgCon").css("display", "none")
-				    $("#preview-image").attr("src", "")
-				    $(".mainFileBtn").css("display", "block")
-				    $("#input-image").val("")
+					$("#input-image").click()
 				})
 				
 				function readImage(input) {
@@ -69,85 +39,83 @@
 				var inputImage = document.getElementById("input-image")
 				inputImage.addEventListener("change", e => {
 				    readImage(e.target)
-				    $(".mainImgCon").css("display", "block")
-				    $(".mainFileBtn").css("display", "none")
 				})
-				
-				selectAllCategory();
 			})
 		</script>
 	</head>
 	<body>
-		<form action="${pageContext.request.contextPath}/teacher/class/update?${_csrf.parameterName}=${_csrf.token}"
+		<form action="${pageContext.request.contextPath}/teacher/mypage/updateTeacherProfile?${_csrf.parameterName}=${_csrf.token}"
 			enctype="multipart/form-data" method="post">
-			<input type="hidden" name="classId" value="${classes.classId}">
+			<input type="hidden" name="teacherId" value="${teacher.teacherId}">
 			<table id="classTable">
 				<tr>
 					<td>
 						<div class="mb-3">
-							<h3>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="mb-3">
-							<div class="image-container profileImgCon">
-							    <a><img id="preview-image" src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}"></a>
+							<div class="profileImgCon">
+								<c:choose>
+									<c:when test="${teacher.teacherImg == null}">
+										<a><img id="preview-image" src="${pageContext.request.contextPath}/img/teacher/Profile.png"></a>
+									</c:when>
+									<c:otherwise>
+										<a><img id="preview-image" src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}"></a>
+									</c:otherwise>
+								</c:choose>
 							</div>
-							<button type="button" class="fileBtn mainFileBtn">
-								<i class="fa-regular fa-image fa-2xl"></i>
-								대표 이미지 추가
-							</button>
 							<input type="file" id="input-image" name="file">
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div class="mb-3">
-							<select name='categoryId' id="categoryId" class="form-select" aria-label="Default select example">
-								<option value='0'>클래스 카테고리 선택</option>
-							</select>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="teacherNickname" placeholder="닉네임" name="teacherNickname" value="${teacher.teacherNickname}">
+							<label for="className">닉네임</label>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="teacherId" name="teacherId" value="Tkim1234" placeholder="선생님ID">
-							<label for="teacherId">선생님ID</label>
+							<input type="text" class="form-control" id="teacherTel" placeholder="공개 연락처" value="${teacher.teacherTel}" name="teacherTel">
+							<label for="teacherTel">공개 연락처</label>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className" value="${classes.className}">
-							<label for="className">클래스명</label>
-						</div>
+						<h5>SNS</h5>
 					</td>
 				</tr>
 				<tr>
 					<td>
+						<c:forEach items="${teacher.teacherSns}" var="sns">
+							<c:if test="${sns.sns.snsId == 1}"><c:set var="youtube" value="${sns.teacherSnsId}"/></c:if>
+							<c:if test="${sns.sns.snsId == 2}"><c:set var="instagram" value="${sns.teacherSnsId}"/></c:if>
+							<c:if test="${sns.sns.snsId == 3}"><c:set var="twitter" value="${sns.teacherSnsId}"/></c:if>
+							<c:if test="${sns.sns.snsId == 4}"><c:set var="facebook" value="${sns.teacherSnsId}"/></c:if>
+						</c:forEach>
 						<div class="form-floating mb-3">
-							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" style="height: 100px">${classes.classInfo}</textarea>
-							<label for="classInfo">클래스 소개글</label>
+							<input type="text" class="form-control" id="youtube" placeholder="유튜브" value="${youtube}" name="youtube">
+							<label for="youtube">유튜브</label>
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
 						<div class="form-floating mb-3">
-							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" value="${classes.classPrice}" name="classPrice">
-							<label for="classPrice">클래스 금액</label>
+							<input type="text" class="form-control" id="instagram" placeholder="인스타그램" value="${instagram}" name="instagram">
+							<label for="instagram">인스타그램</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="twitter" placeholder="트위터" value="${twitter}" name="twitter">
+							<label for="twitter">트위터</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="facebook" placeholder="페이스북" value="${facebook}" name="facebook">
+							<label for="pacebook">페이스북</label>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="d-grid gap-2">
-							<input type="submit" class="btn btn-primary" value="클래스 수정">
+							<input type="submit" class="btn btn-primary" value="프로필 수정">
 						</div>
 					</td>
 				</tr>

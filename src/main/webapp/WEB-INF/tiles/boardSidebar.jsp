@@ -9,28 +9,22 @@
 	</head>
 	<body>
 		<div id="inner-sidebar">
-			<h4>마이페이지</h4>
-			<h5>나의 예약 내역</h5>
+			<h4>고객센터</h4>
+			<a href=""><h5>공지사항</h5></a>
+			<a href=""><h5>자주 묻는 질문</h5></a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/main/mypage/bookCalendar">나의 예약 캘린더</a></li>
-				<li><a href="${pageContext.request.contextPath}/main/mypage/bookList">예약 목록</a></li>
+				<li><a href="">자주</a></li>
 			</ul>
-			<h5>쿠폰 관리</h5>
 			<ul>
-				<li><a href="">나의 쿠폰 목록</a></li>
+				<li><a href="">묻는</a></li>
 			</ul>
-			<h5>나의 글 관리</h5>
 			<ul>
-				<li><a href="">1:1 문의</a></li>
-				<li><a href="">클래스 후기</a></li>
-				<li><a href="">클래스 Q&A</a></li>
+				<li><a href="">질문</a></li>
 			</ul>
-			<h5>회원 정보</h5>
 			<ul>
-				<li><a href="">회원정보 수정</a></li>
-				<li><a href="">비밀번호 수정</a></li>
-				<li><a href="">회원 탈퇴</a></li>
+				<li><a href="">카테고리</a></li>
 			</ul>
+			<a href=""><h5>이벤트</h5></a>
 		</div>
 	</body>
 </html>
