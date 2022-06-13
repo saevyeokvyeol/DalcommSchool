@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
@@ -63,7 +64,6 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -83,112 +83,184 @@
             <!-- Dashboard -->
 
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">클래스 관리</span>
+              <span class="menu-header-text">회원 관리</span>
             </li>
             <li class="menu-item">
               <a href="${pageContext.request.contextPath}/teacher/class/createClass" class="menu-link">
-              	<i class="fa-solid fa-circle-plus menu-icon"></i>
-                <div data-i18n="Account Settings">새 클래스 만들기</div>
+              	<i class="fa-solid fa-chalkboard-user menu-icon"></i>
+                <div data-i18n="Account Settings">선생님 조회</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="${pageContext.request.contextPath}/teacher/class/classList" class="menu-link">
-                <i class="fa-solid fa-list menu-icon"></i>
-                <div data-i18n="Authentications">내 클래스 조회</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
-                <i class="fa-solid fa-people-line menu-icon"></i>
-                <div data-i18n="Misc">클래스 수강 조회</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
-                <i class="fa-solid fa-pen menu-icon"></i>
-                <div data-i18n="Misc">클래스 리뷰 조회</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
-                <i class="fa-solid fa-circle-question menu-icon"></i>
-                <div data-i18n="Misc">클래스 Q&A 조회</div>
+                <i class="fa-solid fa-users-between-lines menu-icon"></i>
+                <div data-i18n="Authentications">학생 조회</div>
               </a>
             </li>
             <!-- Components -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">수익 관리</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">클래스 관리</span></li>
             <!-- Cards -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
-                <i class="fa-solid fa-coins menu-icon"></i>
-                <div data-i18n="User interface">내 수익 조회</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-school menu-icon"></i>
+                <div data-i18n="Account Settings">클래스 관리</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/admin/class/classList" class="menu-link">
+                    <div data-i18n="Account">전체 클래스 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/admin/class/openSubscriptList" class="menu-link">
+                    <div data-i18n="Notifications">클래스 공개 수락</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">전체 예약 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">예약 완료 수락</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustForm" class="menu-link">
-                <i class="fa-solid fa-hand-holding-dollar menu-icon"></i>
-                <div data-i18n="Basic">정산 신청하기</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-chalkboard menu-icon"></i>
+                <div data-i18n="Account Settings">클래스 게시판 관리</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">클래스 후기 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                    <div data-i18n="Notifications">클래스 1대1 문의 조회</div>
+                  </a>
+                </li>
+              </ul>
             </li>
-            <!-- User interface -->
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/adjust/adjustList" class="menu-link">
-                <i class="fa-solid fa-file-invoice-dollar menu-icon"></i>
-                <div data-i18n="User interface">정산 신청 내역</div>
-              </a>
-            </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">쿠폰 관리</span></li>
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-ticket menu-icon"></i>
-                <div data-i18n="User interface">새 쿠폰 만들기</div>
+                <div data-i18n="Account Settings">쿠폰 관리</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">새 쿠폰 만들기</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">전체 쿠폰 조회</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="fa-solid fa-table-list menu-icon"></i>
-                <div data-i18n="Basic">내 쿠폰 조회</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-coins menu-icon"></i>
+                <div data-i18n="Account Settings">정산 관리</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">전체 정산 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">정산 신청 수락</div>
+                  </a>
+                </li>
+              </ul>
             </li>
-            <!-- Forms & Tables -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">회원 관리</span></li>
-            <!-- Forms -->
+            <!-- Components -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">게시판 관리</span></li>
+            <!-- Cards -->
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/updateForm" class="menu-link">
-                <i class="fa-solid fa-user menu-icon"></i>
-                <div data-i18n="Form Elements">내 정보 수정</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-circle-exclamation menu-icon"></i>
+                <div data-i18n="Account Settings">공지사항</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">새 공지사항 작성</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">전체 공지사항 조회</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="fa-solid fa-key menu-icon"></i>
-                <div data-i18n="Form Elements">비밀번호 수정</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-circle-question menu-icon"></i>
+                <div data-i18n="Account Settings">자주 묻는 질문</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">새 FAQ 작성</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">전체 FAQ 조회</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="fa-solid fa-address-card menu-icon"></i>
-                <div data-i18n="Form Elements">선생님 프로필 수정</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-calendar-check menu-icon"></i>
+                <div data-i18n="Account Settings">이벤트</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">새 이벤트 작성</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">전체 이벤트 조회</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="fa-solid fa-location-dot menu-icon"></i>
-                <div data-i18n="Form Elements">공방 정보 수정</div>
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-comment-dots menu-icon"></i>
+                <div data-i18n="Account Settings">1대1 문의</div>
               </a>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="fa-solid fa-arrow-right-from-bracket menu-icon"></i>
-                <div data-i18n="Form Elements">회원 탈퇴</div>
-              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                    <div data-i18n="Account">전체 1대1 문의 조회</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                    <div data-i18n="Notifications">1대1 문의 답변</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <div class="ps__rail-y" style="top: 0px; height: 429px; right: 4px;">
-<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
-</div>
-</div>
+				<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 206px;">
+				</div>
+			</div>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -214,20 +286,27 @@
                 <li class="nav-item lh-1 me-3">
                   <a
                     class="github-button"
-                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    href="#"
                     data-icon="octicon-star"
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >Star</a
+                    >${teacher.teacherNickname} 선생님</a
                   >
                 </li>
 
-                <!-- User -->
+   <!-- -------------------강사 정보------------  -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="${pageContext.request.contextPath}/img/class/class_4.jpg" alt class="w-px-40 h-auto rounded-circle" />
+                    <c:choose>
+                    <c:when test="${teacher.teacherImg == null}">
+						<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:when>
+                    <c:otherwise>
+						<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+                    </c:otherwise>
+                    </c:choose>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -236,7 +315,15 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                             <c:choose>
+			                    <c:when test="${teacher.teacherImg == null}">
+									<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+			                    </c:when>
+			                    <c:otherwise>
+									<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
+		                    </c:otherwise>
+	                    	</c:choose>
+<!--                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> -->
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -249,30 +336,30 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-user me-2"></i> -->
+<!--                         <span class="align-middle">My Profile</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="bx bx-cog me-2"></i> -->
+<!--                         <span class="align-middle">Settings</span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <span class="d-flex align-items-center align-middle"> -->
+<!--                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i> -->
+<!--                           <span class="flex-grow-1 align-middle">Billing</span> -->
+<!--                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span> -->
+<!--                         </span> -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <div class="dropdown-divider"></div> -->
+<!--                     </li> -->
                     <li>
                       <a class="dropdown-item" href="#" onclick="logout()">
                         <i class="bx bx-power-off me-2"></i>
@@ -281,7 +368,6 @@
                     </li>
                   </ul>
                 </li>
-                <!--/ User -->
               </ul>
             </div>
           </nav>
@@ -293,7 +379,6 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/css/bootstrap.js"></script>
 
     <script src="${pageContext.request.contextPath}/js/helpers.js"></script>
     <script src="${pageContext.request.contextPath}/js/perfect-scrollbar.js"></script>
@@ -308,7 +393,6 @@
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
 	</form>
 	</div>
-    
     
   </body>
 </html>

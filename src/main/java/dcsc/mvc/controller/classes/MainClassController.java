@@ -42,7 +42,7 @@ public class MainClassController {
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
-		Page<Classes> list = classesService.selectByFilter(new Search(), pageable);
+		Page<Classes> list = classesService.selectByFilter(new Search(), pageable, 3L);
 		
 		// 학생의 마이리스트 가져오기
 		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
@@ -77,7 +77,7 @@ public class MainClassController {
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
-		Page<Classes> list = classesService.selectByFilter(search, pageable);
+		Page<Classes> list = classesService.selectByFilter(search, pageable, 3L);
 		
 		// 학생의 마이리스트 가져오기
 		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());

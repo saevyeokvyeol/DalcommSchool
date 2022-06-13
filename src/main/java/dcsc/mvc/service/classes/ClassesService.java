@@ -57,10 +57,10 @@ public interface ClassesService {
 
 	/**
 	 * 클래스 검색 및 필터링
-	 * @param Search search, Pageable pageable
+	 * @param Search search, Pageable pageable, Long flag
 	 * @return List<Classes>
 	 * */
-	Page<Classes> selectByFilter(Search search, Pageable pageable);
+	Page<Classes> selectByFilter(Search search, Pageable pageable, Long flag);
 
 	/**
 	 * 클래스 상세 보기

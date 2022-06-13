@@ -111,16 +111,16 @@ a {
 }
 
 #sidebar h4 {
-	font-weight: 600; margin-bottom: 20px; padding-bottom: 15px;
+	font-weight: 600; padding-bottom: 15px;
 	border-bottom: 1px solid #888; display: inline-block;
 }
 
 #sidebar h5 {
-	font-weight: 700; font-size: 18px;
+	font-weight: 700; font-size: 18px; margin-top: 20px;
 }
 
 #sidebar ul {
-	margin: 5px 0 20px;
+	margin: 5px 0 0;
 }
 
 #sidebar li {
@@ -347,11 +347,11 @@ a {
 }
 
 /* 선생님 관리 페이지 */
-#teacher-main {
+#manage-main {
     padding-left: 260px;
 }
 
-#teacher-main-content {
+#manage-main-content {
 	max-width: calc(1440px - calc(1.625rem * 2));
     margin: 30px auto;
     padding: 50px;
@@ -404,7 +404,11 @@ a {
 }
 
 #classTable {
-	text-align: center; margin: auto;
+	text-align: center; width: 750px; margin: auto;
+}
+
+#classTable h5 {
+	text-align: left; margin-top: 20px;
 }
 
 #classTable .image-container, .fileBtn {
@@ -413,6 +417,14 @@ a {
 
 #classTable .image-container img {
 	max-width: 750px; max-height: 500px; border-radius: 5px; margin: auto; vertical-align: middle;
+}
+
+#classTable .profileImgCon {
+	width: 200px; height: 200px; margin: auto; border: 1px solid #CED4DA; border-radius: 5px; background-color: transparent;
+}
+
+#classTable .profileImgCon img {
+	width: 200px; height: 200px; border-radius: 5px; margin: auto; vertical-align: middle;
 }
 
 #classTable #input-image {
@@ -461,4 +473,52 @@ a {
 
 #pagenation {
 	margin-top: 50px;
+}
+
+.likeBox {
+	 padding: 10px 0; margin: auto;
+}
+
+.likeBox > div {
+	display: flex; justify-content: space-between; padding: 10px;
+}
+
+.likeBox .likeBoxImg {
+	width: 150px; height: 100px; border-radius: 5px; overflow: hidden;
+}
+
+.likeBox a:hover {
+	color: black;
+}
+
+.likeBox .likeBoxImg img {
+	width: 150px; height: 100px; transform: scale(1.0); transition: transform .5s;
+}
+
+.likeBox .likeBoxImg img:hover {
+    transform: scale(1.2); transition: transform .5s;
+}
+
+.likeBox .classBoxContent {
+	padding: 10px 0; text-align: right; width: 180px;
+}
+
+.likeBox .classBoxName {
+	font-weight: 700; color: #333; text-align: left;
+}
+
+.likeBox .likeBtn  {
+	width: 32px; height: 32px;  line-height: 25px; border-radius: 18px; border-width: 1px;
+}
+
+.likeBox .classBoxInfo {
+	display: flex; justify-content: space-between; color: #555; 
+}
+
+.likeBox .classBoxLocation i {
+	padding: 0 10px;
+}
+
+.likeBox .classBoxLocation span {
+	padding: 0 20px 0 0; margin: 0 10px 0 0; border-right: 2px solid #888;
 }

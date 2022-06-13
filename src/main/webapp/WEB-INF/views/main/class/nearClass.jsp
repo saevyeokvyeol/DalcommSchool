@@ -15,6 +15,14 @@
 		<script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
 		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		<style type="text/css">
+			.accordion-body {border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 10px; padding: 30px;}
+			#searchBtn {text-align: right;}
+			#searchBox {margin: 30px 0;}
+			#searchBox .btn-group {width: 100%; margin: 10px 0;}
+			#searchBtnBox {padding: 20px 0 0; text-align: center;}
+			#searchBtnBox > .btn {width: 100px;}
+		</style>
 		<script type="text/javascript">
 			$(function() {
 				function selectPlaceRegion(){
@@ -26,12 +34,14 @@
 						success: function(result){
 							text = ""
 							$.each(result, function(index, item){
-								text += `<input type="radio" class="btn-check" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary" for="\${item.regionName}">\${item.regionName}</label>`;
+								text += `<input type="radio" class="btn-check shadow-none placeRegion" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary shadow-none" for="\${item.regionName}">\${item.regionName}</label>`;
 							})
 							$("#placeRegion").append(text);
 						},
-						error: function(err){
-							alert("지역정보를 가져올 수 없습니다.")
+						error:function(request, status, error){
+
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
 						}
 					})
 				}
@@ -45,8 +55,7 @@
 						success: function(result){
 							text = ""
 							$.each(result, function(index, item){
-								text += `<input type="radio" class="btn-check" name="classCategory" id="\${item.categoryName}" value="\${item.categoryId}"><label class="btn btn-outline-primary" for="\${item.categoryName}">\${item.categoryName}</label>`;
-								
+								text += `<input type="radio" class="btn-check shadow-none classCategory" name="classCategory" id="\${item.categoryName}" value="\${item.categoryId}"><label class="btn btn-outline-primary shadow-none" for="\${item.categoryName}">\${item.categoryName}</label>`;
 							})
 							text += ""
 							$("#classCategory").append(text);
@@ -62,15 +71,47 @@
 					var query = window.location.search;
 					var param = new URLSearchParams(query);
 					$("#keyword").val(param.get('keyword'));
-					$("[value="+param.get('placeRegion')+"]").prop("checked", true)
-					$("[value="+param.get('classCategory')+"]").prop("checked", true)
+					$(".placeRegion[value="+param.get('placeRegion')+"]").prop("checked", true)
+					$(".classCategory[value="+param.get('classCategory')+"]").prop("checked", true)
 					$("[value="+param.get('sort')+"]").prop("checked", true)
 				}
+
+				$(document).on("click", "button[name=none-like]", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/like/insert",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : $(this).val()},
+						context: this,
+						success: function(result){
+							$(this).html('<i class="fa-solid fa-heart fa-lg"></i>');
+							$(this).attr("name", "like");
+							$(this).attr("value", `\${result.likeId}`);
+						},
+						error: function(err){
+						}
+					})
+				})
+
+				$(document).on("click", "button[name=like]", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/like/deleteByLikeId",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "likeId" : $(this).val()},
+						context: this,
+						success: function(result){
+							$(this).html('<i class="fa-regular fa-heart fa-lg"></i>');
+							$(this).attr("name", "none-like")
+							$(this).attr("value", `\${result}`);
+						},
+						error: function(err){
+							alert(123)
+						}
+					})
+				})
+				
 				selectClassCategory();
 				selectPlaceRegion();
 			})
-		
-			
 		</script>
 	</head>
 	<body>
@@ -132,39 +173,35 @@
 					<div class="classList">
 						<c:forEach items="${list.content}" var="schedule">
 							<div class="classBox">
-								<c:if test="${schedule.classes.classImages != null}">
-									<c:forEach items="${schedule.classes.classImages}" var="classImage">
-										<div class="classBoxImg">
-											<a href="${pageContext.request.contextPath}/main/class/${schedule.classes.classId}">
-												<img alt="${schedule.classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}">
-											</a>
-										</div>
-										<div class="classBoxContent">
-											<h5 class="classBoxName">
-												<a href="${pageContext.request.contextPath}/main/class/${schedule.classes.classId}">
-													<span>${schedule.classes.className}</span>
-												</a>
-												<c:choose>
-													<c:when test="${schedule.classes.likeId != null}">
-														<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${schedule.classes.likeId}">
-															<i class="fa-solid fa-heart fa-lg"></i>
-														</button>
-													</c:when>
-													<c:otherwise>
-														<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${schedule.classes.classId}">
-															<i class="fa-regular fa-heart fa-lg"></i>
-														</button>
-													</c:otherwise>
-												</c:choose>
-											</h5>
-											<div class="classBoxInfo">
-												<h6>${schedule.classes.teacher.teacherNickname} 선생님</h6>
-											<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${schedule.classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${schedule.classes.teacher.place.placeRegion.regionName}서울</div>
-											</div>
-											<h5 class="classBoxPrice"><fmt:formatNumber value="${schedule.classes.classPrice}" pattern="#,###" />원</h5>
-										</div>
-									</c:forEach>
-								</c:if>
+								<div class="classBoxImg">
+									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
+										<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+									</a>
+								</div>
+								<div class="classBoxContent">
+									<h5 class="classBoxName">
+										<a href="${pageContext.request.contextPath}/main/class/${schedule.classes.classId}">
+											<span>${schedule.classes.className}</span>
+										</a>
+										<c:choose>
+											<c:when test="${schedule.classes.likeId != null}">
+												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${schedule.classes.likeId}">
+													<i class="fa-solid fa-heart fa-lg"></i>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${schedule.classes.classId}">
+													<i class="fa-regular fa-heart fa-lg"></i>
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</h5>
+									<div class="classBoxInfo">
+										<h6>${schedule.classes.teacher.teacherNickname} 선생님</h6>
+									<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${schedule.classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${schedule.classes.teacher.place.placeRegion.regionName}서울</div>
+									</div>
+									<h5 class="classBoxPrice"><fmt:formatNumber value="${schedule.classes.classPrice}" pattern="#,###" />원</h5>
+								</div>
 							</div>
 						</c:forEach>
 					</div>

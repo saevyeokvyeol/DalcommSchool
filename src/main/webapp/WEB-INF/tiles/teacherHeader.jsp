@@ -64,8 +64,6 @@
   <body>
     <!-- Layout wrapper -->
         <!-- Menu -->
-  <sec:authorize access="isAuthenticated()">
- 	<sec:authentication property="principal" var="teacher"/>
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -175,13 +173,13 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">회원 관리</span></li>
             <!-- Forms -->
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/updateForm" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/updateForm" class="menu-link">
                 <i class="fa-solid fa-user menu-icon"></i>
                 <div data-i18n="Form Elements">내 정보 수정</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/modifyPwd" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/modifyPwd" class="menu-link">
                 <i class="fa-solid fa-key menu-icon"></i>
                 <div data-i18n="Form Elements">비밀번호 수정</div>
               </a>
@@ -199,7 +197,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/teacherMypage/deleteUserForm" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/deleteUserForm" class="menu-link">
                 <i class="fa-solid fa-arrow-right-from-bracket menu-icon"></i>
                 <div data-i18n="Form Elements">회원 탈퇴</div>
               </a>
@@ -342,6 +340,5 @@
 	</form>
 	</div>
     
- </sec:authorize>
   </body>
 </html>

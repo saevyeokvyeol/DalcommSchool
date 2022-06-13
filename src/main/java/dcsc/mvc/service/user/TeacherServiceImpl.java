@@ -114,7 +114,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public void updateTeacher(Teacher teacher) {
-		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(teacher);
+		Teacher newTeacher = teacherRep.findById(teacher.getTeacherId()).orElse(null);
+		System.out.println(teacher.getTeacherId());
 		
 		if(newTeacher==null) {
 			throw new RuntimeException("선생님 아이디 오류로 수정할 수 없습니다.");

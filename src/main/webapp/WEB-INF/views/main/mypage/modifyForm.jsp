@@ -177,7 +177,8 @@ $(function(){
 	    <table class="table">
 	      <tr>
 	          <th>아이디</th>
-	          <td><b>${student.studentId}"</b></td>
+	          <td><input type="hidden" id="studentId" name="studentId" class="" value="${student.studentId}" />
+	          <b>${student.studentId}</b></td>
 
 	      </tr>
 	      <tr>

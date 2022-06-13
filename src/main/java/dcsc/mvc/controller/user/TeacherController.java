@@ -65,12 +65,7 @@ public class TeacherController {
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacher")
 	public String updateTeacher(Teacher teacher,HttpServletRequest request) {
-		
-		System.out.println(teacher.getTeacherId());
-		System.out.println(teacher.getTeacherNickname());
-		System.out.println(teacher.getTeacherPhone());
-		
-		
+		System.out.println("강사정보 수정하기");
 		teacherService.updateTeacher(teacher);
 		
 		Teacher tea = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -99,13 +94,13 @@ public class TeacherController {
 	 * 강사 프로필 수정
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacherProfile")
-	public void updateTeacherProfile(Teacher teacher, String youtude, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
+	public String updateTeacherProfile(Teacher teacher, String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
 
 		List<TeacherSns> list = new ArrayList<TeacherSns>();
-		if(youtude != null) list.add(new TeacherSns(null, teacher, new Sns(1L), youtude));
-		if(instagram != null) list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
-		if(twitter != null) list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
-		if(facebook != null) list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
+		list.add(new TeacherSns(null, teacher, new Sns(1L), youtube));
+		list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
+		list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
+		list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
 		
 		teacher.setTeacherSns(list);
 		
@@ -117,6 +112,8 @@ public class TeacherController {
 		}
 		
 		teacherService.updateTeacherProfile(teacher);
+		
+		return "redirect:/teacher/mypage/updateProfile";
 	}
 	
 	/**
@@ -191,7 +188,7 @@ public class TeacherController {
 	/**
 	 * 비밀번호 수정 폼(session O) - 학생 마이페이지 
 	 * */
-	@RequestMapping("/teacher/teacherMypage/modifyPwd")
+	@RequestMapping("/teacher/mypage/modifyPwd")
 	public void updatePwdTeacherForm() {}
 	
 	
@@ -206,7 +203,8 @@ public class TeacherController {
 				
 		//서비스 호출
 		teacherService.updateLoginUserPwd(userPwd, encodePassword);
-				
+		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
+
 		return "redirect:/";
 	}
 	

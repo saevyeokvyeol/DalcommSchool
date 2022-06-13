@@ -130,7 +130,7 @@ public class StudentController {
 	
 	//회원 정보 수정
 	@RequestMapping("/main/mypage/modify")
-	public String modify(HttpServletRequest request, Student student, RedirectAttributes ra) {
+	public String modify(HttpServletRequest request, Student student) {
 		System.out.println("modify 호출...");
 		
 		studentService.updateStudent(student);
@@ -139,8 +139,6 @@ public class StudentController {
 		//세션 회원정보 업데이트
 		stu.setStudentPhone(student.getStudentPhone());
 		stu.setStudentEmail(student.getStudentEmail());
-		
-		ra.addFlashAttribute("msg", "modSuccess");
 		
 		return "redirect:/main/mypage/modifyForm";
 	}
@@ -154,7 +152,7 @@ public class StudentController {
 	
 	
 	//회원 탈퇴 페이지 - 강사
-	@RequestMapping("/teacher/teacherMypage/deleteUserForm")
+	@RequestMapping("/teacher/mypage/deleteUserForm")
 	public void deleteTeacherForm() {
 		System.out.println("강사 탈퇴 페이지");
 		
