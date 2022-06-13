@@ -79,7 +79,7 @@
 
 
 <!--        <div class="loginbox-title">로그인</div> -->
-<!--------------------------------- sns 로그인 ------------------------------------>
+<!--  sns 로그인 -->
           <div class="loginbox-social">
               <div class="social-title ">SNS계정으로 10초만에 로그인</div>
               <div class="social-buttons">
@@ -103,7 +103,7 @@
                   <div class="line"></div>
                   <div class="or">OR</div>
               </div><br>
-<!--------------------------------- 일반 로그인 ------------------------------------>
+<!-- 일반 로그인  -->
 
               <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

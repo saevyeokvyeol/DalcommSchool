@@ -91,7 +91,7 @@
 			<div class="offcanvas-body"></div>
 		</div>
 				
-		<!-- ---------------------------------로그인 모달--------------------------------------- -->
+		<!-- 로그인 모달 -->
 		<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
