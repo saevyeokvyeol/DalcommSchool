@@ -91,6 +91,12 @@
 				}
 			})
 		</script>
+		
+		<style type="text/css">
+			.modal-dialog-centered {
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -140,9 +146,10 @@
 		
 <!-- ---------------------------------로그인 모달--------------------------------------- -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
+         <h5 class="modal-title modal-title-centered"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body"><!-- 모달 본문 -->
