@@ -347,11 +347,11 @@ a {
 }
 
 /* 선생님 관리 페이지 */
-#teacher-main {
+#manage-main {
     padding-left: 260px;
 }
 
-#teacher-main-content {
+#manage-main-content {
 	max-width: calc(1440px - calc(1.625rem * 2));
     margin: 30px auto;
     padding: 50px;
@@ -473,4 +473,52 @@ a {
 
 #pagenation {
 	margin-top: 50px;
+}
+
+.likeBox {
+	 padding: 10px 0; margin: auto;
+}
+
+.likeBox > div {
+	display: flex; justify-content: space-between; padding: 10px;
+}
+
+.likeBox .likeBoxImg {
+	width: 150px; height: 100px; border-radius: 5px; overflow: hidden;
+}
+
+.likeBox a:hover {
+	color: black;
+}
+
+.likeBox .likeBoxImg img {
+	width: 150px; height: 100px; transform: scale(1.0); transition: transform .5s;
+}
+
+.likeBox .likeBoxImg img:hover {
+    transform: scale(1.2); transition: transform .5s;
+}
+
+.likeBox .classBoxContent {
+	padding: 10px 0; text-align: right; width: 180px;
+}
+
+.likeBox .classBoxName {
+	font-weight: 700; color: #333; text-align: left;
+}
+
+.likeBox .likeBtn  {
+	width: 32px; height: 32px;  line-height: 25px; border-radius: 18px; border-width: 1px;
+}
+
+.likeBox .classBoxInfo {
+	display: flex; justify-content: space-between; color: #555; 
+}
+
+.likeBox .classBoxLocation i {
+	padding: 0 10px;
+}
+
+.likeBox .classBoxLocation span {
+	padding: 0 20px 0 0; margin: 0 10px 0 0; border-right: 2px solid #888;
 }

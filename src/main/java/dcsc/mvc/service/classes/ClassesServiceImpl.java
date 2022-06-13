@@ -145,28 +145,35 @@ public class ClassesServiceImpl implements ClassesService {
 
 	/**
 	 * 클래스 검색 및 필터링
-	 * @param Search search, Pageable pageable
+	 * @param Search search, Pageable pageable, Long flag
 	 * @return List<Classes>
 	 * */
 	@Override
-	public Page<Classes> selectByFilter(Search search, Pageable pageable) {
+	public Page<Classes> selectByFilter(Search search, Pageable pageable, Long flag) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
 		QClasses classes = QClasses.classes;
 		
-		// 공개된 클래스만 검색
-		booleanBuilder.and(classes.classState.stateId.eq(3L));
+		// 어드민이 아닐 경우 공개된 클래스만 검색
+		if(flag != null) {
+			booleanBuilder.and(classes.classState.stateId.eq(flag));
+		}
 		
-		// 지역으로 검색
-		if(search.getPlaceRegion() != null) booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getPlaceRegion()));
-		
-		// 카테고리로 검색
-		if(search.getClassCategory() != null) booleanBuilder.and(classes.classCategory.categoryId.eq(search.getClassCategory()));
-		
-		// 키워드로 검색
-		if(search.getKeyword() != null && !search.getKeyword().equals("")) {
-			booleanBuilder.and(classes.className.like("%" + search.getKeyword() + "%"));
-			booleanBuilder.or(classes.teacher.teacherNickname.like("%" + search.getKeyword() + "%"));
+		if(search != null) {
+			// 지역으로 검색
+			if(search.getPlaceRegion() != null) {
+				System.out.println(search.getPlaceRegion());
+				booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getPlaceRegion()));
+			}
+			
+			// 카테고리로 검색
+			if(search.getClassCategory() != null) booleanBuilder.and(classes.classCategory.categoryId.eq(search.getClassCategory()));
+			
+			// 키워드로 검색
+			if(search.getKeyword() != null && !search.getKeyword().equals("")) {
+				booleanBuilder.and(classes.className.like("%" + search.getKeyword() + "%"));
+				booleanBuilder.or(classes.teacher.teacherNickname.like("%" + search.getKeyword() + "%"));
+			}
 		}
 		
 		JPQLQuery<Classes> jpqlQuery = jpaQueryFactory.selectFrom(classes)
@@ -175,8 +182,7 @@ public class ClassesServiceImpl implements ClassesService {
 									.limit(pageable.getPageSize());
 
 		// 정렬하기
-		jpqlQuery.orderBy(classes.classId.desc());
-		if(search.getSort() != null) {
+		if(search != null && search.getSort() != null) {
 			switch (search.getSort()) {
 				case "review":
 					jpqlQuery.orderBy(classes.classReviews.size().desc());
@@ -191,6 +197,8 @@ public class ClassesServiceImpl implements ClassesService {
 					jpqlQuery.orderBy(classes.classPrice.desc());
 					break;
 			}
+		} else {
+			jpqlQuery.orderBy(classes.classId.desc());
 		}
 		
 		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
