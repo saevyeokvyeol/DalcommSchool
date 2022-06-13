@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import dcsc.mvc.config.security.PasswordEncoder;
 import dcsc.mvc.domain.user.Sns;
-import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.domain.user.TeacherSns;
+import dcsc.mvc.repository.user.TeacherSnsRepository;
 import dcsc.mvc.service.user.TeacherService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class TeacherController {
 	
 	public final TeacherService teacherService;
+	public final TeacherSnsRepository teacherSnsRep;
 	
 	public final BCryptPasswordEncoder getBCryptPasswordEncoder;
 	
@@ -53,49 +53,29 @@ public class TeacherController {
 	 * 강사 정보 수정폼
 	 * */
 	@RequestMapping("/teacher/mypage/updateForm")
-	public ModelAndView updateTeacherForm(HttpServletRequest request) {
+	public ModelAndView updateTeacherForm() {
 //		teacherId = "Tpark1234";
-		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//강사 정보와 sns 정보를 db에서 꺼내서 넣어주기
+		Teacher dbteacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		System.out.println("dbteacher.getTeacherId() 출력 : " + dbteacher.getTeacherId());
+		
+		Teacher teacher = teacherService.selectById(dbteacher.getTeacherId());
+		//teacher.setTeacherSns(teacherSnsRep.findByTeacherId(teacher.getTeacherId()));
 		
 		return new ModelAndView("teacher/mypage/updateForm","teacher", teacher);
+		//return "teacher/mypage/updateForm";
 	}
 	
 	/**
 	 * 강사 정보 수정하기
 	 * */
 	@RequestMapping("/teacher/mypage/updateTeacher")
-	public String updateTeacher(Teacher teacher,HttpServletRequest request) {
+	public String updateTeacher(Teacher teacher,HttpServletRequest request,
+				String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
 		System.out.println("강사정보 수정하기");
-		teacherService.updateTeacher(teacher);
 		
-		Teacher tea = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		tea.setTeacherPhone(teacher.getTeacherPhone());
-		tea.setTeacherEmail(teacher.getTeacherEmail());
-		
-		return "redirect:/teacher/mypage/mypage";
-	}
-	
-	/**
-	 * 강사 정보 수정폼
-	 * */
-	@RequestMapping("/teacher/mypage/updateProfile")
-	public ModelAndView updateProfile() {
-		String teacherId = "Tkim1234" /*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
-		
-		Teacher teacher = teacherService.selectById(teacherId);
-		
-		ModelAndView modelAndView = new ModelAndView("teacher/mypage/updateProfile","teacher", teacher);
-		modelAndView.addObject("title", "");
-		return modelAndView;
-	}
-	
-	/**
-	 * 강사 프로필 수정
-	 * */
-	@RequestMapping("/teacher/mypage/updateTeacherProfile")
-	public String updateTeacherProfile(Teacher teacher, String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
-
 		List<TeacherSns> list = new ArrayList<TeacherSns>();
 		list.add(new TeacherSns(null, teacher, new Sns(1L), youtube));
 		list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
@@ -103,18 +83,66 @@ public class TeacherController {
 		list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
 		
 		teacher.setTeacherSns(list);
-		
+
 		if(file.getSize() > 0) {
-			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+			File img = new File(ImageLink.TEACHER_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 		   	
 			teacher.setTeacherImg(file.getOriginalFilename());
 		}
 		
-		teacherService.updateTeacherProfile(teacher);
+		teacherService.updateTeacher(teacher);
 		
-		return "redirect:/teacher/mypage/updateProfile";
+		Teacher tea = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		tea.setTeacherPhone(teacher.getTeacherPhone());
+		tea.setTeacherEmail(teacher.getTeacherEmail());
+		tea.setTeacherNickname(teacher.getTeacherNickname());
+		tea.setTeacherTel(teacher.getTeacherTel());
+		tea.setTeacherSns(teacher.getTeacherSns());
+		
+		return "redirect:/teacher/mypage/updateForm";
 	}
+	
+//	/**
+//	 * 강사 정보 수정폼
+//	 * */
+//	@RequestMapping("/teacher/mypage/updateProfile")
+//	public ModelAndView updateProfile() {
+//		String teacherId = "Tkim1234" /*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
+//		
+//		Teacher teacher = teacherService.selectById(teacherId);
+//		
+//		ModelAndView modelAndView = new ModelAndView("teacher/mypage/updateProfile","teacher", teacher);
+//		modelAndView.addObject("title", "");
+//		return modelAndView;
+//	}
+//	
+//	/**
+//	 * 강사 프로필 수정
+//	 * */
+//	@RequestMapping("/teacher/mypage/updateTeacherProfile")
+//	public String updateTeacherProfile(Teacher teacher, String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
+//
+//		List<TeacherSns> list = new ArrayList<TeacherSns>();
+//		list.add(new TeacherSns(null, teacher, new Sns(1L), youtube));
+//		list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
+//		list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
+//		list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
+//		
+//		teacher.setTeacherSns(list);
+//		
+//		if(file.getSize() > 0) {
+//			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
+//			file.transferTo(img);
+//		   	
+//			teacher.setTeacherImg(file.getOriginalFilename());
+//		}
+//		
+//		teacherService.updateTeacherProfile(teacher);
+//		
+//		return "redirect:/teacher/mypage/updateProfile";
+//	}
 	
 	/**
 	 * 마이페이지

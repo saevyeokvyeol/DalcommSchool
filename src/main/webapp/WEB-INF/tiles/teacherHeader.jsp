@@ -246,7 +246,7 @@
                     <div class="avatar avatar-online">
                     <c:choose>
                     <c:when test="${teacher.teacherImg == null}">
-						<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+						<img src="${pageContext.request.contextPath}/img/teacher/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
                     </c:when>
                     <c:otherwise>
 						<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
@@ -262,7 +262,7 @@
                             <div class="avatar avatar-online">
                              <c:choose>
 			                    <c:when test="${teacher.teacherImg == null}">
-									<img src="${pageContext.request.contextPath}/img/main/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
+									<img src="${pageContext.request.contextPath}/img/teacher/Profile.png" alt class="w-px-40 h-auto rounded-circle" />
 			                    </c:when>
 			                    <c:otherwise>
 									<img src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}" alt class="w-px-40 h-auto rounded-circle" />
