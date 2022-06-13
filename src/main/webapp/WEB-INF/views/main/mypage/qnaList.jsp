@@ -46,7 +46,7 @@
 					<thead>
 						<tr>
 							<th>Q&A글번호</th>
-							<th>클래스ID</th>
+							<th>클래스명</th>
 							<th>제목</th>
 							<th>등록일자</th>
 							<th>수정일자</th>
@@ -66,7 +66,7 @@
 		                        <c:forEach items="${requestScope.pageList.content}" var="qna">
 		                            <tr>
 		                                <td>${qna.qnaId}</td>
-		                                <td>${qna.classes.classId}</td>
+		                                <td>${qna.classes.className}</td>
 		                                <td>
 		                                <a href="${pageContext.request.contextPath}/main/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
 		                                </td>

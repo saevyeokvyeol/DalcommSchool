@@ -40,7 +40,7 @@
 <div class="main-content">
 	<section>
 			<div><h1>쿠폰조회</h1></div>
-			<table>
+			<table class="table">
 		
 			<div class="btn-group" role="group" aria-label="Basic outlined example">
 				<form action="${pageContext.request.contextPath}/main/mypage/couponList">

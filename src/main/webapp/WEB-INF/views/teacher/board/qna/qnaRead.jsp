@@ -51,7 +51,7 @@
 <div class="main-content">
 	
 	<div>
-        <table>
+        <table class="table">
         
             <tr>
             	<th>클래스 ID</th>
