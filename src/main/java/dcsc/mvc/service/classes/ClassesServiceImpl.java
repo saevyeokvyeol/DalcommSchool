@@ -138,6 +138,17 @@ public class ClassesServiceImpl implements ClassesService {
 	 * @return Page<Classes> 클래스 전체 목록 반환
 	 * */
 	@Override
+	public List<Classes> selectByTeacherId(String teacherId) {
+		List<Classes> list = classesRepository.findByTeacherTeacherIdEquals(teacherId);
+		return list;
+	}
+
+	/**
+	 * 강사ID로 클래스 조회
+	 * @param String teacherId
+	 * @return Page<Classes> 클래스 전체 목록 반환
+	 * */
+	@Override
 	public Page<Classes> selectByTeacherId(String teacherId, Pageable pageable) {
 		Page<Classes> list = classesRepository.findByTeacherTeacherIdEquals(teacherId, pageable);
 		return list;
