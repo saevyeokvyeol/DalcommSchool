@@ -68,4 +68,10 @@ public interface StudentService {
 	Page<Student> selectByStudentId (String keyfield, String keyword, Pageable pageable);
 	
 	
+	/**
+	 * 탈퇴시 비밀번호 비교
+	 * */
+	boolean checkPwd(String userPwd);
+	
+	
 }

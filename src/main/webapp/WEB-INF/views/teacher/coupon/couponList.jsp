@@ -48,7 +48,6 @@
 						<th>쿠폰명</th>
 						<th>할인금액</th>
 						<th>등록일자</th>
-						<th>수정일자</th>
 						<th>사용기간</th>
 						<th>쿠폰상태</th>
 					</tr>
@@ -67,16 +66,12 @@
 	                            <tr>
 	                                <td>${coupon.couponId}</td>
 	                                <td>${coupon.couponName}</td>
-	                                <td>${coupon.couponDc}</td>
+	                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${coupon.couponDc}"/>원</td>
 	                                <td>
 			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
 			                        </td>
-			                        <td>
-			                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
-			                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-	                                <td>${coupon.couponEndDate}</td>
+	                                <td>${coupon.couponEndDate}일</td>
 	                                <td>${coupon.couponState.couponStateName}</td>
 	                            </tr>
 	                        </c:forEach>

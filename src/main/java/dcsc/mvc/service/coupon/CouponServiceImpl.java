@@ -17,6 +17,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.coupon.Coupon;
+import dcsc.mvc.domain.coupon.CouponState;
 import dcsc.mvc.domain.coupon.IssueCoupon;
 import dcsc.mvc.domain.coupon.QCoupon;
 import dcsc.mvc.domain.coupon.QIssueCoupon;
@@ -181,12 +182,19 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void updateCouponState(Coupon coupon) {
-		//System.out.println("updateCouponState =" + coupon.getCouponState().getCouponStateId());
 		Coupon dbCoupon = couponRep.findById(coupon.getCouponId()).orElse(null);
+		
 		if(dbCoupon==null) {
 			throw new RuntimeException("쿠폰 상태를 변경하는 도중에 오류가 발생했습니다.");
 		}
-		dbCoupon.setCouponState(coupon.getCouponState());
+		
+		List<Coupon> dbCouponList = couponRep.findByClassesClassId(dbCoupon.getClasses().getClassId());
+		System.out.println(dbCouponList);
+		for(Coupon c : dbCouponList) {
+			c.setCouponState(new CouponState(2L, null));
+		}
+		
+		dbCoupon.setCouponState(new CouponState(1L, null));
 	}
 
 	/**
@@ -264,6 +272,20 @@ public class CouponServiceImpl implements CouponService {
 		issueCoupon.setIssueUsable("T");
 		
 		issueCouponRep.save(issueCoupon);
+		
+	}
+
+	
+	/**
+	 * 클래스 쿠폰 상태 변경 기능 ; 관리자
+	 * */
+	@Override
+	public void updateEventCouponState(Coupon coupon) {
+		Coupon dbCoupon = couponRep.findById(coupon.getCouponId()).orElse(null);
+		if(dbCoupon==null) {
+			throw new RuntimeException("쿠폰 상태를 변경하는 도중에 오류가 발생했습니다.");
+		}
+		dbCoupon.setCouponState(coupon.getCouponState());
 		
 	}
 

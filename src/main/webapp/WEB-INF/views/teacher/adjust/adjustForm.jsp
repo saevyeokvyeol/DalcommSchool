@@ -44,7 +44,7 @@
     <div class="card-body">
      	<form name="adjust-teacher-insert" method="post" id="adjust-teacher-insert" action="${pageContext.request.contextPath}/applyAdjust">
      	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-     	<%-- <td><input type=hidden name="teacherId" value="${teacher.teacherId} id="teacherId"></td> --%>
+     	<%-- <input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId"> --%>
      	<input type=hidden name="teacherId" value="Tkim1234" id="teacherId">
      	<input type=hidden name="adjustStateId" value="1" id="adjustStateId">
      		<h2> 정산신청하기 </h2>

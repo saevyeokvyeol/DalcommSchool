@@ -31,7 +31,7 @@ table, th, td {
 }
 
 table {
-	width: 1500px;
+	width: 1200px;
 }
 
 .pagination {
@@ -46,14 +46,14 @@ table {
 	<div class="teacher-main-content">
 		<section>
 			<div>
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>번호</th>
 							<th>작성자</th>
+							<th>클래스명</th>
 							<th>제목</th>
 							<th>등록일자</th>
-							<th>수정일자</th>
 							<th>답변완료</th>
 						</tr>
 					</thead>
@@ -69,28 +69,29 @@ table {
 									<tr>
 										<td><span>${qna.qnaId}</span></td>
 										<td><span>${qna.student.studentId}</span></td>
+										<td>${qna.classes.className}</td>
 										<td><c:choose>
 												<c:when test="${qna.blindState eq 'T'}">
 													<a>이 글은 관리자의 권한으로 블라인드처리가 되었습니다.</a>
 												</c:when>
 												<c:otherwise>
-													<p onClick="modalClick()" data-bs-toggle="modal" data-bs-target="#exampleModal">
-														  <a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
-														
-														
-													</p>
-
+													<a href="${pageContext.request.contextPath}/teacher/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
 												</c:otherwise>
 											</c:choose></td>
 										<td><span><fmt:parseDate
 													value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd"
 													var="parseDate" /></span> <span><fmt:formatDate
 													value="${parseDate}" pattern="yyyy-mm-dd" /></span></td>
-										<td><span><fmt:parseDate
-													value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd"
-													var="updateDate" /></span> <span><fmt:formatDate
-													value="${updateDate}" pattern="yyyy-mm-dd" /></span></td>
-										<td><span>${qna.qnaComplete}</span></td>
+										<td>
+											<c:choose>
+					                        	<c:when test="${qna.qnaComplete == 'F'}">
+					                        		<span class="badge bg-secondary">미답변</span>
+					                        	</c:when>
+					                        	<c:when test="${qna.qnaComplete == 'T'}">
+					                        		<span class="badge bg-primary">답변 완료</span>
+					                        	</c:when>
+					                        </c:choose>
+					                    </td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>

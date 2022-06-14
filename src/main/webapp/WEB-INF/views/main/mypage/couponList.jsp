@@ -92,7 +92,7 @@
 		                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
 		                        </td>
 		                        <td>
-		                        	<span><fmt:parseDate value="${issueCoupon.issueStartDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		                        	<span><fmt:parseDate value="${issueCoupon.issueEndDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
 		                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
 		                        </td>
                             </tr>

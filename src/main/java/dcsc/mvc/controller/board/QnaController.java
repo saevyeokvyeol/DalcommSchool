@@ -235,7 +235,7 @@ public class QnaController {
 		return map;
 	}
 	
-	/**
+	/*
 	 * 강사ID로 클래스 Q&A 검색 - 페이징
 	 * */
 	@RequestMapping("teacher/mypage/qnaListAll")
