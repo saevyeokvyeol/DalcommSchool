@@ -3,7 +3,6 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-<head>
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -15,8 +14,12 @@
 
 </script>
 <title>Insert title here</title>
-<head>
+</head>
+<body>
+<div class="main-content">
 <h1>FAQ 리스트</h1>
+
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -101,8 +104,7 @@
 
 </div>
 
-
-</head>
+</div>
 </body>
 
 </html>
