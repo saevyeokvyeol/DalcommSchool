@@ -102,7 +102,7 @@
 	                            <tr>
 	                                <td>${adjust.adjustNo}</td>
 	                                <td>${adjust.teacher.teacherId}</td>
-	                                <td>${adjust.adjustPrice}</td>
+	                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${adjust.adjustPrice}"/>원</td>
 	                                <td>${adjust.bank}</td>
 	                                <td>${adjust.depositor}</td>
 	                                <td>${adjust.account}</td>

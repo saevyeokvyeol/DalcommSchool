@@ -140,7 +140,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/qna/qnaListBlind" class="menu-link">
                     <div data-i18n="Notifications">클래스 1대1 문의 조회</div>
                   </a>
                 </li>
