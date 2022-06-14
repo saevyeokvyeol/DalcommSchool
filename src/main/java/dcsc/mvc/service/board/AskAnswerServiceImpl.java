@@ -58,7 +58,7 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		//수정완료
 		dbAsk.setAskTitle(ask.getAskTitle());//제목
 		dbAsk.setAskContent(ask.getAskContent());//문의내용
-		//dbAsk.setAskImg(ask.getAskImg());//이미지
+		dbAsk.setAskImg(ask.getAskImg());//이미지
  
 		return dbAsk;
 	}
@@ -106,7 +106,10 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 	 * */
 	@Override
 	public Page<Ask> selectAll(Pageable pageable) {
+		
+		
 		return askRep.findAll(pageable);
+	
 	}
 	
 	/**
@@ -148,9 +151,10 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		 * List<Ask> list = Lists.newArrayList(iterable);
 		 */
 		JPQLQuery<Ask> jpqlQuery = factory.selectFrom(ask).where(booleanBuilder)
-									.offset(pageable.getOffset()).limit(pageable.getPageSize());
+									.offset(pageable.getOffset()).limit(pageable.getPageSize())
+									.orderBy(ask.askNo.desc());
 	
-		Page<Ask>list = new PageImpl<Ask>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		Page<Ask>list = new PageImpl<Ask>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	} 

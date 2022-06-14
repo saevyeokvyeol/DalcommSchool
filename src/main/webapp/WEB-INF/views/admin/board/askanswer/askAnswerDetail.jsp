@@ -2,13 +2,16 @@
     pageEncoding="UTF-8"%>
     
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -85,65 +88,94 @@
 </script>
 </head>
 <body>
-		<!-- 아작스 클릭하면 자동으로 나오게 하는것
-		id값주고 remove하기 -->
-		<table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
-  		   <tr>  
-		        <td>
-		           글 번호 : ${askAnswerDetail.askNo}<p>
-		        </td>
-		        <td>
-		        	문의 ID : ${askAnswerDetail.student.studentId}<p>
-		        </td>
-		        <td>
-		        	문의제목 : ${askAnswerDetail.askTitle}<p>
-		        </td>
-		        <td>
-				    카테고리 : ${askAnswerDetail.askCategory.askCategoryId}<p>
-		        </td>
-		        <td>
-		            문의 내용 : ${askAnswerDetail.askContent}<p>
-		        </td>
-		        <td>
-		        	첨부 파일명 : ${askAnswerDetail.askImg}<p>
-		        </td>
-		        <td>
-		        	문의 일자 : ${askAnswerDetail.askInsertDate}<p>
-		        </td>
-		        <td>
-		        	답변 유무 : ${askAnswerDetail.askComplete}<p>
-		        </td>
-		    </tr>
-		    
-		</table>
-		<hr>
+
+<div class="main-content">
+	<h5> 관리자 > 1대1 문의 LIST </h5><br><hr>
+<table align="center" class="table">	
+		
+		<tr> 
+			 <td> <!-- 글 제목 -->
+		    	문의제목
+		    </td>
+		    <td> <!-- 글 제목 -->
+		    	${askAnswerDetail.askTitle}
+		    </td>
+	    </tr>
+		<tr> 
+			 <td> <!-- 글 제목 -->
+		    	문의 ID
+		    </td>
+		    <td> <!-- 글 제목 -->
+		    	${askAnswerDetail.student.studentId}
+		    </td>
+		</tr>
+		 <tr> 
+			 <td> <!-- 글 제목 -->
+		    	작성일
+		    </td>
+			<td>
+				<fmt:parseDate value="${askAnswerDetail.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+				<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+			</td>
+		 </tr>
+		 <tr> 
+			 <td> <!-- 글 제목 -->
+		    	카테고리명
+		    </td>
+			<td>
+				${askAnswerDetail.askCategory.askCategoryName}
+			</td>
+		 </tr>
+		 	<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
+		<tr>
+		     <td colspan="2" style="text-align: center;">
+				<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+				<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
+		     </td>
+	    </tr>
 		
 		
-
-<div id="answerView">
-
-<c:if test="${not empty askAnswerDetail.answer}">
-	 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-	 답변 일자 : ${askAnswerDetail.answer.answerInsertDate}
-</c:if>
-
 	
+		
+		
+		<tr>
+			<td>
+				<div align="right">
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+				</div>
+			</td>
+		</tr>
+	
+
+
+</table>
+	<div align="center">
+		<div id="answerView">
+			
+			<c:if test="${not empty askAnswerDetail.answer}">
+				 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
+				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
+				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+												<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+			</c:if>
+			
+				
+			</div>
+				
+			<c:if test="${empty askAnswerDetail.answer}">
+				<c:remove var="span"/>
+				
+			<span id="span">	
+				<textarea rows="10" cols="10" id="answerArea" placeholder="답변을 입력해 주세요."></textarea>
+				<!-- <input type="button" id="answerBtn" value="답변하기">  -->
+				
+				 <button type="button" id="answerBtn"  class="btn btn-secondary">답변하기</button>
+				
+				<!-- <button id="answerBtn">답변하기</button> -->
+			</span>
+			</c:if>
+	</div>
 </div>
-	
-<c:if test="${empty askAnswerDetail.answer}">
-	<c:remove var="span"/>
-	
-<span id="span">	
-	<textarea rows="10" cols="10" id="answerArea" placeholder="답변을 입력해 주세요."></textarea>
-	<!-- <input type="button" id="answerBtn" value="답변하기">  -->
-	
-	 <button type="button" id="answerBtn"  class="btn btn-secondary">답변하기</button>
-	
-	<!-- <button id="answerBtn">답변하기</button> -->
-</span>
-</c:if>
-
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/admin/board/askAnswerList">리스트로 돌아가기</a>&gt;</span></div>
 
 </body>
 </html>
