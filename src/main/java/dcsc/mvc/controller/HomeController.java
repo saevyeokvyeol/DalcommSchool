@@ -34,7 +34,7 @@ public class HomeController {
 		Pageable pageable = PageRequest.of(page, size);
 		
 		// 인기 클래스 목록
-		Page<Classes> popularList = classesService.selectByFilter(new Search(null, null, null, "likes"), pageable);
+		Page<Classes> popularList = classesService.selectByFilter(new Search(null, null, null, "likes"), pageable, 3L);
 		
 		// 학생의 마이리스트 가져오기
 		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());

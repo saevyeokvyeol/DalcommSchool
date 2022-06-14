@@ -21,5 +21,6 @@ public class ClassDTO {
 	private Long StateId;
 	
 	private String classImage;
-	
+
+	private Long likeId;
 }

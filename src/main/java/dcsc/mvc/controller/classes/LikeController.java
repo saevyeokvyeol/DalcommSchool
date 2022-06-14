@@ -69,7 +69,7 @@ public class LikeController {
 		List<ClassDTO> dtoList = new ArrayList<ClassDTO>();
 		
 		for(Likes l : list) {
-			ClassDTO classDTO = new ClassDTO(l.getClasses().getClassId(), l.getClasses().getClassName(), l.getClasses().getClassPrice(), l.getClasses().getTeacher().getTeacherNickname(), l.getClasses().getClassState().getStateId(), l.getClasses().getClassImage());
+			ClassDTO classDTO = new ClassDTO(l.getClasses().getClassId(), l.getClasses().getClassName(), l.getClasses().getClassPrice(), l.getClasses().getTeacher().getTeacherNickname(), l.getClasses().getClassState().getStateId(), l.getClasses().getClassImage(), l.getLikeId());
 			
 			dtoList.add(classDTO);
 		}
