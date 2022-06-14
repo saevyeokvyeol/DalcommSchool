@@ -128,8 +128,8 @@
                </span>
                <br>
                <div class="loginbox-forgot">
-                   <a href="${pageContext.request.contextPath}/main/login/findId">아이디</a>&ensp;/&ensp;
-                   <a href="${pageContext.request.contextPath}/main/login/findPwd">비밀번호 찾기</a>
+                   <a href="${pageContext.request.contextPath}/main/login/findIdForm">아이디</a>&ensp;/&ensp;
+                   <a href="${pageContext.request.contextPath}/main/login/findPwdForm">비밀번호 찾기</a>
                </div><br>
                <div class="d-grid gap-2 col-6 mx-auto">
                    <input type="button" id="login" class="btn btn-primary btn-block btn-lg" value="로그인" onclick="loginCheck()">

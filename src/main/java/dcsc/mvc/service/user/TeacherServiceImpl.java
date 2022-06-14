@@ -390,5 +390,34 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherRep.findAll(pageable);
 	}
 
+	//탈퇴전 강사 비번체크
+	@Override
+	public boolean checkPwd(String userPwd) {
+		//저장된 사용자 정보를 불러온다
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//DB에 저장된 비밀번호화 입력받은 비밀번호 비교
+		if(!getBCryptPasswordEncoder.matches(userPwd, teacher.getTeacherPwd())) {
+			return false; //비밀번호 틀림
+		} else { 
+			return true; //비밀번호 일치
+		}
+	}
+
+	//강사탈퇴
+	@Override
+	public void deleteTeacher(String userId, String userPwd) {
+		//저장된 사용자 정보를 불러온다
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//DB에 저장된 비밀번호화 입력받은 비밀번호 비교
+		if(!getBCryptPasswordEncoder.matches(userPwd, teacher.getTeacherPwd())) {
+			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+		} else {
+			teacherRep.deleteById(userId);
+		}
+	}
+	
+	
 
 }

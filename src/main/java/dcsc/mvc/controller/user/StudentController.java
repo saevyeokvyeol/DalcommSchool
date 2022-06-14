@@ -163,12 +163,22 @@ public class StudentController {
 	@RequestMapping("/main/mypage/deleteUser")
 	public String deleteUser(String userId, String userPwd) {
 		System.out.println("deleteUser 호출...");
-
+		System.out.println("탈퇴 아이디:" + userId + "탈퇴 비번 : " + userPwd);
 		studentService.deleteStudent(userId, userPwd);
 		
 		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
 		
 		return "redirect:/main/login/deleteOk";
+	}
+	
+	
+	//회원 탈퇴 전 비밀번호 검증 - 학생
+	@RequestMapping("/checkPwd")
+	@ResponseBody
+	public boolean checkPwd(String userPwd) {
+		boolean result= studentService.checkPwd(userPwd);
+		
+		return result;
 	}
 	
 	

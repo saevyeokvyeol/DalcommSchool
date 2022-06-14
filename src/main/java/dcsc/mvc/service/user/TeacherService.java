@@ -148,4 +148,13 @@ public interface TeacherService {
 	 * */
 	Page<Teacher> selectAllTeacher(Pageable pageable);
 	
+	//탈퇴 전 강사 비밀번호 체크 
+	boolean checkPwd(String userPwd);
+	
+	/**
+	 * 회원 탈퇴하기(강사)
+	 * @param: String teacherId
+	 * */
+	void deleteTeacher (String userId, String userPwd);
+	
 }
