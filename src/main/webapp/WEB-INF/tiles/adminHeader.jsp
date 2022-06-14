@@ -158,7 +158,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon" class="menu-link">
                     <div data-i18n="Notifications">전체 쿠폰 조회</div>
                   </a>
                 </li>
@@ -171,7 +171,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/adjust/adjustAllList" class="menu-link">
                     <div data-i18n="Account">전체 정산 조회</div>
                   </a>
                 </li>

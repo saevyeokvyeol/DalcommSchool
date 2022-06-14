@@ -9,12 +9,39 @@
 <html>
 <head>
 <style type="text/css">
-	fieldset{display: inline-block; border: 0;}
-	
+	#reviewDetail-form fieldset{display: inline-block; border: 0;}
+	 	
 	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
 	.checked {color: #EB5353;}
-/* 	.star:hover{text-shadow: 0 0 0 #EB5353;} */
-/* 	.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
+	
+	
+ 	
+/* 수정하기 모달 폼 */
+
+	#reviewUpdate-form .fa-star{font-size: 1em; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
+
+ 	#reviewUpdate-form fieldset{ 
+ 		display: inline-block;
+ 		direction: rtl;
+ 		border: 0;
+ 	}
+ 	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
+ 	
+ 	#reviewUpdate-form i:hover{
+ 		color: #EB5353;
+ 	}
+ 	
+ 	#reviewUpdate-form label:hover~label i{
+ 		color: #EB5353;
+ 	}
+ 	
+ 	#reviewUpdate-form [type=radio]{ 
+ 		display: none;
+ 	}
+ 	
+ 	#reviewUpdate-form [type=radio]:checked~label i{ 
+ 		color: #EB5353;
+ 	}
 </style>
 <meta charset="UTF-8">
 <title>메인페이지용 리뷰 리스트</title>
@@ -28,28 +55,7 @@
 
 
 <script type="text/javascript">
-//   $(function(){
-	  
-// 	  $("button").click(function(){
-// 			var target =$(this).attr("name")
-			
-// 			$.ajax({
-// 	        url: "${pageContext.request.contextPath}/main/board/review/blind" , //서버요청주소
-// 	        type: "post" , //요청방식 (get,post...)
-// 	        data: {"${_csrf.parameterName}": "${_csrf.token}", reviewId: target, reviewBlindState: 'true'} , //서버에게 보낼 데이터정보(parameter정보)
-	        
-// 	        success: function(result){
-// 	            alert("블라인드 처리되었습니다.")
-// 	            location.reload()
-// 	        },
-	
-// 	        error: function(err){//실패했을 때 콜백함수
-// 	            alert(err+"오류가 발생했습니다.")
-// 	        } 
-	
-// 	        })
-// 		})
-//   })
+
 $(function(){
 	
 	$(".reviewContent").click(function(){
@@ -62,7 +68,7 @@ $(function(){
 			},
 			dataType:"json",
 // 				alert(result.reviewImg.toString());
-				
+			success:function(result){
 				let text = "";
 				let rate = result.reviewRate;
 				if(rate==1) {
@@ -100,9 +106,10 @@ $(function(){
 // 				let image = result.reviewImg.toString();
 // 				let str="";
 // 				if(image!=null){
-// 					str+= '<td><div id="reviewImg"></div></td>';
+// 					str+= '<img alt="" src="${pageContext.request.contextPath}/img/classReview/${requestScope.review.reviewImg}">';
 // 				}
-// 				$("#reviewDetail-form th:eq(7)").after(str);
+// 				$("#reviewDetail-form th:eq(6)").after(str);
+				
 				$("#reviewDetail-form #reviewRate").html(text);
 				
 				$("#reviewDetail-form #reviewId").html(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
@@ -119,13 +126,55 @@ $(function(){
 		})
 	})
 	
-// 	$(".updateBtn").click(function(){
+	$("#updateBtn").click(function(){
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review/updateForm",
+			type: "post",
+			data:{"${_csrf.parameterName}": "${_csrf.token}",
+				  "reviewId" : $("#reviewDetail-form #reviewId").html()	
+			},
+			dataType:"json",
+			success:function(result){
+// 				alert(result);
+				$("#reviewUpdate-form #reviewId").html(`\${result.reviewId}`);
+				$("#reviewUpdate-form .reviewId").val(`\${result.reviewId}`);
+				$("#reviewUpdate-form #studentId").html(`\${result.studentId}`);
+				$("#reviewUpdate-form #className").html(`\${result.className}`);
+				$("#reviewUpdate-form #reviewContent").html(`\${result.reviewContent}`);
+			},
+			error:function(err){
+				alert(err + "에러 발생");
+			}
+		})
+	})
+	
+// 	$("#deleteBtn").click(function(){
+		
 // 		$.ajax({
-// 			url:
+// 			url: "${pageContext.request.contextPath}/review/delete",
+// 			type: "post",
+// 			data: {"${_csrf.parameterName}": "${_csrf.token}",
+// 				  "reviewId" : $("#reviewDetail-form #reviewId").html()	
+// 			},
+// 			success: function(){
+// 				alert($("#reviewDetail-form #reviewId").html() + "번 후기가 삭제되었습니다.")
+// 			},
+// 			error:function(err){
+// 				alert(err + "에러 발생");
+// 			}
 // 		})
 // 	})
 	
 })
+</script>
+<script type="text/javascript">
+function deleteReview(deleteOk){
+	alert("일반 닫기");
+	deleteOk.action = "${pageContext.request.contextPath}/review/delete";
+	deleteOk.method="post";
+	deleteOk.submit();
+}
 </script>
 </head>
 <body>
@@ -270,12 +319,12 @@ $(function(){
 					    	  <div id="reviewRate"></div>
 					    	</td>
 					  	</tr>
-<!-- 					  	<tr> -->
-<!-- 					    	<th rowspan="2">후기</th> -->
-	<!-- 				    	<td> -->
-	<!-- 				    	  <div id="reviewImg"></div> -->
-	<!-- 				    	</td> -->
-<!-- 					    </tr> -->
+					  	<tr>
+					    	<th rowspan="2">후기</th>
+					    	<td>
+					    	  <div><img alt="" src=""></div>
+					    	</td>
+					    </tr>
 					    <tr>
 					    	<th>후기</th>
 					    	<td>
@@ -285,15 +334,17 @@ $(function(){
 					</table>
 				</form>
 			
-			<form id="requestForm">
-		  	  <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
-		  	  <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal" class="updateBtn" id="updateBtn" value="수정하기" ">
-			</form>
+			
+		  	  
+			
 		      </div> <!-- modal body 끝 -->
 		      
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		      <form id="detail-requestForm">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal" class="updateBtn" id="updateBtn" value="${review.reviewId}" >수정하기</button>
+		      	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" class="deleteBtn" value="${review.reviewId}" >삭제하기</button>
+		      </form>
 		      </div>
 		    </div>
 		  </div>
@@ -310,13 +361,13 @@ $(function(){
 	      </div>
 	      <div class="modal-body">
 	        
-	        <form id="updateForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/mypage/review/update?${_csrf.parameterName}=${_csrf.token}">
-				<input type="hidden" name=reviewId value="${review.reviewId}">
+	        <form id="reviewUpdate-form" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/mypage/review/update?${_csrf.parameterName}=${_csrf.token}">
+				<input type="hidden" class="reviewId" name="reviewId">
 				<table>
 			  		<tr>
 				    	<th>글번호</th>
 				    	<td>
-				    	  <div id="reviewId" ></div>
+				    	  <div id="reviewId" name="reviewId"></div>
 				    	</td>
 				  	</tr>
 				  	<tr>
@@ -334,13 +385,13 @@ $(function(){
 				  	<tr>
 				    	<th>별점</th>
 				    	<td>
-				    		<fieldset>
-							  <label for="recipient-name" class="col-form-label">별점</label>
-						        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
+				    		<fieldset id="update-star">
+<!-- 							  <label for="recipient-name" class="col-form-label">별점</label> -->
+						        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>
 							</fieldset>
 				    	</td>
 				  	</tr>
@@ -351,22 +402,45 @@ $(function(){
 				  	<tr>
 				    	<th>내용</th>
 				    	<td>
-				    		 <textarea name="reviewContent" id="summernote" placeholder="후기를 자유롭게 입력해주세요. 욕설 / 비방은 관리자에 의한 비공개 처리 및 처벌될 수 있습니다.">${review.reviewContent}</textarea>	    	</td>
+				    		 <textarea name="reviewContent" id="reviewContent" placeholder="후기를 자유롭게 입력해주세요. 욕설 / 비방은 관리자에 의한 비공개 처리 및 처벌될 수 있습니다.">${review.reviewContent}</textarea>	    	</td>
 				  	</tr>
 				</table>
-				<input type="submit" id="updateBtn" value="수정하기">
-				<a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}">취소</a>
-			</form>
+
 	        
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <input type="submit" id="updateBtn" value="저장하기">
 	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
+		</form>
 	    </div>
 	  </div>
 	</div>
-	
+
+<!---------------------------------- 삭제 확인 모달 -------------------------------------->
+
+	<div class="modal fade" id="deleteModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">후기 삭제</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		       정말 삭제하시겠습니까?
+		      </div>
+		      <div class="modal-footer">
+<!-- 		      <form id="delete-requestForm"> -->
+<!-- 		      <input type="hidden" name="reviewId" id="reviewId"> -->
+		        <button type="button" class="btn btn-primary" id="deleteBtn" onclick="deleteReview(deleteOk)">삭제</button>
+<!-- 		        <button type="button" class="btn btn-primary" id="deleteBtn">아작스로 삭제</button> -->
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		      </form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	
 		
 	<!-- 페이징 처리 -->

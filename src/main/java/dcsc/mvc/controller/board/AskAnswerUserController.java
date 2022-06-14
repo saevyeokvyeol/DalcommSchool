@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
+import dcsc.mvc.domain.board.Event;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.AskAnswerService;
@@ -34,7 +36,7 @@ public class AskAnswerUserController {
 	private final static int PAGE_COUNT=8;
 	private final static int BLOCK_COUNT=4;
 	       
-	 /**
+	 /**            
 	  * 학생 ID로 자신 1대1문의 조회 
 	  * */
 	@RequestMapping("main/board/askanswer/askAnswerStudent") 
@@ -43,14 +45,45 @@ public class AskAnswerUserController {
 		studentId = "jang1234"; 
 		   
 		
-		  List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
-		  
-		  model.addAttribute("askSelectByIdList", askSelectByIdList);
-		 
+		/*
+		 * List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
+		 * 
+		 * model.addAttribute("askSelectByIdList", askSelectByIdList);
+		 */
 		
 		//페이징 처리
-	/*	Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "askNo");
-		Page<Ask> askList = askAnswerService.selectById(page);
+			Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+			Page<Ask> askSelectByIdList = askAnswerService.selectById(studentId, page);
+			
+			model.addAttribute("askSelectByIdList", askSelectByIdList);
+			
+			int temp = (nowPage-1)%BLOCK_COUNT;
+			int startPage = nowPage - temp;
+			
+			model.addAttribute("blockCount", BLOCK_COUNT);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("nowPage", nowPage);
+	
+		return "main/board/askanswer/askAnswerSelectById"; 
+	} 
+	
+	 /**
+	  * 선생님 ID로 자신 1대1문의 조회 
+	  * */
+	@RequestMapping("teacher/board/askanswer/askAnswerTeacher") 
+	public String selectByTeacherId(String teacherId, Model model,@RequestParam(defaultValue = "1") int nowPage) {
+		
+		teacherId = "Tjang1234"; 
+		   
+		/*
+		 * List<Ask> askSelectByIdList=askAnswerService.selectById(teacherId);
+		 * 
+		 * model.addAttribute("askSelectByIdList", askSelectByIdList);
+		 */
+		
+		//페이징 처리
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Ask> askSelectByIdList = askAnswerService.selectById(teacherId, page);
 		
 		model.addAttribute("askSelectByIdList", askSelectByIdList);
 		
@@ -60,25 +93,23 @@ public class AskAnswerUserController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
-		*/
-		return "/main/board/askanswer/askAnswerSelectById"; 
-	} 
-	
-	 /**
-	  * 선생님 ID로 자신 1대1문의 조회 
-	  * */
-	@RequestMapping("teacher/board/askanswer/askAnswerTeacher") 
-	public String selectByTeacherId(String teacherId, Model model) {
 		
-		teacherId = "Tjang1234"; 
-		   
-		List<Ask> askSelectByIdList=askAnswerService.selectById(teacherId);
-		 
-		model.addAttribute("askSelectByIdList", askSelectByIdList);
 		
-		return "/teacher/board/askanswer/askAnswerSelectById"; 
+		return "teacher/board/askanswer/askAnswerSelectById"; 
 	}
 	   
+	/**
+	 * 1대1문의 상세보기기능(학생)
+	 * */
+	@RequestMapping("main/board/askanswer/askAnswerDetailStudent/{askNo}")
+	public ModelAndView askAnswerDetailStudent(@PathVariable Long askNo) {
+		
+		Ask askAnswerDetail=askAnswerService.selectByAskNo(askNo);
+		
+		return new ModelAndView("main/board/askanswer/askAnswerDetailStudent","askAnswerDetail",askAnswerDetail);
+	}
+	 
+	 
 	/** 
 	 * 등록폼(학생)  
 	 * */
@@ -88,7 +119,7 @@ public class AskAnswerUserController {
 	 
 	/**
 	 * 등록하기 (학생)
-	 * */
+	 * */  
 	@RequestMapping("main/board/askanswer/insertStudent")
 	public String insert(Ask ask, AskCategory askCategory,Student student, MultipartFile file,HttpSession session)throws Exception {
 		
@@ -178,21 +209,21 @@ public class AskAnswerUserController {
 	 * 1대1 문의 수정하기(학생)     
 	 * */ 
 	@RequestMapping("main/board/askanswer/updateStudent")
-	public String updateStudent(Ask ask, MultipartFile file)throws Exception {
+	public String updateStudent(Ask ask/*, MultipartFile file*/)/*throws Exception */{
 		
+		
+		
+		/*
+		 * if(file.getSize() > 0) { File img = new File(ImageLink.ASK_IMG +
+		 * file.getOriginalFilename()); file.transferTo(img);
+		 * 
+		 * ask.setAskImg(file.getOriginalFilename());
+		 * 
+		 * }
+		 */
 		Ask dbAsk=askAnswerService.updateAsk(ask);
-		
-		if(file.getSize() > 0) {
-			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
-			file.transferTo(img);
-			
-			ask.setAskImg(file.getOriginalFilename());
-			
-		} 
-		
-		
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
-		return "redirect:/main/board/askanswer/askAnswerStudent";
+		return "redirect:/main/board/askanswer/askAnswerStudent"; 
 	}
 					
 	/**
@@ -209,18 +240,18 @@ public class AskAnswerUserController {
 	 * 1대1 문의 수정하기(선생님)     
 	 * */ 
 	@RequestMapping("teacher/board/askanswer/updateTeacher")
-	public String updateTeacher(Ask ask, MultipartFile file)throws Exception {
+	public String updateTeacher(Ask ask){
 		
 		Ask dbAsk=askAnswerService.updateAsk(ask);
 		
-		if(file.getSize() > 0) {
-			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
-			file.transferTo(img);
-			
-			ask.setAskImg(file.getOriginalFilename());
-			
-		} 
-		
+		/*
+		 * if(file.getSize() > 0) { File img = new File(ImageLink.ASK_IMG +
+		 * file.getOriginalFilename()); file.transferTo(img);
+		 * 
+		 * ask.setAskImg(file.getOriginalFilename());
+		 * 
+		 * }
+		 */
 		
 	
 		return "redirect:/teacher/board/askanswer/askAnswerTeacher";

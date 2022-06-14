@@ -23,7 +23,7 @@ public interface FaqService {
 	 * @param faqCategory 
 	 * @param FAQ( 제목, 카테고리, 내용, 이미지)
 	 * */
-	Faq updateFAQ(Faq faq, FaqCategory faqCategory);
+	Faq updateFAQ(Faq faq);
 	
 	/**
 	 * FAQ 삭제 기능
@@ -70,7 +70,7 @@ public interface FaqService {
 	 * @param String keyword
 	 * @return List<FAQ>
 	 * */
-	Page<Faq> selectBykeyword(Pageable pageable);
+	Page<Faq> selectBykeyword(String keyword,Pageable pageable);
 	
 	/**
 	 * 카테고리 리스트

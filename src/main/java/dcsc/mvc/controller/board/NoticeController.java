@@ -142,16 +142,16 @@ public class NoticeController {
 	 * */
 	
 	@RequestMapping("/admin/board/Notice/noticeUpdate")
-	public ModelAndView updateNotice(Notice notice,MultipartFile file)throws Exception {
+	public String updateNotice(Notice notice,MultipartFile file)throws Exception {
 		
 		if(file.getSize() > 0) {
 			File img = new File(ImageLink.NOTICE_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			notice.setNoticeImg(file.getOriginalFilename());
 		}
-		noticeService.updateNotice(notice);
+		Notice newNotice = noticeService.updateNotice(notice);
 		
-		return new ModelAndView("admin/board/Notice/noticeRead","notice",notice);
+		return "redirect:/admin/board/Notice/noticeRead/" + newNotice.getNoticeNo();
 	}
 	
 	/**

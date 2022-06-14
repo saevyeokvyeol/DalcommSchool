@@ -79,8 +79,12 @@
 <body>
 
 <!--        <div class="loginbox-title">로그인</div> -->
+<<<<<<< HEAD
+<!--  sns 로그인 -->
+=======
 <!--------------------------------- sns 로그인 ------------------------------------>
 		<br>
+>>>>>>> 705f331d59c75c9c058f0bae2304d9ab93fa0d8e
           <div class="loginbox-social">
 			<div class="logo">
 					<img src="${pageContext.request.contextPath}/img/main/login_logo.png" class="logo-img" alt="...">
@@ -103,9 +107,12 @@
                   </div>
               </div>
           </div>
-          <br><br><br>
-<!--------------------------------- 일반 로그인 ------------------------------------>
-			<div>
+              <div class="loginbox-or">
+                  <div class="line"></div>
+                  <div class="or">OR</div>
+              </div><br>
+<!-- 일반 로그인  -->
+
               <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	               <div class="form-floating mb-3"> 

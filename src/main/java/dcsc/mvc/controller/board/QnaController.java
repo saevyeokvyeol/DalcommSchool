@@ -1,6 +1,8 @@
 package dcsc.mvc.controller.board;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,8 +38,8 @@ public class QnaController {
 	@Autowired
 	private ClassQnaService classQnaService;
 	
-	private final static int PAGE_COUNT=10;
-	private final static int BLOCK_COUNT=3;
+	private final static int PAGE_COUNT = 10;
+	private final static int BLOCK_COUNT = 5;
 	
 	/**
 	 * Q&A 전체조회
@@ -51,9 +53,9 @@ public class QnaController {
 	
 	
 	/**
-	 * Q&A 상세조회(메인)
+	 * Q&A 상세조회(메인) - 포워드
 	 * */
-	/*@RequestMapping("main/board/qna/qnaRead/{qnaId}")
+	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
 	public String qnaRead(@PathVariable Long qnaId, Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
@@ -61,7 +63,7 @@ public class QnaController {
 		model.addAttribute("qnaReply", classReply);
 		
 		return "main/board/qna/qnaRead";
-	}*/
+	}
 	
 	/**
 	 * Q&A 상세조회(메인) -모달 - 아작스
@@ -125,7 +127,9 @@ public class QnaController {
 		model.addAttribute("qna", classQna);
 		model.addAttribute("qnaReply", classReply);
 		
+
 		return "teacher/board/qna/qnaRead";
+		
 	}
 	
 	/**
@@ -274,26 +278,27 @@ public class QnaController {
 	/**
 	 * 클래스ID로 클래스 Q&A 검색 - 페이징
 	 * */
-	@RequestMapping("main/board/qna/qnaList")
-	public void selectByClassId(Long classId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
-		classId = 2L;
+	@RequestMapping("board/qna/selectByClassId")
+	@ResponseBody
+	public Map<String, Object> selectByClassId(Long classId, Model model, int page) {
 		
 		//페이징처리하기
-		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
-		Page<ClassQna> pageList = classQnaService.selectByClassId(classId, page);
+		Pageable pageable = PageRequest.of((page-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByClassId(classId, pageable);
 		
-		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		model.addAttribute("pageList", pageList);
+		map.put("list", pageList.getContent());
 		
+		int temp = (page-1) % BLOCK_COUNT;
+		int startPage = page - temp;
+
+		map.put("totalPage", pageList.getTotalPages());
+		map.put("blockCount", BLOCK_COUNT);
+		map.put("startPage", startPage);
+		map.put("page", page);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
-		int startPage = nowPage-temp;
-		
-		model.addAttribute("blockCount", BLOCK_COUNT);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
-		
+		return map;
 	}
 	
 	/**
