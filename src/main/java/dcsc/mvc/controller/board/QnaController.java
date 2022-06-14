@@ -1,5 +1,6 @@
 package dcsc.mvc.controller.board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,70 +28,43 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.ClassQnaService;
+import lombok.RequiredArgsConstructor;
 
 
 
 
 @Controller
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class QnaController {
-	
-	@Autowired
-	private ClassQnaService classQnaService;
+	private final ClassQnaService classQnaService;
 	
 	private final static int PAGE_COUNT = 10;
 	private final static int BLOCK_COUNT = 5;
 	
 	/**
-	 * Q&A 전체조회
-	 * */
-	/*@RequestMapping("main/board/qna/qnaList")
-	public void qnaList(Model model) {
-		List<ClassQna> list = classQnaService.selectAllQna();
-		
-		model.addAttribute("list", list);
-	}*/
-	
-	
-	/**
 	 * Q&A 상세조회(메인) - 포워드
 	 * */
-	@RequestMapping("main/board/qna/qnaRead/{qnaId}")
-	public String qnaRead(@PathVariable Long qnaId, Model model) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
-		model.addAttribute("qna", classQna);
-		model.addAttribute("qnaReply", classReply);
-		
-		return "main/board/qna/qnaRead";
-	}
-	
-	/**
-	 * Q&A 상세조회(메인) -모달 - 아작스
-	 * */
-	@RequestMapping("main/board/qna/qnaRead")
+	@RequestMapping("board/qna/selectByQnaId")
 	@ResponseBody
-	public ClassQnaReplyDTO qnaRead(Long qnaId) {
+	public ClassQnaReplyDTO selectByQnaId(Long qnaId, Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
 		
-		ClassQnaReplyDTO qnaReplyDTO = new ClassQnaReplyDTO();
+		ClassQnaReplyDTO qna = new ClassQnaReplyDTO(qnaId, classQna.getStudent().getStudentId(),
+				null, classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
+				classQna.getQnaContent(), classQna.getBlindState(), classQna.getSecretState(), 
+				null, null, null, null);
 		
-		if(classReply!=null) {
-			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
-											classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
-											classQna.getQnaContent(), classReply.getReplyId(), classReply.getTeacher().getTeacherNickname(), 
-											classReply.getReplyInsertDate(), classReply.getReplyContent());
-			
-		}else if(classReply==null) {
-			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
-					classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
-					classQna.getQnaContent(), null, null, 
-					null, null);
+		if(classQna.getClassReply() != null) {
+			ClassReply reply = classQna.getClassReply();
+			System.out.println(reply.getReplyId());
+			qna.setReplyId(reply.getReplyId());
+			qna.setTeacherNickname(reply.getTeacher().getTeacherNickname());
+			qna.setReplyContent(reply.getReplyContent());
+			qna.setReplyInsertDate(reply.getReplyInsertDate());
 		}
-		
-		
-		return qnaReplyDTO;
+		System.out.println(qna.getReplyContent());
+		return qna;
 	}
 	
 	/**
@@ -105,16 +79,6 @@ public class QnaController {
 		
 		return "admin/board/qna/qnaRead";
 	}
-	
-	/**
-	 * 선생님 - Q&A 상세조회
-	 * */
-	/*@RequestMapping("teacher/board/qna/qnaRead/{qnaId}")
-	public ModelAndView qnaReadth(@PathVariable Long qnaId ) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		
-		return new ModelAndView("teacher/board/qna/qnaRead", "qna", classQna);
-	}*/
 	
 	/**
 	 * 선생님 - Q&A 상세조회
@@ -137,7 +101,6 @@ public class QnaController {
 	 * */
 	@RequestMapping("main/board/qna/qnaWrite")
 	public void qnaWrite() {
-		
 	}
 	
 	/**
@@ -153,45 +116,35 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 수정폼 - 포워드방식
-	 * */
-	/*@RequestMapping("main/board/qna/qnaUpdateForm")
-	public ModelAndView qnaUpdateForm(Long qnaId) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		
-		return new ModelAndView("main/board/qna/qnaUpdate", "qna", classQna);
-	}*/
-	
-	/**
 	 * Q&A 수정폼 - 모달
 	 * */
-	@RequestMapping("qnaUpdateForm")
+	@RequestMapping("board/qna/qnaUpdateForm")
 	@ResponseBody
-	public ClassQna qnaUpdateFormModal(Long qnaId) {
+	public ClassQna qnaUpdateForm(Long qnaId) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
 		
 		return classQna;
 	}
 	
-	
 	/**
-	 * Q&A 수정하기
+	 * Q&A 수정폼 - 모달
 	 * */
-	@RequestMapping("main/board/qna/qnaUpdate")
-	public String qnaUpdate(ClassQna classQna) {
+	@RequestMapping("board/qna/qnaUpdate")
+	@ResponseBody
+	public ClassQna qnaUpdate(ClassQna classQna, Classes classes) {
+		classQna.setClasses(classes);
 		classQnaService.updateQuestion(classQna);
-	
-		return "redirect:/main/board/qna/qnaList";
+		
+		return classQna;
 	}
 	
 	/**
 	 * Q&A 삭제하기
 	 * */
-	@RequestMapping("main/board/qna/qnaDelete")
-	public String qnaDelete(Long qnaId) {
+	@RequestMapping("board/qna/qnaDelete")
+	@ResponseBody
+	public void qnaDelete(Long qnaId) {
 		classQnaService.deleteQuestion(qnaId);
-		
-		return "redirect:/main/board/qna/qnaList";
 	}
 	
 	/**
@@ -201,7 +154,6 @@ public class QnaController {
 	public void qnaAll(Model model) {
 		List<ClassQna> list = classQnaService.selectAllQna();
 		model.addAttribute("list", list);
-		
 	}*/
 	
 	/**
@@ -218,14 +170,12 @@ public class QnaController {
 		
 		model.addAttribute("pageList", pageList);
 		
-		
 		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
 		int startPage = nowPage-temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
-		
 	}
 	
 	/**
@@ -252,17 +202,6 @@ public class QnaController {
 	}
 	
 	/**
-	 * 클래스ID로 클래스 Q&A 검색
-	 * */
-	/*@RequestMapping("main/board/qna/qnaList")
-	public void selectByClassId(Long classId , Model model) {
-		classId = 2L;
-		
-		List<ClassQna> list= classQnaService.selectByClassId(classId);
-		model.addAttribute("list", list);
-	}*/
-	
-	/**
 	 * 클래스ID로 클래스 Q&A 검색 - 페이징
 	 * */
 	@RequestMapping("board/qna/selectByClassId")
@@ -274,8 +213,16 @@ public class QnaController {
 		Page<ClassQna> pageList = classQnaService.selectByClassId(classId, pageable);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<ClassQnaReplyDTO> list = new ArrayList<ClassQnaReplyDTO>();
 		
-		map.put("list", pageList.getContent());
+		for(ClassQna c : pageList.getContent()) {
+			ClassQnaReplyDTO qna = new ClassQnaReplyDTO(c.getQnaId(), c.getStudent().getStudentId(),
+					null, c.getQnaInsertDate(), c.getQnaTitle(), c.getQnaComplete(), c.getQnaContent(),
+					c.getBlindState(), c.getSecretState(), null, null, null, null);
+			list.add(qna);
+		}
+		
+		map.put("list", list);
 		
 		int temp = (page-1) % BLOCK_COUNT;
 		int startPage = page - temp;
@@ -287,17 +234,6 @@ public class QnaController {
 		
 		return map;
 	}
-	
-	/**
-	 * 강사ID로 클래스 Q&A 검색
-	 * */
-	/*@RequestMapping("teacher/teacherMypage/qnaListAll")
-	public void selectByteacherId(String teacherId , Model model) {
-		teacherId = "Tann1234";
-		
-		List<ClassQna> list = classQnaService.selectByTeacherId(teacherId);
-		model.addAttribute("list", list);
-	}*/
 	
 	/**
 	 * 강사ID로 클래스 Q&A 검색 - 페이징
@@ -386,18 +322,6 @@ public class QnaController {
 		
 		return "redirect:/teacher/teacherMypage/qnaListAll";
 	}
-	
-	/**
-	 * 학생ID로 클래스 Q&A 검색
-	 * */
-	/*@RequestMapping("main/mypage/qnaList")
-	public void selectByStudentId(String studentId, Model model) {
-		studentId="lee1234";
-		
-		List<ClassQna> list = classQnaService.selectByStudentId(studentId);
-		model.addAttribute("list", list);
-		
-	}*/
 	
 	/**
 	 * 학생ID로 클래스 Q&A 검색 -페이징처리
