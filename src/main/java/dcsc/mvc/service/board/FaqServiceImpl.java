@@ -5,11 +5,13 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.SimpleQuery;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -38,7 +40,7 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public Faq updateFAQ(Faq faq,FaqCategory faqCategory) {
+	public Faq updateFAQ(Faq faq) {
 		
 		Faq dbFaq = faqRepository.findById(faq.getFaqNo()).orElse(null);
 		if(dbFaq==null) {
@@ -49,7 +51,6 @@ public class FaqServiceImpl implements FaqService {
 		dbFaq.setFaqCategory(faq.getFaqCategory());
 		dbFaq.setFaqContent(faq.getFaqContent());
 		dbFaq.setFaqImg(faq.getFaqImg());
-		dbFaq.setFaqUpdateDate(faq.getFaqUpdateDate());
 		
 		return dbFaq;
 	}
@@ -100,10 +101,22 @@ public class FaqServiceImpl implements FaqService {
 	}
 	
 	@Override
-	public Page<Faq> selectBykeyword(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Faq> selectBykeyword(String keyword, Pageable pageable) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		QFaq faq = QFaq.faq;
+		booleanBuilder.and(faq.faqContent.like("%"+keyword+"%"));
+		booleanBuilder.or(faq.faqTitle.like("%"+keyword+"%"));
+		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(booleanBuilder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize());
+				
+		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		
+		//List<Faq> list = jpqlQuery.fetch();
+
+		
+		return list;
 	}
+
 
 	@Override
 	public List<FaqCategory>  selectfaqCategory() {

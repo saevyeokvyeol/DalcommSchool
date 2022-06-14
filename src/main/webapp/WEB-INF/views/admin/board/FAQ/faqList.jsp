@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
@@ -28,7 +27,7 @@ a{
 
 <div class="main-content">
 	
-	<h5> 고객센터 > 공지사항 </h5>
+	<h5> 고객센터 > 자주 묻는 질문 </h5>
 	
 	
 	<form action="${pageContext.request.contextPath}/admin/board/FAQ/faqSearch" method="post">

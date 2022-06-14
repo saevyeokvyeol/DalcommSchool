@@ -349,74 +349,123 @@ function setThumbnail(event){
 
 </head>
 <body>
-<h1> 강사 회원가입 </h1>
+
+<div class="main-content">
+
+
   <section>
-	<form id="insertForm" name="insertForm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/main/login/insert?${_csrf.parameterName}=${_csrf.token}">
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
-	    <table>
-<!-- 	      <tr> -->
-<!-- 	        <th>프로필 이미지</th> -->
-<!-- 			<td> -->
-<!-- 			  <div id="image_container"></div> -->
-<!-- 			  <div class="form-group"> -->
-<!-- 				<input class="form-control form-control-user" type="file"  -->
-<!-- 				name="file" id="product_image" onchange="setThumbnail(event);"> -->
-<!-- 			  </div> -->
-<!-- 			</td> -->
-<!-- 		  </tr> -->
-	      <tr>
-	          <th>* 강사 ID</th>
-	          <td class=""><input type="text" id="teacherId" class="" name="teacherId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>
-	          <button type="button" class="" id="idCheck">중복체크</button>
-	          <span id="notValidId" class="message">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
-	          <span id="idCheck_success" class="message">사용가능한 ID입니다^^</span></td>
-	          <span id="idCheck_fail" class="message">이미 존재하는 ID입니다.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 강사 비밀번호</th>
-	          <td class=""><input type="password" id="teacherPwd" name="teacherPwd" class="" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required/>
-	          <span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
-	      </tr>
-	      <tr>
-	      	  <th>* 강사 비밀번호 확인</th>
-	      	  <td><input type="password" id="teacherPwd2" class="" placeholder="비밀번호를 한번 더 입력해주세요." required="required"/>
-	      	  <span id="pwdCheck_success" class="message">비밀번호가 일치합니다.</span>
-	      	  <span id="pwdCheck_Fail" class="message">비밀번호 일치 여부를 확인해주세요.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 강사 이름</th>
-	          <td><input type="text" id="teacherName" name="teacherName" class="" placeholder="" required="required"/>
-	      </tr>
-	      <tr>
-	          <th>* 강사 닉네임</th>
-	          <td><input type="text" id="teacherNick" name="teacherNickname" class="" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
-	          <button type="button" id="nickCheck" class="">중복체크</button>
-	          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
-	          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 강사 핸드폰 번호</th>
-	          <td><input type="text" id="teacherPhone" name="teacherPhone" class="" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
-	          <button type="button" id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
-	          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
-	          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
-	      </tr>
-<!-- 	      <tr> -->
-<!-- 	          <th>강사 공개 연락처</th> -->
-<!-- 	          <td><input type="text" id="teacherNick" class="" name="teacherTel" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td> -->
-<!-- 	      </tr> -->
-	      <tr>
-	          <th>*강사 이메일</th>
-	          <td><input type="text" id="teacherEmail" name="teacherEmail" class="" required="required"/>
-	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
-	      </tr>
-	  	</table>
-	  	<div>
-	  	<input type="submit" id="joinBtn" value="회원가입">
-	  	<a href="../index.jsp" id="cancelBtn">취소</a>
+	<form id="insertForm" name="insertForm" method="post" class="row g-3" enctype="multipart/form-data" action="${pageContext.request.contextPath}/main/login/insert?${_csrf.parameterName}=${_csrf.token}">
+	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+	    <h3> 강사 회원가입 </h3><br><br>
+	    <hr>
+	    
+    	<!-- 아이디 -->
+    		<div class="col-md-2">
+			</div>	
+		    <div class="col-md-2">
+			    <label for="studentId" class="form-label">아이디</label>
+		  	</div>
+		  	 <div class="col-md-6">
+				<input type="text" id="teacherId" class="form-control" name="teacherId" placeholder="영소문자+숫자, 최소 6글자 이상 10글자 이하로 입력해주세요." required/>
+				<span id="notValidId" class="message">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
+				<span id="idCheck_success" class="message">사용가능한 ID입니다^^</span>
+				<span id="idCheck_fail" class="message">이미 존재하는 ID입니다.</span>
+		  	</div>
+		  	<div class="col-md-2">
+				<button type="button" class="btn btn-primary" id="idCheck">중복체크</button>
+			</div>
+	    
+    	<!-- 비밀번호 -->
+    		<div class="col-md-2">
+			</div>	
+     		<div class="col-md-2">
+     			<label for="teacherPwd" class="form-label">비밀번호</label>
+     		</div>
+     		<div class="col-md-6">
+				<input type="password" id="teacherPwd" name="teacherPwd" class="form-control" placeholder="영소문자+대문자+숫자, 최소 8글자 이상 입력해주세요." required/>
+	      		<span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
+	      	</div>
+	      	<div class="col-md-2">
+			</div>	
+	    
+		<!-- 비밀번호 확인 -->
+			<div class="col-md-2">
+			</div>	
+     		<div class="col-md-2">
+     			<label for="teacherPwd2" class="form-label">비밀번호 확인</label>
+     		</div>
+     		<div class="col-md-6">
+				<input type="password" id="teacherPwd2" name="teacherPwd2" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." required/>
+				<span id="pwdCheck_success" class="message">비밀번호가 일치합니다.</span>
+				<span id="pwdCheck_Fail" class="message">비밀번호 일치 여부를 확인해주세요.</span>
+	      	</div>
+	      	<div class="col-md-2">
+			</div>	
+	    
+	    <!-- 이름 -->
+	    	<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			   <label for="teacherName" class="form-label">이름</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" id="teacherName" name="teacherName" class="form-control" placeholder="" required="required"/>
+			</div>
+			<div class="col-md-2">
+			</div>	
+	    
+    	<!-- 닉네임 -->
+    		<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			   <label for="teacherNick" class="form-label">닉네임</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" id="teacherNick" name="teacherNickname" class="form-control" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
+				<span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
+				<span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
+			</div>
+			<div class="col-md-2">
+				<button type="button" id="nickCheck" class="btn btn-primary">중복체크</button>
+			</div>	
+	    
+       	<!-- 휴대폰 번호 -->
+       		<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			   <label for="teacherPhone" class="form-label">휴대폰 번호</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" id="teacherPhone" name="teacherPhone" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+				<span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
+				<span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
+				<span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
+			</div>
+			<div class="col-md-2">
+				<button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+			</div>	
+	    
+    	<!-- 이메일 -->
+    		<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			   <label for="teacherEmail" class="form-label">이메일</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" id="teacherEmail" name="teacherEmail" class="form-control" placeholder="" required="required"/>
+				<span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
+			</div>
+			<div class="col-md-2">
+			</div>	
+			
+	    <br><br>
+	    <hr>
+	    <!-- 버튼 -->
+	    <div class=".col-6 .col-sm-4 text-center">
+	  		<input type="submit" id="joinBtn" class="btn btn-primary" value="회원가입">
 	  	</div>
 	</form>
   </section>
+</div>
 </body>
 </html>
