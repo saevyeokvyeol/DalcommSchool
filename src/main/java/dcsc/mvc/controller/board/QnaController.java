@@ -304,7 +304,7 @@ public class QnaController {
 	/**
 	 * 강사ID로 클래스 Q&A 검색
 	 * */
-	/*@RequestMapping("teacher/teacherMypage/qnaListAll")
+	/*@RequestMapping("teacher/mypage/qnaListAll")
 	public void selectByteacherId(String teacherId , Model model) {
 		teacherId = "Tann1234";
 		

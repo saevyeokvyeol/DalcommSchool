@@ -75,6 +75,13 @@ public interface CouponService {
 	 * */
 	void updateCouponState(Coupon coupon);
 	
+	/**
+	 * 클래스 쿠폰 상태 변경 기능 ; 관리자
+	 * @param Coupon coupon(couponId,couponStateId)
+	 * @return void
+	 * */
+	void updateEventCouponState(Coupon coupon);
+	
 	
 	/**
 	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자
