@@ -157,11 +157,23 @@ a {
 	 padding: 10px;
 }
 
+.boardTable, .boardTable button {
+	font-size: 15px;
+}
+
 .boardTable .no-record {
 	padding-top: 50px;/*  border: 1px solid #ddd; border-radius: 10px; */
 }
 
-#qnaTable td {
+.boardTable i {
+	color: #444; padding-left: 10px
+}
+
+#qnaTable td, #qnaTable th {
+	text-align: center;
+}
+
+#qnaTable td, #qnaTable th {
 	text-align: center;
 }
 
@@ -170,7 +182,23 @@ a {
 }
 
 #qnaTable td:nth-child(2) {
-	width: 550px; text-align: left;
+	width: 410px; text-align: left;
+}
+
+#qnaTable td:nth-child(3) {
+	text-align: left; width: 100px;
+}
+
+#qnaTable td:nth-child(5), #qnaTable td:nth-child(6) {
+	padding: 10px 0;
+}
+
+#qnaTable .qnaDetailRecode {
+	background-color: #f9f9f9;
+}
+
+#qnaTable .qnaDetailRecode th {
+	border: none;
 }
 
 .classInfoBox .classBoxName {
@@ -178,7 +206,7 @@ a {
 }
 
 .classBox .classBoxImg {
-	width: 380px; height: 253px; border-radius: 10px; overflow: hidden;
+	width: 400px; height: 253px; border-radius: 10px; overflow: hidden;
 }
 
 .classBox a:hover {
