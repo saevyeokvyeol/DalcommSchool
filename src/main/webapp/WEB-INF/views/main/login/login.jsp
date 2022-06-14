@@ -78,13 +78,9 @@
 </head>
 <body>
 
-<!--        <div class="loginbox-title">로그인</div> -->
-<<<<<<< HEAD
-<!--  sns 로그인 -->
-=======
+
 <!--------------------------------- sns 로그인 ------------------------------------>
 		<br>
->>>>>>> 705f331d59c75c9c058f0bae2304d9ab93fa0d8e
           <div class="loginbox-social">
 			<div class="logo">
 					<img src="${pageContext.request.contextPath}/img/main/login_logo.png" class="logo-img" alt="...">
