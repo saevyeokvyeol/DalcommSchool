@@ -256,13 +256,17 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/review/updateForm")
 	@ResponseBody
-	public ClassReview updateReviewForm(Long reviewId) {
-//		reviewId=1L;
-		ClassReview review = reviewService.selectByReviewId(reviewId);
+	public ClassReviewDTO updateReviewForm(Long reviewId) {
 		
-		return review;
-	}
-	
+		ClassReview review = reviewService.selectByReviewId(reviewId);
+		ClassReviewDTO reviewDTO = new ClassReviewDTO();
+		
+		reviewDTO = new ClassReviewDTO(review.getStudent().getStudentId(), review.getReviewContent(), review.getReviewId(),
+				review.getReviewImg(), review.getReviewInsertDate(), review.getReviewRate(),
+				review.getReviewUpdateDate(), review.getReviewBlindState(), review.getClasses().getClassName());
+		
+		return reviewDTO;
+	}	
 	
 	/**
 	 * 클래스 후기 수정
@@ -275,19 +279,19 @@ public class ClassReviewController {
 			
 			review.setReviewImg(file.getOriginalFilename());
 		}		
-		ClassReview newReview = reviewService.update(review);
+		reviewService.update(review);
 		
-		return "redirect:/main/mypage/review/read/" + newReview.getReviewId();
+		return "redirect:/main/review/list";
 	}
 	/**
 	 * 클래스 후기 삭제
 	 * */
 	@RequestMapping("/review/delete")
 	@ResponseBody
-	public void deleteReview(Long reviewId) {
+	public String deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
 		
-//		return "redirect:/";
+		return "redirect:/main/board/review/read";
 	}
 	
 	/**
