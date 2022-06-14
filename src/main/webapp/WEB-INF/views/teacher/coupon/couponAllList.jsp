@@ -103,6 +103,13 @@
 		});//$(".updateForm").click 끝
 		
 		
+		$(".deleteCoupon").click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				return false;
+			}
+		}); //$(".deleteCoupon").click 끝
+		
+		
 	}); //ready 끝	
 	
 </script>
@@ -176,7 +183,7 @@
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<input class="btn btn-primary" type="submit" value="삭제하기">
+											<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
 											
 										</form>
 									</td>

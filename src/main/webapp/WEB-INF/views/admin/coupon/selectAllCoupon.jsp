@@ -81,6 +81,11 @@
 			}); // 아작스 종료
 		})//$(".updateForm").click 끝
 		
+		$(".deleteCoupon").click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				return false;
+			}
+		});
 		
 		
 	}); //ready 끝	
@@ -175,7 +180,7 @@
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 											<c:choose>
 												<c:when test="${empty coupon.classes.classId }">
-													<input class="btn btn-primary" type="submit" value="삭제하기">
+													<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
 												</c:when>
 											</c:choose>
 										</form>
@@ -264,7 +269,6 @@
 			                <option value="0">-쿠폰상태 선택-</option>
 			                <option value="1">발급</option>
 			                <option value="2">발급중지</option>
-			                <option value="3">삭제</option>          
 			              </select>	
 			             </div>
 			             <div>
