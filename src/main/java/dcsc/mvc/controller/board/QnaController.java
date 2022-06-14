@@ -68,6 +68,34 @@ public class QnaController {
 	}
 	
 	/**
+	 * Q&A 상세조회(메인) -모달 - 아작스(학생 마이페이지)
+	 * */
+	@RequestMapping("main/board/qna/qnaRead")
+	@ResponseBody
+	public ClassQnaReplyDTO qnaRead(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
+		
+		ClassQnaReplyDTO qnaReplyDTO = new ClassQnaReplyDTO();
+		
+		if(classReply!=null) {
+			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
+											classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
+											classQna.getQnaContent(), classQna.getBlindState(), classQna.getSecretState(), classReply.getReplyId(), classReply.getTeacher().getTeacherNickname(), 
+											classReply.getReplyInsertDate(), classReply.getReplyContent());
+			
+		}else if(classReply==null) {
+			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
+					classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
+					classQna.getQnaContent(), classQna.getBlindState(), classQna.getSecretState(), null, null, 
+					null, null);
+		}
+		
+		
+		return qnaReplyDTO;
+	}
+	
+	/**
 	 * Q&A 상세조회 - 관리자
 	 * */
 	@RequestMapping("admin/board/qna/qnaRead/{qnaId}")
@@ -101,6 +129,60 @@ public class QnaController {
 	 * */
 	@RequestMapping("main/board/qna/qnaWrite")
 	public void qnaWrite() {
+	}
+	
+	/**
+	 * Q&A 등록  - 학생 마이페이지
+	 * */
+	@RequestMapping("main/board/qna/qnaInsert")
+	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
+		
+		String blindState = "F";
+		String qnaComplete = "F";
+		
+		if(classQna.getSecretState()==null) {
+			classQna.setSecretState("T");
+		}
+		
+		classQna.setClasses(classes);
+		classQna.setStudent(student);
+		classQna.setBlindState(blindState);
+		classQna.setQnaComplete(qnaComplete);
+		classQnaService.insertQuestion(classQna);
+		System.out.println("classQna = "+classQna );
+		
+		return "redirect:/main/mypage/qnaList";
+	}
+	
+	/**
+	 * Q&A 수정폼 - 모달(학생 마이페이지)
+	 * */
+	@RequestMapping("qnaUpdateForm")
+	@ResponseBody
+	public ClassQna qnaUpdateFormModal(Long qnaId) {
+		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		return classQna;
+	}
+	
+	/**
+	 * Q&A 수정하기 - 학생페이지
+	 * */
+	@RequestMapping("main/board/qna/qnaUpdate")
+	public String qnaUpdateMypage(ClassQna classQna) {
+		classQnaService.updateQuestion(classQna);
+	
+		return "redirect:/main/mypage/qnaList";
+	}
+	
+	/**
+	 * Q&A 삭제하기 - 학생페이지
+	 * */
+	@RequestMapping("main/board/qna/qnaDelete")
+	public String qnaDeleteMypage(Long qnaId) {
+		classQnaService.deleteQuestion(qnaId);
+		
+		return "redirect:/main/mypage/qnaList";
 	}
 	
 	/**

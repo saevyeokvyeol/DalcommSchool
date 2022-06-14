@@ -36,7 +36,8 @@
 <script type="text/javascript">
 $(function(){
 	
-	$("button").click(function(){
+	//블라인드처리
+	$(".blind").click(function(){
 		var target =$(this).attr("name")
 		
 		$.ajax({
@@ -54,13 +55,58 @@ $(function(){
         } 
 
         })
-	})
+	})// $("button").click 끝
+	
+	//글 상세보기
+	$(".qnaTitle").click(function(){
+			//alert($(this).val());
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
+				type: "post",
+				data:{"${_csrf.parameterName}": "${_csrf.token}",
+					  "qnaId" : $(this).val()	
+				},
+				dataType:"json",
+				success : function(result) {
+				
+					$("#qnaDetail-form #qnaId").html(`\${result.qnaId}`); //span, div 같은 태그에는 .html 속성으로 부여.
+					$("#qnaDetail-form #studentId").html(`\${result.studentId}`);
+					$("#qnaDetail-form #className").html(`\${result.className}`);
+					$("#qnaDetail-form #qnaInsertDate").html(`\${result.qnaInsertDate.toString().substring(0, 10)}`);
+					$("#qnaDetail-form #qnaTitle").html(`\${result.qnaTitle}`);
+					$("#qnaDetail-form #qnaComplete").html(`\${result.qnaComplete}`);
+					$("#qnaDetail-form #qnaContent").html(`\${result.qnaContent}`);
+					//$("#deleteId").val(`\${result.qnaId}`);
+					
+					let complete = result.qnaComplete;
+					if(complete == "T"){
+						
+						$("#replyId").html(`\${result.replyId}`);
+						$("#teacherNickname").html(`\${result.teacherNickname}`);
+						$("#replyInsertDate").html(`\${result.replyInsertDate.toString().substring(0, 10)}`);
+						$("#replyContent").html(`\${result.replyContent}`);
+						
+						//$("#requestForm").remove();
+						
+					} else {
+						$("#replyDetail-form").text("")
+						$("#replyDetail-Card-body").remove();
+					}
+					
+				},
+				error: function(err){
+					alert(err + "에러 발생");
+				}
+			})//ajax 끝
+		})// $(".qnaTitle").click 끝
+	
 })
 </script>
 </head>
 <body>
 
-<div class="main-content">
+
 	<section>
     <div>
         <table class="table">
@@ -74,7 +120,6 @@ $(function(){
 	                <th>작성자</th>
 	                <th>제목</th>
 	                <th>등록일자</th>
-	                <th>수정일자</th>
 	                <th>답변완료</th>
 	                <th>블라인드유무</th>
 	                <th>블라인드처리</th>
@@ -96,22 +141,28 @@ $(function(){
                                 <td><span>${qna.classes.classId}</span></td>
                                 <td><span>${qna.student.studentId}</span></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a>
+                                    <%-- <a href="${pageContext.request.contextPath}/admin/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a> --%>
+                                    <button class="btn btn-light qnaTitle" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${qna.qnaId}">${qna.qnaTitle}</button>
                                 </td>
                                 <td>
 		                        	<span><fmt:parseDate value="${qna.qnaInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 		                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
 		                        </td>
-		                        <td>
-		                        	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
-		                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+                                <td>
+			                        <c:choose>
+			                        	<c:when test="${qna.qnaComplete == 'F'}">
+			                        		<span class="badge bg-secondary">미답변</span>
+			                        	</c:when>
+			                        	<c:when test="${qna.qnaComplete == 'T'}">
+			                        		<span class="badge bg-primary">답변 완료</span>
+			                        	</c:when>
+			                        </c:choose>
 		                        </td>
-                                <td><span>${qna.qnaComplete}</span></td>
                                 <td><span>${qna.blindState}</span></td>
                                 <td>
                                 	<c:choose>
                                         <c:when test="${qna.blindState eq 'F'}">
-                                            <button type="button" class="btn btn-danger" name="${qna.qnaId}" value="F">게시글 숨기기</button>
+                                            <button type="button" class="btn btn-danger blind" name="${qna.qnaId}" value="F">게시글 숨기기</button>
                                         </c:when>
                                         <c:when test="${qna.blindState eq 'T'}">
                                             <button type="button" class="btn btn-secondary" name="${qna.qnaId}" value="T">블라인드 처리됨</button>
@@ -174,7 +225,58 @@ $(function(){
     </div>
     
 	</section>
-</div>     
+
+<!-- QnA 상세보기 모달 -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Q&A 글 상세보기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card" style="width: 29rem;" id="qnaDtail-Card-body">
+          <div class="card-body">
+			<form id="qnaDetail-form">
+				<div>답변완료&nbsp;&nbsp;<span id="qnaComplete"></span></div>
+			    <div>글번호&nbsp;&nbsp;<span id="qnaId"></span></div>
+			    <div>작성자&nbsp;&nbsp;<span id="studentId"></span></div>
+			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
+			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
+			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
+			    <div>내용&nbsp;&nbsp;<span id="qnaContent"></span></div>
+			</form>
+		  </div>
+        </div>
+        
+		
+	<!-- 강사 답변글 -->
+	  <div class="modal-body">
+        <div class="card" style="width: 27rem;" id="replyDetail-Card-body">
+          <div class="card-body">
+			<form id="replyDetail-form">
+			    <div>글번호</div>
+			    <div id="replyId" ></div>
+			    <div>작성자</div>
+			    <div id="teacherNickname"></div>
+			    <div>작성 날짜</div>
+			    <div id="replyInsertDate"></div>
+			    <div>내용</div>
+			    <div id="replyContent"></div>	
+			</form>
+		  </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>  
 
 
 </body>
