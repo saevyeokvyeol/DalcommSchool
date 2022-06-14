@@ -50,6 +50,13 @@ public interface ClassesService {
 
 	/**
 	 * 강사ID로 클래스 조회
+	 * @param String teacherId
+	 * @return List<Classes> 클래스 전체 목록 반환
+	 * */
+	List<Classes> selectByTeacherId(String teacherId);
+
+	/**
+	 * 강사ID로 클래스 조회
 	 * @param String teacherId, Pageable pageable
 	 * @return List<Classes> 클래스 전체 목록 반환
 	 * */

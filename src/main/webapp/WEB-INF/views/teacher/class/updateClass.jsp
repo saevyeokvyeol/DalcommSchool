@@ -124,7 +124,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" style="height: 100px">${classes.classInfo}</textarea>
+							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" name="classInfo" style="height: 100px">${classes.classInfo}</textarea>
 							<label for="classInfo">클래스 소개글</label>
 						</div>
 					</td>

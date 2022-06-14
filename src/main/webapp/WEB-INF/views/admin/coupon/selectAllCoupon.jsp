@@ -139,21 +139,14 @@
 	                                <td>
 										<select name="select_couponStateName" id="select_couponStateName" class="form-select">
 											<c:choose>
-											<c:when test="${coupon.couponState.couponStateId == '1'}">
-												<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
-												<option name="couponStateId" value="2">발급중지</option>
-												<option name="couponStateId" value="3">삭제</option>
-											</c:when>
-											<c:when test="${coupon.couponState.couponStateId == '2'}">
-												<option name="couponStateId" value="2">${coupon.couponState.couponStateName}</option>
-												<option name="couponStateId" value="1">발급</option>
-												<option name="couponStateId" value="3">삭제</option>
-											</c:when>
-											<c:when test="${coupon.couponState.couponStateId == '3'}">
-												<option name="couponStateId" value="3">${coupon.couponState.couponStateName}</option>
-												<option name="couponStateId" value="1">발급</option>
-												<option name="couponStateId" value="2">발급중지</option> 
-											</c:when>
+												<c:when test="${coupon.couponState.couponStateId == '1'}">
+													<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
+													<option name="couponStateId" value="2">발급중지</option>
+												</c:when>
+												<c:when test="${coupon.couponState.couponStateId == '2'}">
+													<option name="couponStateId" value="2">${coupon.couponState.couponStateName}</option>
+													<option name="couponStateId" value="1">발급</option>
+												</c:when>
 											</c:choose>	
 	        							</select>
 	        						</td>

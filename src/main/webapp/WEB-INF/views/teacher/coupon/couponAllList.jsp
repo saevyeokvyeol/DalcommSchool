@@ -129,7 +129,6 @@
 						<th>등록일자</th>
 						<th>사용기간</th>
 						<th>쿠폰상태</th>
-						<th>수정하기</th>
 						<th>삭제하기</th>
 					</tr>
 				</thead>
@@ -137,7 +136,7 @@
 					<c:choose>
 	                    <c:when test ="${empty requestScope.couponList.content}">
 	                        <tr>
-	                            <th colspan="9">
+	                            <th colspan="8">
 	                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>
 	                            </th>
 	                        </tr>
@@ -147,7 +146,10 @@
 	                            <tr>
 	                            	<td>${coupon.classes.className}</td>
 	                                <td>${coupon.couponId}</td>
-	                                <td>${coupon.couponName}</td>
+	                                <td>
+	                                	<button type="button" class="btn btn-light updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${coupon.couponId}">
+										${coupon.couponName}</button>
+									</td>
 	                                <td>${coupon.couponDc}원</td>
 	                                <td>
 			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
@@ -168,11 +170,11 @@
 											</c:choose>	        
 	        							</select>
 	        						</td>
-	        						<td>
+	        						<!-- <td>
 										<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="">
 											수정하기
 										</button>
-									</td>
+									</td> -->
 									<td>
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
