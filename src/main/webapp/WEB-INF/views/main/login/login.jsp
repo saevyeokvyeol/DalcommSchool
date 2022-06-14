@@ -128,8 +128,8 @@
                    <a href="${pageContext.request.contextPath}/main/login/findId">아이디</a>&ensp;/&ensp;
                    <a href="${pageContext.request.contextPath}/main/login/findPwd">비밀번호 찾기</a>
                </div><br>
-               <div class="loginbox-submit">
-                   <input type="button" id="login" class="btn btn-primary btn-block" value="로그인" onclick="loginCheck()">
+               <div class="d-grid gap-2 col-6 mx-auto">
+                   <input type="button" id="login" class="btn btn-primary btn-block btn-lg" value="로그인" onclick="loginCheck()">
                </div><br>
                <div class="loginbox-signup">
                    <a href="${pageContext.request.contextPath}/main/login/joinStudent">일반 회원가입</a>&ensp;or&ensp;
