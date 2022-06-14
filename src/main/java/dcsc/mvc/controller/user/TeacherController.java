@@ -291,7 +291,33 @@ public class TeacherController {
 		return new ModelAndView("/teacher/mypage/teacherDetail", "teacher", teacher);
 	}
 	
-
+	/**
+	 * 에러페이지
+	 * */
+	@RequestMapping("main/login/findError")
+	public void findError() {}
+	
+	
+	//회원 탈퇴 전 비밀번호 검증 - 강사
+	@RequestMapping("/checkTeacherPwd")
+	@ResponseBody
+	public boolean checkPwd(String userPwd) {
+		boolean result= teacherService.checkPwd(userPwd);
+		
+		return result;
+	}
+	
+	//회원 탈퇴
+	@RequestMapping("/main/mypage/deleteTeacher")
+	public String deleteUser(String userId, String userPwd) {
+		System.out.println("deleteTeacher 호출...");
+		System.out.println("탈퇴 아이디:" + userId + "탈퇴 비번 : " + userPwd);
+		teacherService.deleteTeacher(userId, userPwd);
+		
+		SecurityContextHolder.clearContext(); //세션에 저장된 정보 삭제
+		
+		return "redirect:/main/login/deleteOk";
+	}
 	
 	
 }
