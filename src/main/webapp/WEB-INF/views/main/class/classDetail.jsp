@@ -231,7 +231,7 @@
 										text += "</td>"
 										text += "<td>"
 										text += `\${item.qnaTitle}`
-										if(item.secretState == "F"){
+										if(item.secretState == "T"){
 											text += ' <i class="fa-solid fa-lock"></i>'
 										}
 										text += "</td>"
@@ -284,8 +284,26 @@
 					})
 				} // 클래스 문의글 아작스 함수 종료
 				
+				// 클래스 문의글 특정 페이지로 이동
 				$(document).on("click", ".qnaPaging > li > button", function() {
 					classQna($(this).val())
+				})
+				
+				// 클래스 문의글 등록
+				$("#qnaInsertBtn").click(function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/qnaInsert",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId},
+							"qnaTitle": $("#qnaInsertTitle").val(), "qnaContent": $("#qnaInsertContent").val(), "secretState": $("[name=qnaInsertSecretState]:checked").val()},
+						success: function(){
+							classQna(1)
+							$('#qnaInsertForm').modal("hide");
+						},
+						error: function(err){
+							alert(123)
+						}
+					})
 				})
 				
 				classQna(1)
@@ -293,6 +311,37 @@
 		</script>
 	</head>
 	<body>
+		<!--  -->
+		<div class="modal fade" id="qnaInsertForm" tabindex="-1" aria-labelledby="qnaInsertFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="qnaInsertFormLabel">클래스 Q&A 등록</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="qnaInsertTitle" placeholder="제목">
+							<label for="qnaTitle">제목</label>
+						</div>
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="내용" id="qnaInsertContent" style="height: 100px"></textarea>
+							<label for="qnaContent">내용</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="F" name="qnaInsertSecretState" id="qnaInsertSecretState">
+							<label class="form-check-label" for="secretState">비밀글</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="qnaInsertBtn">등록</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	
 		<div class="main-content">
 			<div id="classDetail">
 				<div id="classInfomation">
@@ -352,7 +401,7 @@
 					<div class="classInfoBox" id="QnA">
 						<h4 class="classBoxName">
 							클래스 Q&A
-							<button type="button" class="btn btn-outline-primary">Q&A 등록</button>
+							<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#qnaInsertForm">Q&A 등록</button>
 						</h4>
 						<hr>
 						<div class="boardTable">

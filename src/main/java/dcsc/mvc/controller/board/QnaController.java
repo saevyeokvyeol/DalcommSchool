@@ -141,26 +141,13 @@ public class QnaController {
 	/**
 	 * Q&A 등록 
 	 * */
-	@RequestMapping("main/board/qna/qnaInsert")
-	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
-		
-		String blindState = "F";
-		String qnaComplete = "F";
-		
-		if(classQna.getSecretState()==null) {
-			classQna.setSecretState("T");
-		}
-		
+	@RequestMapping("board/qna/qnaInsert")
+	@ResponseBody
+	public void qnaInsert(ClassQna classQna, Classes classes) {
+		System.out.println(classQna.getSecretState());
 		classQna.setClasses(classes);
-		classQna.setStudent(student);
-		//classQna.setBlindState(classQna.getBlindState());
-		//classQna.setQnaComplete(classQna.getQnaComplete());
-		classQna.setBlindState(blindState);
-		classQna.setQnaComplete(qnaComplete);
+		classQna.setStudent(new Student("kim1234", null, null, null, null, null, null, null, null));
 		classQnaService.insertQuestion(classQna);
-		System.out.println("classQna = "+classQna );
-		
-		return "redirect:/main/board/qna/qnaList";
 	}
 	
 	/**
@@ -349,7 +336,7 @@ public class QnaController {
 	 * 선생님 Q&A 답변하기
 	 * */
 	@RequestMapping("qnaReplyInsert")
-	public String qnaReplyInsert(ClassReply classReply, Long qnaId , Teacher teacher ) {
+	public String qnaReplyInsert(ClassReply classReply, Long qnaId, Teacher teacher) {
 		classReply.setClassQna(new ClassQna(qnaId));
 		classReply.setTeacher(teacher);
 		classQnaService.insertReply(classReply);

@@ -11,6 +11,10 @@ a {
 	text-decoration: none;
 }
 
+.table th, .table td {
+	vertical-align: middle;
+}
+
 /* 헤더 */
 #index-header {
 	width: 100%; position: fixed; z-index: 1040; 
@@ -43,7 +47,7 @@ a {
 }
 
 #logo_menu h1 {
-	margin: 0px 50px 15px 0;
+	margin: 10px 50px 0 0;
 }
 
 #inner-main-header ul {
@@ -347,7 +351,7 @@ a {
 }
 
 #bookListBox .table th, #bookListBox .table td {
-	height: 60px; vertical-align: middle; font-size: 16px;
+	height: 60px; font-size: 16px;
 }
 
 #bookListBox .table th {
