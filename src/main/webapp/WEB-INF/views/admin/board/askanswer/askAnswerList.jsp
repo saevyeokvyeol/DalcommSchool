@@ -16,13 +16,28 @@
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+
+	a{
+		text-decoration: none;
+	}
+	table,th,td{
+		text-align: center;
+	}
+
+
+</style>
 </head>
 <body>
-	<table> 
+
+<div class="main-content">
+
+	<table class="table"> 
 		<thead>
             <tr>
              <th>글번호</th>
-             <th>문의 ID</th>
+             <th>문의 USER</th>
              <th>글 제목</th>
              <th>카테고리</th>
              <th>문의 내용</th>
@@ -51,12 +66,12 @@
 				        	
 				        	<c:choose>
 						    	<c:when test="${empty askList.student.studentId}">
-									<span>(선생님) ${askList.teacher.teacherId}</span>
+									<span>(선생님) <%-- ${askList.teacher.teacherId} --%></span>
 						    	
 						    	</c:when>
 						    	
 						    	<c:when test="${empty askList.teacher.teacherId}">
-						    			<span>(학생 ) ${askList.student.studentId}</span>
+						    			<span>(학생 ) <%-- ${askList.student.studentId} --%></span>
 						    	</c:when>
 		    				</c:choose>
 				        	
@@ -70,13 +85,17 @@
 						   	${askList.askCategory.askCategoryName}<p>
 				        </td>
 				        <td>
-				            ${askList.askContent}<p>
+					        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+					            ${askList.askContent}<p>
+					        </span>
+					        
 				        </td>
 				        <td>
 				         	${askList.askImg}<p>
 				        </td>
 				        <td>
-				        	${askList.askInsertDate}<p>
+				        	<fmt:parseDate value="${askList.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				        </td>
 				        <td>
 				        	${askList.askComplete}<p>
@@ -93,21 +112,24 @@
    </tbody>
 	</table>
 	
-	<div style="text-align: center">
+	<hr>
+		
+	 <div style="text-align: center">
 		<!--  블럭당  -->
- <nav class="pagination-container" aria-label="Page navigation example">
- 	<ul class="pagination justify-content-center">
-	<div class="pagination">
+ <nav class="pagination-container">
+	<div class="pagination justify-content-center">
 	<c:set var="doneLoop" value="false"/>
 		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage-1}">PREV</a>
+		      <li class="page-item">
+		      	<a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage-1}">PREV</a>
+		  	  </li>
 		  </c:if>
 		  
 		<span class="pagination-inner"> 
 		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
 		  
-			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
+			    <c:if test="${(i-1)>=askList.getTotalPages()}">
 			       <c:set var="doneLoop" value="true"/>
 			    </c:if> 
 		    
@@ -118,14 +140,41 @@
 		</c:forEach>
 		</span> 
 				
-		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">NEXT</a>
+		 <c:if test="${(startPage+blockCount)<=askList.getTotalPages()}">
+		     <li class="page-item">
+		     	<a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">NEXT</a>
+		 	 </li>
 		 </c:if>
 		</div>
-		</ul>
 	</nav>  
-</div>
-	
+</div>	 
+
+		<%-- 	<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:set var="doneLoop" value="false" />
+					<c:if test="${(startPage-blockCount) > 0 and askList.content.size() != 0}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+						</li>
+					</c:if>
+						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<askList.totalPages?(startPage-1)+blockCount:askList.totalPages}'>
+							<c:if test="${(i-1)>=list.getTotalPages()}">
+								<c:set var="doneLoop" value="true" />
+							</c:if>
+							<c:if test="${not doneLoop}">
+								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+					<c:if test="${(startPage+blockCount) <= askList.getTotalPages()}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav> --%>
+		
+		
+</div>	
 	
 </body>
 </html>

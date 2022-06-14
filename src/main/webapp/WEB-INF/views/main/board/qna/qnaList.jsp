@@ -259,7 +259,6 @@ $(function() {
           <div class="card" style="width: 29rem;">
             <div class="card-body">
               <form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/qna/qnaInsert" >
-                <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
                 <%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
                 <input type="hidden" name="studentId" value="${qna.student.studentId}">
                 --%>

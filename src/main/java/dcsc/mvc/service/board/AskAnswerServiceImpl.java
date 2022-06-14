@@ -5,11 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
@@ -25,6 +28,8 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 
 	private final AnswerRepository answerRep;
 	private final AskRepository askRep;
+	
+	private final JPAQueryFactory factory;
 	
 	/**
 	 * 1대1 문의 등록하기(학생&선생님) 
@@ -53,7 +58,7 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		//수정완료
 		dbAsk.setAskTitle(ask.getAskTitle());//제목
 		dbAsk.setAskContent(ask.getAskContent());//문의내용
-		//dbAsk.setAskImg(ask.getAskImg());//이미지
+		dbAsk.setAskImg(ask.getAskImg());//이미지
  
 		return dbAsk;
 	}
@@ -101,35 +106,36 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 	 * */
 	@Override
 	public Page<Ask> selectAll(Pageable pageable) {
+		
+		
 		return askRep.findAll(pageable);
+	
 	}
 	
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회하기 기능(학생&선생님)
 	 * --------동적쿼리
 	 * */
-	@Override  
-	public List<Ask> selectById(String id) {
-		
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-		
-		QAsk ask = QAsk.ask;
-		booleanBuilder.and(ask.teacher.teacherId.eq(id));
-		booleanBuilder.or(ask.student.studentId.eq(id));
-		
-		Iterable<Ask> iterable = askRep.findAll(booleanBuilder);
-		 
-		List<Ask> list = Lists.newArrayList(iterable);
-		
-		
-		return list;
-	} 
-	
+	/*
+	 * @Override public List<Ask> selectById(String id) {
+	 * 
+	 * BooleanBuilder booleanBuilder = new BooleanBuilder();
+	 * 
+	 * QAsk ask = QAsk.ask; booleanBuilder.and(ask.teacher.teacherId.eq(id));
+	 * booleanBuilder.or(ask.student.studentId.eq(id));
+	 * 
+	 * Iterable<Ask> iterable = askRep.findAll(booleanBuilder);
+	 * 
+	 * List<Ask> list = Lists.newArrayList(iterable);
+	 * 
+	 * 
+	 * return list; }
+	 */
 	/**
 	 * 내가 쓴 1대1 문의 리스트 조회하기 기능(학생&선생님)
 	 * --------동적쿼리(페이징처리)
 	 * */
-	/*@Override  
+	@Override  
 	public Page<Ask> selectById(String id, Pageable pageable) {
 		
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -139,14 +145,19 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		booleanBuilder.and(ask.teacher.teacherId.eq(id));
 		booleanBuilder.or(ask.student.studentId.eq(id));
 		
-		Iterable<Ask> iterable = askRep.findAll(booleanBuilder);
-		 
-		List<Ask> list = Lists.newArrayList(iterable);
-		
+		/*
+		 * Iterable<Ask> iterable = askRep.findAll(booleanBuilder);
+		 * 
+		 * List<Ask> list = Lists.newArrayList(iterable);
+		 */
+		JPQLQuery<Ask> jpqlQuery = factory.selectFrom(ask).where(booleanBuilder)
+									.offset(pageable.getOffset()).limit(pageable.getPageSize())
+									.orderBy(ask.askNo.desc());
 	
+		Page<Ask>list = new PageImpl<Ask>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
-	} */
+	} 
 	
 	
 	/**
