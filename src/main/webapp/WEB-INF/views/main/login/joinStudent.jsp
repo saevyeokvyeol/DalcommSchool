@@ -21,14 +21,16 @@
 
 <style type="text/css">
 
-	.idCheck_success, .pwdCheck_success, .phoneCheck_success, .phoneCheck_success {
+	.idCheck_success, .pwdCheck_success, .phoneCheck_success, .ValidId, ValidEmail.phoneCheck_success {
 		color: blue;
 		display: none;
 	}
-	.idCheck_fail, .pwdCheck_Fail, .phoneCheck_fail, .notValidEmail, .phoneCheck_fail {
+	.idCheck_fail, .pwdCheck_Fail, .phoneCheck_fail, .notValidEmail, .notValidId, .phoneCheck_fail {
 		color:red;
 		display: none;
 	}
+	
+	
 </style>
 
 	<!-- 형식 체크 (진행 중) -->
@@ -296,59 +298,106 @@
 
 </head>
 <body>
+
+<div class="main-content">
+
   <section>
-	<form id="joinForm" name="joinForm" method="post" action="${pageContext.request.contextPath}/main/login/join">
+  <div>
+	<form id="joinForm" name="joinForm" method="post" action="${pageContext.request.contextPath}/main/login/join" class="row g-3">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-	  <h1> 학생 회원가입 </h1>
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div>
-	    <table>
-	      <tr>
-	          <th>* 아이디</th>
-	          <td class=""><input type="text" id="studentId" class="" name="studentId" placeholder="영소문자와 숫자를 조합하여 최소 6자리 이상 10글자 이하로 입력해주세요." required/>
-	          <button type="button" class="" id="idCheck">중복체크</button>
-	          <span id="notValidId" class="message">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span><br>
-	          <span id="idCheck_success" class="idCheck_success">사용가능한 ID입니다^^</span>
-	          <span id="idCheck_fail" class="idCheck_fail">이미 존재하는 ID입니다.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 비밀번호</th>
-	          <td class=""><input type="password" id="studentPwd" name="studentPwd" class="" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required/>
-	          <span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
-	      </tr>
-	      <tr>
-	      	  <th>* 비밀번호 확인</th>
-	      	  <td><input type="password" id="studentPwd2" class="" placeholder="비밀번호를 한번 더 입력해주세요." required="required"/><br>
-	      	  <span id="pwdCheck_success" class="pwdCheck_success">비밀번호가 일치합니다.</span>
-	      	  <span id="pwdCheck_Fail" class="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 이름</th>
-	          <td><input type="text" id="studentName" name="studentName" class="" placeholder="" required="required"/>
-	      </tr>
-	      <tr>
-	          <th>* 핸드폰 번호</th>
-	          <td><input type="text" id="studentPhone" name="studentPhone" class="" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
-	          <button type="button" id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone" class="notValidPhone">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span><br>
-	          <span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
-	          <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 이메일</th>
-	          <td><input type="text" id="studentEmail" name="studentEmail" class="" required="required"/>
-	          <span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span></td>
-	      </tr>
-  	</table>
-	  	<div>
-	  	<input type="submit" id="joinBtn" value="회원가입">
-	  	<a href="../index.jsp" id="cancelBtn">취소</a>
-	  	</div>
+	  <h3> 일반 회원가입 </h3><br><br>
+	  		<hr>
+		  	<!-- 아이디 -->
+		    <div class="col-md-2">
+		  	</div>
+	  	    <div class="col-md-2">
+			    <label for="studentId" class="form-label">아이디</label>
+		  	</div>
+		  	 <div class="col-md-6">
+		  	 	<input type="text" id="studentId" class="form-control" name="studentId" placeholder="영소문자+숫자, 최소 6글자 이상 10글자 이하로 입력해주세요." required/>
+				<span id="idCheck_success" class="idCheck_success">사용가능한 ID입니다^^</span>
+				<span id="idCheck_fail" class="idCheck_fail">이미 존재하는 ID입니다.</span>
+		  	</div>
+		  	<div class="col-md-2">
+				<button type="button" class="btn btn-primary" id="idCheck">중복체크</button>
+			</div>
+     		
+     		<!-- 비밀번호 -->
+  		 	<div class="col-md-2">
+			</div>	
+     		<div class="col-md-2">
+     			<label for="studentPwd" class="form-label">비밀번호</label>
+     		</div>
+     		<div class="col-md-6">
+				<input type="password" id="studentPwd" name="studentPwd" class="form-control" placeholder="영소문자+대문자+숫자, 최소 8글자 이상 입력해주세요." required/>
+	      	</div>
+	      	<div class="col-md-2">
+			</div>	
+	      	
+	      	<!-- 비밀번호 확인-->	
+	      	<div class="col-md-2">
+			</div>	
+	      	<div class="col-md-2">
+     			<label for="studentPwd2" class="form-label">비밀번호 확인</label>
+     		</div>	
+	      	<div class="col-md-6">
+	      		<input type="password" id="studentPwd2" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." required="required"/><br>
+	      		<span id="pwdCheck_success" class="pwdCheck_success">비밀번호가 일치합니다.</span>
+			    <span id="pwdCheck_Fail" class="pwdCheck_Fail">비밀번호 일치 여부를 확인해주세요.</span>
+	      	</div>
+			<div class="col-md-2">
+			</div>	
+			
+			<!-- 이름 -->
+			<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			   <label for="studentName" class="form-label">이름</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" id="studentName" name="studentName" class="form-control" placeholder="" required="required"/>
+			</div>
+			<div class="col-md-2">
+			</div>	
+			
+			<!-- 휴대폰 번호 -->
+			<div class="col-md-2">
+			</div>	
+			<div class="col-md-2">
+			    <label for="studentPhone" class="form-label">휴대폰 번호</label>
+		  	</div>
+			<div class="col-md-6">
+				<input type="text" id="studentPhone" name="studentPhone" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+	      		<span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
+			    <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span>
+			</div>
+			<div class="col-md-2">
+				<button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+			</div>
+	      	
+	      	<!-- 이메일 -->	
+	      	<div class="col-md-2">
+			</div>	
+	      	<div class="col-md-2">
+	      		<label for="studentEmail" class="form-label">이메일</label>
+	      	</div>
+	      	<div class="col-md-6">
+	      		<input type="text" id="studentEmail" name="studentEmail" class="form-control" required="required"/>
+	      		<span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span>
+	      	</div>
+      		<div class="col-md-2">
+			</div>	
+	      	
+	      	<br><br>
+	    	<hr>
+	      	<!-- 버튼 -->
+		  	<div class=".col-6 .col-sm-4 text-center">
+		  		<input type="submit" id="joinBtn" class="btn btn-primary" value="회원가입">
+		  	</div>
 	</form>
+</div>
   </section>
-
-
-
-
+</div>
 
 </body>
 </html>
