@@ -100,7 +100,7 @@ public class AdminController {
 	public String techerInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherId");
 		Page<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword, page);
 		
 		model.addAttribute("teacherList",list);

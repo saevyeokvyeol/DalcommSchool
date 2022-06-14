@@ -111,103 +111,106 @@
 		</script>
 	</head>
 	<body>
-		<div class="main-content">
-			<h2 class="title">
-				<c:choose>
-					<c:when test="${empty title}">전체 클래스</c:when>
-					<c:otherwise>${title}</c:otherwise>
-				</c:choose>
-			</h2>
-			<div id="searchBtn">
-				<button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					검색&필터
-				</button>
-			</div>
-		
-			<div class="accordion" id="searchBox">
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="headingOne">
-					</h2>
-					<div id="collapseOne" class="accordion-collapse collapse ${title=='클래스 검색'?'show':hide}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-						<div class="accordion-body">
-							<form action="${pageContext.request.contextPath}/main/class/classSearch">
-								<div class="form-floating mb-3">
-									<input type="text" class="form-control" name="keyword" id="keyword" placeholder="검색할 단어를 입력해주세요">
-									<label for="floatingInput">검색할 단어를 입력해주세요</label>
-								</div>
-								
-								<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="placeRegion">
-								</div><br>
-								
-								<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="classCategory">
-								</div><br>
-								
-								<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="sort">
-									<input type="radio" class="btn-check shadow-none"  name="sort" id="new" value="new">
-									<label class="btn btn-outline-primary shadow-none" for="new">최근 등록</label>
-									<input type="radio" class="btn-check shadow-none" name="sort" id="review" value="review">
-									<label class="btn btn-outline-primary shadow-none" for="review">후기 많은 순</label>
-									<input type="radio" class="btn-check shadow-none" name="sort" id="likes" value="likes">
-									<label class="btn btn-outline-primary shadow-none" for="likes">인기순</label>
-									<input type="radio" class="btn-check shadow-none" name="sort" id="low" value="low">
-									<label class="btn btn-outline-primary shadow-none" for="low">낮은 가격순</label>
-									<input type="radio" class="btn-check shadow-none" name="sort" id="high" value="high">
-									<label class="btn btn-outline-primary shadow-none" for="high">높은 가격순</label>
-								</div><br>
-								<div id="searchBtnBox">
-									<input type="reset" class="btn btn-primary btn-lg" value="초기화">
-									<input type="submit" class="btn btn-primary btn-lg" value="검색">
-								</div>
-							</form>
-						</div>
+		<div id="searchBtn">
+			<button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				검색&필터
+			</button>
+		</div>
+	
+		<div class="accordion" id="searchBox">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingOne">
+				</h2>
+				<div id="collapseOne" class="accordion-collapse collapse ${title=='클래스 검색'?'show':hide}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+						<form action="${pageContext.request.contextPath}/admin/class/classSearch">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" name="keyword" id="keyword" placeholder="검색할 단어를 입력해주세요">
+								<label for="floatingInput">검색할 단어를 입력해주세요</label>
+							</div>
+							
+							<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="placeRegion">
+							</div><br>
+							
+							<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="classCategory">
+							</div><br>
+							
+							<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="sort">
+								<input type="radio" class="btn-check shadow-none"  name="sort" id="new" value="new">
+								<label class="btn btn-outline-primary shadow-none" for="new">최근 등록</label>
+								<input type="radio" class="btn-check shadow-none" name="sort" id="review" value="review">
+								<label class="btn btn-outline-primary shadow-none" for="review">후기 많은 순</label>
+								<input type="radio" class="btn-check shadow-none" name="sort" id="likes" value="likes">
+								<label class="btn btn-outline-primary shadow-none" for="likes">인기순</label>
+								<input type="radio" class="btn-check shadow-none" name="sort" id="low" value="low">
+								<label class="btn btn-outline-primary shadow-none" for="low">낮은 가격순</label>
+								<input type="radio" class="btn-check shadow-none" name="sort" id="high" value="high">
+								<label class="btn btn-outline-primary shadow-none" for="high">높은 가격순</label>
+							</div><br>
+							<div id="searchBtnBox">
+								<input type="reset" class="btn btn-primary btn-lg" value="초기화">
+								<input type="submit" class="btn btn-primary btn-lg" value="검색">
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-		
-			
-			<c:choose>
-				<c:when test="${empty list}">
-					클래스가 존재하지 않습니다.
-				</c:when>
-				<c:otherwise>
-					<div class="classList">
-						<c:forEach items="${list.content}" var="classes">
-							<div class="classBox">
-								<div class="classBoxImg">
-									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-										<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
-									</a>
-								</div>
-								<div class="classBoxContent">
-									<h5 class="classBoxName">
-										<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-											<span>${classes.className}</span>
-										</a>
-										<c:choose>
-											<c:when test="${classes.likeId != null}">
-												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="like" value="${classes.likeId}">
-													<i class="fa-solid fa-heart fa-lg"></i>
-												</button>
-											</c:when>
-											<c:otherwise>
-												<button type="button" class="btn btn-outline-primary shadow-none btn-sm likeBtn" name="none-like" value="${classes.classId}">
-													<i class="fa-regular fa-heart fa-lg"></i>
-												</button>
-											</c:otherwise>
-										</c:choose>
-									</h5>
-									<div class="classBoxInfo">
-										<h6>${classes.teacher.teacherNickname} 선생님</h6>
-									<div class="classBoxLocation"><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</span><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</div>
-									</div>
-									<h5 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h5>
-								</div>
+		</div>
+		<div id="allBookList">
+		 	<table class="table">
+		 		<thead>
+		 			<tr>
+		 				<th>
+		 					카테고리
+		 				</th>
+		 				<th>
+		 					클래스명
+		 				</th>
+		 				<th>
+		 					선생님
+		 				</th>
+		 				<th>
+		 					등록일
+		 				</th>
+		 				<th>
+		 					공개일
+		 				</th>
+		 				<th>
+		 					가격
+		 				</th>
+		 				<th>
+		 					상태
+		 				</th>
+		 			</tr>
+		 		</thead>
+		 		<tbody>
+					<c:choose>
+						<c:when test="${empty list}">
+							클래스가 존재하지 않습니다.
+						</c:when>
+						<c:otherwise>
+							<div class="classList">
+								<c:forEach items="${list.content}" var="classes">
+									
+								</c:forEach>
 							</div>
-						</c:forEach>
-					</div>
-				</c:otherwise>
-			</c:choose>
-			<nav aria-label="Page navigation example">
+						</c:otherwise>
+					</c:choose>
+		 			<c:forEach items="${list.content}" var="classes">
+		 				<tr>
+		 					<td>${classes.classCategory.categoryName}</td>
+		 					<td>${classes.className}</td>
+		 					<td>${classes.teacher.teacherNickname}(${classes.teacher.teacherId})</td>
+		 					<td>${classes.classInsertDate.toString().substring(0, 10)}</td>
+		 					<td>${classes.classOpenDate.toString().substring(0, 10)}</td>
+		 					<td><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</td>
+		 					<td>${classes.classState.stateName}</td>
+		 				</tr>
+		 			</c:forEach>
+		 		</tbody>
+		 	</table>
+		</div>
+		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 				<c:set var="doneLoop" value="false" />
 				<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
@@ -230,6 +233,5 @@
 				</c:if>
 			</ul>
 		</nav>
-		</div>
 	</body>
 </html>

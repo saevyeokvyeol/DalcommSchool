@@ -39,7 +39,7 @@
 
 <div class="main-content">
 
-	<h5> 고객센터 > 공지사항 </h5><br><hr>
+	<h5> 고객센터 > 자주 묻는 질문 </h5><br><hr>
 	
 <table align="center" class="table">
   

@@ -16,8 +16,43 @@
 
 	.message{display: none; position: fixed;}
 	
+	.mainFileBtn {
+				display: none;
+			}
+	h6 {
+		text-align: left;
+	}
+	
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$("img").click(function() {
+					$("#input-image").click()
+				})
+				
+				function readImage(input) {
+				    // 인풋 태그에 파일이 있는 경우
+				    if(input.files && input.files[0]) {
+				        // FileReader 인스턴스 생성
+				        var reader = new FileReader()
+				        // 이미지가 로드가 된 경우
+				        reader.onload = e => {
+				        	var previewImage = document.getElementById("preview-image")
+				            previewImage.src = e.target.result
+				        }
+				        // reader가 이미지 읽도록 하기
+				        reader.readAsDataURL(input.files[0])
+				    }
+				}
+				// input file에 change 이벤트 부여
+				var inputImage = document.getElementById("input-image")
+				inputImage.addEventListener("change", e => {
+				    readImage(e.target)
+				})
+			})
+		</script>
+		
 <script type="text/javascript">
 $(function(){
 	
@@ -167,58 +202,135 @@ $(function(){
 })
 
 </script>
-<title>강사 회원정보 수정 페이지입니다.</title>
+<title>강사 회원 정보 수정 페이지입니다.</title>
 </head>
 <body>
 <div id="main-content">
-<h3> 강사정보 수정 페이지 </h3>
+<h3> 강사 정보 수정 페이지 </h3>
 <section>
-  <sec:authorize access="isAuthenticated()">
- 	<sec:authentication property="principal" var="teacher"/>
-	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/updateTeacher">
+<%--   <sec:authorize access="isAuthenticated()"> --%>
+<%--  	<sec:authentication property="principal" var="teacher"/> --%>
+	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/mypage/updateTeacher?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-		<input type="hidden" name=teacherId value="${teacher.teacherId}">
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><br><hr>
-	    <table class="table">
+	  <table id="classTable">
+	    <tr>
+			<td>
+				<div class="mb-3">
+					<div class="profileImgCon">
+						<c:choose>
+							<c:when test="${teacher.teacherImg == null}">
+								<a><img id="preview-image" src="${pageContext.request.contextPath}/img/teacher/Profile.png"></a>
+							</c:when>
+							<c:otherwise>
+								<a><img id="preview-image" src="${pageContext.request.contextPath}/img/teacher/${teacher.teacherImg}"></a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<input type="file" id="input-image" name="file">
+				</div>
+			</td>
+		</tr>
 	      <tr>
-	          <th>강사 ID</th>
-	          <td><b>${teacher.teacherId}</b></td>
+	          <td>
+		          <div class="form-floating mb-3">
+			          <input type="text" id="teacherId" name="teacherId" placeholder="아이디" class="form-control" value="${teacher.teacherId}" readonly/>
+			          <label for="teacherId">아이디</label>
+		          </div>
+	          </td>
 	      </tr>
 	      <tr>
-	          <th>강사 이름</th>
-	          <td><b>${teacher.teacherName}</b></td>
+	          <td>
+		          <div class="form-floating mb-3">
+				          <input type="text" id="teacherName" name="teacherName" placeholder="이름" class="form-control" value="${teacher.teacherName}" readonly/>
+				          <label for="teacherId">이름</label>
+		          </div>
+	          </td>
 	      </tr>
 	      <tr>
-	          <th>*강사 닉네임</th>
-	          <td><input type="text" id="teacherNick" name="teacherNickname" class="" value="${teacher.teacherNickname}" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required/>
-	          <button type="button" id="nickCheck" class="">중복체크</button>
-	          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
-	          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
+	          <td>
+	           <div class="form-floating mb-3">
+				          <input type="text" id="teacherNick" name="teacherNickname" placeholder="닉네임" class="form-control" value="${teacher.teacherNickname}" required/>
+				          <label for="teacherId">닉네임</label>
+	          </div>
+		          <button type="button" id="nickCheck" class="btn btn-primary">중복체크</button>
+		          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span>
+		          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span>
+	          </td>
 	      </tr>
 	      <tr>
-	          <th>*강사 핸드폰 번호</th>
-	          <td><input type="text" id="teacherPhone" name="teacherPhone" class="" value="${teacher.teacherPhone}" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required/>
-	          <button type="button" id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
-	          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
-	          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
+	      	<td>
+	           <div class="form-floating mb-3">
+				          <input type="text" id="teacherPhone" name="teacherPhone" placeholder="휴대폰 번호" class="form-control" value="${teacher.teacherPhone}" required/>
+				          <label for="teacherPhone">휴대폰 번호</label>
+	          </div>
+		          <button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+		          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
+		          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span>
+		          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span>
+			</td>
 	      </tr>
 	      <tr>
-	          <th>강사 공개 연락처</th>
-	          <td><input type="text" id="teacherNick" class="" name="teacherTel" value="${teacher.teacherTel}" placeholder="달콤스쿨에서 보여지는 강사님의 번호를 입력해주세요." /></td>
+	     	 <td>
+				<div class="form-floating mb-3">
+					          <input type="text" id="teacherTel" name="teacherTel" placeholder="공개 연락처" class="form-control" value="${teacher.teacherTel}" required/>
+					          <label for="teacherTel">공개 연락처</label>
+				</div>
+			</td>
 	      </tr>
 	      <tr>
-	          <th>*강사 이메일</th>
-	          <td><input type="text" id="teacherEmail" name="teacherEmail" value="${teacher.teacherEmail}" class="" required/>
-	          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
+	          <td>
+		          <div class="form-floating mb-3">
+					          <input type="text" id="teacherEmail" name="teacherEmail" placeholder="이메일 주소" class="form-control" value="${teacher.teacherEmail}" required/>
+					          <label for="teacherEmail">이메일 주소</label>
+		          </div>
+		          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span>
+	          </td>
 	      </tr>
+	      <tr>
+			<td>
+				<h5>SNS</h5>
+				<h6>* SNS 주소를 입력해주세요 </h6>
+				<hr>
+			</td>
+		  </tr>
+			<tr>
+				<td>
+					<c:forEach items="${teacher.teacherSns}" var="sns">
+						<c:if test="${sns.sns.snsId == 1}"><c:set var="youtube" value="${sns.teacherSnsId}"/></c:if>
+						<c:if test="${sns.sns.snsId == 2}"><c:set var="instagram" value="${sns.teacherSnsId}"/></c:if>
+						<c:if test="${sns.sns.snsId == 3}"><c:set var="twitter" value="${sns.teacherSnsId}"/></c:if>
+						<c:if test="${sns.sns.snsId == 4}"><c:set var="facebook" value="${sns.teacherSnsId}"/></c:if>
+					</c:forEach>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="youtube" placeholder="유튜브" value="${youtube}" name="youtube">
+						<label for="youtube">유튜브</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="instagram" placeholder="인스타그램" value="${instagram}" name="instagram">
+						<label for="instagram">인스타그램</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="twitter" placeholder="트위터" value="${twitter}" name="twitter">
+						<label for="twitter">트위터</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="facebook" placeholder="페이스북" value="${facebook}" name="facebook">
+						<label for="pacebook">페이스북</label>
+					</div>
+				</td>
+			</tr>
+	      
+	      
+	      
+	      
+	      
 	  	</table>
 	  	<div>
 	  	<input type="submit" id="updateBtn" value="수정하기">
 	  	<a href="../board.jsp" id="cancelBtn">취소</a>
 	  	</div>
 	</form>
-	</sec:authorize>
+<%-- 	</sec:authorize> --%>
   </section>
   </div>
 </body>
