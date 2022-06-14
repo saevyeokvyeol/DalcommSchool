@@ -188,7 +188,7 @@ public class TeacherController {
 		
 		if(!result) return new ModelAndView("main/login/findError");
 		
-		return new ModelAndView("/main/login/findPwdOk","userId",userId);
+		return new ModelAndView("main/login/findPwdOk","userId",userId);
 		
 	}
 	
