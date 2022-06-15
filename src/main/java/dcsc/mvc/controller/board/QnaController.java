@@ -361,18 +361,18 @@ public class QnaController {
 		classReply.setTeacher(teacher);
 		classQnaService.insertReply(classReply);
 		
-		return "redirect:/teacher/board/qna/qnaRead/"+qnaId;
+		return "redirect:/teacher/mypage/qnaListAll";
 	}
 	
 	/**
 	 * 선생님 Q&A 답변 수정폼
 	 * */
-	@RequestMapping("qnaReplyUpdateForm/{replyId}")
+	/*@RequestMapping("qnaReplyUpdateForm/{replyId}")
 	public ModelAndView qnaReplyUpdateForm(@PathVariable Long replyId){
 		ClassReply classReply= classQnaService.selectByReplyId(replyId);
 		
 		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
-	}
+	}*/
 	
 	/**
 	 * 선생님 Q&A 답변 수정폼 - 모달
@@ -392,17 +392,27 @@ public class QnaController {
 	public String qnaReplyUpdate(ClassReply classReply) {
 		classQnaService.updateReply(classReply);
 		
-		return "redirect:/teacher/teacherMypage/qnaListAll";
+		return "redirect:/teacher/mypage/qnaListAll";
 	}
 
 	/**
-	 * 선생님 Q&A 답변 삭제하기
+	 * 선생님 Q&A 답변 삭제하기 - 기존 포워드
 	 * */
-	@RequestMapping("qnaReplyDelete/{replyId}")
+	/*@RequestMapping("qnaReplyDelete/{replyId}")
 	public String qnaReplyDelete(@PathVariable Long replyId) {
 		classQnaService.deleteReply(replyId);
 		
-		return "redirect:/teacher/teacherMypage/qnaListAll";
+		return "redirect:/teacher/mypage/qnaListAll";
+	}*/
+	
+	/**
+	 * 선생님 Q&A 답변 삭제하기
+	 * */
+	@RequestMapping("qnaReplyDelete")
+	public String qnaReplyDeleteTeacherMypage(Long replyId) {
+		classQnaService.deleteReply(replyId);
+		
+		return "redirect:/teacher/mypage/qnaListAll";
 	}
 	
 	/**
