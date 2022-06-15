@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.ClassSchedule;
+import dcsc.mvc.domain.classes.ClassStatistics;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.FullCalendar;
 import dcsc.mvc.service.classes.ClassesService;
@@ -154,5 +157,37 @@ public class AjaxClassController {
 	public ClassSchedule selectScheduleByScheduleId(Long scheduleId) {
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
 		return schedule;
-	}	
+	}
+	
+	/**
+	 * 강사 클래스 통계
+	 * */
+	@RequestMapping("/teacher/classStatistics")
+	@ResponseBody
+	public List<ClassStatistics> classStatistics(){
+		List<Classes> classList = classesService.selectByTeacherId("Tkim1234");
+		List<ClassStatistics> list = new ArrayList<ClassStatistics>();
+		
+		for (Classes c : classList) {
+			ClassStatistics cs = new ClassStatistics();
+			cs.setClassName(c.getClassName());
+			cs.setBookCount(0);
+			cs.setClassTotalProfit(0);
+			
+			if(c.getBooks() != null) {
+				cs.setBookCount(c.getBooks().size());
+				
+				int profit = 0;
+				
+				for(Book b : c.getBooks()) {
+					profit += b.getTotalPrice();
+				}
+				cs.setClassTotalProfit(profit);
+			}
+			
+			list.add(cs);
+		}
+		
+		return list;
+	}
 }

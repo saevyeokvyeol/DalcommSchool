@@ -50,8 +50,8 @@
 				}
 				
 				$("#order").on("click", function() {
-					/* IMP.init("imp86665517");
-					requestPay(); */
+					IMP.init("imp86665517");
+					requestPay();
 					$("#bookForm").submit();
 				})
 			});

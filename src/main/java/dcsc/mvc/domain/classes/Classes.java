@@ -93,4 +93,8 @@ public class Classes {
 	
 	@Transient
 	private Long likeId;
+	
+	@OneToMany(mappedBy = "classes")
+	@JsonIgnore
+	private List<Book> books;
 }

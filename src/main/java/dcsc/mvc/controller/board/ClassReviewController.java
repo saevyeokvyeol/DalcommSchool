@@ -3,6 +3,8 @@ package dcsc.mvc.controller.board;
 import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassReview;
@@ -272,14 +276,21 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/main/mypage/review/update")
 	@ResponseBody
-	public void updateReview(ClassReview review, MultipartFile file) throws Exception{
-		if(file!=null) {
-			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
-			file.transferTo(img);
-			
-			review.setReviewImg(file.getOriginalFilename());
-		}		
-		reviewService.update(review);
+	public void updateReview(ClassReview review, HttpServletRequest request) throws Exception{
+		System.out.println("클래스후기 컨트롤러, update 호출.");
+		System.out.println(review.getReviewContent());
+		System.out.println(review.getReviewRate());
+		
+//		MultipartRequest m = new MultipartRequest(request, ImageLink.CLASSREVIEW_IMG, 1024*1024*100, "UTF-8"); 
+//				new DefaultFileRenamePolicy());
+//		System.out.println(file);
+//		if(file!=null) {
+//			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
+//			file.transferTo(img);
+//			
+//			review.setReviewImg(file.getOriginalFilename());
+//		}		
+//		reviewService.update(review);
 		
 //		return "redirect:/main/review/list";
 	}
@@ -315,8 +326,5 @@ public class ClassReviewController {
 		return null;
 	}
 	
-	/**
-	 * 클래스 후기 신고 기능
-	 * */
-//	@RequestMapping("")
+
 }

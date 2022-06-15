@@ -17,7 +17,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ClassState {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "state_id_seq")
