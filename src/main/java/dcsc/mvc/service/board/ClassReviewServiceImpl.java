@@ -29,14 +29,14 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 	}
 
 	@Override
-	public ClassReview update(ClassReview classReview) {
-		ClassReview newReview = reviewRep.findById(classReview.getReviewId()).orElse(null);
+	public ClassReview update(ClassReview review) {
+		ClassReview newReview = reviewRep.findById(review.getReviewId()).orElse(null);
 		if(newReview==null) {
 			throw new RuntimeException("리뷰 아이디 오류로 수정할 수 없습니다.");
 		}
-		newReview.setReviewContent(classReview.getReviewContent());
-		newReview.setReviewImg(classReview.getReviewImg());
-		newReview.setReviewRate(classReview.getReviewRate());
+		newReview.setReviewContent(review.getReviewContent());
+		newReview.setReviewImg(review.getReviewImg());
+		newReview.setReviewRate(review.getReviewRate());
 		
 		return newReview;
 	}
