@@ -15,6 +15,8 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+		
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
 			    z-index: 1050!important;
@@ -31,15 +33,21 @@
 			}
 			
 			/* 클래스 후기 CSS */
-			fieldset input[type=radio]{display: none;}
-			fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;}
-			fieldset{display: inline-block; direction: rtl; border: 0;}
+/* 			fieldset input[type=radio]{display: none;} */
+/* 			fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;} */
+/* 			fieldset{display: inline-block; direction: rtl; border: 0;} */
 			
-			.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
-			.star:hover{text-shadow: 0 0 0 #EB5353;}
-			.star:hover~label{text-shadow: 0 0 0 #EB5353;}
+/* 			.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;} */
+/* 			.star:hover{text-shadow: 0 0 0 #EB5353;} */
+/* 			.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
 			
-			textarea{width:100%; height:6.25em; resize:none;}
+/* 			textarea{width:100%; height:6.25em; resize:none;} */
+
+			/* 지도 API CSS*/
+			#map {
+			  height: 500px;
+			  width: 750px;
+			}
 		</style>
 		<script>
 			// 풀캘린더 API 사용
@@ -451,6 +459,43 @@
 				
 				classQna(1)
 			})
+			
+			  var geocoder;
+			  var map;
+			  
+			  function initialize() {
+			    geocoder = new google.maps.Geocoder();
+			    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+			    var mapOptions = {
+			      zoom: 16,
+			      center: latlng
+			    }
+			    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+			  }
+			  
+			  function codeAddress() {
+				    var address = document.getElementById('placeAddr').value;
+				    geocoder.geocode( { 'address': address}, function(results, status) {
+				      if (status == 'OK') {
+				    	  
+				    	  var lat = results[0].geometry.location.lat();
+				 	      var lng = results[0].geometry.location.lng(); 
+				    	  
+				        map.setCenter(results[0].geometry.location);
+				        var marker = new google.maps.Marker({
+				            map: map,
+				            position: results[0].geometry.location
+				        });
+				        
+				      } else {
+				        alert('Geocode was not successful for the following reason: ' + status);
+				      }
+				    });
+				}
+		$(function(){	
+			codeAddress();
+				
+		})
 		</script>
 	</head>
 	<body>
@@ -543,7 +588,7 @@
 					<div id="classBoxInfo">
 							<h5>${classes.teacher.teacherNickname} 선생님</h5>
 							<h6><i class="fa-solid fa-cookie-bite"></i><span>${classes.classCategory.categoryName}</h5>
-							<h6><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}서울</h6>
+							<h6><i class="fa-solid fa-location-dot"></i>${classes.teacher.place.placeRegion.regionName}</h6>
 					</div>
 					<h4 class="classBoxPrice"><fmt:formatNumber value="${classes.classPrice}" pattern="#,###" />원</h4>
 
@@ -554,6 +599,28 @@
 						<h4 class="classBoxName">강사 소개</h4>
 					<hr>
 						<!-- 여기부터 지도 -->
+						<h4>공방 정보</h4>
+						<div class="classPlace">
+							<table class="placeTable">
+						    	<tr>
+						    		<th>공방 이름</th>
+						    		<td>${classes.teacher.place.placeName}</td>
+						    		<th>공방 주소</th>
+						    		<td>${classes.teacher.place.placeAddr}, ${classes.teacher.place.detailAddr}</td>
+						    		<input type="hidden" id="placeAddr" value="${classes.teacher.place.placeAddr}">
+						    	</tr>
+						    	<tr>
+						    		<th>위치</th>
+						    		<td colspan="3">
+						    			<div id="map"></div>
+	  										<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
+						    			
+						    		</td>
+						    	</tr>
+							</table>
+						</div>
+						
+						
 					</div>
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">

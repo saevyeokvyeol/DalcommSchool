@@ -25,7 +25,6 @@ import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("teacher/teacherMypage/place")
 @RequiredArgsConstructor
 public class PlaceController {
 	
@@ -35,13 +34,13 @@ public class PlaceController {
 	/**
 	 * 공방 등록 폼
 	 * */
-	@RequestMapping("/insertForm")
+	@RequestMapping("/teacher/teacherMypage/place/insertForm")
 	public void insertForm() {}
 	
 	/**
 	 * 공방 등록하기
 	 * */
-	@RequestMapping("/insert")
+	@RequestMapping("/teacher/teacherMypage/place/insert")
 	public String insertPlace(Place place, PlaceRegion placeRegion,@RequestParam List<Long> infraId) {
 		System.out.println("placeController - insertPlace 실행");
 		place.setPlaceRegion(placeRegion);
@@ -53,7 +52,7 @@ public class PlaceController {
 	/**
 	 * 공방 수정 폼
 	 * */
-	@RequestMapping("/updateForm")
+	@RequestMapping("/teacher/teacherMypage/place/updateForm")
 	public ModelAndView updateForm(Long placeId) {
 		placeId=24L;
 		Place place = teacherService.selectByPlaceId(placeId);
@@ -64,7 +63,7 @@ public class PlaceController {
 	/**
 	 * 공방 수정하기
 	 * */
-	@RequestMapping("/update")
+	@RequestMapping("/teacher/teacherMypage/place/update")
 	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam List<Long> infraId) {
 		
 		place.setPlaceRegion(placeRegion);
@@ -78,18 +77,18 @@ public class PlaceController {
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/detail")
+	@RequestMapping("/teacher/teacherMypage/place/detail")
 	public ModelAndView readPlace(Long placeId) {
 		placeId=24L;
 		
 		Place place = teacherService.selectByPlaceId(placeId);
-		return new ModelAndView("teacher/teacherMypage/place/placeDetail", "place", place);
+		return new ModelAndView("teacher/mypage/place/placeDetail", "place", place);
 	}
 	
 	/**
 	 * 공방 인프라 리스트 가져오기
 	 * */
-	@RequestMapping("/selectPlaceInfra")
+	@RequestMapping("/teacher/teacherMypage/place/selectPlaceInfra")
 	@ResponseBody
 	public List<Infra> selectPlaceInfra() {
 		List<Infra> list = teacherService.selectPlaceInfra();
@@ -100,7 +99,7 @@ public class PlaceController {
 	/**
 	 * 공방 지역 가져오기
 	 * */
-	@RequestMapping("/selectPlaceRegion")
+	@RequestMapping("/teacher/teacherMypage/place/selectPlaceRegion")
 	@ResponseBody
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = teacherService.selectPlaceRegion();
@@ -111,7 +110,7 @@ public class PlaceController {
 	/**
 	 * 공방 아이디로 공방 인프라 가져오기
 	 * */
-	@RequestMapping("/selectInfra")
+	@RequestMapping("/teacher/teacherMypage/place/selectInfra")
 	@ResponseBody
 	public List<PlaceInfraDTO> selectInfraByPlaceId(Long placeId){
 		List<PlaceInfra> list = teacherService.selectInfraByPlaceId(placeId);
