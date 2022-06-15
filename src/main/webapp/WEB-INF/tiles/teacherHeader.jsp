@@ -66,7 +66,7 @@
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="${pageContext.request.contextPath}/teacher" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="${pageContext.request.contextPath}/img/main/mainLogoblack.png" style="height: 50px;">
               </span>
@@ -324,7 +324,6 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/css/bootstrap.js"></script>
 
     <script src="${pageContext.request.contextPath}/js/helpers.js"></script>
     <script src="${pageContext.request.contextPath}/js/perfect-scrollbar.js"></script>

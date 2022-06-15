@@ -153,7 +153,6 @@ public class EventController {
 			event.setEventImg(file.getOriginalFilename());
 		}
 		eventService.updateEvent(event);
-		
 		return "redirect:/admin/board/event/eventList";
 	}
 	
