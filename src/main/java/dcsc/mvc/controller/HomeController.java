@@ -10,14 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import dcsc.mvc.domain.classes.Book;
+import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.service.classes.LikeService;
+import dcsc.mvc.service.user.StudentService;
 import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +31,7 @@ public class HomeController {
 	private final ClassesService classesService;
 	private final LikeService likeService;
 	private final BookService bookService;
+	private final StudentService studentService;
 	
 	@RequestMapping("/") 
 	public String index(Model model) {
@@ -93,6 +97,45 @@ public class HomeController {
 		model.addAttribute("classList", classList);
 		model.addAttribute("todayProfit", todayProfit);
 		return "teacher/index"; 
+	}
+	
+	@RequestMapping("/admin") 
+	public String adminIndex(Model model) {
+		int studentNum = 0;
+		
+		List<Student> students = studentService.selectNewStudent();
+		if(students != null) {
+			studentNum = students.size();
+		}
+		int teacherNum = teacherService.selectNewTeacher().size();
+		
+		List<Teacher> teachers = teacherService.selectNewTeacher();
+		if(teachers != null) {
+			teacherNum = teachers.size();
+		}
+		
+		int userNum = 0;
+		int totalProfit = 0;
+		
+		students = studentService.selectAllStudent();
+		teachers = teacherService.selectAllTeacher();
+		
+		if(students != null) {
+			userNum += students.size();
+		}
+		if(teachers != null) {
+			userNum += teachers.size();
+			for(Teacher t : teachers) {
+				totalProfit += t.getTotalProfit();
+			}
+		}
+		
+		model.addAttribute("title", "ADMIN");
+		model.addAttribute("studentNum", studentNum);
+		model.addAttribute("teacherNum", teacherNum);
+		model.addAttribute("userNum", userNum);
+		model.addAttribute("totalProfit", totalProfit);
+		return "admin/index"; 
 	}
 	
 }

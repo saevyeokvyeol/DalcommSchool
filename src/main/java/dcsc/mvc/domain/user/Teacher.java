@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import dcsc.mvc.domain.classes.Classes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,4 +62,8 @@ public class Teacher {
 	@OneToMany(mappedBy = "teacher")
 	@JsonIgnore
 	private List<TeacherSns> teacherSns;
+	
+	@OneToMany(mappedBy = "teacher")
+	@JsonIgnore
+	private List<Classes> classes;
 }

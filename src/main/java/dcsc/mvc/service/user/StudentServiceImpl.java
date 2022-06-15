@@ -1,7 +1,11 @@
 package dcsc.mvc.service.user;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
+import javax.management.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -186,6 +190,26 @@ public class StudentServiceImpl implements StudentService {
 		} else { 
 			return true; //비밀번호 일치
 		}
+	}
+	
+	/**
+	 * 신규 학생 수 검색
+	 * @return: List<Student>
+	 * */
+	@Override
+	public List<Student> selectNewStudent() {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QStudent student = QStudent.student;
+		
+		LocalDateTime to = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+		LocalDateTime from = to.minusDays(1);
+		booleanBuilder.and(student.studentInsertDate.between(from, to));
+		
+		JPQLQuery<Student> query = jpqlQueryFactory.selectFrom(student)
+				.where(booleanBuilder);
+		
+		return query.fetch();
 	}
 
 }
