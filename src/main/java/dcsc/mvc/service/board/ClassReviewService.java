@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.classes.Classes;
@@ -21,6 +22,11 @@ public interface ClassReviewService {
 	 * */
 	ClassReview update(ClassReview classReview);
 
+	/**
+	 * 클래스 후기 수정(아작스)
+	 * */
+//	void updateAjax(Long reviewId, int reviewRate, String reviewContent, String file);
+	
 	/**
 	 * 클래스 후기 삭제
 	 * @param Long reviewId
