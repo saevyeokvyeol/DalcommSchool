@@ -5,6 +5,9 @@
 <html>
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -12,17 +15,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+
+	#input-image {
+		display: none;
+	}
+	
+</style>
 
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
-    <!-- include plugin -->
-    <script src="[folder where script is located]/[plugin script].js"></script>
 
 	
 	  <script type="text/javascript">
@@ -48,8 +51,36 @@
 			}
 		)
 	});
-	
     </script>
+    
+      <script type="text/javascript">
+			$(function() {
+				$("#preview-image").click(function() {
+					$("#input-image").click()
+				})
+				
+				function readImage(input) {
+				    // 인풋 태그에 파일이 있는 경우
+				    if(input.files && input.files[0]) {
+				        // FileReader 인스턴스 생성
+				        var reader = new FileReader()
+				        // 이미지가 로드가 된 경우
+				        reader.onload = e => {
+				        	var previewImage = document.getElementById("preview-image")
+				            previewImage.src = e.target.result
+				        }
+				        // reader가 이미지 읽도록 하기
+				        reader.readAsDataURL(input.files[0])
+				    }
+				}
+				// input file에 change 이벤트 부여
+				var inputImage = document.getElementById("input-image")
+				inputImage.addEventListener("change", e => {
+				    readImage(e.target)
+				})
+			})
+
+		</script>
 
 <head>
 </head>
@@ -83,7 +114,12 @@
        		파일 첨부
         </td>
         <td>
-			<input type="file" name="file" size="30" value="${notice.noticeImg}">
+	       	<div class="mb-3">
+	   			<div class="image-container mainImgCon">
+				    <a><img id="preview-image" src="${pageContext.request.contextPath}/img/notice/${notice.noticeImg}"></a>
+				</div>
+				<input type="file" name="file" id="input-image">
+			</div>
 		</td>
     </tr>
     <tr>
@@ -103,45 +139,7 @@
 </table>
 </form>
 </div>
-<%-- 
-<form name=updateForm method=post action="${pageContext.request.contextPath}/admin/board/Notice/noticeUpdate?${_csrf.parameterName}=${_csrf.token}"
-	enctype="multipart/form-data">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type='hidden' name='noticeNo' value="${notice.noticeNo}">
-	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
-    <tr>
-        <td width="1220" height="20" colspan="2" bgcolor="#00cc00">
-            <p align="center"><font color="white" size="3"><b> ${notice.noticeNo} 게시물 수정하기</b></font></p>
-        </td>
-    </tr>
-    <tr>
-        <td width="150" height="20">
-            <p align="right"><b><span style="font-size:9pt;">제목</span></b></p>
-        </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type=text name="noticeTitle" size="30"
-		 value="${requestScope.notice.noticeTitle}"></span></b></td>
-    </tr>
-    <tr>
-   	    <td width="150" height="20" >
-        <p align="right"><b><span style="font-size:9pt;">파일 첨부</span></b></p>
-        </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type="file" name="file" size="30" value="${notice.noticeImg}"></span></b></td>
-    </tr>
-    <tr>
-        <td width="150" height="20" >
-            <p align="right"><b><span style="font-size:9pt;">내 용</span></b></p>
-        </td>
-        <td width="450" height="20" ><b><span style="font-size:9pt;">
-		<textarea name="noticeContent" cols="50" rows="10">${requestScope.notice.noticeContent}</textarea></span></b></td>
-    </tr>
-    <tr>
-        <td width="450" height="20" colspan="2" align="center"><b><span style="font-size:9pt;">
-		<input type="submit" value="수정하기" name="update"> <input type="reset" value="다시쓰기"></span></b></td>
-    </tr>
-</table>
-</form> --%>
+
 
 </body>
 

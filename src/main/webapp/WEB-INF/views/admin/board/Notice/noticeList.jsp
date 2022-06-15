@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -47,6 +49,7 @@ a{
              <th>작성자</th>
              <th>글제목</th>
              <th>작성일</th>
+             <th>첨부파일</th>
              <th>조회수</th>
             </tr>
         </thead>
@@ -72,6 +75,10 @@ a{
 				<td>
 				<a href="${pageContext.request.contextPath}/admin/board/Notice/noticeRead/${notice.noticeNo}">
 				   ${notice.noticeTitle}
+				   <c:set var="today" value="<%=LocalDateTime.now().minusDays(1)%>"/>
+				  <c:if test="${notice.noticeInsertDate >= today}">
+				  	<span class="badge rounded-pill bg-primary">new</span>
+				  </c:if>
 				</a>
 				</td>
 				<td>
@@ -79,6 +86,11 @@ a{
 					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				</td>
 				<td>
+				<c:if test="${notice.noticeImg != null}">
+					<i class="fa fa-file-image-o" aria-hidden="true"></i>
+				</c:if>
+				</td>
+				<td>	
 					${notice.noticeViews}
 				</td>
 			</tr>		
