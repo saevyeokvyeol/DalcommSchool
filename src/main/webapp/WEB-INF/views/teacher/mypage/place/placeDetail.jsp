@@ -106,7 +106,6 @@ body{margin: auto; width: 1200px;}
 	
 	function codeAddress() {
 	    var address = document.getElementById('placeAddr').value;
-// 	    alert(address)
 	    geocoder.geocode( { 'address': address}, function(results, status) {
 	      if (status == 'OK') {
 	    	  
