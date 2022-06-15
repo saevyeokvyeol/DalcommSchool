@@ -184,9 +184,10 @@ $(function(){
 공방 수정 폼입니다.
 
 <section>
-  <form id="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/teacherMypage/place/update">
+  <form id="updateForm" method="post" action="${pageContext.request.contextPath}/place/update">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-  <input type="hidden" name=placeId  value="${place.placeId}">
+  <input type="hidden" name="placeId"  value="${place.placeId}">
+<%--   <input type="hidden" name="teacherId" value="${teacherId}"> --%>
     <table>
       <tr>
         <th>공방 이름</th>

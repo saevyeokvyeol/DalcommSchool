@@ -289,20 +289,29 @@ public class TeacherServiceImpl implements TeacherService {
 	 * */
 	@Override
 	public void updatePlace(Place place,@RequestParam List<Long> infraId) {
-		Place place2 = placeRep.findById(place.getPlaceId()).orElse(place);
-				
-		place2.setDetailAddr(place.getDetailAddr());
-		place2.setPlaceName(place.getPlaceName());
-		place2.setPlaceAddr(place.getPlaceAddr());
-		place2.setPlaceRoute(place.getPlaceRoute());
-		
-		place2.setPlaceRegion(place.getPlaceRegion());
-		
-		placeInfraRep.deletePlaceInfra(place.getPlaceId());
-		
-		for(Long i : infraId) {
-			Infra infra = infraRep.findById(i).orElse(null);
-			placeInfraRep.save(new PlaceInfra(null, place2, infra));
+		System.out.println(place.getPlaceId());
+		if(place.getPlaceId() == null) {
+			Place newPlace = placeRep.save(place);
+			
+			for(Long i : infraId) {
+				Infra infra = infraRep.findById(i).orElse(null);
+				placeInfraRep.save(new PlaceInfra(null, newPlace, infra));
+			}
+		} else {
+			Place dbPlace = placeRep.findById(place.getPlaceId()).orElse(null);
+			dbPlace.setDetailAddr(place.getDetailAddr());
+			dbPlace.setPlaceName(place.getPlaceName());
+			dbPlace.setPlaceAddr(place.getPlaceAddr());
+			dbPlace.setPlaceRoute(place.getPlaceRoute());
+			
+			dbPlace.setPlaceRegion(place.getPlaceRegion());
+			
+			placeInfraRep.deletePlaceInfra(place.getPlaceId());
+			
+			for(Long i : infraId) {
+				Infra infra = infraRep.findById(i).orElse(null);
+				placeInfraRep.save(new PlaceInfra(null, dbPlace, infra));
+			}
 		}
 	}
 	
@@ -321,9 +330,15 @@ public class TeacherServiceImpl implements TeacherService {
 	 * 공방 상세 정보 가져오기
 	 * */
 	@Override
-	public Place selectByPlaceId(Long placeId) {
-		Place place = placeRep.findById(placeId).orElse(null);
-		if(place == null) new RuntimeException("상세보기에 오류가 생겼습니다.");
+	public Place selectByTeacherId(String teacherId) {
+		
+		Place place = placeRep.findByTeacherTeacherIdEquals(teacherId);
+		
+		if(place==null) {
+			return null;
+		}
+//		Place place = placeRep.findById(placeId).orElse(null);
+//		if(place == null) new RuntimeException("상세보기에 오류가 생겼습니다.");
 		return place;
 	}
 	
