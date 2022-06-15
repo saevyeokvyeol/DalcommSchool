@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>해당 클래스 QnA: 전체보기</title>
+
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -184,7 +185,16 @@ $(function() {
 			                        	<span><fmt:parseDate value="${qna.qnaUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
 			                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
 			                        </td>
-	                                <td><span>${qna.qnaComplete}</span></td>
+	                                <td>
+				                        <c:choose>
+				                        	<c:when test="${qna.qnaComplete == 'F'}">
+				                        		<span class="badge bg-secondary">미답변</span>
+				                        	</c:when>
+				                        	<c:when test="${qna.qnaComplete == 'T'}">
+				                        		<span class="badge bg-primary">답변 완료</span>
+				                        	</c:when>
+				                        </c:choose>
+			                        </td>
 	                            </tr>
 	                        </c:forEach>
 	                    </c:otherwise>
@@ -259,7 +269,6 @@ $(function() {
           <div class="card" style="width: 29rem;">
             <div class="card-body">
               <form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/qna/qnaInsert" >
-                <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
                 <%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
                 <input type="hidden" name="studentId" value="${qna.student.studentId}">
                 --%>

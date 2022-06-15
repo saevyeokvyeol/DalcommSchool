@@ -58,9 +58,6 @@
 		})//onchang 끝	
 		
 		//선생님이 보유한 클래스명 가져오기
-		$(".insertForm").click(function() {
-			//alert(1);
-			
 			$.ajax({
 				url: "/teacher/selectByTeacherId",
 				type: "post",
@@ -78,9 +75,9 @@
 				error: function(err){
 					
 					alert("클래스명을 가져올 수 없습니다.")
-				}
+				}		
 			}) //ajax 끝
-		})//$(".insertForm").click 끝
+		
 		
 		// 선택한 쿠폰값 가지고 수정폼으로 가기
 		$(".updateForm").click(function() {
@@ -106,6 +103,13 @@
 		});//$(".updateForm").click 끝
 		
 		
+		$(".deleteCoupon").click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				return false;
+			}
+		}); //$(".deleteCoupon").click 끝
+		
+		
 	}); //ready 끝	
 	
 </script>
@@ -129,7 +133,6 @@
 						<th>등록일자</th>
 						<th>사용기간</th>
 						<th>쿠폰상태</th>
-						<th>수정하기</th>
 						<th>삭제하기</th>
 					</tr>
 				</thead>
@@ -137,7 +140,7 @@
 					<c:choose>
 	                    <c:when test ="${empty requestScope.couponList.content}">
 	                        <tr>
-	                            <th colspan="9">
+	                            <th colspan="8">
 	                                <span> 클래스 내 발급 가능한 쿠폰이 없습니다.</span>
 	                            </th>
 	                        </tr>
@@ -147,8 +150,11 @@
 	                            <tr>
 	                            	<td>${coupon.classes.className}</td>
 	                                <td>${coupon.couponId}</td>
-	                                <td>${coupon.couponName}</td>
-	                                <td>${coupon.couponDc}원</td>
+	                                <td>
+	                                	<button type="button" class="btn btn-light updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${coupon.couponId}">
+										${coupon.couponName}</button>
+									</td>
+	                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${coupon.couponDc}"/>원</td>
 	                                <td>
 			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
@@ -168,16 +174,16 @@
 											</c:choose>	        
 	        							</select>
 	        						</td>
-	        						<td>
+	        						<!-- <td>
 										<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="">
 											수정하기
 										</button>
-									</td>
+									</td> -->
 									<td>
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<input class="btn btn-primary" type="submit" value="삭제하기">
+											<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
 											
 										</form>
 									</td>

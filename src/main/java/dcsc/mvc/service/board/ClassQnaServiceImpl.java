@@ -51,13 +51,7 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	 * */
 	@Override
 	public void insertQuestion(ClassQna classQna) {
-		ClassQna saveQna = classQnaRep.save(classQna);
-		System.out.println("saveQna.getQnaId = " + saveQna.getQnaId());
-		System.out.println("saveQna.getQnaTitle = " + saveQna.getQnaTitle());
-		System.out.println("saveQna.getClasses().getClassId() = " + saveQna.getClasses().getClassId());
-		System.out.println("saveQna.getStudent().getStudentId() = " + saveQna.getStudent().getStudentId());
-		
-
+		classQnaRep.save(classQna);
 	}
 
 	/**
@@ -66,13 +60,19 @@ public class ClassQnaServiceImpl implements ClassQnaService {
 	@Override
 	public void updateQuestion(ClassQna classQna) {
 		ClassQna dbQna = classQnaRep.findById(classQna.getQnaId()).orElse(null);
+		
 		if(dbQna==null) {
 			throw new RuntimeException("Q&A 문의글 번호 오류로 수정되지 않았습니다.");
 		}
 		
 		dbQna.setQnaTitle(classQna.getQnaTitle());
 		dbQna.setQnaContent(classQna.getQnaContent());
-		dbQna.setBlindState(classQna.getBlindState());
+		
+		if(classQna.getSecretState() != null) {
+			dbQna.setSecretState(classQna.getSecretState());
+		} else {
+			dbQna.setSecretState("F");
+		}
 
 	}
 

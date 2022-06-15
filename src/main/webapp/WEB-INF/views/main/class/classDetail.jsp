@@ -215,7 +215,7 @@
 								$.each(result.list, function(index, item){
 									if(item.blindState == 'T'){
 										text += "<tr>"
-										text += "<td colspan='3'>"
+										text += "<td colspan='6'>"
 										text += "블라인드된 글입니다"
 										text += "</td>"
 										text += "</tr>"
@@ -230,13 +230,26 @@
 										}
 										text += "</td>"
 										text += "<td>"
+										text += `<button class="btn btn-light qnaDetail" value="\${item.qnaId}">`
 										text += `\${item.qnaTitle}`
-										if(item.secretState == "F"){
-											text += ' <i class="fa-solid fa-lock"></i>'
+										if(item.secretState == "T"){
+											text += '<i class="fa-solid fa-lock"></i>'
 										}
+										text += "</button>"
+										text += "</td>"
+										text += "<td>"
+										text += `\${item.studentId.replace(/(?<=.{3})./gi, "*")}`
 										text += "</td>"
 										text += "<td>"
 										text += `\${item.qnaInsertDate.toString().substring(0, 10)}`
+										text += "</td>"
+										text += "<td>"
+										if(item.qnaComplete == 'F'){
+											text += `<button class="btn btn-light qnaUpdateBtn" value="\${item.qnaId}"><i class="fa-solid fa-pen fa-xs"></i></button>`
+										}
+										text += "</td>"
+										text += "<td>"
+										text += `<button class="btn btn-light qnaDeleteBtn" value="\${item.qnaId}"><i class="fa-solid fa-xmark fa-xs"></i></button>`
 										text += "</td>"
 										text += "</tr>"
 										
@@ -266,9 +279,15 @@
 									doneLoop = true
 								}
 								if(!doneLoop){
-									pageText += '<li class="page-item">'
-									pageText += `<button class="page-link" value="\${i}">\${i}</button>`
-									pageText += '</li>'
+									if(i == num){
+										pageText += '<li class="page-item">'
+										pageText += `<button class="page-link now" value="\${i}">\${i}</button>`
+										pageText += '</li>'
+									} else{
+										pageText += '<li class="page-item">'
+										pageText += `<button class="page-link" value="\${i}">\${i}</button>`
+										pageText += '</li>'
+									}
 								}
 							}
 							if((startPage + blockCount) <= result.totalPage){
@@ -284,8 +303,150 @@
 					})
 				} // 클래스 문의글 아작스 함수 종료
 				
+				// 클래스 문의글 특정 페이지로 이동
 				$(document).on("click", ".qnaPaging > li > button", function() {
 					classQna($(this).val())
+				})
+				
+				// 클래스 문의글 등록폼
+				$("#qnaInsertFormBtn").click(function() {
+					$("#qnaInsertTitle").val("")
+					$("#qnaInsertContent").val("")
+					$("[name=qnaInsertSecretState]:checked").prop("checked", false);
+				})
+				
+				// 클래스 문의글 등록
+				$("#qnaInsertBtn").click(function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/qnaInsert",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId},
+							"qnaTitle": $("#qnaInsertTitle").val(), "qnaContent": $("#qnaInsertContent").val(), "secretState": $("[name=qnaInsertSecretState]:checked").val()},
+						success: function(){
+							$("#qnaInsertTitle").val("")
+							$("#qnaInsertContent").val("")
+							$("[name=qnaInsertSecretState]:checked").prop("ckecked", false);
+							
+							classQna(1)
+							$('#qnaInsertForm').modal("hide");
+							$('body').removeClass('modal-open');
+							$('.modal-backdrop').remove();
+						},
+						error: function(err){
+							alert("Q&A를 등록할 수 없습니다.")
+						}
+					})
+				})
+				
+				// 클래스 문의글 조회
+				
+				$(document).on("click", ".qnaDetail", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/selectByQnaId",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "qnaId" : $(this).val()},
+						success: function(result){
+							$(".qnaDetailRecode").remove();
+							
+							text = "<tr class='qnaDetailRecode'>"
+							text += "<th>"
+							text += "</th>"
+							text += "<td>"
+							text += `\${result.qnaContent}`
+							text += "</td>"
+							text += "<td colspan='4'>"
+							text += "</td>"
+							text += "</tr>"
+							text += "<tr class='qnaDetailRecode'>"
+							text += "<td>"
+							text += "</td>"
+							if(result.replyContent == null){
+								text += "<td colspan=5'>"
+								text += `아직 답변이 등록되지 않았습니다.`
+							} else {
+								text += "<td>"
+								text += `\${result.replyContent}`
+								text += "</td>"
+								text += "<td>"
+								text += `\${result.teacherNickname}`
+								text += "</td>"
+								text += "<td>"
+								text += `\${result.replyInsertDate.toString().substring(0, 10)}`
+								text += "</td>"
+								text += "<td colspan='2'>"
+							}
+							text += "</td>"
+							text += "</tr>"
+							$(this).parent().parent().after(text);
+						},
+						error: function(err){
+							alert("Q&A를 조회할 수 없습니다.");
+						}
+					})
+				})
+				
+				$(document).on("click", ".qnaDeleteBtn", function() {
+					if(!confirm("정말 Q&A를 삭제하시겠습니까?")){
+						return false
+					}
+					
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/qnaDelete",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "qnaId" : $(this).val()},
+						success: function(result){
+							classQna($(".now").val())
+						},
+						error: function(err){
+							alert("Q&A를 삭제할 수 없습니다");
+						}
+					})
+				})
+				
+				$(document).on("click", ".qnaUpdateBtn", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/qnaUpdateForm",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "qnaId" : $(this).val()},
+						success: function(result){
+							$("#qnaIdInput").val(result.qnaId)
+							$("#qnaUpdateTitle").val(result.qnaTitle)
+							$("#qnaUpdateContent").val(result.qnaContent)
+							
+							if(result.secretState == "F"){
+								$("[name=qnaSecretState]").prop("checked", false);
+							} else {
+								$("[name=qnaSecretState]").prop("checked", true);
+							}
+							
+							$("#qnaUpdateForm").modal("show")
+						},
+						error: function(err){
+							alert("Q&A를 삭제할 수 없습니다");
+						}
+					})
+				})
+				
+				$("#qnaUpdateBtn").click(function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/qnaUpdate",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}, "qnaId" : $("#qnaIdInput").val(),
+							"qnaTitle": $("#qnaUpdateTitle").val(), "qnaContent": $("#qnaUpdateContent").val(), "secretState": $("[name=qnaUpdateSecretState]:checked").val()},
+						success: function(){
+							
+							classQna($(".now").val())
+							$('#qnaUpdateForm').modal("hide");
+							$('body').removeClass('modal-open');
+							$('.modal-backdrop').remove();
+						},
+						error: function(err){
+							alert("Q&A를 수정할 수 없습니다.")
+						}
+					})
 				})
 				
 				classQna(1)
@@ -293,6 +454,67 @@
 		</script>
 	</head>
 	<body>
+		<!-- 클래스 Q&A 등록 모달 -->
+		<div class="modal fade" id="qnaInsertForm" tabindex="-1" aria-labelledby="qnaInsertFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="qnaInsertFormLabel">클래스 Q&A 등록</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="qnaInsertTitle" placeholder="제목">
+							<label for="qnaTitle">제목</label>
+						</div>
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="내용" id="qnaInsertContent" style="height: 100px"></textarea>
+							<label for="qnaContent">내용</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="T" name="qnaInsertSecretState" id="qnaInsertSecretState">
+							<label class="form-check-label" for="secretState">비밀글</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="qnaInsertBtn">등록</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 클래스 Q&A 수정 모달 -->
+		<div class="modal fade" id="qnaUpdateForm" tabindex="-1" aria-labelledby="qnaUpdateFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<input type="hidden" id="qnaIdInput">
+						<h5 class="modal-title" id="qnaUpdateFormLabel">클래스 Q&A 수정</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="qnaUpdateTitle" placeholder="제목">
+							<label for="qnaUpdateTitle">제목</label>
+						</div>
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="내용" id="qnaUpdateContent" style="height: 100px"></textarea>
+							<label for="qnaUpdateContent">내용</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="T" name="qnaUpdateSecretState" id="qnaUpdateSecretState">
+							<label class="form-check-label" for="qnaUpdateSecretState">비밀글</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="qnaUpdateBtn">수정</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
 		<div class="main-content">
 			<div id="classDetail">
 				<div id="classInfomation">
@@ -352,7 +574,7 @@
 					<div class="classInfoBox" id="QnA">
 						<h4 class="classBoxName">
 							클래스 Q&A
-							<button type="button" class="btn btn-outline-primary">Q&A 등록</button>
+							<button type="button" class="btn btn-outline-primary" id="qnaInsertFormBtn" data-bs-toggle="modal" data-bs-target="#qnaInsertForm">Q&A 등록</button>
 						</h4>
 						<hr>
 						<div class="boardTable">
@@ -443,113 +665,6 @@
 					</div>
 				</div>
 			</div>
-			
-			
-	<%-- 		 <table>
-			  <thead>
-			    <tr>
-			      <th>아이디</th>
-			      <th>별점</th>
-			      <th>내용</th>
-			      <th>작성 날짜</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <c:choose>
-			      <c:when test="${requestScope.classReviews.content==null}">
-			        <tr>
-			          <th colspan="4">
-			            <span>등록된 후기가 없습니다.</span>
-			          </th>
-			        </tr>
-			      </c:when>
-			      <c:otherwise>
-			        <c:forEach items="${classReviews.content}" var="review">
-			          <div id="review">
-			          <tr>
-			            <td><span>${review.student.studentId}</span></td>
-			            <td><span>${review.reviewRate}</span></td>
-			            <td><span>${review.reviewContent}</span></td>
-			            <td><span>${review.reviewInsertDate}</span></td>
-			          </tr>
-					  </div>
-			        </c:forEach>
-			      </c:otherwise>
-			    </c:choose>
-			  </tbody>
-			  <tfoot>
-			    <input type="button" value="후기 남기기" onclick="location.href='${pageContext.request.contextPath}/main/board/review/insertForm'">
-			  </tfoot>
-			</table>
-			 --%>
-			<!-- 페이징 처리 -->
-	<!-- 		<div> -->
-	<!-- 		  <nav class="pagination-container"> -->
-	<!-- 		    <div class="pagination"> -->
-	<%-- 		      <c:set var="doneLoop" value="false"/> --%>
-	<%-- 		      		<c:if test="${(startPage-blockCount)>0 }"> --%>
-	<%-- 		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/review/reviewList/{classId}?nowPage=${startPage-1}">이전</a>	      		 --%>
-	<%-- 		      		</c:if> --%>
-			      		
-	<!-- 		      		<span class="pagination-inner"> -->
-	<%-- 		      		  <c:forEach var='i' begin="${startPage}" end="${(startPage-1)+blockCount}"> --%>
-			      		    
-	<%-- 		      		    <c:if test="${(i-1)>=classReviews.getTotalPages()}"> --%>
-	<%-- 		      		      <c:set var="doneLoop" value="true"/> --%>
-	<%-- 		      		    </c:if> --%>
-	<%-- 		      		    <c:if test="${not doneLoop}"> --%>
-	<%-- 		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/review/reviewList/${classId}?nowPage=${i}">${i}</a> --%>
-	<%-- 		      		    </c:if> --%>
-			      		    
-	<%-- 		      		  </c:forEach> --%>
-	<!-- 		      		</span> -->
-			      		
-	<%-- 		      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}"> --%>
-	<%-- 		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/review/reviewList/${classId}?nowPage=${startPage+blockCount}">다음</a> --%>
-	<%-- 		      		</c:if> --%>
-	<!-- 		    </div> -->
-			  
-	<!-- 		  </nav> -->
-	<!-- 		</div> -->
-			<%-- 
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	  			후기 등록하기
-			</button>
-			
-	  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">클래스 후기 등록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="reviewInsertForm" method="post" action="${pageContext.request.contextPath}/main/board/review/insert">
-						<fieldset>
-						  <label for="recipient-name" class="col-form-label">별점</label>
-					        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-					        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5" class="star"><i class="fa-solid fa-star fa-sm"></i></label>
-						</fieldset>
-						<div class="mb-3">
-	                        <label for="formFileMultiple" class="form-label">이미지 첨부</label>
-	                        <input class="form-control" type="file" id="formFileMultiple" name="reviewImg" multiple>
-	                    </div>
-						<div class="mb-3">
-							<label for="recipient-name" class="col-form-label">내용</label>
-							<textarea name="reviewContent" placeholder="후기를 자유롭게 입력해주세요."></textarea>
-						</div>
-						<div class="modal-footer">
-							<input type="submit" class="btn btn-primary" id="insertReview" value="후기 등록">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	  </div>
-			 --%>
 		</div>
 	</body>
 </html>

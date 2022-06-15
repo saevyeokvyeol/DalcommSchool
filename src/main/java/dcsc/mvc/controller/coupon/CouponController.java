@@ -75,6 +75,8 @@ public class CouponController {
 		model.addAttribute("list", list);
 	}
 	
+	
+	
 	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님
 	 * */
@@ -233,12 +235,10 @@ public class CouponController {
 	 * */
 	@RequestMapping("teacher/coupon/changeCouponState")
 	@ResponseBody
-	public String changeCouponState(Coupon coupon, CouponState couponState) {
+	public void changeCouponState(Coupon coupon, CouponState couponState) {
 		coupon.setCouponState(couponState);
 		couponService.updateCouponState(coupon);
 		//System.out.println("changeCouponState = "+ coupon.getCouponState().getCouponStateName() );
-		
-		return "redirect:/";
 	}
 	
 	/**
@@ -297,12 +297,10 @@ public class CouponController {
 	 * */
 	@RequestMapping("admin/coupon/changeEventCouponState")
 	@ResponseBody
-	public String changeEventCouponState(Coupon coupon, CouponState couponState) {
+	public void changeEventCouponState(Coupon coupon, CouponState couponState) {
 		coupon.setCouponState(couponState);
-		couponService.updateCouponState(coupon);
-		//System.out.println("changeCouponState = "+ coupon.getCouponState().getCouponStateName() );
+		couponService.updateEventCouponState(coupon);
 		
-		return "redirect:/";
 	}
 	
 	/**

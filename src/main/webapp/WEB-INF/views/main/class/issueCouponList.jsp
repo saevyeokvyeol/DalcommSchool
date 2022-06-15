@@ -10,15 +10,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>쿠폰발급 뷰</h2>
-<form method="post" id="insertIssueCoupon" action="${pageContext.request.contextPath}/main/class/insertIssueCoupon">
-	<%-- <input type="hidden" name="couponId" value="${coupon.couponId}">
-	<input type="hidden" name="studentId" value="${student.studentId}"> --%>
-	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-	<input class="btn btn-primary" type="submit" value="쿠폰발급받기">
-	<input type="hidden" name="couponId" value="5">
-	<input type="hidden" name="studentId" value="kim1234">
-</form>
+<div class="main-content">
+	<h2>쿠폰발급 뷰</h2>
+	<form method="post" id="insertIssueCoupon" action="${pageContext.request.contextPath}/main/class/insertIssueCoupon">
+		<%-- <input type="hidden" name="couponId" value="${coupon.couponId}">
+		<input type="hidden" name="studentId" value="${student.studentId}"> --%>
+		<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+		<input class="btn btn-primary" type="submit" value="쿠폰발급받기">
+		<input type="hidden" name="couponId" value="4">
+		<input type="hidden" name="studentId" value="kim1234">
+	</form>
+</div>
 
 </body>
 </html>

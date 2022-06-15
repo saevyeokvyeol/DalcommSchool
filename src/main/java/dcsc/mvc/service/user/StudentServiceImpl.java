@@ -173,5 +173,19 @@ public class StudentServiceImpl implements StudentService {
 	public Page<Student> selectAllStudent(Pageable pageable) {
 		return studentRep.findAll(pageable);
 	}
+	
+	//탈퇴시 비밀번호 검증
+	@Override
+	public boolean checkPwd(String userPwd) {
+		//저장된 사용자 정보를 불러온다
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//DB에 저장된 비밀번호화 입력받은 비밀번호 비교
+		if(!getBCryptPasswordEncoder.matches(userPwd, student.getStudentPwd())) {
+			return false; //비밀번호 틀림
+		} else { 
+			return true; //비밀번호 일치
+		}
+	}
 
 }

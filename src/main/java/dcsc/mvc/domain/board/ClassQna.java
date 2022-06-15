@@ -10,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,6 +33,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -53,7 +57,9 @@ public class ClassQna {
 	
 	@Column(length = 3000)
 	private String qnaContent;
+	
 	private String secretState;
+
 	private String blindState;
 	
 	@CreationTimestamp
@@ -61,8 +67,11 @@ public class ClassQna {
 	
 	@UpdateTimestamp
 	private LocalDateTime qnaUpdateDate;
-	
+
 	private String qnaComplete;
+	
+	@OneToOne(mappedBy = "classQna", fetch = FetchType.LAZY)
+	private ClassReply classReply;
 	
 	
 }

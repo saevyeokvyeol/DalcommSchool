@@ -63,7 +63,7 @@ public class AjaxClassController {
 	public List<Classes> selectByTeacherId(){
 		String teacherId = "Tkim1234";
 		
-		List<Classes> list = null; /*classesService.selectByTeacherId(teacherId);*/
+		List<Classes> list = classesService.selectByTeacherId(teacherId);
 		
 		return list;
 	}

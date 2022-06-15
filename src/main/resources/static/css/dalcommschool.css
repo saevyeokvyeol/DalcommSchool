@@ -11,6 +11,10 @@ a {
 	text-decoration: none;
 }
 
+.table th, .table td {
+	vertical-align: middle;
+}
+
 /* 헤더 */
 #index-header {
 	width: 100%; position: fixed; z-index: 1040; 
@@ -43,7 +47,7 @@ a {
 }
 
 #logo_menu h1 {
-	margin: 0px 50px 15px 0;
+	margin: 10px 50px 0 0;
 }
 
 #inner-main-header ul {
@@ -153,11 +157,23 @@ a {
 	 padding: 10px;
 }
 
+.boardTable, .boardTable button {
+	font-size: 15px;
+}
+
 .boardTable .no-record {
 	padding-top: 50px;/*  border: 1px solid #ddd; border-radius: 10px; */
 }
 
-#qnaTable td {
+.boardTable i {
+	color: #444; padding-left: 10px
+}
+
+#qnaTable td, #qnaTable th {
+	text-align: center;
+}
+
+#qnaTable td, #qnaTable th {
 	text-align: center;
 }
 
@@ -166,7 +182,23 @@ a {
 }
 
 #qnaTable td:nth-child(2) {
-	width: 550px; text-align: left;
+	width: 410px; text-align: left;
+}
+
+#qnaTable td:nth-child(3) {
+	text-align: left; width: 100px;
+}
+
+#qnaTable td:nth-child(5), #qnaTable td:nth-child(6) {
+	padding: 10px 0;
+}
+
+#qnaTable .qnaDetailRecode {
+	background-color: #f9f9f9;
+}
+
+#qnaTable .qnaDetailRecode th {
+	border: none;
 }
 
 .classInfoBox .classBoxName {
@@ -174,7 +206,7 @@ a {
 }
 
 .classBox .classBoxImg {
-	width: 380px; height: 253px; border-radius: 10px; overflow: hidden;
+	width: 400px; height: 253px; border-radius: 10px; overflow: hidden;
 }
 
 .classBox a:hover {
@@ -347,7 +379,7 @@ a {
 }
 
 #bookListBox .table th, #bookListBox .table td {
-	height: 60px; vertical-align: middle; font-size: 16px;
+	height: 60px; font-size: 16px;
 }
 
 #bookListBox .table th {
