@@ -46,6 +46,7 @@ public class AdminController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("title", "학생 회원 조회");
 		
 		return new ModelAndView("admin/user/userList","studentList",studentList);
 	}
@@ -68,7 +69,7 @@ public class AdminController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
-		
+		model.addAttribute("title", "학생 회원 조회");
 		
 		return "admin/user/userList";
 	}
@@ -90,6 +91,8 @@ public class AdminController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("title", "강사 회원 조회");
+
 		
 		return new ModelAndView("admin/user/teacherList","teacherList",teacherList);
 	}
@@ -111,6 +114,7 @@ public class AdminController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("title", "강사 회원 조회");
 		
 		return "admin/user/teacherList";
 	}

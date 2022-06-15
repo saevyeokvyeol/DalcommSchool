@@ -27,9 +27,6 @@
 </head>
 <body>
 	
-	<h5> 관리자 > 이벤트 관리 </h5>
-	
-	
 	<form action="${pageContext.request.contextPath}/admin/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<div class="row g-3">
