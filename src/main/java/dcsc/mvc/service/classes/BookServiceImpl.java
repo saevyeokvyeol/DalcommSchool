@@ -1,5 +1,9 @@
 package dcsc.mvc.service.classes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -171,8 +175,8 @@ public class BookServiceImpl implements BookService {
 	
 	/**
 	 * 강사ID로 예약 조회
-	 * @param String teacherId
-	 * @return List<Book>
+	 * @param String teacherId, Pageable pageable
+	 * @return Page<Book>
 	 * */
 	@Override
 	public Page<Book> selectByTeacherId(String teacherId, Pageable pageable) {
@@ -180,12 +184,43 @@ public class BookServiceImpl implements BookService {
 		
 		QBook book = QBook.book;
 		
+		booleanBuilder.and(book.classes.teacher.teacherId.eq(teacherId));
+		
 		JPQLQuery<Book> jpaQuery = jpaQueryFactory.selectFrom(book)
+				.where(booleanBuilder)
 				.orderBy(book.classSchedule.scheduleDate.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize());
 		
 		Page<Book> list = new PageImpl<Book>(jpaQuery.fetch(), pageable, jpaQuery.fetchCount());
+		
+		return list;
+	}
+	
+	/**
+	 * 강사ID로 오늘 예약 조회
+	 * @param String teacherId
+	 * @return List<Book>
+	 * */
+	@Override
+	public List<Book> selectByTeacherIdAndDate(String teacherId) {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QBook book = QBook.book;
+		
+		booleanBuilder.and(book.classes.teacher.teacherId.eq(teacherId));
+		
+		LocalDateTime from = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+		LocalDateTime to = from.plusDays(1);
+		System.out.println(from + " : " + to);
+		
+		booleanBuilder.and(book.bookInsertDate.between(from, to));
+		
+		JPQLQuery<Book> jpaQuery = jpaQueryFactory.selectFrom(book)
+				.where(booleanBuilder)
+				.orderBy(book.classSchedule.scheduleDate.desc());
+		
+		List<Book> list = jpaQuery.fetch();
 		
 		return list;
 	}

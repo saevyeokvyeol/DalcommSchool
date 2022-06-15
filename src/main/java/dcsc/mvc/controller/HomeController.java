@@ -9,29 +9,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.service.classes.LikeService;
+import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+	private final TeacherService teacherService;
 	private final ClassesService classesService;
 	private final LikeService likeService;
-	
-	private int page = 0;
-	private int size = 6;
+	private final BookService bookService;
 	
 	@RequestMapping("/") 
 	public String index(Model model) {
 		// 로그인 했을 경우
 		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
 		
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequest.of(0, 6);
 		
 		// 인기 클래스 목록
 		Page<Classes> popularList = classesService.selectByFilter(new Search(null, null, null, "likes"), pageable, 3L);
@@ -66,6 +69,30 @@ public class HomeController {
 		model.addAttribute("newList", newList);
 		
 		return "index"; 
+	}
+	
+	@RequestMapping("/teacher") 
+	public String teacherIndex(Model model) {
+		String teacherId = "Tkim1234";
+		
+		Teacher teacher = teacherService.selectById(teacherId);
+		List<Book> bookList = bookService.selectByTeacherIdAndDate(teacherId);
+		int todayProfit = 0;
+		
+		if(bookList != null) {
+			for(Book b : bookList) {
+				todayProfit += b.getTotalPrice();
+			}
+		}
+		
+		List<Classes> classList = classesService.selectByTeacherId(teacherId);
+		
+		model.addAttribute("title", " 선생님");
+		model.addAttribute("teacher", teacher);
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("classList", classList);
+		model.addAttribute("todayProfit", todayProfit);
+		return "teacher/index"; 
 	}
 	
 }
