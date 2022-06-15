@@ -51,7 +51,7 @@ public class EventController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
-		
+		model.addAttribute("title", "이벤트 관리");
 	}
 
 	
@@ -83,13 +83,16 @@ public class EventController {
 	 * 이벤트 상세 페이지 (글 제목 누르면 이동) - 관리자
 	 * */
 	@RequestMapping("/admin/board/event/eventRead/{eventNo}")
-	public ModelAndView selectByEventNo(@PathVariable Long eventNo, String flag) {
+	public ModelAndView selectByEventNo(@PathVariable Long eventNo, String flag, Model model) {
+		
+		model.addAttribute("title", "이벤트 관리");
 		
 		//eventNo=1L;
 		 boolean state = flag==null ? true : false;
 		 
 		Event event = eventService.selectByEventNo(eventNo, state); //true면 글 조회수 증가
 		return new ModelAndView("admin/board/event/eventRead" , "event", event);
+		
 		
 	}
 	
@@ -119,7 +122,9 @@ public class EventController {
 	 * 이벤트 글 등록 
 	 * */
 	@RequestMapping("/admin/board/event/eventInsert")
-	public String eventInsert(Event event, MultipartFile file) throws Exception {
+	public String eventInsert(Model model, Event event, MultipartFile file) throws Exception {
+		
+		model.addAttribute("title", "이벤트 관리");
 		
 		if(file.getSize() > 0) {
 			File img = new File(ImageLink.EVENT_IMG + file.getOriginalFilename());
@@ -135,9 +140,10 @@ public class EventController {
 	 * 이벤트 글 수정 폼
 	 * */
 	@RequestMapping("/admin/board/event/eventUpdate")
-	public ModelAndView eventUpdateForm(Long eventNo) {
+	public ModelAndView eventUpdateForm(Long eventNo , Model model) {
 		Event event = eventService.selectByEventNo(eventNo,false);
-	
+		model.addAttribute("title", "이벤트 관리");
+		
 		return new ModelAndView("admin/board/event/eventUpdate","event", event);
 	}
 	
@@ -145,7 +151,9 @@ public class EventController {
 	 * 이벤트 글 수정
 	 * */
 	@RequestMapping("/admin/board/event/eventUpdateForm")
-	public String eventUpdate(Event event, MultipartFile file) throws Exception {
+	public String eventUpdate(Event event, MultipartFile file, Model model) throws Exception {
+		
+		model.addAttribute("title", "이벤트 관리");
 		
 		if(file.getSize() > 0) {
 			File img = new File(ImageLink.EVENT_IMG + file.getOriginalFilename());
@@ -153,7 +161,6 @@ public class EventController {
 			event.setEventImg(file.getOriginalFilename());
 		}
 		eventService.updateEvent(event);
-		
 		return "redirect:/admin/board/event/eventList";
 	}
 	
@@ -189,7 +196,8 @@ public class EventController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("nowPage", nowPage);
-
+		model.addAttribute("title", "이벤트 관리");
+		
 		return "admin/board/event/eventList";
 	}
 	

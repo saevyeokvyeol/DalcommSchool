@@ -39,8 +39,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h5> 관리자 > 이벤트 관리 </h5><br><hr>
 	
 <table align="center" class="table">
   

@@ -50,7 +50,7 @@
 	$(function() {
   		$("#writeForm").submit(function(event){
   				alert("게시글이 등록되었습니다.")
-  			}
+  			
   		})
 	});
     
