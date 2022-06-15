@@ -58,9 +58,6 @@
 		})//onchang 끝	
 		
 		//선생님이 보유한 클래스명 가져오기
-		$(".insertForm").click(function() {
-			//alert(1);
-			
 			$.ajax({
 				url: "/teacher/selectByTeacherId",
 				type: "post",
@@ -78,9 +75,9 @@
 				error: function(err){
 					
 					alert("클래스명을 가져올 수 없습니다.")
-				}
+				}		
 			}) //ajax 끝
-		})//$(".insertForm").click 끝
+		
 		
 		// 선택한 쿠폰값 가지고 수정폼으로 가기
 		$(".updateForm").click(function() {
@@ -104,6 +101,13 @@
 				}
 			}) // 아작스 종료
 		});//$(".updateForm").click 끝
+		
+		
+		$(".deleteCoupon").click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				return false;
+			}
+		}); //$(".deleteCoupon").click 끝
 		
 		
 	}); //ready 끝	
@@ -150,7 +154,7 @@
 	                                	<button type="button" class="btn btn-light updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${coupon.couponId}">
 										${coupon.couponName}</button>
 									</td>
-	                                <td>${coupon.couponDc}원</td>
+	                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${coupon.couponDc}"/>원</td>
 	                                <td>
 			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
@@ -179,7 +183,7 @@
 										<form method="post" id="delete" action="${pageContext.request.contextPath}/teacher/coupon/couponDelete">
 											<input type="hidden" name="couponId" value="${coupon.couponId}">
 											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<input class="btn btn-primary" type="submit" value="삭제하기">
+											<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
 											
 										</form>
 									</td>

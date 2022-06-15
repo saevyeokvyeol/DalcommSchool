@@ -6,8 +6,10 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.board.ClassReview;
+import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.repository.board.ClassReviewReposiroty;
 import dcsc.mvc.repository.classes.ClassesRepository;
@@ -38,6 +40,15 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		
 		return newReview;
 	}
+	
+//	@Override
+//	public void updateAjax(Long reviewId, int reviewRate, String reviewContent, String file) {
+//		ClassReview newReview = reviewRep.findById(reviewId).orElse(null);
+//		if(newReview==null) {
+//			throw new RuntimeException("리뷰 아이디 오류로 수정할 수 없습니다.");
+//		}
+		
+//	}
 
 	@Override
 	public void delete(Long reviewId) {
@@ -87,9 +98,7 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 	public Page<ClassReview> selectByClassId(Long classId, Pageable pageable) {
 		
 //		List<ClassReview> list = reviewRep.findByClassesClassIdEquals(classId);
-		
-		
-		
+
 		return reviewRep.findByClassesClassIdEquals(classId, pageable);
 	}
 	

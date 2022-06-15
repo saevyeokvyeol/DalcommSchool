@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -57,10 +58,8 @@ public class ClassQna {
 	@Column(length = 3000)
 	private String qnaContent;
 	
-	@Column
 	private String secretState;
 
-	@Column
 	private String blindState;
 	
 	@CreationTimestamp
@@ -69,8 +68,10 @@ public class ClassQna {
 	@UpdateTimestamp
 	private LocalDateTime qnaUpdateDate;
 
-	@Column
 	private String qnaComplete;
+	
+	@OneToOne(mappedBy = "classQna", fetch = FetchType.LAZY)
+	private ClassReply classReply;
 	
 	
 }
