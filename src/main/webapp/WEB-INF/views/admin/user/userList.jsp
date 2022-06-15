@@ -104,10 +104,10 @@
 		                            </td>
 		                            <td>
 		                            	<c:if test="${student.studentQuit == 'F'}">
-			                            	<span class="badge rounded-pill text-bg-primary" id="badge1">활동중</span>
+			                            	<span class="badge text-bg-primary" id="badge1">활동중</span>
 		                            	</c:if>
 		                            	<c:if test="${student.studentQuit == 'T'}">
-			                            	<span class="badge rounded-pill text-bg-secondary" id="badge2">탈퇴</span>
+			                            	<span class="badge text-bg-secondary" id="badge2">탈퇴</span>
 		                            	</c:if>
 		                            </td>
 		                        </tr>
