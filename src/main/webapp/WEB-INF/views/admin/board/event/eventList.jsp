@@ -95,38 +95,34 @@
 </tbody>
 </table>
 
-<hr>
-<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
-<div style="text-align: center">
-		<!--  블럭당  -->
- <nav class="pagination-container">
-	<div class="pagination">
+<!--  페이징처리  -->
+<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
 	<c:set var="doneLoop" value="false"/>
-		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">PREV</a>
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">이전</a>
+		  	</li>
 		  </c:if>
-		  
-		<span class="pagination-inner"> 
-		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		  
-			    <c:if test="${(i-1)>=eventList.getTotalPages()}">
-			       <c:set var="doneLoop" value="true"/>
-			    </c:if> 
-		    
-		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
-		  </c:if>
-		   
+		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=eventList.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
 		</c:forEach>
-		</span> 
 				
 		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">NEXT</a>
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
 		 </c:if>
-		</div>
+		</ul>
 	</nav>  
-</div>
 
 	<div align=right>
 		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a>

@@ -5,6 +5,9 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -39,12 +42,15 @@
     </script>
     <script type="text/javascript">
     
+    
+    
 	$(function() {
+		
   		$("#writeForm").submit(function(event){
-  				alert("게시글이 등록되었습니다.")
-  			}
-  		})
-	});
+  				alert("이벤트 게시글이 등록되었습니다.")
+  			})
+  		});
+
     
     </script>
 </head>
@@ -52,7 +58,7 @@
 
 	<h4> 관리자 > 이벤트 작성 </h4><br>
 	
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
+<form id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
 enctype="multipart/form-data">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<table class="table">

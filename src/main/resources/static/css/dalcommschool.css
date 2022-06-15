@@ -206,7 +206,7 @@ a {
 }
 
 .classBox .classBoxImg {
-	width: 400px; height: 253px; border-radius: 10px; overflow: hidden;
+	width: 380px; height: 253px; border-radius: 10px; overflow: hidden;
 }
 
 .classBox a:hover {
@@ -577,4 +577,46 @@ a {
 
 button.page-link {
 	border: none;
+}
+
+#summary {
+	display: flex; justify-content: space-between; padding: 10px;
+	
+}
+
+#summary > div {
+	display: flex; justify-content: flex-start;
+}
+
+#summary .icon {
+	width: 60px; height: 60px; text-align: center; line-height: 30px; border-radius: 10px;
+	margin-right: 20px;
+}
+
+.indexBox {
+	padding-top: 50px;
+}
+
+.indexBox h4 {
+	font-weight: 600; padding-bottom: 15px;
+}
+
+.indexBox h5 {
+	padding: 30px;
+}
+
+.indexBox table {
+	text-align: center;
+}
+
+.indexBox table th, .indexBox table td {
+	font-size: 15px;
+}
+
+#chartBox {
+	display: flex; justify-content: space-between;
+}
+
+#chartBox canvas {
+	width: 600px;
 }

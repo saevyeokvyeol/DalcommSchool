@@ -206,6 +206,110 @@
 					})
 				})
 				
+				/* // 클래스 후기 아작스
+				function classQna(num) {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/board/qna/selectByClassId",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}, "page": num},
+						dataType : "json",
+						success: function(result){
+							text = "<tbody>"
+							
+							if(result.list.length == 0){
+								text = "<tr><td><h5 class='no-record'>아직 질문이 없어요!</h5></td></tr>"
+							} else {
+								$.each(result.list, function(index, item){
+									if(item.blindState == 'T'){
+										text += "<tr>"
+										text += "<td colspan='6'>"
+										text += "블라인드된 글입니다"
+										text += "</td>"
+										text += "</tr>"
+										
+									} else {
+										text += "<tr>"
+										text += "<td>"
+										if(item.qnaComplete == 'F'){
+											text += `<span class="badge bg-secondary">미답변</span>`
+										} else {
+											text += `<span class="badge bg-primary">답변 완료</span>`
+										}
+										text += "</td>"
+										text += "<td>"
+										text += `<button class="btn btn-light qnaDetail" value="\${item.qnaId}">`
+										text += `\${item.qnaTitle}`
+										if(item.secretState == "T"){
+											text += '<i class="fa-solid fa-lock"></i>'
+										}
+										text += "</button>"
+										text += "</td>"
+										text += "<td>"
+										text += `\${item.studentId.replace(/(?<=.{3})./gi, "*")}`
+										text += "</td>"
+										text += "<td>"
+										text += `\${item.qnaInsertDate.toString().substring(0, 10)}`
+										text += "</td>"
+										text += "<td>"
+										if(item.qnaComplete == 'F'){
+											text += `<button class="btn btn-light qnaUpdateBtn" value="\${item.qnaId}"><i class="fa-solid fa-pen fa-xs"></i></button>`
+										}
+										text += "</td>"
+										text += "<td>"
+										text += `<button class="btn btn-light qnaDeleteBtn" value="\${item.qnaId}"><i class="fa-solid fa-xmark fa-xs"></i></button>`
+										text += "</td>"
+										text += "</tr>"
+										
+									}
+								})
+							}
+							text += "</tbody>"
+							$("#qnaTable").html(text);
+							
+							pageText = ""
+							
+							let doneLoop = false;
+							let startPage = result.startPage;
+							let blockCount = result.blockCount;
+							let endPage = startPage + blockCount - 1
+							if(endPage > result.totalPage){
+								endPage = result.totalPage
+							}
+							
+							if((startPage - blockCount) > 0 && result.list.length != 0){
+								pageText += '<li class="page-item">'
+								pageText += `<button class="page-link" value="\${startPage - 1}">이전</button>`
+								pageText += '</li>'
+							}
+							for(i = startPage; i <= endPage; i++){
+								if((i - 1) >= endPage){
+									doneLoop = true
+								}
+								if(!doneLoop){
+									if(i == num){
+										pageText += '<li class="page-item">'
+										pageText += `<button class="page-link nowQna" value="\${i}">\${i}</button>`
+										pageText += '</li>'
+									} else{
+										pageText += '<li class="page-item">'
+										pageText += `<button class="page-link" value="\${i}">\${i}</button>`
+										pageText += '</li>'
+									}
+								}
+							}
+							if((startPage + blockCount) <= result.totalPage){
+								pageText += '<li class="page-item">'
+								pageText += `<button class="page-link" value="\${startPage + blockCount}">이후</button>`
+								pageText += '</li>'
+							}
+							$(".qnaPaging").html(pageText)
+						},
+						error: function(err){
+							alert(123)
+						}
+					})
+				} // 클래스 후기 아작스 함수 종료 */
+				
 				
 				// 클래스 문의글 아작스
 				function classQna(num) {
@@ -289,7 +393,7 @@
 								if(!doneLoop){
 									if(i == num){
 										pageText += '<li class="page-item">'
-										pageText += `<button class="page-link now" value="\${i}">\${i}</button>`
+										pageText += `<button class="page-link nowQna" value="\${i}">\${i}</button>`
 										pageText += '</li>'
 									} else{
 										pageText += '<li class="page-item">'
@@ -405,7 +509,7 @@
 						context: this,
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "qnaId" : $(this).val()},
 						success: function(result){
-							classQna($(".now").val())
+							classQna($(".nowQna").val())
 						},
 						error: function(err){
 							alert("Q&A를 삭제할 수 없습니다");
@@ -446,7 +550,7 @@
 							"qnaTitle": $("#qnaUpdateTitle").val(), "qnaContent": $("#qnaUpdateContent").val(), "secretState": $("[name=qnaUpdateSecretState]:checked").val()},
 						success: function(){
 							
-							classQna($(".now").val())
+							classQna($(".nowQna").val())
 							$('#qnaUpdateForm').modal("hide");
 							$('body').removeClass('modal-open');
 							$('.modal-backdrop').remove();

@@ -57,10 +57,17 @@ public interface BookService {
 
 	/**
 	 * 강사ID로 예약 조회
-	 * @param String teacherId
+	 * @param String teacherId, Pageable pageable
 	 * @return Page<Book>
 	 * */
 	Page<Book> selectByTeacherId(String teacherId, Pageable pageable);
+
+	/**
+	 * 강사ID로 오늘 예약 조회
+	 * @param String teacherId
+	 * @return List<Book>
+	 * */
+	List<Book> selectByTeacherIdAndDate(String teacherId);
 
 	/**
 	 * 일정ID로 예약 조회
