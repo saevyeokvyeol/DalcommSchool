@@ -47,7 +47,7 @@
 	$(function() {
 		
   		$("#writeForm").submit(function(event){
-  				alert("게시글이 등록되었습니다.")
+  				alert("이벤트 게시글이 등록되었습니다.")
   			})
   		});
 
@@ -58,7 +58,7 @@
 
 	<h4> 관리자 > 이벤트 작성 </h4><br>
 	
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
+<form id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
 enctype="multipart/form-data">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<table class="table">
