@@ -1,5 +1,8 @@
 package dcsc.mvc.service.user;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +27,7 @@ import dcsc.mvc.domain.user.Infra;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceInfra;
 import dcsc.mvc.domain.user.PlaceRegion;
+import dcsc.mvc.domain.user.QStudent;
 import dcsc.mvc.domain.user.QTeacher;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
@@ -418,6 +422,24 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 	}
 	
-	
+	/**
+	 * 신규 선생님 수 검색
+	 * @return: List<Teacher>
+	 * */
+	@Override
+	public List<Teacher> selectNewTeacher() {
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		
+		QTeacher teacher = QTeacher.teacher;
+		
+		LocalDateTime to = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+		LocalDateTime from = to.minusDays(1);
+		booleanBuilder.and(teacher.teacherInsertDate.between(from, to));
+		
+		JPQLQuery<Teacher> query = jpqlQueryFactory.selectFrom(teacher)
+				.where(booleanBuilder);
+		
+		return query.fetch();
+	}
 
 }

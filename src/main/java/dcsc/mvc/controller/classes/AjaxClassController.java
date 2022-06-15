@@ -15,13 +15,18 @@ import dcsc.mvc.domain.classes.ClassSchedule;
 import dcsc.mvc.domain.classes.ClassStatistics;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.FullCalendar;
+import dcsc.mvc.domain.user.Place;
+import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.service.classes.ClassesService;
+import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
+import nonapi.io.github.classgraph.fileslice.reader.RandomAccessArrayReader;
 
 @RestController
 @RequiredArgsConstructor
 public class AjaxClassController {
 	private final ClassesService classesService;
+	private final TeacherService teacherService;
 	
 	private final int SIZE = 9;
 	private final int BLOCK_COUNT = 5;
@@ -170,7 +175,7 @@ public class AjaxClassController {
 		
 		for (Classes c : classList) {
 			ClassStatistics cs = new ClassStatistics();
-			cs.setClassName(c.getClassName());
+			cs.setName(c.getClassName());
 			cs.setBookCount(0);
 			cs.setClassTotalProfit(0);
 			
@@ -184,6 +189,67 @@ public class AjaxClassController {
 				}
 				cs.setClassTotalProfit(profit);
 			}
+			
+			list.add(cs);
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * 카테고리별 매출 통계
+	 * */
+	@RequestMapping("/teacher/categoryStatistics")
+	@ResponseBody
+	public List<ClassStatistics> categoryStatistics(){
+		
+		List<ClassCategory> categories = classesService.selectAllCategory();
+		List<ClassStatistics> list = new ArrayList<ClassStatistics>();
+		
+		for (ClassCategory c : categories) {
+			ClassStatistics cs = new ClassStatistics();
+			cs.setName(c.getCategoryName());
+			int totalProfit = 0;
+			
+			if(c.getClasses() != null) {
+				for(Classes classes : c.getClasses()) {
+					if(classes.getBooks() != null) {
+						for(Book b : classes.getBooks()) {
+							totalProfit += b.getTotalPrice();
+						}
+					}
+				}
+			}
+			cs.setClassTotalProfit(totalProfit);
+			
+			list.add(cs);
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * 지역별 매출 통계
+	 * */
+	@RequestMapping("/teacher/regionStatistics")
+	@ResponseBody
+	public List<ClassStatistics> regionStatistics(){
+		
+		List<PlaceRegion> regions = teacherService.selectPlaceRegion();
+		List<ClassStatistics> list = new ArrayList<ClassStatistics>();
+		
+		for (PlaceRegion r : regions) {
+			ClassStatistics cs = new ClassStatistics();
+			cs.setName(r.getRegionName());
+			
+			int totalProfit = 0;
+			
+			if(r.getPlace() != null) {
+				for(Place p : r.getPlace()) {
+					totalProfit += p.getTeacher().getTotalProfit();
+				}
+			}
+			cs.setClassTotalProfit(totalProfit);
 			
 			list.add(cs);
 		}

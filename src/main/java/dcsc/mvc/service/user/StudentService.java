@@ -72,6 +72,12 @@ public interface StudentService {
 	 * 탈퇴시 비밀번호 비교
 	 * */
 	boolean checkPwd(String userPwd);
+
+	/**
+	 * 신규 학생 수 검색
+	 * @return: List<Student>
+	 * */
+	List<Student> selectNewStudent();
 	
 	
 }
