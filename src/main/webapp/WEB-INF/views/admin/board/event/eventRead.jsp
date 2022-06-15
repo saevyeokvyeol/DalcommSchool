@@ -39,9 +39,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-
-<div class="main-content">
 
 	<h5> 관리자 > 이벤트 관리 </h5><br><hr>
 	
@@ -79,32 +76,26 @@
 			<span style="font-size:9pt;"><b><pre>${requestScope.event.eventContent}</pre></b></span>
 	     </td>
     </tr>
-    
-	<tr>
-        <td>
-        <!-- 관리자 버튼 권한-->
-	        <div class="col-6 col-md-4">
-				<form name="requestForm" method="post" id="requestForm">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-					<input type=hidden name="eventNo" value="${event.eventNo}">
-					
-					<input type=button class="btn btn-primary" value="수정하기" >
-				</form>
-			</div>
-		</td>
-		<td>
-	        <div class="col-6 col-md-4">
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventList" role="button" >목록으로</a>
-		</td>
-	</tr>
     </table>
-    
+	        <div class="row">
+	        	<div class="col text-center">
+	        		<!--  수정 버튼 -->
+					<input type=button class="btn btn-primary" value="수정하기" >
+					<!--  삭제 모달 버튼 -->
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
+				</div>
+			</div>
+
+			<a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/admin/board/event/eventList" role="button" >목록으로</a>
+	
+	
+	<!-- 수정버튼 누르면 폼 전송 -->
+	<form name="requestForm" method="post" id="requestForm">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+		<input type=hidden name="eventNo" value="${event.eventNo}">
+	</form>
+
+    <!-- 삭제 모달에서 전송하는 폼 -->
     <form name="eventInfo" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		<input type=hidden name="eventNo" value="${event.eventNo}">
@@ -129,9 +120,6 @@
 	    </div>
 	  </div>
 	</div>
-    </div>
-    
-    
 
 </body>
 </html>
