@@ -169,40 +169,91 @@ $(function(){
  <section>
   <sec:authorize access="isAuthenticated()">
  	<sec:authentication property="principal" var="student"/>
-	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/main/mypage/modify">
+	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/main/mypage/modify" class="row g-3">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		
 	  <h3>회원정보 수정</h3>
-	    <div class="joinNotice"> * 표시가 있는 항목은 필수 항목입니다.</div><br><hr>
-	    <table class="table">
-	      <tr>
-	          <th>아이디</th>
-	          <td><input type="hidden" id="studentId" name="studentId" class="" value="${student.studentId}" />
-	          <b>${student.studentId}</b></td>
+	    
+	   	  	<!-- 아이디 -->
+			    <div class="col-md-2">
+			  	</div>
+		  	    <div class="col-md-2">
+				    <label for="studentId" class="form-label">아이디</label>
+			  	</div>
+			  	 <div class="col-md-6">
+			  	 	<input type="text" value="${student.studentId}" id="studentId" class="form-control" name="studentId" readonly/>
+			  	</div>
+			  	<div class="col-md-2">
+				</div>
+		    
+		    <!-- 아이디 -->
+			    <div class="col-md-2">
+			  	</div>
+		  	    <div class="col-md-2">
+				    <label for="studentName" class="form-label">이름</label>
+			  	</div>
+			  	 <div class="col-md-6">
+			  	 	<input type="text" value="${student.studentName}" id="studentName" class="form-control" name="studentName" readonly/>
+			  	</div>
+			  	<div class="col-md-2">
+				</div>
+	    
+		    <!-- 휴대폰 번호 -->
+				<div class="col-md-2">
+				</div>	
+				<div class="col-md-2">
+				    <label for="studentPhone" class="form-label">휴대폰 번호</label>
+			  	</div>
+				<div class="col-md-6">
+					<input type="text" id="studentPhone" name="studentPhone" value="${student.studentPhone}" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+		      		<span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
+				    <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span>
+				</div>
+				<div class="col-md-2">
+					<button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+				</div>
+				
+			<!-- 이메일 -->	
+		      	<div class="col-md-2">
+				</div>	
+		      	<div class="col-md-2">
+		      		<label for="studentEmail" class="form-label">이메일</label>
+		      	</div>
+		      	<div class="col-md-6">
+		      		<input type="text" id="studentEmail" name="studentEmail" value="${student.studentEmail}" class="form-control" required="required"/>
+		      		<span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span>
+		      	</div>
+	      		<div class="col-md-2">
+				</div>	
 
-	      </tr>
-	      <tr>
-	          <th>이름</th>
-	          <td><b>${student.studentName}</b></td>
-	      </tr>
-	      <tr>
-	          <th>* 핸드폰 번호</th>
-	          <td><input type="text" id="studentPhone" name="studentPhone" class="" value="${student.studentPhone}" />
-	          <button type="button" id="phoneCheck" class="">중복체크</button>
-	          <span id="notValidPhone" class="notValidPhone"></span><br>
-	          <span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span>
-	          <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td>
-	      </tr>
-	      <tr>
-	          <th>* 이메일</th>
-	          <td><input type="text" id="studentEmail" name="studentEmail" class="" value="${student.studentEmail}" />
-	          <span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span></td>
-	      </tr>
-  	</table>
-	  	<div>
-	  	<input type="submit" id="updateBtn" value="수정">
-	  	<a href="../index.jsp" id="cancelBtn">취소</a>
-	  	<a href="${pageContext.request.contextPath}/main/mypage/myPage" id="cancelBtn">뒤로가기</a>
+<!-- 	    <table class="table"> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>아이디</th> -->
+<%-- 	          <td><input type="hidden" id="studentId" name="studentId" class="" value="${student.studentId}" /> --%>
+<%-- 	          <b>${student.studentId}</b></td> --%>
+
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>이름</th> -->
+<%-- 	          <td><b>${student.studentName}</b></td> --%>
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>* 핸드폰 번호</th> -->
+<%-- 	          <td><input type="text" id="studentPhone" name="studentPhone" class="" value="${student.studentPhone}" /> --%>
+<!-- 	          <button type="button" id="phoneCheck" class="">중복체크</button> -->
+<!-- 	          <span id="notValidPhone" class="notValidPhone"></span><br> -->
+<!-- 	          <span id="phoneCheck_success" class="phoneCheck_success">사용가능한 번호입니다.</span> -->
+<!-- 	          <span id="phoneCheck_fail" class="phoneCheck_fail">이미 가입한 이력이 있는 번호입니다.</span></td> -->
+<!-- 	      </tr> -->
+<!-- 	      <tr> -->
+<!-- 	          <th>* 이메일</th> -->
+<%-- 	          <td><input type="text" id="studentEmail" name="studentEmail" class="" value="${student.studentEmail}" /> --%>
+<!-- 	          <span id="notValidEmail" class="notValidEmail">올바른 이메일 주소가 아닙니다.</span></td> -->
+<!-- 	      </tr> -->
+<!--   	</table> -->
+	  	<div class=".col-6 .col-sm-4 text-center">
+		  	<input type="submit" class="btn btn-primary" id="updateBtn" value="수정">
+		  	<a href="${pageContext.request.contextPath}/main/mypage/myPage" class="btn btn-primary" id="cancelBtn">뒤로가기</a>
 	  	</div>
 	</form>
 

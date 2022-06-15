@@ -27,7 +27,6 @@
 </head>
 <body>
 	
-<div class="main-content">
 	
 	<h5> 공지사항 > 이벤트 </h5><br><hr>
 	
@@ -119,7 +118,6 @@
 		 </c:if>
 		</div>
 	</nav>  
-</div>
 </div>
 </body>
 </html>
