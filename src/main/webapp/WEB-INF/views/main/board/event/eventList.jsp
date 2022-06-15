@@ -27,14 +27,21 @@
 </head>
 <body>
 	
-<div class="main-content">
 	
-	<h5> 공지사항 > 이벤트 </h5><br><hr>
+	<h5> 공지사항 > 이벤트 </h5><br>
 	
 	<form action="${pageContext.request.contextPath}/user/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-      <input type="text" id="keyword" name="keyword">
-   	  <input type="submit" id="search" value="검색">
+	<div class="row g-3">
+		<div class="col-md-8">
+		</div>	
+		<div class="col-md-3">
+      		<input type="text" class="form-control" id="keyword" name="keyword">
+		</div>
+		<div class="col-md-1">
+			<input type="submit" class="btn btn-primary" id="search" value="검색">
+		</div>
+	</div>
     </form>
     
     <hr><!-- 구분선 -->
@@ -119,7 +126,6 @@
 		 </c:if>
 		</div>
 	</nav>  
-</div>
 </div>
 </body>
 </html>

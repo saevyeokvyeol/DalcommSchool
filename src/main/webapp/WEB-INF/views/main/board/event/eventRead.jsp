@@ -18,7 +18,6 @@
 <body>
 	
 	
-<div class="main-content">
 
 	<h5> 이벤트 > 이벤트 상세 </h5><br><hr>
 	
@@ -56,12 +55,9 @@
 			<span style="font-size:9pt;"><b><pre>${requestScope.event.eventContent}</pre></b></span>
 	     </td>
 	</tr>
-	<tr>
-		<td>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/event/eventList" role="button" >목록으로</a>
-		</td>
-	</tr>
     </table>
-</div>
+    	<div class=".col-6 .col-sm-4 text-center">
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/event/eventList" role="button" >목록으로</a>
+		</div>
 </body>
 </html>

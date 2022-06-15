@@ -271,8 +271,9 @@ public class ClassReviewController {
 	 * 클래스 후기 수정
 	 * */
 	@RequestMapping("/main/mypage/review/update")
-	public String updateReview(ClassReview review, MultipartFile file) throws Exception{
-		if(file.getSize()>0) {
+	@ResponseBody
+	public void updateReview(ClassReview review, MultipartFile file) throws Exception{
+		if(file!=null) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
@@ -280,17 +281,18 @@ public class ClassReviewController {
 		}		
 		reviewService.update(review);
 		
-		return "redirect:/main/review/list";
+//		return "redirect:/main/review/list";
 	}
+	
 	/**
 	 * 클래스 후기 삭제
 	 * */
 	@RequestMapping("/review/delete")
 	@ResponseBody
-	public String deleteReview(Long reviewId) {
+	public void deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
 		
-		return "redirect:/main/board/review/read";
+//		return "redirect:/main/review/list";
 	}
 	
 	/**

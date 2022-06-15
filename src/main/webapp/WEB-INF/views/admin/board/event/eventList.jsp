@@ -27,15 +27,21 @@
 </head>
 <body>
 	
-<div class="main-content">
-	
 	<h5> 관리자 > 이벤트 관리 </h5>
 	
 	
 	<form action="${pageContext.request.contextPath}/admin/eventSearch" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-      <input type="text" id="keyword" name="keyword">
-   	  <input type="submit" id="search" value="검색">
+	<div class="row g-3">
+		<div class="col-md-8">
+		</div>	
+		<div class="col-md-3">
+      		<input type="text" class="form-control" id="keyword" name="keyword">
+		</div>
+		<div class="col-md-1">
+			<input type="submit" class="btn btn-primary" id="search" value="검색">
+		</div>
+	</div>
     </form>
     
     <hr><!-- 구분선 -->
@@ -123,7 +129,7 @@
 </div>
 
 	<div align=right>
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a></div>
+		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a>
 	</div>
 
 </body>
