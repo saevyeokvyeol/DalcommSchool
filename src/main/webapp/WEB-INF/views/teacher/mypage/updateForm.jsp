@@ -207,10 +207,11 @@ $(function(){
 <body>
 <div id="main-content">
 <h3> 강사 정보 수정 페이지 </h3>
+<br>
 <section>
 <%--   <sec:authorize access="isAuthenticated()"> --%>
 <%--  	<sec:authentication property="principal" var="teacher"/> --%>
-	<form id="updateForm" name="updateForm" method="post" action="${pageContext.request.contextPath}/teacher/mypage/updateTeacher?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+	<form id="updateForm" name="updateForm" method="post" class="row g-3" action="${pageContext.request.contextPath}/teacher/mypage/updateTeacher?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 	  <table id="classTable">
 	    <tr>
@@ -248,22 +249,34 @@ $(function(){
 	      </tr>
 	      <tr>
 	          <td>
-	           <div class="form-floating mb-3">
+				<div class="row g-3">
+				<div class="col-md-10">
+				<div class="form-floating mb-3">
 				          <input type="text" id="teacherNick" name="teacherNickname" placeholder="닉네임" class="form-control" value="${teacher.teacherNickname}" required/>
 				          <label for="teacherId">닉네임</label>
-	          </div>
+	          	</div>
+		        </div>
+	          	<div class="col-md-2">
 		          <button type="button" id="nickCheck" class="btn btn-primary">중복체크</button>
+		        </div>
+		        </div>
 		          <span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span>
 		          <span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span>
 	          </td>
 	      </tr>
 	      <tr>
 	      	<td>
+			<div class="row g-3">
+			<div class="col-md-10">
 	           <div class="form-floating mb-3">
 				          <input type="text" id="teacherPhone" name="teacherPhone" placeholder="휴대폰 번호" class="form-control" value="${teacher.teacherPhone}" required/>
 				          <label for="teacherPhone">휴대폰 번호</label>
 	          </div>
+	          </div>
+	          <div class="col-md-2">
 		          <button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+	          </div>
+	          </div>
 		          <span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
 		          <span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span>
 		          <span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span>
@@ -325,9 +338,9 @@ $(function(){
 	      
 	      
 	  	</table>
-	  	<div>
-	  	<input type="submit" id="updateBtn" value="수정하기">
-	  	<a href="../board.jsp" id="cancelBtn">취소</a>
+	  	<div class=".col-6 .col-sm-4 text-center">
+		  	<input type="submit" class="btn btn-primary" id="updateBtn" value="수정하기">
+		  	<a href="../board.jsp" class="btn btn-primary" id="cancelBtn">취소</a>
 	  	</div>
 	</form>
 <%-- 	</sec:authorize> --%>

@@ -14,6 +14,10 @@
 	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
 	.checked {color: #EB5353;}
 	
+ 	.modal img{ 
+		width: 100px; 
+ 		height:100px; 
+ 	} 
 	
  	
 /* 수정하기 모달 폼 */
@@ -22,7 +26,7 @@
 
  	#reviewUpdate-form fieldset{ 
  		display: inline-block;
- 		direction: rtl;
+  		direction: rtl;
  		border: 0;
  	}
  	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
@@ -42,23 +46,23 @@
  	#reviewUpdate-form [type=radio]:checked~label i{ 
  		color: #EB5353;
  	}
+ 	
+ 	
 </style>
 <meta charset="UTF-8">
 <title>메인페이지용 리뷰 리스트</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/351ed6665e.js" crossorigin="anonymous"></script>
-
 
 <script type="text/javascript">
 
 $(function(){
 	
-	$(".reviewContent").click(function(){
+	$(".list-reviewContent").click(function(){
 		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/main/board/review/read",
@@ -103,78 +107,150 @@ $(function(){
 					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
 				}
 				
-// 				let image = result.reviewImg.toString();
-// 				let str="";
-// 				if(image!=null){
-// 					str+= '<img alt="" src="${pageContext.request.contextPath}/img/classReview/${requestScope.review.reviewImg}">';
-// 				}
-// 				$("#reviewDetail-form th:eq(6)").after(str);
+				let image = `\${result.reviewImg}`;
 				
-				$("#reviewDetail-form #reviewRate").html(text);
+				if(image!='null'){
+					$("#reviewDetail-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
+				} else {
+					$("#reviewDetail-form .reviewImg").attr("src","");
+				}
 				
-				$("#reviewDetail-form #reviewId").html(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
-				$("#reviewDetail-form #studentId").html(`\${result.studentId}`);
-				$("#reviewDetail-form #reviewInsertDate").html(`\${result.reviewInsertDate.toString().substring(0, 10)}`);
-				$("#reviewDetail-form #reviewUpdateDate").html(`\${result.reviewUpdateDate.toString().substring(0, 10)}`);
-				$("#reviewDetail-form #className").html(`\${result.className}`);
-				$("#reviewDetail-form #reviewImg").html(`\${result.reviewImg}`);
-				$("#reviewDetail-form #reviewContent").html(`\${result.reviewContent}`);
+				$("#reviewDetail-form .reviewRate").html(text);
+				
+				$("#reviewDetail-form .reviewId").val(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
+				$("#reviewDetail-form .studentId").val(`\${result.studentId}`);
+				$("#reviewDetail-form .reviewInsertDate").val(`\${result.reviewInsertDate.toString().substring(0, 10)}`);
+				$("#reviewDetail-form .reviewUpdateDate").val(`\${result.reviewUpdateDate.toString().substring(0, 10)}`);
+				$("#reviewDetail-form .className").val(`\${result.className}`);
+				$("#reviewDetail-form .reviewContent").html(`\${result.reviewContent}`);
 			},
 			error: function(err){
-				alert(err + "에러 발생");
+				alert(err + "에러 발생. - 상세보기");
 			}
 		})
 	})
 	
+	/*
+	수정 폼 불러오기
+	*/
 	$("#updateBtn").click(function(){
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/review/updateForm",
 			type: "post",
 			data:{"${_csrf.parameterName}": "${_csrf.token}",
-				  "reviewId" : $("#reviewDetail-form #reviewId").html()	
+				  "reviewId" : $("#reviewDetail-form .reviewId").val()	
 			},
 			dataType:"json",
 			success:function(result){
+				$("#exampleModal").modal("hide");
+
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+				
 // 				alert(result);
-				$("#reviewUpdate-form #reviewId").html(`\${result.reviewId}`);
 				$("#reviewUpdate-form .reviewId").val(`\${result.reviewId}`);
-				$("#reviewUpdate-form #studentId").html(`\${result.studentId}`);
-				$("#reviewUpdate-form #className").html(`\${result.className}`);
-				$("#reviewUpdate-form #reviewContent").html(`\${result.reviewContent}`);
+				$("#reviewUpdate-form .reviewId").val(`\${result.reviewId}`);
+				$("#reviewUpdate-form .studentId").val(`\${result.studentId}`);
+				$("#reviewUpdate-form .className").val(`\${result.className}`);
+				$("#reviewUpdate-form .reviewContent").html(`\${result.reviewContent}`);
+				
+				
+				
+				let image = `\${result.reviewImg}`;
+				
+				if(image!='null'){
+					$("#reviewUpdate-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
+				}else {
+					$("#reviewUpdate-form .reviewImg").attr("src","");
+				}
+				$("#updateModal").modal("show");
 			},
 			error:function(err){
-				alert(err + "에러 발생");
+				alert(err + "에러 발생 - 수정 폼 불러오기");
 			}
 		})
 	})
 	
-// 	$("#deleteBtn").click(function(){
-		
-// 		$.ajax({
-// 			url: "${pageContext.request.contextPath}/review/delete",
-// 			type: "post",
-// 			data: {"${_csrf.parameterName}": "${_csrf.token}",
-// 				  "reviewId" : $("#reviewDetail-form #reviewId").html()	
-// 			},
-// 			success: function(){
-// 				alert($("#reviewDetail-form #reviewId").html() + "번 후기가 삭제되었습니다.")
-// 			},
-// 			error:function(err){
-// 				alert(err + "에러 발생");
-// 			}
+	/*
+	삭제하기
+	*/
+	$("#deleteBtn").click(function(){
+		$("#deleteModal").modal("hide");
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review/delete",
+			type: "post",
+			data: {"${_csrf.parameterName}": "${_csrf.token}",
+				  "reviewId" : $("#reviewDetail-form .reviewId").html()	
+			},
+			success: function(){
+				document.location.reload(true);
+			},
+			error:function(err){
+				alert(err + "에러 발생 - 삭제하기");
+			}
+		})
+	})
+	
+	/*
+	정보 수정하기
+	*/
+	$("#updateOkBtn").click(function(){
+		$("#reviewUpdate-form").ajaxForm({
+			url: "${pageContext.request.contextPath}/main/mypage/review/update",
+			type: "get",
+			enctype: "multipart/form-data",
+			contentType: false,
+			processData: false,
+			success: function(){
+				alert("수정 성공")
+			},
+			error:function(xhr, status, error){
+				alert(eval("(" + xhr.responseText + ")").message);
+			}
+		}).submit();
+	})
+	
+	/*
+	복붙 파트(수정폼에 이미지 바꾼거 바로 띄우기)
+	*/
+// 	$(".mainFileBtn").click(function() {
+// 			$("#input-image").click()
 // 		})
-// 	})
+		
+// 		$("img").click(function() {
+// 		    $(".mainImgCon").css("display", "none")
+// 		    $("#preview-image").attr("src", "")
+// 		    $(".mainFileBtn").css("display", "block")
+// 		    $("#input-image").val("")
+// 		})
+		
+// 		function readImage(input) {
+// 		    // 인풋 태그에 파일이 있는 경우
+// 		    if(input.files && input.files[0]) {
+// 		        // FileReader 인스턴스 생성
+// 		        var reader = new FileReader()
+// 		        // 이미지가 로드가 된 경우
+// 		        reader.onload = e => {
+// 		        	var previewImage = document.getElementById("preview-image")
+// 		            previewImage.src = e.target.result
+// 		        }
+// 		        // reader가 이미지 읽도록 하기
+// 		        reader.readAsDataURL(input.files[0])
+// 		    }
+// 		}
+// 		// input file에 change 이벤트 부여
+// 		var inputImage = document.getElementById("input-image")
+// 		inputImage.addEventListener("change", e => {
+// 		    readImage(e.target)
+// 		    $(".mainImgCon").css("display", "block")
+// 		    $(".mainFileBtn").css("display", "none")
+// 		})
 	
 })
 </script>
 <script type="text/javascript">
-function deleteReview(deleteOk){
-	alert("일반 닫기");
-	deleteOk.action = "${pageContext.request.contextPath}/review/delete";
-	deleteOk.method="post";
-	deleteOk.submit();
-}
+
 </script>
 </head>
 <body>
@@ -253,11 +329,10 @@ function deleteReview(deleteOk){
 		            			<a>이 후기는 비공개 상태입니다.</a>
 		            		</c:when>
 		            		<c:when test="${review.reviewBlindState eq 'false'}">
-		            			<button class="reviewContent" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${review.reviewId}">${review.reviewContent}</button>
+		            			<button id="list-reviewContent" class="list-reviewContent" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${review.reviewId}">${review.reviewContent}</button>
 		            		</c:when>
 		            	</c:choose>
 		            </td>
-<%-- 		            <td><a href="${pageContext.request.contextPath}/main/board/review/read/${review.reviewId}" class="reviewContent">${review.reviewContent}</a></td> --%>
 		            <td>
 		            	<span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
 		            	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
@@ -286,63 +361,58 @@ function deleteReview(deleteOk){
 						<tr>
 					    	<th>글번호</th>
 					    	<td>
-					    	  <div id="reviewId" ></div>
+					    	  <div><input type="text" class="reviewId" readonly></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th>작성자</th>
 					    	<td>
-					    	  <div id="studentId"></div>
+					    	  <div><input type="text" class="studentId" readonly></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th>클래스 이름</th>
 					    	<td>
-					    	  <div id="className"></div>
+					    	  <div><input type="text" class="className" readonly></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th>작성 날짜</th>
 					    	<td>
-					    	  <div id="reviewInsertDate"></div>
+					    	  <div><input type="text" class="reviewInsertDate" readonly></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th>수정 날짜</th>
 					    	<td>
-					    	  <div id="reviewUpdateDate"></div>
+					    	  <div><input type="text" class="reviewUpdateDate" readonly></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th>별점</th>
 					    	<td>
-					    	  <div id="reviewRate"></div>
+					    	  <div class="reviewRate"></div>
 					    	</td>
 					  	</tr>
 					  	<tr>
 					    	<th rowspan="2">후기</th>
 					    	<td>
-					    	  <div><img alt="" src=""></div>
+					    	  <div><img class="reviewImg" alt=""></div>
 					    	</td>
 					    </tr>
 					    <tr>
-					    	<th>후기</th>
 					    	<td>
-					    	 <div id="reviewContent"></div>
+					    	  <div><textarea class="reviewContent" readonly></textarea></div>
 					    	</td>
 					  	</tr>
 					</table>
 				</form>
-			
-			
-		  	  
-			
 		      </div> <!-- modal body 끝 -->
-		      
+<!-- 		      <input type="text" class="reviewContent" readonly> -->
 		      <div class="modal-footer">
 		      <form id="detail-requestForm">
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal" class="updateBtn" id="updateBtn" value="${review.reviewId}" >수정하기</button>
+		        <button type="button" class="btn btn-primary" class="updateBtn" id="updateBtn" value="${review.reviewId}" >수정하기</button>
 		      	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" class="deleteBtn" value="${review.reviewId}" >삭제하기</button>
 		      </form>
 		      </div>
@@ -361,56 +431,61 @@ function deleteReview(deleteOk){
 	      </div>
 	      <div class="modal-body">
 	        
-	        <form id="reviewUpdate-form" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/main/mypage/review/update?${_csrf.parameterName}=${_csrf.token}">
-				<input type="hidden" class="reviewId" name="reviewId">
+	        <form id="reviewUpdate-form" enctype="multipart/form-data" method="post">
+	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+				<input type="hidden" class="reviewId" >
 				<table>
 			  		<tr>
 				    	<th>글번호</th>
 				    	<td>
-				    	  <div id="reviewId" name="reviewId"></div>
+				    	  <div><input name="reviewId" type="text" class="reviewId" readonly></div>
 				    	</td>
 				  	</tr>
 				  	<tr>
 				    	<th>작성자</th>
 				    	<td>
-				    	  <div id="studentId"></div>
+				    	  <div><input name="reviewId" type="text" class="studentId" readonly></div>
 				    	</td>
 				  	</tr>
 				  	<tr>
 				    	<th>클래스 이름</th>
 				    	<td>
-				    	  <div id="className"></div>
+				    	  <div><input name="className" type="text" class="className" readonly></div>
 				    	</td>
 				  	</tr>
 				  	<tr>
 				    	<th>별점</th>
 				    	<td>
 				    		<fieldset id="update-star">
-<!-- 							  <label for="recipient-name" class="col-form-label">별점</label> -->
-						        <input type="radio" name="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>
+						        <input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>
 							</fieldset>
 				    	</td>
 				  	</tr>
 				  	<tr>
-				  		<th>사진 첨부</th>
-				  		<input class="form-control" type="file" id="formFileMultiple" value="${review.reviewImg}" name="file" multiple>
+				  		<th>첨부 이미지</th>
+				  		<td>
+					  		<input type="file" name="file" id="file" class="upload-box upload-plus file" accept="image/*">
+					  		<img class="reviewImg" />
+				  		</td>
 				  	</tr>
 				  	<tr>
-				    	<th>내용</th>
+				    	<th>후기</th>
 				    	<td>
-				    		 <textarea name="reviewContent" id="reviewContent" placeholder="후기를 자유롭게 입력해주세요. 욕설 / 비방은 관리자에 의한 비공개 처리 및 처벌될 수 있습니다.">${review.reviewContent}</textarea>	    	</td>
+				    		<textarea name="reviewContent" class="reviewContent" id="reviewContent" placeholder="후기를 자유롭게 입력해주세요. 욕설 / 비방은 관리자에 의한 비공개 처리 및 처벌될 수 있습니다."></textarea>
+				    	</td>
 				  	</tr>
+
 				</table>
 
 	        
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <input type="submit" id="updateBtn" value="저장하기">
+	        <button type="button" id="updateOkBtn">저장하기</button>
 	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
 		</form>
@@ -431,10 +506,7 @@ function deleteReview(deleteOk){
 		       정말 삭제하시겠습니까?
 		      </div>
 		      <div class="modal-footer">
-<!-- 		      <form id="delete-requestForm"> -->
-<!-- 		      <input type="hidden" name="reviewId" id="reviewId"> -->
-		        <button type="button" class="btn btn-primary" id="deleteBtn" onclick="deleteReview(deleteOk)">삭제</button>
-<!-- 		        <button type="button" class="btn btn-primary" id="deleteBtn">아작스로 삭제</button> -->
+		        <button type="button" class="btn btn-primary" id="deleteBtn">아작스로 삭제</button>
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 		      </form>
 		      </div>

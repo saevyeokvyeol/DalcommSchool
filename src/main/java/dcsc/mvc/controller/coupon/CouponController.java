@@ -75,6 +75,8 @@ public class CouponController {
 		model.addAttribute("list", list);
 	}
 	
+	
+	
 	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님
 	 * */
