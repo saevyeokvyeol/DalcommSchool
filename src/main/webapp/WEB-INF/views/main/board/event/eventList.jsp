@@ -101,12 +101,12 @@
 	<c:set var="doneLoop" value="false"/>
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
 		     <li class="page-item">
-		      <a class="page-link" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage-1}">PREV</a>
+		      <a class="page-link" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage-1}">이전</a>
 		  	 </li>
 		  </c:if>
 		  
 		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
+			    <c:if test="${(i-1)>=eventList.getTotalPages()}">
 			       <c:set var="doneLoop" value="true"/>
 			    </c:if> 
 		    
@@ -118,9 +118,9 @@
 		   
 		</c:forEach>
 				
-		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
 		    <li class="page-item"> 
-		    	<a class="page-link" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage+blockCount}">NEXT</a>
+		    	<a class="page-link" href="${pageContext.request.contextPath}/main/board/event/eventList?nowPage=${startPage+blockCount}">다음</a>
 		 	</li>
 		 </c:if>
 		 </ul>

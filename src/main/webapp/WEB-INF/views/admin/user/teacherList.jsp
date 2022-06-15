@@ -13,26 +13,54 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <title>Insert title here</title>
+
+<style type="text/css">
+	
+	a{
+		text-decoration: none;
+	}
+	table,th,td{
+		text-align: center;
+	}
+	
+	#badge1 {
+		background-color: green;
+	}
+	
+	#badge2 {
+		background-color: red;
+	}
+
+	</style>
+
 </head>
 <body>
-<h2>관리자용 강사 조회 페이지 입니다</h2>
 	
-	<div class="main-content">
 	<form action="${pageContext.request.contextPath}/admin/user/teacherSearch" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-	       <select name = "keyfield" class="selectpicker">
+	    <div class="row g-3">
+		<div class="col-md-6">
+		</div>	 
+		<div class="col-md-2">
+	       <select name = "keyfield" class="form-select">
 	          <option value = "teacherID" selected>아이디</option>
 	          <option value = "teacherName">이름</option>
 	          <option value = "teacherPhone">연락처</option>
 	          <option value = "teacherEmail">이메일</option>
 	       </select>
+	     </div>
+	     <div class="col-md-3">  
 	       <input type="text" class="form-control" id="keyword" name="keyword">
-     	  <input type="submit" id="search" value="검색">
+     	 </div>
+     	 <div class="col-md-1">
+     	  <input type="submit" class="btn btn-primary" id="search" value="검색">
+     	 </div>
+    </div>
     </form>
     
     <hr><!-- 구분선 -->
     
-  <table class="table table-striped table-hover">
+  <table class="table">
         <thead>
             <tr>
              <th>아이디</th>
@@ -56,15 +84,32 @@
                  <c:when test ="${not empty teacherList}">
 		              <c:forEach items="${teacherList.content}" var="teacher">
 		                        <tr>
-		                            <td><span>${teacher.teacherId}</span></td>
-		                            <td><span>${teacher.teacherName}</span></td>
-		                            <td><span><c:set var="phone" value="${teacher.teacherPhone}"/>
-		                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
-		                            </span></td>
-		                            <td><span>${teacher.teacherEmail}</span></td>
-		                            <td><span><fmt:parseDate value="${teacher.teacherInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
-		                           <span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span></td>
-		                            <td><span>${teacher.teacherQuit}</span></td>
+		                            <td>
+		                            	<span>${teacher.teacherId}</span>
+		                            </td>
+		                            <td>
+		                            	<span>${teacher.teacherName}</span>
+		                            </td>
+		                            <td>
+			                            <span><c:set var="phone" value="${teacher.teacherPhone}"/>
+			                            ${fn:substring(phone,0,3)} - ${fn:substring(phone,3,7)} - ${fn:substring(phone,7,13)}
+			                            </span>
+		                            </td>
+		                            <td>
+		                            	<span>${teacher.teacherEmail}</span>
+		                            </td>
+		                            <td>
+			                            <span><fmt:parseDate value="${teacher.teacherInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+			                           <span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		                           </td>
+		                            <td>
+		                            	<c:if test="${teacher.teacherQuit == 'F'}">
+			                            	<span class="badge text-bg-primary" id="badge1">활동중</span>
+		                            	</c:if>
+		                            	<c:if test="${teacher.teacherQuit == 'T'}">
+			                            	<span class="badge text-bg-secondary" id="badge2">탈퇴</span>
+		                            	</c:if>
+		                            </td>
 		                        </tr>
                     	</c:forEach>
                 </c:when>
@@ -72,38 +117,33 @@
         </tbody>
     </table>
     
-    <hr>
-<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
-<div style="text-align: center">
-		<!--  블럭당  -->
- <nav class="pagination-container">
-	<div class="pagination">
+<!--  페이징처리  -->
+<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
 	<c:set var="doneLoop" value="false"/>
-		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage-1}">PREV</a>
+		      <li class="page-item">
+			      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage-1}">PREV</a>
+			  </li>
 		  </c:if>
 		  
-		<span class="pagination-inner"> 
-		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		  
+		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<teacherList.totalPages?(startPage-1)+blockCount:teacherList.totalPages}'> 
 			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
 			       <c:set var="doneLoop" value="true"/>
 			    </c:if> 
-		    
 		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${i}">${i}</a> 
+			<li class="page-item">
+		         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${i}">${i}</a> 
+			</li>
 		  </c:if>
-		   
 		</c:forEach>
-		</span> 
 				
 		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage+blockCount}">NEXT</a>
+			 <li class="page-item">  
+			     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage+blockCount}">NEXT</a>
+			 </li>
 		 </c:if>
-		</div>
+		 </ul>
 	</nav>  
-</div>
-</div>
 </body>
 </html>

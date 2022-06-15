@@ -274,25 +274,20 @@ public class ClassReviewController {
 	/**
 	 * 클래스 후기 수정
 	 * */
-	@RequestMapping("/main/mypage/review/update")
+	@RequestMapping("/review/update")
 	@ResponseBody
-	public void updateReview(ClassReview review, HttpServletRequest request) throws Exception{
+	public void updateReview(ClassReview review, @RequestParam("file") MultipartFile file) throws Exception{
 		System.out.println("클래스후기 컨트롤러, update 호출.");
 		System.out.println(review.getReviewContent());
 		System.out.println(review.getReviewRate());
-		
-//		MultipartRequest m = new MultipartRequest(request, ImageLink.CLASSREVIEW_IMG, 1024*1024*100, "UTF-8"); 
-//				new DefaultFileRenamePolicy());
-//		System.out.println(file);
-//		if(file!=null) {
-//			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
-//			file.transferTo(img);
-//			
-//			review.setReviewImg(file.getOriginalFilename());
-//		}		
-//		reviewService.update(review);
-		
-//		return "redirect:/main/review/list";
+		System.out.println(file);
+		if(file!=null) {
+			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
+			file.transferTo(img);
+			
+			review.setReviewImg(file.getOriginalFilename());
+		}		
+		reviewService.update(review);
 	}
 	
 	/**
@@ -302,8 +297,6 @@ public class ClassReviewController {
 	@ResponseBody
 	public void deleteReview(Long reviewId) {
 		reviewService.delete(reviewId);
-		
-//		return "redirect:/main/review/list";
 	}
 	
 	/**

@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassStatistics {
-	private String className;
+	private String name;
 	private int bookCount;
 	private int classTotalProfit;
 }

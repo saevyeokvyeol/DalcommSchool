@@ -156,5 +156,11 @@ public interface TeacherService {
 	 * @param: String teacherId
 	 * */
 	void deleteTeacher (String userId, String userPwd);
+
+	/**
+	 * 신규 선생님 수 검색
+	 * @return: List<Teacher>
+	 * */
+	List<Teacher> selectNewTeacher();
 	
 }

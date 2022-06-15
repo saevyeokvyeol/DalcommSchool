@@ -56,7 +56,6 @@
 </head>
 <body>
 
-	<h4> 관리자 > 이벤트 작성 </h4><br>
 	
 <form id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/board/event/eventInsert?${_csrf.parameterName}=${_csrf.token}"
 enctype="multipart/form-data">

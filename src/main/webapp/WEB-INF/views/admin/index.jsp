@@ -16,35 +16,35 @@
 		</style>
 		<script type="text/javascript">
 			$(function() {
-				let labels = [];
-				let bookData = [];
-				let profitData = [];
+				let categoryName = [];
+				let regionName = [];
+				let category = [];
+				let region = [];
 				
 				$.ajax({
-					url : "${pageContext.request.contextPath}/teacher/classStatistics",
+					url : "${pageContext.request.contextPath}/teacher/categoryStatistics",
 					type : "post",
 					data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 					dataType: "json",
 					success : function(result) {
 						$.each(result, function(index, item) {
-							labels.push(item.name);
-							bookData.push(item.bookCount);
-							profitData.push(item.classTotalProfit);
+							categoryName.push(item.name);
+							category.push(item.classTotalProfit);
 						})
-						/
-						new Chart($("#classBooker"), {
+						
+						new Chart($("#categoryProfit"), {
 							type: 'doughnut',
 							options: {
 								responsive: false,
 								title: {
 									display: true,
-									text: '클래스 예약'
+									text: '카테고리별 매출'
 								}
 							},
 							data: {
-								labels: labels,
+								labels: categoryName,
 								datasets: [{
-									data: bookData,
+									data: category,
 									backgroundColor: [
 										'rgb(255, 99, 132)',
 										'rgb(255, 159, 64)',
@@ -68,20 +68,37 @@
 								}]
 							},
 						})
+					},
+					error: function(xhr, status, error) {
+						var err = eval("(" + xhr.responseText + ")");
+						alert(err.message);
+					} 
+				}); // 아작스 종료
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath}/teacher/regionStatistics",
+					type : "post",
+					data : {"${_csrf.parameterName}" : "${_csrf.token}"},
+					dataType: "json",
+					success : function(result) {
+						$.each(result, function(index, item) {
+							regionName.push(item.name);
+							region.push(item.classTotalProfit);
+						})
 						
-						new Chart($("#classProfit"), {
+						new Chart($("#placeProfit"), {
 							type: 'doughnut',
 							options: {
 								responsive: false,
 								title: {
 									display: true,
-									text: '클래스 매출'
+									text: '지역별 매출'
 								}
 							},
 							data: {
-								labels: labels,
+								labels: regionName,
 								datasets: [{
-									data: profitData,
+									data: region,
 									backgroundColor: [
 										'rgb(255, 99, 132)',
 										'rgb(255, 159, 64)',
@@ -120,29 +137,29 @@
 		<div id="summary">
 			<div id="todayBook">
 				<div class="p-3 mb-2 bg-success bg-opacity-25 icon">
-					<i class="fa-regular fa-calendar-check fa-xl text-success"></i>
+					<i class="fa-solid fa-users-between-lines fa-xl text-success"></i>
 				</div>
 				<div>
-					<h6>오늘 예약</h6>
-					<h3>${bookList != null? bookList.size() : '0'}건</h3>
+					<h6>신규 학생</h6>
+					<h3><fmt:formatNumber value="${studentNum}" pattern="#,###"/>명</h3>
 				</div>
 			</div>
 			<div id="todayPrice">
 				<div class="p-3 mb-2 bg-warning bg-opacity-25 icon">
-					<i class="fa-regular fa-money-bill-1 fa-xl text-warning"></i>
+					<i class="fa-solid fa-chalkboard-user fa-xl text-warning"></i>
 				</div>
 				<div>
-					<h6>오늘 수익</h6>
-					<h3><fmt:formatNumber value="${todayProfit}" pattern="#,###"/>원</h3>
+					<h6>신규 선생님</h6>
+					<h3><fmt:formatNumber value="${teacherNum}" pattern="#,###"/>명</h3>
 				</div>
 			</div>
 			<div id="adjustablePrice">
 				<div class="p-3 mb-2 bg-danger bg-opacity-25 icon">
-					<i class="fa-solid fa-hand-holding-dollar fa-xl text-danger"></i>
+					<i class="fa-solid fa-person-arrow-up-from-line fa-xl text-danger"></i>
 				</div>
 				<div>
-					<h6>정산 가능 금액</h6>
-					<h3><fmt:formatNumber value="${teacher.adjustable}" pattern="#,###"/>원</h3>
+					<h6>총 회원 수</h6>
+					<h3><fmt:formatNumber value="${userNum}" pattern="#,###"/>명</h3>
 				</div>
 			</div>
 			<div id="totalPrice">
@@ -151,70 +168,15 @@
 				</div>
 				<div>
 					<h6>총 수익</h6>
-					<h3><fmt:formatNumber value="${teacher.totalProfit}" pattern="#,###"/>원</h3>
+					<h3><fmt:formatNumber value="${totalProfit}" pattern="#,###"/>원</h3>
 				</div>
 			</div>
 		</div>
-		
 		<div class="indexBox">
-			<h4>오늘 예약 목록</h4>
-			<table class="table">
-		 		<thead>
-		 			<tr>
-		 				<th>
-		 					수강 클래스
-		 				</th>
-		 				<th>
-		 					수강일
-		 				</th>
-		 				<th>
-		 					학생 아이디
-		 				</th>
-		 				<th>
-		 					체험자 아이디
-		 				</th>
-		 				<th>
-		 					체험자 전화번호
-		 				</th>
-		 				<th>
-		 					수강 인원
-		 				</th>
-		 				<th>
-		 					결제 금액
-		 				</th>
-		 				<th>
-		 					수강 상태
-		 				</th>
-		 			</tr>
-		 		</thead>
-		 		<tbody>
-		 			<c:choose>
-		 				<c:when test="${bookList.size() == 0}">
-			 				<tr>
-			 					<td colspan="8"><h5>오늘 수강 예약 내역이 없습니다.</h5></td>
-			 				</tr>
-		 				</c:when>
-		 			</c:choose>
-		 			<c:forEach items="${bookList}" var="book">
-		 				<tr>
-		 					<td>${book.classes.className}</td>
-		 					<td>${book.classSchedule.scheduleDate.toString().substring(0, 10)} ${book.classSchedule.startTime} ~ ${book.classSchedule.endTime}</td>
-		 					<td>${book.student.studentId}</td>
-		 					<td>${book.bookName}</td>
-		 					<td>${book.bookPhone}</td>
-		 					<td>${book.bookSeat}명</td>
-		 					<td><fmt:formatNumber value="${book.totalPrice}" pattern="#,###" />원</td>
-		 					<td>${book.bookState.bookStateName}</td>
-		 				</tr>
-		 			</c:forEach>
-		 		</tbody>
-		 	</table>
-		</div>
-		<div class="indexBox">
-			<h4>내 예약 통계</h4>
+			<h4>매출 통계</h4>
 			<div id="chartBox">
-				<canvas id="classBooker"></canvas>
-				<canvas id="classProfit"></canvas>
+				<canvas id="placeProfit"></canvas>
+				<canvas id="categoryProfit"></canvas>
 			</div>
 		</div>
 	</body>

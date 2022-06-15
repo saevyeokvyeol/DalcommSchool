@@ -197,8 +197,8 @@ $(function(){
 	*/
 	$("#updateOkBtn").click(function(){
 		$("#reviewUpdate-form").ajaxForm({
-			url: "${pageContext.request.contextPath}/main/mypage/review/update",
-			type: "get",
+			url: "${pageContext.request.contextPath}/review/update?${_csrf.parameterName}=${_csrf.token}",
+			type: "post",
 			enctype: "multipart/form-data",
 			contentType: false,
 			processData: false,
@@ -279,7 +279,6 @@ $(function(){
 		        <c:forEach items="${classReviews.content}" var="review">
 		          <div id="review">
 		          <tr>
-		          	<input type="hidden" class="reviewId" name="reviewId" value="${review.reviewId}">
 		            <td><span>${review.student.studentId}</span></td>
 		            <td>
 				    	<fieldset>
@@ -432,7 +431,7 @@ $(function(){
 	      <div class="modal-body">
 	        
 	        <form id="reviewUpdate-form" enctype="multipart/form-data" method="post">
-	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
+	        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
 				<input type="hidden" class="reviewId" >
 				<table>
 			  		<tr>
@@ -481,14 +480,14 @@ $(function(){
 
 				</table>
 
-	        
+	       
+		</form> 
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	        <button type="button" id="updateOkBtn">저장하기</button>
 	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
-		</form>
 	    </div>
 	  </div>
 	</div>

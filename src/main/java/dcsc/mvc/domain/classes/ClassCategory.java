@@ -1,10 +1,15 @@
 package dcsc.mvc.domain.classes;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +29,8 @@ public class ClassCategory {
 	private Long categoryId;
 	
 	private String categoryName;
+	
+	@OneToMany(mappedBy = "classCategory")
+	@JsonIgnore
+	private List<Classes> classes;
 }

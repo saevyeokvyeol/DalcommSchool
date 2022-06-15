@@ -88,7 +88,6 @@
 </head>
 <body>
 
-	<h4> 관리자 > 이벤트 작성 </h4><br>
 	
 	<form id="updateForm" name="updateForm" method=post action="${pageContext.request.contextPath}/admin/board/event/eventUpdateForm?${_csrf.parameterName}=${_csrf.token}"
 	enctype="multipart/form-data">
