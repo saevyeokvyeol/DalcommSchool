@@ -31,117 +31,16 @@
 <body>
 
 
-<%-- <div class="main-content">
-
-		 <table class="table">
-        <thead>
-            <tr>
-             <th>글번호</th>
-             <th>문의 ID</th>
-             <th>카테고리</th>
-             <th>문의제목</th>
-             <th>문의내용</th>
-             <th>첨부파일명</th>
-             <th>문의일자</th>
-             <th>답변유무</th>
-            </tr>
-        </thead>
-		
-			<tbody>
-		
-					<c:choose>
-					 
-						    <c:when test="${empty requestScope.askSelectByIdList}">
-							<tr>
-						        <td colspan="5">
-						            <span style="font-size:9pt;"><h3>등록된 문의가 없습니다.</h3></span></p>
-						        </td>
-						    </tr>
-						    </c:when>
-					    
-						    <c:otherwise>
-							<c:forEach items="${requestScope.askSelectByIdList.content}" var="ask">
-								     <tr>  
-								        <td>
-								           ${ask.askNo} 
-								        </td>
-								        <td>
-								        	${ask.teacher.teacherId}
-								        </td>
-								        <td>
-								            ${ask.askCategory.askCategoryName}
-								        </td>
-								        <td>
-								        	<a href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerDetailTeacher/${ask.askNo}">
-								        	${ask.askTitle}
-								        	</a>
-								        </td>
-								        <td>
-								        	<span class="d-inline-block text-truncate" style="max-width: 150px;">
-								        		${ask.askContent}
-								        	</span> 
-								        </td>  
-								        <td>
-								        	${ask.askImg}
-								        </td> 
-								        <td>
-								        	<fmt:parseDate value="${ask.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-											<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-								        </td>
-								        <td>
-								        	${ask.askComplete}
-								        </td>
-								    </tr>
-								
-						    </c:forEach>
-							</c:otherwise> 
-							
-					
-				    </c:choose>
-			</tbody>
-   		</table>
-   		
-   		<hr>
-   		<div style="text-align: center">
-		<!--  블럭당  -->
- <nav class="pagination-container">
-	<div class="pagination">
-	<c:set var="doneLoop" value="false"/>
-		
-		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerTeacher?nowPage=${startPage-1}">PREV</a>
-		  </c:if>
-		  
-		<span class="pagination-inner"> 
-		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		  
-			    <c:if test="${(i-1)>=askSelectByIdList.getTotalPages()}">
-			       <c:set var="doneLoop" value="true"/>
-			    </c:if> 
-		    
-		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerTeacher?nowPage=${i}">${i}</a> 
-		  </c:if>
-		   
-		</c:forEach>
-		</span> 
-				
-		 <c:if test="${(startPage+blockCount)<=askSelectByIdList.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerTeacher?nowPage=${startPage+blockCount}">NEXT</a>
-		 </c:if>
-		</div>
-	</nav>  
-</div>
-   		
-	</div> --%>
-
-
-
-
 <div class="main-content">
-	<!-- <section>
-		<div>	
-			<h1>1대1 문의</h1> -->
+	<div class="alert alert-dark" role="alert">
+		     <span>
+				<h1>1대1 문의목록</h1>
+			</span> 
+	</div>
+	
+	
+	
+	
 				 <table class="table">
 		        <thead>
 		            <tr>
@@ -175,7 +74,7 @@
 									           ${ask.askNo} 
 									        </td>
 									        <td>
-									        	${ask.student.studentId}
+									        	${ask.teacher.teacherId}
 									        </td>
 									        <td>
 									            ${ask.askCategory.askCategoryName}
@@ -198,7 +97,14 @@
 												<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 									        </td>
 									        <td>
-									        	${ask.askComplete}
+									        	<c:choose>
+						                        	<c:when test="${ask.askComplete == 'F'}">
+						                        		<span class="badge bg-secondary">미답변</span>
+						                        	</c:when>
+						                        	<c:when test="${ask.askComplete == 'T'}">
+						                        		<span class="badge bg-primary">답변 완료</span>
+						                        	</c:when>
+						                       	</c:choose>
 									        </td>
 									    </tr>
 									

@@ -21,6 +21,7 @@ import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.AskCategory;
 import dcsc.mvc.domain.board.Event;
+import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.AskAnswerService;
 import lombok.RequiredArgsConstructor; 
@@ -58,7 +59,7 @@ public class AskAnswerAdminController {
 				model.addAttribute("nowPage", nowPage);
 		 
 		  
-		return "/admin/board/askanswer/askAnswerList";  
+		return "admin/board/askanswer/askAnswerList";  
 	}     
 	         
 	/**    
@@ -101,7 +102,82 @@ public class AskAnswerAdminController {
 		 
 		 model.addAttribute("answerReply", dbAnswer);
 		 
-		 return dbAnswer;
+		 return dbAnswer; 
 		 
+	 }
+	 
+	 
+	 /**
+	  * 1대1 문의 미답변 리스트(관리자)
+	  * */ 
+	 @RequestMapping("/askUnanswerList")  
+		public String askUnanswerList(Model model,@RequestParam(defaultValue = "1") int nowPage) {
+
+					Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "askNo");
+					Page<Ask> askList = askAnswerService.askUnanswerList(page);
+					
+					model.addAttribute("askList", askList);
+					
+					int temp = (nowPage-1)%BLOCK_COUNT;
+					int startPage = nowPage - temp;
+					
+					model.addAttribute("blockCount", BLOCK_COUNT);
+					model.addAttribute("startPage", startPage);
+					model.addAttribute("nowPage", nowPage);
+			 
+			  
+			return "admin/board/askanswer/askUnanswerList";
+	 
+	 
+	 }
+	 
+	 /**
+	  * 1대1문의 검색하기(관리자)
+	  * */
+	 @RequestMapping("/askAnswerSearch")
+	 public String selectByKeyword(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		 
+		 //List<Ask> list=askAnswerService.selectByKeyword(keyword);
+		 
+		 Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "askNo");
+			Page<Ask> askList = askAnswerService.selectBykeyword(keyword,page);
+
+			model.addAttribute("askList", askList);
+
+			int temp = (nowPage - 1) % BLOCK_COUNT;
+			int startPage = nowPage - temp;
+
+			model.addAttribute("blockCount", BLOCK_COUNT);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("nowPage", nowPage);
+		 
+		 
+		 return "admin/board/askanswer/askAnswerList";
+	 }
+	 
+	 /**
+	  * 1대1 문의 카테고리 별 리스트 조회(관리자)
+	  * */
+	 @RequestMapping("/askCategoryId")
+	 public String askCategory(@RequestParam Long askCategoryId,Model model, @RequestParam(defaultValue = "1") int nowPage){
+		 
+		 System.out.println("%%%%%%%%%%%%%%askCategoryId:"+askCategoryId);
+		 
+		 Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "askNo");
+		 
+		 Page<Ask> askList =askAnswerService.askCategory(askCategoryId, page);
+		 
+		 model.addAttribute("askList", askList);
+		 
+		 int temp = (nowPage-1)%BLOCK_COUNT;
+		 int startPage = nowPage - temp;
+		
+		 model.addAttribute("blockCount", BLOCK_COUNT);
+	 	 model.addAttribute("startPage", startPage);
+	 	 model.addAttribute("nowPage", nowPage);
+		 
+		 
+		 
+		 return "admin/board/askanswer/askAnswerList";
 	 }
 }

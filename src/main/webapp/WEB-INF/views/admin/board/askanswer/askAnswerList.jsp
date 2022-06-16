@@ -25,14 +25,61 @@
 	table,th,td{
 		text-align: center;
 	}
-
+	.askSearch{
+		width: 150px;
+		height: 40px;
+	}
+	#askCategoryId{
+		width: 150px;
+		height: 40px;
+	}
 
 </style>
+
+<script type="text/javascript">
+	$(function() {
+
+		$(document).on("change", "#askCategoryId", function() {
+			location.href="${pageContext.request.contextPath}/admin/board/askCategoryId?askCategoryId=" + $(this).val()
+		})
+	})
+
+</script>
 </head>
 <body>
 
 <div class="main-content">
-
+		
+     		
+	     		 
+		
+      
+     <div class="alert alert-dark" role="alert">
+		     <span>
+				<h1>1대1 문의목록</h1>
+			</span> 
+	</div>
+					<select name="askCategoryId" id="askCategoryId" class="form-select" aria-label="Default select example">
+						  <option value="">카테고리 종류</option>
+						  <option value="1">클래스</option>
+						  <option value="2">결제</option>
+						  <option value="3">환불</option>
+						  <option value="4">후기</option>
+						  <option value="5">탈퇴</option>
+					</select>
+	
+		  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		       <div class="container-fluid">
+		           <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/board/askAnswerList">전체보기</a>
+						<form class="d-flex" action="${pageContext.request.contextPath}/admin/board/askAnswerSearch" method="post">
+						     <div class="askSearch"> 
+						        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyword" name="keyword">
+						     </div>
+						        <button class="btn btn-primary" type="submit" id="search">Search</button>
+					    </form> 
+			    </div>
+		  </nav>   
 	<table class="table"> 
 		<thead>
             <tr>
@@ -78,7 +125,7 @@
 				        </td>
 				        <td>
 				        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
-				        	     ${askList.askTitle}<p>
+				        	     ${askList.askTitle}
 				        	</a>
 				        </td>
 				        <td>
@@ -86,7 +133,7 @@
 				        </td>
 				        <td>
 					        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-					            ${askList.askContent}<p>
+					            ${askList.askContent}
 					        </span>
 					        
 				        </td>
@@ -98,7 +145,14 @@
 							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				        </td>
 				        <td>
-				        	${askList.askComplete}<p>
+				        	<c:choose>
+	                        	<c:when test="${askList.askComplete == 'F'}">
+	                        		<span class="badge bg-secondary">미답변</span>
+	                        	</c:when>
+	                        	<c:when test="${askList.askComplete == 'T'}">
+	                        		<span class="badge bg-primary">답변 완료</span>
+	                        	</c:when>
+	                       	</c:choose>
 				        </td>
 				       <%-- 	<td>
 				       		<span>
@@ -109,6 +163,13 @@
 		    </c:forEach>
 		</c:otherwise>
     </c:choose>
+    	<tr>
+			<td>
+				<div align="right">
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+				</div>
+			</td>
+		</tr>
    </tbody>
 	</table>
 	

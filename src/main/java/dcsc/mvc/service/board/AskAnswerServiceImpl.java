@@ -16,7 +16,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
+import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.QAsk;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.repository.board.AnswerRepository;
 import dcsc.mvc.repository.board.AskRepository;
 import lombok.RequiredArgsConstructor;
@@ -140,7 +142,7 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		
-		QAsk ask = QAsk.ask;
+		QAsk ask = QAsk.ask; 
 		
 		booleanBuilder.and(ask.teacher.teacherId.eq(id));
 		booleanBuilder.or(ask.student.studentId.eq(id));
@@ -171,5 +173,57 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 		
 		return dbAsk;
 	}
+	
 
+	/**
+	 * 1대1 문의 미답변 리스트(관리자)
+	 * */
+	@Override
+	public Page<Ask> askUnanswerList(Pageable pageable){
+	
+		return askRep.findByAsk(pageable); 
+	}
+	
+	/**
+	  * 1대1문의 검색하기(관리자)
+	  * */
+	@Override
+	public Page<Ask> selectBykeyword(String keyword,Pageable pageable){
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		QAsk ask = QAsk.ask;
+		booleanBuilder.and(ask.askContent.like("%"+keyword+"%"));
+		booleanBuilder.or(ask.askTitle.like("%"+keyword+"%"));
+		JPQLQuery<Ask> jpqlQuery = factory.selectFrom(ask).where(booleanBuilder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize());
+
+		Page<Ask> list = new PageImpl<Ask>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		
+		
+		return list;
+	}
+	
+	/**
+	  * 1대1 문의 카테고리 별 리스트 조회(관리자)
+	  * */
+	@Override
+	public Page<Ask> askCategory(Long askCategoryId, Pageable pageable){
+		
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		QAsk ask = QAsk.ask;
+		
+//		booleanBuilder.and(ask.teacher.teacherId.eq(id));
+//		booleanBuilder.or(ask.student.studentId.eq(id));
+//		
+		booleanBuilder.and(ask.askCategory.askCategoryId.eq(askCategoryId));
+		
+		JPQLQuery<Ask> query = factory.selectFrom(ask)
+				.where(booleanBuilder)
+				.orderBy(ask.askNo.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		
+		Page<Ask> list = new PageImpl<Ask>(query.fetch(), pageable, query.fetch().size());
+		
+		return list;
+	}
 }

@@ -172,7 +172,7 @@ public class FaqController {
 	@ResponseBody
 	public List<FaqCategory> userselectfaqCategory() {
 		List<FaqCategory> list = faqService.selectfaqCategory();
-
+		
 		return list;
 	}
 	

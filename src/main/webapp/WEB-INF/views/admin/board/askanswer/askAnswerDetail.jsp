@@ -36,7 +36,14 @@
 	    width: 500px;
 	    
 	}
-
+	
+	#preview-image{
+		width: 350px;
+		height: 350px;
+		/* object-fit:cover; */
+		background-size: contain;
+	
+	}
 
 
 </style>
@@ -46,7 +53,7 @@
 	$(function getAnswerList(){
 		//alert(1);
 		$("#answerBtn").click(function(){
-		   alert(123)
+		   
 		    $.ajax({
 			   url: "${pageContext.request.contextPath}/admin/board/insertAnswer",
 			   type: "post",
@@ -55,7 +62,7 @@
 			   success: function(result) {
 				   var data="<table border='1' cellpadding='5'>";
 				  
-					   alert("성공");
+					   alert("답변을 등록하였습니다.");
 						 data+="<tr>";
 							data+="<td>답변 번호 : "+result.answerNo+"</td><p>";
 							data+="<td>답변 내용 : "+result.answerContent+"</td><p>";
@@ -128,27 +135,21 @@
 		 </tr>
 		 	<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
 		<tr>
+			<td>
+				첨부 파일
+			</td>
 		     <td colspan="2" style="text-align: center;">
-				<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+				<img  id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
 				<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
 		     </td>
 	    </tr>
 		
-		
-	
-		
-		
-		<tr>
-			<td>
-				<div align="right">
-					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
-				</div>
-			</td>
-		</tr>
-	
 
 
 </table>
+			
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+				
 	<div align="center">
 		<div id="answerView">
 			

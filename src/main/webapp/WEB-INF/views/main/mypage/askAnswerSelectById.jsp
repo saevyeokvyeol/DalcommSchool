@@ -24,6 +24,10 @@
 	table,th,td{
 		text-align: center;
 	}
+	#askCategory{
+		width: 150px;
+		height: 40px;
+	}
 
 </style>
 
@@ -31,10 +35,14 @@
 <body>
 
 <div class="main-content">
-	<!-- <section>
-		<div>	
-			<h1>1대1 문의</h1> -->
-				 <table class="table">
+	<div class="alert alert-dark" role="alert">
+		     <span>
+				<h1>1대1 문의목록</h1>
+			</span> 
+	</div>
+					
+	 
+				<table class="table">
 		        <thead>
 		            <tr>
 		             <th>글번호</th>
@@ -90,7 +98,14 @@
 												<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 									        </td>
 									        <td>
-									        	${ask.askComplete}
+									        	<c:choose>
+						                        	<c:when test="${ask.askComplete == 'F'}">
+						                        		<span class="badge bg-secondary">미답변</span>
+						                        	</c:when>
+						                        	<c:when test="${ask.askComplete == 'T'}">
+						                        		<span class="badge bg-primary">답변 완료</span>
+						                        	</c:when>
+					                       		</c:choose>
 									        </td>
 									    </tr>
 									
@@ -131,7 +146,7 @@
 				</nav>
 			
 			<div align=right>
-				<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerWriteStudent" role="button">문의하기</a>
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/mypage/askForm" role="button">문의하기</a>
 			</div>
 		<!-- </div>	
 	</section>	 -->   		
