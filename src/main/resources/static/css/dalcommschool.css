@@ -166,15 +166,75 @@ li {
 }
 
 .boardTable .no-record {
-	padding-top: 50px;/*  border: 1px solid #ddd; border-radius: 10px; */
+	padding-top: 50px; text-align: center;
 }
 
 .boardTable i {
-	color: #444; padding-left: 10px
+	color: #444; padding-left: 10px;
 }
 
-#qnaTable td, #qnaTable th {
-	text-align: center;
+#reviewTable td:first-child {
+	width: 101px; text-align: center;
+}
+
+#reviewTable td:nth-child(3) {
+	width: 100px;
+}
+
+#reviewTable td:nth-child(4) {
+	text-align: center; width: 112px;
+}
+
+#reviewTable td:nth-child(5), #reviewTable td:nth-child(6) {
+	padding: 10px 0; width: 26px; text-align: center;
+}
+
+#reviewTable th {
+	background-color: #f9f9f9;
+}
+
+#reviewTable th img {
+	max-width: 100%; border-radius: 5px; margin: 20px auto;
+}
+
+#reviewTable th div {
+	margin: 20px 0;
+}
+
+.starRate {
+	text-align: center; direction: rtl;
+}
+
+.starRate input[type=radio] {
+	display: none;
+}
+
+.starRate label {
+	color: #bfbfbf;
+}
+
+.starRate label:hover {
+	color: #ffab00
+}
+
+.starRate label:hover ~ label {
+	color: #ffab00
+}
+
+.starRate input[type=radio]:checked ~ label {
+	color: #ffab00
+}
+
+.modalImageBox img {
+	max-width: 466px; max-height: 280px; border-radius: 5px;
+}
+
+.modalImageBox button {
+	width: 466px; height: 280px;
+}
+
+.modalImageBox input {
+	display: none;
 }
 
 #qnaTable td, #qnaTable th {
@@ -194,7 +254,7 @@ li {
 }
 
 #qnaTable td:nth-child(5), #qnaTable td:nth-child(6) {
-	padding: 10px 0;
+	padding: 10px 0; width: 26px;
 }
 
 #qnaTable .qnaDetailRecode {
@@ -647,4 +707,8 @@ button.page-link {
 
 #map {
 	height: 400px; width: 750px; border-radius: 10px; margin: 20px 0 ;
+}
+
+i.fa-star {
+	padding: 0;
 }

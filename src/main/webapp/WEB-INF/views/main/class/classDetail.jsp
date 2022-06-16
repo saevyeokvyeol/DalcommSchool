@@ -17,6 +17,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
 			    z-index: 1050!important;
@@ -31,19 +32,6 @@
 			#bookSeat {
 				width: 100px; display: inline; text-align: center;
 			}
-			
-			/* 클래스 후기 CSS */
-/* 			fieldset input[type=radio]{display: none;} */
-/* 			fieldset input[type=radio]:checked~label{text-shadow: 0 0 0 #EB5353;} */
-/* 			fieldset{display: inline-block; direction: rtl; border: 0;} */
-			
-/* 			.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;} */
-/* 			.star:hover{text-shadow: 0 0 0 #EB5353;} */
-/* 			.star:hover~label{text-shadow: 0 0 0 #EB5353;} */
-			
-/* 			textarea{width:100%; height:6.25em; resize:none;} */
-
-			/* 지도 API CSS*/
 		</style>
 		<script>
 			// 풀캘린더 API 사용
@@ -128,6 +116,72 @@
 					}
 				});
 				
+				$("#insertImgBtn").click(function() {
+					$("#insertImgInput").click()
+				})
+				
+				$("#insertImgCon img").click(function() {
+				    $("#insertImgCon").css("display", "none")
+				    $("#insertPreviewImage").attr("src", "")
+				    $("#insertImgBtn").css("display", "block")
+				    $("#insertImgInput").val("")
+				})
+				
+				function readInsertImage(input) {
+				    // 인풋 태그에 파일이 있는 경우
+				    if(input.files && input.files[0]) {
+				        // FileReader 인스턴스 생성
+				        var reader = new FileReader()
+				        // 이미지가 로드가 된 경우
+				        reader.onload = e => {
+				        	var insertPreview = document.getElementById("insertPreviewImage")
+				            insertPreview.src = e.target.result
+				        }
+				        // reader가 이미지 읽도록 하기
+				        reader.readAsDataURL(input.files[0])
+				    }
+				}
+				// input file에 change 이벤트 부여
+				var insertImage = document.getElementById("insertImgInput")
+				insertImage.addEventListener("change", e => {
+					readInsertImage(e.target)
+				    $("#insertImgCon").css("display", "block")
+				    $("#insertImgBtn").css("display", "none")
+				})
+				
+				$("#updateImgBtn").click(function() {
+					$("#updateImgInput").click()
+				})
+				
+				$("#updateImgCon img").click(function() {
+				    $("#updateImgCon").css("display", "none")
+				    $("#updatePreviewImage").attr("src", "")
+				    $("#updateImgBtn").css("display", "block")
+				    $("#updateImgInput").val("")
+				})
+				
+				function readUpdateImage(input) {
+				    // 인풋 태그에 파일이 있는 경우
+				    if(input.files && input.files[0]) {
+				        // FileReader 인스턴스 생성
+				        var reader = new FileReader()
+				        // 이미지가 로드가 된 경우
+				        reader.onload = e => {
+				        	var previewImage = document.getElementById("updatePreviewImage")
+				            previewImage.src = e.target.result
+				        }
+				        // reader가 이미지 읽도록 하기
+				        reader.readAsDataURL(input.files[0])
+				    }
+				}
+				// input file에 change 이벤트 부여
+				var inputImage = document.getElementById("updateImgInput")
+				inputImage.addEventListener("change", e => {
+					readUpdateImage(e.target)
+				    $("#updateImgCon").css("display", "block")
+				    $("#updateImgBtn").css("display", "none")
+				})
+				
 				// 캘린더 랜더링
 				calendar.render();
 				
@@ -203,9 +257,9 @@
 				})
 				
 				// 클래스 후기 아작스
-				function classQna(num) {
+				function classReview(num) {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/board/review/selectByClassId",
+						url: "${pageContext.request.contextPath}/review/selectByClassId",
 						type: "post",
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}, "page": num},
 						dataType : "json",
@@ -216,27 +270,27 @@
 								text = "<tr><td><h5 class='no-record'>아직 후기가 없어요!</h5></td></tr>"
 							} else {
 								$.each(result.list, function(index, item){
-									if(item.blindState == 'T'){
+									if(item.reviewBlindState == 'T'){
 										text += "<tr>"
 										text += "<td colspan='6'>"
 										text += "블라인드된 글입니다"
 										text += "</td>"
 										text += "</tr>"
-										
 									} else {
 										text += "<tr>"
 										text += "<td>"
-										if(item.qnaComplete == 'F'){
-											text += `<span class="badge bg-secondary">미답변</span>`
-										} else {
-											text += `<span class="badge bg-primary">답변 완료</span>`
+										for(var i = 1; i <= item.reviewRate; i++){
+											text += `<i class="fa-solid fa-star text-warning"></i>`
+										}
+										for(var i = 5; i > item.reviewRate; i--){
+											text += `<i class="fa-solid fa-star text-black text-opacity-25"></i>`
 										}
 										text += "</td>"
 										text += "<td>"
-										text += `<button class="btn btn-light qnaDetail" value="\${item.qnaId}">`
-										text += `\${item.qnaTitle}`
-										if(item.secretState == "T"){
-											text += '<i class="fa-solid fa-lock"></i>'
+										text += `<button class="btn btn-light reviewDetail" value="\${item.reviewId}">`
+										text += `\${item.reviewContent.length >= 23 ? item.reviewContent.substring(0, 23).concat("...") : item.reviewContent}`
+										if(item.reviewImg != null){
+											text += `<i class="fa-solid fa-image"></i>`
 										}
 										text += "</button>"
 										text += "</td>"
@@ -244,15 +298,13 @@
 										text += `\${item.studentId.replace(/(?<=.{3})./gi, "*")}`
 										text += "</td>"
 										text += "<td>"
-										text += `\${item.qnaInsertDate.toString().substring(0, 10)}`
+										text += `\${item.reviewInsertDate.toString().substring(0, 10)}`
 										text += "</td>"
 										text += "<td>"
-										if(item.qnaComplete == 'F'){
-											text += `<button class="btn btn-light qnaUpdateBtn" value="\${item.qnaId}"><i class="fa-solid fa-pen fa-xs"></i></button>`
-										}
+										text += `<button class="btn btn-light reviewUpdateBtn" value="\${item.reviewId}"><i class="fa-solid fa-pen fa-xs"></i></button>`
 										text += "</td>"
 										text += "<td>"
-										text += `<button class="btn btn-light qnaDeleteBtn" value="\${item.qnaId}"><i class="fa-solid fa-xmark fa-xs"></i></button>`
+										text += `<button class="btn btn-light reviewDeleteBtn" value="\${item.reviewId}"><i class="fa-solid fa-xmark fa-xs"></i></button>`
 										text += "</td>"
 										text += "</tr>"
 										
@@ -284,11 +336,11 @@
 								if(!doneLoop){
 									if(i == num){
 										pageText += '<li class="page-item">'
-										pageText += `<button class="page-link nowQna" value="\${i}">\${i}</button>`
+										pageText += `<button class="page-link reviewPage nowReview" value="\${i}">\${i}</button>`
 										pageText += '</li>'
 									} else{
 										pageText += '<li class="page-item">'
-										pageText += `<button class="page-link" value="\${i}">\${i}</button>`
+										pageText += `<button class="page-link reviewPage" value="\${i}">\${i}</button>`
 										pageText += '</li>'
 									}
 								}
@@ -298,7 +350,7 @@
 								pageText += `<button class="page-link" value="\${startPage + blockCount}">이후</button>`
 								pageText += '</li>'
 							}
-							$(".qnaPaging").html(pageText)
+							$(".reviewPaging").html(pageText)
 						},
 						error: function(err){
 							alert("Q&A를 조회할 수 없습니다.")
@@ -306,9 +358,141 @@
 					})
 				} // 클래스 후기 아작스 함수 종료
 				
+				// 클래스 후기글 특정 페이지로 이동
+				$(document).on("click", ".reviewPage", function() {
+					classReview($(this).val())
+				})
+				
+				// 클래스 후기글 조회
+				$(document).on("click", ".reviewDetail", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/review/read",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "reviewId" : $(this).val()},
+						success: function(result){
+							$(".reviewDetailRecode").remove();
+							
+							text = "<tr class='reviewDetailRecode'>"
+							text += "<th>"
+							text += "</th>"
+							text += "<th colspan='3'>"
+							if(result.reviewImg != null){
+								text += `<img alt="" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`
+							}
+							text += `<div>\${result.reviewContent}</div>`
+							text += "</th>"
+							text += "<th colspan='2'>"
+							text += "</th>"
+							text += "</tr>"
+							$(this).parent().parent().after(text);
+						},
+						error: function(err){
+							alert("후기를 조회할 수 없습니다.");
+						}
+					})
+				})
+				
+				// 클래스 후기 등록폼
+				$("#reviewInsertModalBtn").click(function() {
+					$("#reviewInsertForm .mainImgCon").css("display", "none")
+					$("#reviewInsertForm .mainFileBtn").css("display", "block")
+					$("#reviewInsertForm [name=reviewContent]").val("")
+					$("#reviewInsertForm [name=reviewRate]:checked").prop("checked", false);
+				})
+				
+				// 클래스 후기 등록
+				$("#reviewInsertBtn").click(function(){
+					$("#reviewInsertForm").ajaxForm({
+						url: "${pageContext.request.contextPath}/review/insert?${_csrf.parameterName}=${_csrf.token}",
+						type: "post",
+						enctype: "multipart/form-data",
+						contentType: false,
+						processData: false,
+						success: function(){
+							$('#reviewInsertModal').modal("hide");
+							$('body').removeClass('modal-open');
+							$('.modal-backdrop').remove();
+							classReview(1);
+						},
+						error:function(xhr, status, error){
+							alert(eval("(" + xhr.responseText + ")").message);
+						}
+					}).submit();
+				})
+				
+				// 클래스 후기 삭제
+				$(document).on("click", ".reviewDeleteBtn", function() {
+					if(!confirm("정말 후기를 삭제하시겠습니까?")){
+						return false
+					}
+					
+					$.ajax({
+						url: "${pageContext.request.contextPath}/review/delete",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "reviewId" : $(this).val()},
+						success: function(result){
+							classReview($(".nowReview").val())
+						},
+						error: function(err){
+							alert("후기를 삭제할 수 없습니다");
+						}
+					})
+				})
+				
+				// 클래스 후기 수정폼
+				$(document).on("click", ".reviewUpdateBtn", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/review/read",
+						type: "post",
+						context: this,
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "reviewId" : $(this).val()},
+						success: function(result){
+							if(result.reviewImg != null){
+								$("#updatePreviewImage").attr("src", `${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`)
+								$("#updateImgCon").css("display", "blobk")
+								$("#updateImgBtn").css("display", "none")
+							} else {
+								$("#updatePreviewImage").attr("src", "")
+								$("#updateImgCon").css("display", "none")
+								$("#updateImgBtn").css("display", "block")
+							}
+							
+							$("#reviewUpdateForm [name=reviewContent]").val(result.reviewContent)
+							$("#" + result.reviewRate + "-update").prop("checked", true);
+							$("#reviewId").val($(this).val());
+							
+							$("#reviewUpdateModal").modal("show")
+						},
+						error: function(err){
+							alert("Q&A를 삭제할 수 없습니다");
+						}
+					})
+				})
+				
+				// 클래스 후기 수정
+				$("#reviewUpdateBtn").click(function(){
+					$("#reviewUpdateForm").ajaxForm({
+						url: "${pageContext.request.contextPath}/review/update?${_csrf.parameterName}=${_csrf.token}",
+						type: "post",
+						enctype: "multipart/form-data",
+						contentType: false,
+						processData: false,
+						success: function(){
+							$('#reviewUpdateModal').modal("hide");
+							$('body').removeClass('modal-open');
+							$('.modal-backdrop').remove();
+							classReview($(".nowReview").val())
+						},
+						error:function(xhr, status, error){
+							alert(eval("(" + xhr.responseText + ")").message);
+						}
+					}).submit();
+				})
 				
 				// 클래스 문의글 아작스
-				function classReview(num) {
+				function classQna(num) {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/board/qna/selectByClassId",
 						type: "post",
@@ -389,11 +573,11 @@
 								if(!doneLoop){
 									if(i == num){
 										pageText += '<li class="page-item">'
-										pageText += `<button class="page-link nowQna" value="\${i}">\${i}</button>`
+										pageText += `<button class="page-link qnaPage nowQna" value="\${i}">\${i}</button>`
 										pageText += '</li>'
 									} else{
 										pageText += '<li class="page-item">'
-										pageText += `<button class="page-link" value="\${i}">\${i}</button>`
+										pageText += `<button class="page-link qnaPage" value="\${i}">\${i}</button>`
 										pageText += '</li>'
 									}
 								}
@@ -412,7 +596,7 @@
 				} // 클래스 문의글 아작스 함수 종료
 				
 				// 클래스 문의글 특정 페이지로 이동
-				$(document).on("click", ".qnaPaging > li > button", function() {
+				$(document).on("click", ".qnaPage", function() {
 					classQna($(this).val())
 				})
 				
@@ -430,11 +614,7 @@
 						type: "post",
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId},
 							"qnaTitle": $("#qnaInsertTitle").val(), "qnaContent": $("#qnaInsertContent").val(), "secretState": $("[name=qnaInsertSecretState]:checked").val()},
-						success: function(){
-							$("#qnaInsertTitle").val("")
-							$("#qnaInsertContent").val("")
-							$("[name=qnaInsertSecretState]:checked").prop("ckecked", false);
-							
+						success: function(){							
 							classQna(1)
 							$('#qnaInsertForm').modal("hide");
 							$('body').removeClass('modal-open');
@@ -447,7 +627,6 @@
 				})
 				
 				// 클래스 문의글 조회
-				
 				$(document).on("click", ".qnaDetail", function() {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/board/qna/selectByQnaId",
@@ -561,45 +740,157 @@
 				classReview(1)
 			})
 			
-			  var geocoder;
-			  var map;
+		var geocoder;
+		var map;
+		
+		function initialize() {
+		  geocoder = new google.maps.Geocoder();
+		  var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+		  var mapOptions = {
+		    zoom: 16,
+		    center: latlng
+		  }
+		  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		}
 			  
-			  function initialize() {
-			    geocoder = new google.maps.Geocoder();
-			    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
-			    var mapOptions = {
-			      zoom: 16,
-			      center: latlng
-			    }
-			    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-			  }
+		function codeAddress() {
+		    var address = document.getElementById('placeAddr').value;
+		    geocoder.geocode( { 'address': address}, function(results, status) {
+		      if (status == 'OK') {
+		    	  
+		    	  var lat = results[0].geometry.location.lat();
+		 	      var lng = results[0].geometry.location.lng(); 
+		    	  
+		        map.setCenter(results[0].geometry.location);
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            position: results[0].geometry.location
+		        });
+		        
+		      } else {
+		        alert('Geocode was not successful for the following reason: ' + status);
+		      }
+		    });
+		}
 			  
-			  function codeAddress() {
-				    var address = document.getElementById('placeAddr').value;
-				    geocoder.geocode( { 'address': address}, function(results, status) {
-				      if (status == 'OK') {
-				    	  
-				    	  var lat = results[0].geometry.location.lat();
-				 	      var lng = results[0].geometry.location.lng(); 
-				    	  
-				        map.setCenter(results[0].geometry.location);
-				        var marker = new google.maps.Marker({
-				            map: map,
-				            position: results[0].geometry.location
-				        });
-				        
-				      } else {
-				        alert('Geocode was not successful for the following reason: ' + status);
-				      }
-				    });
-				}
 		$(function(){	
 			codeAddress();
-				
 		})
 		</script>
 	</head>
 	<body>
+		<!-- 클래스 후기 조회 모달 -->
+		<div class="modal fade" id="reviewSelectForm" tabindex="-1" aria-labelledby="reviewSelectFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="reviewSelectFormLabel">클래스 후기</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 클래스 후기 등록 모달 -->
+		<div class="modal fade" id="reviewInsertModal" tabindex="-1" aria-labelledby="reviewInsertModalFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="reviewInsertForm">
+						<div class="modal-header">
+							<h5 class="modal-title" id="reviewInsertModalLabel">클래스 후기 등록</h5>
+							<input type="hidden" name="classId" value="${classes.classId}"/>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="starRate mb-3">
+								<input type="radio" id="5-insert" name="reviewRate" value="5"/>
+								<label for="5-insert"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="4-insert" name="reviewRate" value="4"/>
+								<label for="4-insert"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="3-insert" name="reviewRate" value="3"/>
+								<label for="3-insert"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="2-insert" name="reviewRate" value="2"/>
+								<label for="2-insert"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="1-insert" name="reviewRate" value="1"/>
+								<label for="1-insert"><i class="fa-solid fa-star fa-2xl"></i></label>
+							</div>
+							<div class="modalImageBox mb-3">
+								<div class="image-container" id="insertImgCon">
+								    <a><img id="insertPreviewImage" src=""></a>
+								</div>
+								<button type="button" class="fileBtn" id="insertImgBtn">
+									<i class="fa-regular fa-image fa-2xl"></i>
+									후기 이미지 등록
+								</button>
+								<input type="file" id="insertImgInput" name="file">
+							</div>
+							<div class="form-floating">
+								<textarea class="form-control" name="reviewContent" placeholder="내용" style="height: 150px"></textarea>
+								<label for="reviewContent">내용</label>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" id="reviewInsertBtn">등록</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 클래스 후기 수정 모달 -->
+		<div class="modal fade" id="reviewUpdateModal" tabindex="-1" aria-labelledby="reviewUpdateModalFormLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="reviewUpdateForm" method="post" enctype="multipart/form-data">
+						<div class="modal-header">
+							<h5 class="modal-title" id="reviewUpdateModalLabel">클래스 후기 수정</h5>
+							<input type="hidden" name="reviewId" id="reviewId">
+							<input type="hidden" name="classId" value="${classes.classId}"/>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="starRate mb-3">
+								<input type="radio" id="5-update" name="reviewRate" value="5"/>
+								<label for="5-update"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="4-update" name="reviewRate" value="4"/>
+								<label for="4-update"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="3-update" name="reviewRate" value="3"/>
+								<label for="3-update"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="2-update" name="reviewRate" value="2"/>
+								<label for="2-update"><i class="fa-solid fa-star fa-2xl"></i></label>
+								<input type="radio" id="1-update" name="reviewRate" value="1"/>
+								<label for="1-update"><i class="fa-solid fa-star fa-2xl"></i></label>
+							</div>
+							<div class="modalImageBox mb-3">
+								<div class="image-container" id="updateImgCon">
+								    <a><img id="updatePreviewImage" src=""></a>
+								</div>
+								<button type="button" class="fileBtn" id="updateImgBtn">
+									<i class="fa-regular fa-image fa-2xl"></i>
+									후기 이미지 등록
+								</button>
+								<input type="file" id="updateImgInput" name="file">
+							</div>
+							<div class="form-floating">
+								<textarea class="form-control" name="reviewContent" placeholder="내용" style="height: 150px"></textarea>
+								<label for="qnaContent">내용</label>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" id="reviewUpdateBtn">수정</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 		<!-- 클래스 Q&A 등록 모달 -->
 		<div class="modal fade" id="qnaInsertForm" tabindex="-1" aria-labelledby="qnaInsertFormLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -748,7 +1039,7 @@
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">
 							클래스 후기
-							<button type="button" class="btn btn-outline-primary">후기 등록</button>
+							<button type="button" class="btn btn-outline-primary" id="reviewInsertModalBtn" data-bs-toggle="modal" data-bs-target="#reviewInsertModal">후기 등록</button>
 						</h4>
 						<hr>
 						<div class="boardTable">
@@ -756,7 +1047,7 @@
 							</table>
 						</div>
 						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
+							<ul class="pagination justify-content-center reviewPaging">
 							</ul>
 						</nav>
 					</div>

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@DynamicInsert
 @Setter
 @Getter
 @NoArgsConstructor
@@ -49,7 +51,7 @@ public class ClassReview {
 	
 	private int reviewRate;
 	
-	private String reviewBlindState = "false";
+	private String reviewBlindState;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
