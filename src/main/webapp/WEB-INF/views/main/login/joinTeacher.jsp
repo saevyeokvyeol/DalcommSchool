@@ -9,6 +9,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -23,6 +24,27 @@
 
 <style type="text/css">
 
+	.pwdCheck_success {
+		font-size: 14px;
+		color: #00944a;
+		display: none;
+		padding: 20px;
+	}
+	.pwdCheck_Fail {
+		font-size: 14px;
+		color: #f85656;
+		display: none;
+		padding: 20px;
+		
+	}
+	
+	span{
+		font-size: 14px;
+		padding: 4px 10px;
+		color: #f85656;
+	
+	}
+	
 	.message{display: none}
 	
 </style>
@@ -193,7 +215,7 @@
 				dataType: "text",
 				success: function(data){
 					if(data=="true"){
-						swal("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
+						swal("가입한 이력이 있는 번호입니다. \n 아이디 및 비밀번호 찾기를 이용해주세요.");
 						return;
 					}else{
 						swal("사용 가능한 번호입니다.");
@@ -267,22 +289,22 @@
 			
 			if(pwd1!="" && pwd2!=""){
 				if(pwd1 == pwd2){
-// 					$("#pwdCheck_Fail").css("display", "none");
-// 					$("#pwdCheck_success").css("display", "inline-block");
+ 					$("#pwdCheck_Fail").css("display", "none");
+ 					$("#pwdCheck_success").css("display", "inline-block");
 					
 					isSamePwd = true;
 				}else{
-// 					$("#pwdCheck_success").css("display", "none");
-// 					$("#pwdCheck_Fail").css("display", "inline-block");
+ 					$("#pwdCheck_success").css("display", "none");
+ 					$("#pwdCheck_Fail").css("display", "inline-block");
 					isSamePwd = false;
 				}
 			}else if(pwd1 != "" && pwd2 == ""){
-// 				$("#pwdCheck_success").css("display", "none");
-// 				$("#pwdCheck_Fail").css("display", "none");
+ 				$("#pwdCheck_success").css("display", "none");
+ 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}else{
-// 				$("#pwdCheck_success").css("display", "none");
-// 				$("#pwdCheck_Fail").css("display", "none");
+ 				$("#pwdCheck_success").css("display", "none");
+ 				$("#pwdCheck_Fail").css("display", "none");
 				isSamePwd = false;
 			}
 		})
@@ -330,23 +352,23 @@
 				event.preventDefault();
 			}	 
 			
-			swal("강사 회원가입에 성공하셨습니다. 로그인해주세요")
+			swal("달콤스쿨 회원가입 완료", "가입하신 계정으로 로그인 후 이용해주세요", "success");
 		})
 	})	
 	
 </script>
 <script type="text/javascript">
-function setThumbnail(event){
-	var reader=new FileReader();
-	
-	reader.onload=function(event){
-		var img = document.createElement("img");
-		img.setAttribute("src", event.target.result);
-		img.setAttribute("class", "col-lg-6");
-		document.querySelector("div#image_container").appendChild(img);
+	function setThumbnail(event){
+		var reader=new FileReader();
+		
+		reader.onload=function(event){
+			var img = document.createElement("img");
+			img.setAttribute("src", event.target.result);
+			img.setAttribute("class", "col-lg-6");
+			document.querySelector("div#image_container").appendChild(img);
+		}
+		reader.readAsDataURL(event.target.files[0]);
 	}
-	reader.readAsDataURL(event.target.files[0]);
-}
 </script>
 
 </head>
@@ -361,107 +383,145 @@ function setThumbnail(event){
 	    <h3> 강사 회원가입 </h3><br><br>
 	    <hr>
 	    
-    	<!-- 아이디 -->
-    		<div class="col-md-2">
-			</div>	
-		    <div class="col-md-2">
-			    <label for="studentId" class="form-label">아이디</label>
-		  	</div>
-		  	 <div class="col-md-6">
-				<input type="text" id="teacherId" class="form-control" name="teacherId" placeholder="영소문자+숫자, 최소 6글자 이상 10글자 이하로 입력해주세요." required/>
-				<span id="notValidId" class="message">ID는 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
-				<span id="idCheck_success" class="message">사용가능한 ID입니다^^</span>
-				<span id="idCheck_fail" class="message">이미 존재하는 ID입니다.</span>
-		  	</div>
-		  	<div class="col-md-2">
-				<button type="button" class="btn btn-primary" id="idCheck">중복체크</button>
-			</div>
+	    <table id="classTable">
+	    <br><br>
+	    <tr>
+	    	<td>
+	    		<!-- 아이디 -->
+		    	<div class="row g-3">
+		  				<div class="col-md-2">
+		  				</div>
+						<div class="col-md-8">
+							<div class="form-floating mb-3">
+			    			<input type="text" id="teacherId" class="form-control" name="teacherId" placeholder="영소문자+숫자, 최소 6글자 이상 10글자 이하로 입력해주세요." required/>
+			    			<label for="teacherId">아이디</label>
+			    				<span id="notValidId" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp; 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
+			    			</div>
+		    			</div>
+		    			<div class="col-md-2">
+		    				<button type="button" class="btn btn-primary" id="idCheck">중복체크</button>
+		    			</div>
+	    		</div>
+	    	</td>
+	    </tr>
 	    
     	<!-- 비밀번호 -->
-    		<div class="col-md-2">
-			</div>	
-     		<div class="col-md-2">
-     			<label for="teacherPwd" class="form-label">비밀번호</label>
-     		</div>
-     		<div class="col-md-6">
-				<input type="password" id="teacherPwd" name="teacherPwd" class="form-control" placeholder="영소문자+대문자+숫자, 최소 8글자 이상 입력해주세요." required/>
-	      		<span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
-	      	</div>
-	      	<div class="col-md-2">
-			</div>	
+	    <tr>
+	    	<td>
+	    	<div class="row g-3">
+		    	<div class="col-md-2">
+				</div>
+		    	<div class="col-md-8">
+			    	<div class="form-floating mb-3">
+				    	<input type="password" id="teacherPwd" name="teacherPwd" class="form-control" placeholder="영소문자+대문자+숫자, 최소 8글자 이상 입력해주세요." required/>
+				    	<label for="teacherPwd">비밀번호</label>
+				    		<span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span>
+			    	</div>
+		    	</div>
+		    	<div class="col-md-2">
+				</div>
+	    	</div>
+	    	</td>
+	    </tr>
 	    
-		<!-- 비밀번호 확인 -->
-			<div class="col-md-2">
-			</div>	
-     		<div class="col-md-2">
-     			<label for="teacherPwd2" class="form-label">비밀번호 확인</label>
-     		</div>
-     		<div class="col-md-6">
-				<input type="password" id="teacherPwd2" name="teacherPwd2" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." required/>
-				<span id="pwdCheck_success" class="message">비밀번호가 일치합니다.</span>
-				<span id="pwdCheck_Fail" class="message">비밀번호 일치 여부를 확인해주세요.</span>
-	      	</div>
-	      	<div class="col-md-2">
-			</div>	
-	    
+    	<!-- 비밀번호 확인 -->
+	    <tr>
+	    	<td>
+				<div class="row g-3">
+		  			<div class="col-md-2">
+	  				</div>
+		    		<div class="col-md-8">
+			  		<div class="form-floating mb-3">
+			    		<input type="password" id="teacherPwd2" name="teacherPwd2" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." required/>
+			    		<label for="studentPwd2">비밀번호 확인</label>
+			    	</div>	
+		    		</div>
+		    		<div class="col-md-2">
+		  				<span id="pwdCheck_success" class="pwdCheck_success"><i class="fa-solid fa-circle-check fa-2xl"></i></span>
+					    <span id="pwdCheck_Fail" class="pwdCheck_Fail"><i class="fa-solid fa-triangle-exclamation fa-2xl"></i></span>
+					</div>
+		    	</div>
+	    	</td>
+	    </tr>
 	    <!-- 이름 -->
-	    	<div class="col-md-2">
-			</div>	
-			<div class="col-md-2">
-			   <label for="teacherName" class="form-label">이름</label>
-			</div>
-			<div class="col-md-6">
-				<input type="text" id="teacherName" name="teacherName" class="form-control" placeholder="" required="required"/>
-			</div>
-			<div class="col-md-2">
-			</div>	
+	    <tr>
+	    	<td>
+		    	<div class="row g-3">
+		  			<div class="col-md-2">
+	  				</div>
+		    		<div class="col-md-8">
+			  		<div class="form-floating mb-3">
+    					<input type="text" id="teacherName" name="teacherName" class="form-control" placeholder="" required="required"/>
+    					<label for="teacherName">이름</label>
+   					</div>
+   					</div>
+ 					<div class="col-md-2">
+					</div>
+				</div>
+	    	</td>
+	    </tr>
 	    
-    	<!-- 닉네임 -->
-    		<div class="col-md-2">
-			</div>	
-			<div class="col-md-2">
-			   <label for="teacherNick" class="form-label">닉네임</label>
-			</div>
-			<div class="col-md-6">
-				<input type="text" id="teacherNick" name="teacherNickname" class="form-control" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
-				<span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span></td>
-				<span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span></td>
-			</div>
-			<div class="col-md-2">
-				<button type="button" id="nickCheck" class="btn btn-primary">중복체크</button>
-			</div>	
+	    <!-- 닉네임 -->
+	    <tr>
+	    	<td>
+	    	<div class="row g-3">
+		  			<div class="col-md-2">
+	  				</div>
+		    		<div class="col-md-8">
+				  		<div class="form-floating mb-3">
+							<input type="text" id="teacherNick" name="teacherNickname" class="form-control" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
+					  		<label for="teacherNick">닉네임</label>
+				  			<span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span>
+							<span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span>
+				  		</div>
+			  		</div>
+	    			<div class="col-md-2">
+	    				<button type="button" id="nickCheck" class="btn btn-primary">중복체크</button>
+	    			</div>
+    			</div>
+	    	</td>
+	    </tr>
+
+	    <!-- 휴대폰 번호 -->
+	    <tr>
+		    <td>
+			    <div class="row g-3">
+		  			<div class="col-md-2">
+	  				</div>
+		    		<div class="col-md-8">
+			  		<div class="form-floating mb-3">
+	    				<input type="text" id="teacherPhone" name="teacherPhone" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+	    				<label for="teacherPhone">휴대폰 번호</label>
+    						<span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
+   					</div>
+   					</div>
+   					<div class="col-md-2">
+   						<button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
+   					</div>
+				</div>
+		    </td>
+	    </tr>
 	    
-       	<!-- 휴대폰 번호 -->
-       		<div class="col-md-2">
-			</div>	
-			<div class="col-md-2">
-			   <label for="teacherPhone" class="form-label">휴대폰 번호</label>
-			</div>
-			<div class="col-md-6">
-				<input type="text" id="teacherPhone" name="teacherPhone" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
-				<span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
-				<span id="phoneCheck_success" class="message">사용가능한 번호입니다.</span></td>
-				<span id="phoneCheck_fail" class="message">이미 가입한 이력이 있는 번호입니다.</span></td>
-			</div>
-			<div class="col-md-2">
-				<button type="button" id="phoneCheck" class="btn btn-primary">중복체크</button>
-			</div>	
-	    
-    	<!-- 이메일 -->
-    		<div class="col-md-2">
-			</div>	
-			<div class="col-md-2">
-			   <label for="teacherEmail" class="form-label">이메일</label>
-			</div>
-			<div class="col-md-6">
-				<input type="text" id="teacherEmail" name="teacherEmail" class="form-control" placeholder="" required="required"/>
-				<span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span></td>
-			</div>
-			<div class="col-md-2">
-			</div>	
-			
-	    <br><br>
-	    <hr>
+	    <!-- 이메일 -->
+	    <tr>
+	    	<td>
+		    	<div class="row g-3">
+		  			<div class="col-md-2">
+		  			</div>
+					<div class="col-md-8">
+			  		<div class="form-floating mb-3">
+		    			<input type="text" id="teacherEmail" name="teacherEmail" class="form-control" placeholder="" required="required"/>
+		    			<label for="teacherEmail">이메일</label>
+		    			<span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span>
+		    		</div>
+		    		</div>
+	 			  	<div class="col-md-2">
+		  			</div>
+		  		</div>	
+	    	</td>
+	    </tr>
+    </table>
+	   
 	    <!-- 버튼 -->
 	    <div class=".col-6 .col-sm-4 text-center">
 	  		<input type="submit" id="joinBtn" class="btn btn-primary" value="회원가입">
