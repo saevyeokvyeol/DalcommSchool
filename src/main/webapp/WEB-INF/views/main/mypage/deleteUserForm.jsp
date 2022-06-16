@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetswal/dist/sweetswal.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -58,7 +60,7 @@
 			  $("#bt").click(function(){
 			   
 				  if($("#userPwd").val() == ''){
-						alert("비밀번호를 입력해주세요");
+						swal("비밀번호를 입력해주세요");
 						return false;
 				  }
 
@@ -80,14 +82,14 @@
 								//모달 id값 찾기 
 								$("#staticBackdrop").modal('hide');
 								$(".modal-backdrop.show").remove(); 
-								alert("비밀번호 오류로 탈퇴할 수 없습니다.");
+								swal("비밀번호 오류로 탈퇴할 수 없습니다.");
 								//btn.disabled = 'disabled';
 								return;
 							}
 						}, //success 끝
 						error : function(err) {
 							console.log("에러 = " , err);
-							alert(err + "에러 발생");
+							swal(err + "에러 발생");
 						}
 				  })//ajax();
 		})//Withdrawal;

@@ -28,8 +28,8 @@ public class FaqController {
 
 	private final FaqService faqService;
 
-	private final static int PAGE_COUNT = 5;
-	private final static int BLOCK_COUNT = 2;
+	private final static int PAGE_COUNT = 10;
+	private final static int BLOCK_COUNT = 5;
 
 	/**
 	 * FAQ 관리자 조회
@@ -57,12 +57,20 @@ public class FaqController {
 	 * FAQ 유저 조회
 	 */
 	@RequestMapping("/main/board/FAQ/faqList")
-	private String userselectAllfqa(Model model) {
-		List<Faq> faqlist = faqService.userselectAllfqa();
+	private void userselectAllfqa(Model model, @RequestParam(defaultValue = "1")int nowPage) {
+		
+		//페이징 처리하기
+		Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "faqNo");
+		Page<Faq> faqlist = faqService.userselectAllfqa(page);
 
 		model.addAttribute("faqlist", faqlist);
-
-		return "main/board/FAQ/faqList";
+		
+		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
+		 int startPage = nowPage-temp;
+		 
+		 model.addAttribute("blockCount",BLOCK_COUNT);
+		 model.addAttribute("startPage",startPage);
+		 model.addAttribute("nowPage",nowPage);
 	}
 
 	@RequestMapping("/admin/board/FAQ/faqCategoryList")
