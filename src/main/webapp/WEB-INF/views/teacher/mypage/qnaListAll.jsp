@@ -303,14 +303,14 @@ $(function() {
 		<form name="replyRequestForm" method="post" id="replyRequestForm" >
 			<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type=hidden name="replyId" id="replyId" value="${qnaReply.replyId}">
-		
+			
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-outline-primary replyUpdateForm" data-bs-toggle="modal" data-bs-target="#replyUpdateModal" value="${qnaReply.replyId}">
 			  답글 수정하기
 			</button>
 			<input class="btn btn-outline-primary deleteBtn" type="button" value="답글 삭제하기" >
-
 		</form>
+		
         
         
       </div>
