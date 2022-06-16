@@ -161,24 +161,13 @@ public class ClassReviewController {
 		return "main/mypage/reviewList";
 	}
 	
-//	/**
-//	 * 후기 상세 보기(메인, 강사)
-//	 * */
-//	@RequestMapping("/main/board/review/read/{reviewId}")
-//	public ModelAndView readReviewUser(@PathVariable Long reviewId) {
-////		reviewId=2L;
-//		ClassReview review = reviewService.selectByReviewId(reviewId);
-//		
-//		return new ModelAndView("main/board/review/reviewDetail", "review", review);
-//	}
-	
 	/**
-	 * 후기 상세 보기(메인, 강사 - 아작스)
+	 * 후기 상세 보기
 	 * */
-	@RequestMapping("/main/board/review/read")
+	@RequestMapping("/review/read")
 	@ResponseBody
 	public ClassReviewDTO readReviewUser(Long reviewId) {
-//		reviewId=2L;
+		
 		ClassReview review = reviewService.selectByReviewId(reviewId);
 
 		ClassReviewDTO reviewDTO = new ClassReviewDTO();
@@ -191,34 +180,12 @@ public class ClassReviewController {
 	}
 	
 	/**
-	 * 후기 상세 보기(학생 마이페이지)
-	 * */
-	@RequestMapping("/main/mypage/review/read/{reviewId}")
-	public ModelAndView readReviewStudent(@PathVariable Long reviewId) {
-//		reviewId=2L;
-		ClassReview review = reviewService.selectByReviewId(reviewId);
-		
-		return new ModelAndView("main/mypage/reviewDetail", "review", review);
-	}
-	
-	/**
-	 * 후기 상세 보기(관리자)
-	 * */
-	@RequestMapping("/admin/board/review/read/{reviewId}")
-	public ModelAndView readReviewAdmin(@PathVariable Long reviewId) {
-//		reviewId=2L;
-		ClassReview review = reviewService.selectByReviewId(reviewId);
-		
-		return new ModelAndView("admin/board/review/reviewDetail", "review", review);
-	}
-	
-	/**
 	 * 클래스 후기 등록 폼
 	 * */
 //	@RequestMapping("/main/mypage/review/writeForm")
 //	public String insertForm(Long classId, Model model) {
 //		
-////		classId=2L;
+//		classId=2L;
 //		model.addAttribute("classId", classId);
 //		
 //		return "main/mypage/review/insertReview";
@@ -252,17 +219,6 @@ public class ClassReviewController {
 		reviewService.insert(review);
 		
 	}
-	
-	/**
-	 * 클래스 후기 수정 폼
-	 * */
-//	@RequestMapping("/review/updateForm")
-//	public ModelAndView updateReviewForm(Long reviewId) {
-////		reviewId=1L;
-//		ClassReview review = reviewService.selectByReviewId(reviewId);
-//		
-//		return new ModelAndView("main/mypage/reviewUpdate", "review", review);
-//	}
 	
 	/**
 	 * 클래스 후기 수정 폼(아작스)
@@ -312,7 +268,7 @@ public class ClassReviewController {
 	/**
 	 * 클래스 후기 블라인드 처리
 	 * */
-	@RequestMapping("/main/board/review/blind")
+	@RequestMapping("/review/blind")
 	@ResponseBody
 	public String reviewBlind(Long reviewId, String reviewBlindState) {
 		

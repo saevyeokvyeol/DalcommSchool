@@ -23,7 +23,7 @@
 
 </style>
 <meta charset="UTF-8">
-<title>메인페이지용 리뷰 리스트</title>
+<title>관리자용 리뷰 리스트</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
@@ -38,13 +38,12 @@ $(function(){
 	$(".list-reviewContent").click(function(){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/admin/board/review/read",
+			url:"${pageContext.request.contextPath}/review/read",
 			type: "post",
 			data:{"${_csrf.parameterName}": "${_csrf.token}",
 				  "reviewId" : $(this).val()	
 			},
 			dataType:"json",
-// 				alert(result.reviewImg.toString());
 			success:function(result){
 				let text = "";
 				let rate = result.reviewRate;
@@ -80,15 +79,16 @@ $(function(){
 					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
 				}
 				
+				let str="";
 				let image = `\${result.reviewImg}`;
-				
+								
 				if(image!='null'){
-					$("#reviewDetail-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
-				} else {
-					$("#reviewDetail-form .reviewImg").attr("src","");
+					str += `<img class="reviewImg" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`;
 				}
-				
+								
+				$(".imgDiv").html(str);
 				$("#reviewDetail-form .reviewRate").html(text);
+				
 				
 				$("#reviewDetail-form .reviewId").val(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
 				$("#reviewDetail-form .studentId").val(`\${result.studentId}`);
@@ -106,14 +106,18 @@ $(function(){
 	/*
 	블라인드 처리
 	*/
-	$("blindBtn").click(function(){
-			var target =$(this).attr("name")
+	$("#blindBtn").click(function(){
+			$("#blindModal").modal("hide");
+			
+			var target = $("#reviewDetail-form .reviewId").val()
 			
 			$.ajax({
-	        url: "${pageContext.request.contextPath}/main/board/review/blind" , //서버요청주소
+	        url: "${pageContext.request.contextPath}/review/blind" , //서버요청주소
 	        type: "post" , //요청방식 (get,post...)
-	        data: {"${_csrf.parameterName}": "${_csrf.token}", reviewId: target, reviewBlindState: 'true'} , //서버에게 보낼 데이터정보(parameter정보)
-	        
+	        data: {"${_csrf.parameterName}": "${_csrf.token}",
+	        	reviewId: target,
+	        	reviewBlindState: 'true'
+	        } , //서버에게 보낼 데이터정보(parameter정보)
 	        success: function(result){
 	            alert("블라인드 처리되었습니다.")
 	            location.reload()
@@ -134,6 +138,7 @@ $(function(){
 	<table>
 		  <thead>
 		    <tr>
+		      <th>후기 번호</th>
 		      <th>아이디</th>
 		      <th>별점</th>
 		      <th>클래스 이름</th>
@@ -155,6 +160,7 @@ $(function(){
 		        <c:forEach items="${classReviews.content}" var="review">
 		          <div id="review">
 		          <tr>
+		          	<td><span>${review.reviewId }</span></td>
 		            <td><span>${review.student.studentId}</span></td>
 		            <td>
 				    	<fieldset>
@@ -205,6 +211,9 @@ $(function(){
 		            		</c:when>
 		            		<c:when test="${review.reviewBlindState eq 'false'}">
 		            			<button id="list-reviewContent" class="list-reviewContent" data-bs-toggle="modal" data-bs-target="#detailModal" value="${review.reviewId}">${review.reviewContent}</button>
+		            			<c:if test="${review.reviewImg != null}">
+									<i class="fa fa-file-image-o" aria-hidden="true"></i>
+								</c:if>
 		            		</c:when>
 		            	</c:choose>
 		            </td>
@@ -233,7 +242,7 @@ $(function(){
 		
 	<!---------------------상세보기 모달 ------------------------------->
 		<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLabel">후기 상세보기</h5>
@@ -282,7 +291,7 @@ $(function(){
 					  	<tr>
 					    	<th rowspan="2">후기</th>
 					    	<td>
-					    	  <div><img class="reviewImg" alt=""></div>
+					    	  <div class="imgDiv"></div>
 					    	</td>
 					    </tr>
 					    <tr>
@@ -292,22 +301,18 @@ $(function(){
 					  	</tr>
 					</table>
 				</form>
+				
 		      </div>
 
 		      <div class="modal-footer">
 		      	<form id="requestForm">
 		  	    <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
 		            <td>
-                   	  <c:choose>
-                         <c:when test="${review.reviewBlindState eq 'false'}">
-                             <button type="blindBtn" class="btn btn-danger" name="${review.reviewId}" value="false">게시글 숨기기</button>
-                         </c:when>
-                         <c:when test="${review.reviewBlindState eq 'true'}">
-                             <input type="text" class="blinded" value="블라인드 처리됨" readonly>
-                         </c:when>
-                      </c:choose>
+		            	<div class="blindBtnDiv">
+                             <button type="button" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#blindModal" name="${review.reviewId}" value="false">게시글 숨기기</button>
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      	</div>
 	                </td>
-			  	<input type="button" id="cancelBtn" onclick="location.href='${pageContext.request.contextPath}/admin/board/review/list'" value="취소">
 				</form>
 		      </div>
 		    </div>
@@ -317,8 +322,8 @@ $(function(){
 
 <!---------------------------------- 블라인드 확인 모달 -------------------------------------->
 
-	<div class="modal fade" id="deleteModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+	<div class="modal fade" id="blindModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="staticBackdropLabel">후기 블라인드 처리</h5>
@@ -328,13 +333,13 @@ $(function(){
 		       블라인드 처리하시겠습니까?
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" id="deleteBtn">아작스로 삭제</button>
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary" id="blindBtn">예</button>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
 		      </form>
 		      </div>
 		    </div>
 		  </div>
-		</div>
+	</div>
 	
 		
 	<!-- 페이징 처리 -->
