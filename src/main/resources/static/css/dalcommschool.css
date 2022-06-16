@@ -15,6 +15,10 @@ a {
 	vertical-align: middle;
 }
 
+li {
+	list-style: none;
+}
+
 /* 헤더 */
 #index-header {
 	width: 100%; position: fixed; z-index: 1040; 
@@ -202,7 +206,27 @@ a {
 }
 
 .classInfoBox .classBoxName {
-	display: flex; justify-content: space-between;
+	display: flex; justify-content: space-between; font-weight: 650;
+}
+
+.classInfoBox h5 {
+	font-weight: 630; margin-bottom: 15px;
+}
+
+.classInfoBox .infraList {
+	padding: 0; margin: 5px 0; display: flex; justify-content: space-between;
+}
+
+.classInfoBox .infraList li {
+	padding: 10px; margin: 5px; text-align: center; color: #555;
+}
+
+.classInfoBox .infraList li div {
+	padding-top: 10px;
+}
+
+.classInfoBox #route {
+	margin: 10px 0 30px;
 }
 
 .classBox .classBoxImg {
@@ -619,4 +643,8 @@ button.page-link {
 
 #chartBox canvas {
 	width: 500px;
+}
+
+#map {
+	height: 400px; width: 750px; border-radius: 10px; margin: 20px 0 ;
 }

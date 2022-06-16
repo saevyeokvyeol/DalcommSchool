@@ -1,7 +1,10 @@
 package dcsc.mvc.controller.board;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,32 +35,39 @@ import lombok.RequiredArgsConstructor;
 public class ClassReviewController {
 	
 	public final ClassReviewService reviewService;
-	private final static int PAGE_COUNT=5;
-	private final static int BLOCK_COUNT=3;
+	private final static int PAGE_COUNT=10;
+	private final static int BLOCK_COUNT=5;
 	
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/main/reviewList/classId")
-	public String selectByClassId(Model model, Long classId, @RequestParam(defaultValue="1") int nowPage){
-//		List<ClassReview> list = reviewService.selectByClassId(classId);
-		
-		classId=1L;
-		
+	@RequestMapping("/board/review/selectByClassId")
+	public Map<String, Object> selectByClassId(Model model, Long classId, int page){
 		//페이징 처리하기
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByClassId(classId, page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectByClassId(classId, pageable);
 		
-		model.addAttribute("classReviews", pageList);
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ClassReviewDTO> list = new ArrayList<ClassReviewDTO>();
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
-	
-		model.addAttribute("blockCount",BLOCK_COUNT);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		for(ClassReview c : pageList.getContent()) {
+			ClassReviewDTO dto = new ClassReviewDTO(c.getStudent().getStudentId(), c.getReviewContent(),
+					c.getReviewId(), c.getReviewImg(), c.getReviewInsertDate(), c.getReviewRate(),
+					null, c.getReviewBlindState(), null);
+			list.add(dto);
+		}
+		
+		map.put("list", list);
+		
+		int temp = (page-1) % BLOCK_COUNT;
+		int startPage = page - temp;
 
-		return "main/class/classDetail";
+		map.put("totalPage", pageList.getTotalPages());
+		map.put("blockCount", BLOCK_COUNT);
+		map.put("startPage", startPage);
+		map.put("page", page);
+
+		return map;
 	}
 	
 	/**
