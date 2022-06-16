@@ -113,7 +113,7 @@
 	        <div class="col-6 col-md-4">
 				<form name="requestForm" method="post" id="requestForm">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-					<input type=hidden name="noticeNo" value="${notice.noticeNo}">
+					<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 					
 					<input type=button class="btn btn-primary" value="수정하기" >
 				</form>
