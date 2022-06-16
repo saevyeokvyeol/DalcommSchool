@@ -269,7 +269,8 @@ $(function() {
 			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
 			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
 			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
-			    <div>내용&nbsp;&nbsp;<span id="qnaContent"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
+			    <div id="qnaContent"></div>
 			</form>
 
 		  </div>
@@ -289,13 +290,10 @@ $(function() {
         <div class="card" style="width: 27rem;" id="replyDetail-Card-body">
           <div class="card-body">
 			<form id="replyDetail-form">
-			    <div>글번호</div>
-			    <div id="replyId" ></div>
-			    <div>작성자</div>
-			    <div id="teacherNickname"></div>
-			    <div>작성 날짜</div>
-			    <div id="replyInsertDate"></div>
-			    <div>내용</div>
+			    <div>글번호&nbsp;&nbsp;<span id="replyId"></span></div>
+			    <div>작성자&nbsp;&nbsp;<span id="teacherNickname"></span></div>
+			    <div>작성 날짜&nbsp;&nbsp;<span id="replyInsertDate"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
 			    <div id="replyContent"></div>	
 			</form>
 		  </div>
