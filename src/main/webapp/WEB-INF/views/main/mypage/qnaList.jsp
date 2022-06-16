@@ -133,16 +133,6 @@ $(function() {
 	    	
 	        <table class="table">
 	            <thead>
-	            	<tr>
-	            		<th colspan="6">
-	            			<p align="right">
-		            			<!-- Button trigger modal -->
-								<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-								  문의글 작성하기
-								</button>
-							</p>
-	            		</th>
-	            	</tr>
 	                <tr>
 		                <th>번호</th>
 		                <th>작성자</th>
@@ -248,54 +238,6 @@ $(function() {
 	</section>
 
 
-
-<!-- QnA 문의글 작성하기  모달-->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">문의글 작성하기</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!--QnA 등록하기-->
-          <div class="card" style="width: 29rem;">
-            <div class="card-body">
-              <form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/qna/qnaInsert" >
-                <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-                <%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
-                <input type="hidden" name="studentId" value="${qna.student.studentId}">
-                --%>
-                <input type="hidden" name="classId" value="2">
-                <input type="hidden" name="studentId" value="lee1234">
-                <div>
-				  제목
-				  <input class="form-control" type=text name="qnaTitle" size="30" >
-				</div>
-				<div>
-				  내용 
-				  <textarea class="form-control" name="qnaContent" rows="10" cols="33"></textarea>	
-				</div>
-				<div>
-				  비밀글 체크
-				  <!-- <input class="form-check-input" type="checkbox" id="inlineFormCheck" name="secretState" value="T">공개 --> 
-				  <input class="form-check-input" type="checkbox" id="inlineFormCheck" name="secretState" value="F">비공개
-				</div>
-				<div class="modal-footer">
-			      <input type="submit" class="btn btn-primary" id="qna-insert-btn" value="등록하기">
-			      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-		      	</div>
-              </form>
-            </div>
-         </div>
-       </div>
-      
-    </div>
-  </div>
-</div>
-
 <!-- QnA 상세보기 모달 -->
 <!-- Button trigger modal -->
 
@@ -317,7 +259,8 @@ $(function() {
 			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
 			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
 			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
-			    <div>내용&nbsp;&nbsp;<span id="qnaContent"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
+			    <div id="qnaContent"></div>
 			</form>
 
 		  </div>
@@ -339,13 +282,10 @@ $(function() {
         <div class="card" style="width: 27rem;" id="replyDetail-Card-body">
           <div class="card-body">
 			<form id="replyDetail-form">
-			    <div>글번호</div>
-			    <div id="replyId" ></div>
-			    <div>작성자</div>
-			    <div id="teacherNickname"></div>
-			    <div>작성 날짜</div>
-			    <div id="replyInsertDate"></div>
-			    <div>내용</div>
+			    <div>글번호&nbsp;&nbsp;<span id="replyId"></span></div>
+			    <div>작성자&nbsp;&nbsp;<span id="teacherNickname"></span></div>
+			    <div>작성 날짜&nbsp;&nbsp;<span id="replyInsertDate"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
 			    <div id="replyContent"></div>	
 			</form>
 		  </div>

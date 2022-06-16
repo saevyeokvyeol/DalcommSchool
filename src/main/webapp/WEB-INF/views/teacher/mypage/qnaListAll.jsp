@@ -337,15 +337,18 @@ $(function() {
        		<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
        		<input type=hidden name="qnaId" id="insert-qnaId" value="${qna.qnaId}">
        		<div><span id="qnaId"></span>번 Q&A글에  답변 등록 </div>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="replyContent"></textarea>
+            <div class="form-floating mb-3">
+				<textarea class="form-control" placeholder="내용" id="replyContent" style="height: 100px" name="replyContent"></textarea>
+				<label for="replyContent">내용</label>
+			</div>
               
-              <%-- <input type=hidden name="teacherId" value="${teacherId}" id="teacherId"> --%>
-			  <input type=hidden name="teacherId" value="Tann1234" id="teacherId">
+            <%-- <input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId"> --%>
+			<input type=hidden name="teacherId" value="Tann1234" id="teacherId">
               
-              <div class="modal-footer">
-		      	<input type="submit" class="btn btn-primary" id="reply-insert-btn" value="답변등록하기">
+            <div class="modal-footer">
+		    	<input type="submit" class="btn btn-primary" id="reply-insert-btn" value="답변등록하기">
 		        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button> 
-		      </div>
+		    </div>
        	 </form>
       </div>
       
