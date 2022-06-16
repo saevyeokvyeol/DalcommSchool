@@ -134,7 +134,7 @@ public class QnaController {
 	/**
 	 * Q&A 등록  - 학생 마이페이지
 	 * */
-	@RequestMapping("main/board/qna/qnaInsert")
+	/*@RequestMapping("main/board/qna/qnaInsert")
 	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
 		
 		String blindState = "F";
@@ -152,7 +152,7 @@ public class QnaController {
 		System.out.println("classQna = "+classQna );
 		
 		return "redirect:/main/mypage/qnaList";
-	}
+	}*/
 	
 	/**
 	 * Q&A 수정폼 - 모달(학생 마이페이지)
@@ -322,7 +322,7 @@ public class QnaController {
 	 * */
 	@RequestMapping("teacher/mypage/qnaListAll")
 	public void selectByteacherId(String teacherId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
-		teacherId = "Tann1234";
+		teacherId = "Tkim1234";
 		
 		//페이징처리하기
 		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");

@@ -269,7 +269,8 @@ $(function() {
 			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
 			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
 			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
-			    <div>내용&nbsp;&nbsp;<span id="qnaContent"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
+			    <div id="qnaContent"></div>
 			</form>
 
 		  </div>
@@ -289,13 +290,10 @@ $(function() {
         <div class="card" style="width: 27rem;" id="replyDetail-Card-body">
           <div class="card-body">
 			<form id="replyDetail-form">
-			    <div>글번호</div>
-			    <div id="replyId" ></div>
-			    <div>작성자</div>
-			    <div id="teacherNickname"></div>
-			    <div>작성 날짜</div>
-			    <div id="replyInsertDate"></div>
-			    <div>내용</div>
+			    <div>글번호&nbsp;&nbsp;<span id="replyId"></span></div>
+			    <div>작성자&nbsp;&nbsp;<span id="teacherNickname"></span></div>
+			    <div>작성 날짜&nbsp;&nbsp;<span id="replyInsertDate"></span></div>
+			    <div>내용&nbsp;&nbsp;</div>
 			    <div id="replyContent"></div>	
 			</form>
 		  </div>
@@ -339,15 +337,18 @@ $(function() {
        		<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
        		<input type=hidden name="qnaId" id="insert-qnaId" value="${qna.qnaId}">
        		<div><span id="qnaId"></span>번 Q&A글에  답변 등록 </div>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="replyContent"></textarea>
+            <div class="form-floating mb-3">
+				<textarea class="form-control" placeholder="내용" id="replyContent" style="height: 100px" name="replyContent"></textarea>
+				<label for="replyContent">내용</label>
+			</div>
               
-              <%-- <input type=hidden name="teacherId" value="${teacherId}" id="teacherId"> --%>
-			  <input type=hidden name="teacherId" value="Tann1234" id="teacherId">
+            <%-- <input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId"> --%>
+			<input type=hidden name="teacherId" value="Tann1234" id="teacherId">
               
-              <div class="modal-footer">
-		      	<input type="submit" class="btn btn-primary" id="reply-insert-btn" value="답변등록하기">
+            <div class="modal-footer">
+		    	<input type="submit" class="btn btn-primary" id="reply-insert-btn" value="답변등록하기">
 		        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button> 
-		      </div>
+		    </div>
        	 </form>
       </div>
       

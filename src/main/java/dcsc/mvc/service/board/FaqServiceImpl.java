@@ -75,8 +75,8 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public List<Faq> userselectAllfqa() {
-		return faqRepository.findAll();
+	public Page<Faq> userselectAllfqa(Pageable pageable) {
+		return faqRepository.findAll(pageable);
 	}
 
 	@Override

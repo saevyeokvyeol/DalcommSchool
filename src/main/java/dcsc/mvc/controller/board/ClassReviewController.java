@@ -6,24 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.board.ClassReviewService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +36,7 @@ public class ClassReviewController {
 	/**
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
-	@RequestMapping("/board/review/selectByClassId")
+	@RequestMapping("/review/selectByClassId")
 	@ResponseBody
 	public Map<String, Object> selectByClassId(Model model, Long classId, int page){
 		//페이징 처리하기
@@ -57,7 +54,7 @@ public class ClassReviewController {
 		}
 		
 		map.put("list", list);
-		
+		map.put("totalCount", pageList.getTotalElements());
 		int temp = (page-1) % BLOCK_COUNT;
 		int startPage = page - temp;
 
@@ -191,20 +188,14 @@ public class ClassReviewController {
 //	}
 	
 	/**
-	 * 클래스 후기 등록 폼(마이페이지에서 작성)
-	 * */
-	@RequestMapping("/main/mypage/writeReview")
-	public void insertForm() {
-		
-		
-	}
-	
-	/**
 	 * 클래스 후기 등록
 	 * */
-	@RequestMapping("/main/mypage/review/insert")
-	public void insertReview(ClassReview review, MultipartFile file, Long classId) throws Exception{
+	@RequestMapping("/review/insert")
+	@ResponseBody
+	public void insertReview(ClassReview review, Long classId, @RequestParam("file") MultipartFile file) throws Exception{
+		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
 		
+		review.setStudent(student);
 		review.setClasses(new Classes(classId));
 		
 		if(file.getSize()>0) {
@@ -213,10 +204,7 @@ public class ClassReviewController {
 			
 			review.setReviewImg(file.getOriginalFilename());
 		}
-		
-		
 		reviewService.insert(review);
-		
 	}
 	
 	/**
@@ -242,11 +230,7 @@ public class ClassReviewController {
 	@RequestMapping("/review/update")
 	@ResponseBody
 	public void updateReview(ClassReview review, @RequestParam("file") MultipartFile file) throws Exception{
-		System.out.println("클래스후기 컨트롤러, update 호출.");
-		System.out.println(review.getReviewContent());
-		System.out.println(review.getReviewRate());
-		System.out.println(file);
-		if(file!=null) {
+		if(file != null) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
