@@ -49,7 +49,6 @@ a{
              <th>작성자</th>
              <th>글제목</th>
              <th>작성일</th>
-             <th>첨부파일</th>
              <th>조회수</th>
             </tr>
         </thead>
@@ -79,17 +78,16 @@ a{
 				  <c:if test="${notice.noticeInsertDate >= today}">
 				  	<span class="badge rounded-pill bg-primary">new</span>
 				  </c:if>
+				  <c:if test="${notice.noticeImg != null}">
+					<i class="fa fa-file-image-o" aria-hidden="true"></i>
+				</c:if>
 				</a>
 				</td>
 				<td>
 					<fmt:parseDate value="${notice.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				</td>
-				<td>
-				<c:if test="${notice.noticeImg != null}">
-					<i class="fa fa-file-image-o" aria-hidden="true"></i>
-				</c:if>
-				</td>
+				
 				<td>	
 					${notice.noticeViews}
 				</td>

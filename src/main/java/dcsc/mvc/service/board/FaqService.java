@@ -41,7 +41,7 @@ public interface FaqService {
 	 * FAQ 게시판 전체 조회 기능
 	 * @return List<FAQ> - 유저
 	 * */
-	List<Faq> userselectAllfqa();
+	Page<Faq> userselectAllfqa(Pageable pageable);
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능

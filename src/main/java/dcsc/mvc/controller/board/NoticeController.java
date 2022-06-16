@@ -26,8 +26,8 @@ public class NoticeController {
 	
 	private final NoticeService noticeService;
 	
-	private final static int PAGE_COUNT= 5;
-	private final static int BLOCK_COUNT= 2;
+	private final static int PAGE_COUNT= 10;
+	private final static int BLOCK_COUNT= 5;
 	
 	/**
 	 * 공지사항 전체 조회 - 관리자
