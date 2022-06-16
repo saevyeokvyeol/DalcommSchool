@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,10 +78,10 @@ public class HomeController {
 	
 	@RequestMapping("/teacher") 
 	public String teacherIndex(Model model) {
-		String teacherId = "Tkim1234";
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		
-		Teacher teacher = teacherService.selectById(teacherId);
-		List<Book> bookList = bookService.selectByTeacherIdAndDate(teacherId);
+		List<Book> bookList = bookService.selectByTeacherIdAndDate(teacher.getTeacherId());
 		int todayProfit = 0;
 		
 		if(bookList != null) {
@@ -89,7 +90,7 @@ public class HomeController {
 			}
 		}
 		
-		List<Classes> classList = classesService.selectByTeacherId(teacherId);
+		List<Classes> classList = classesService.selectByTeacherId(teacher.getTeacherId());
 		
 		model.addAttribute("title", " 선생님");
 		model.addAttribute("teacher", teacher);
