@@ -85,7 +85,7 @@
 							</div>
 							<button type="button" class="fileBtn mainFileBtn">
 								<i class="fa-regular fa-image fa-2xl"></i>
-								대표 이미지 추가
+								후기 이미지 등록
 							</button>
 							<input type="file" id="input-image" name="file">
 						</div>

@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetswal/dist/sweetswal.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -21,16 +23,27 @@
 /* 	} */
 
 	.idCheck_success, .pwdCheck_success, .phoneCheck_success, .phoneCheck_success {
+		font-size: 14px;
+		padding: 4px 10px;
 		color: blue;
 		display: none;
 	}
 	.idCheck_fail, .pwdCheck_Fail, .phoneCheck_fail, .notValidEmail, .phoneCheck_fail {
-		color:red;
+		font-size: 14px;
+		padding: 4px 10px;
+		color: #f85656;
 		display: none;
 	}
 	
 	.id, .name { 
 		background-color: #D3D3D3;
+	}
+	
+	span {
+		font-size: 14px;
+		padding: 4px 10px;
+		color: #f85656;
+	
 	}
 
 /* 	.joinNotice { */
@@ -101,7 +114,7 @@ $(function(){
 	*/
 	$("#phoneCheck").click(function(){
 		if(!isValidPhone()){
-			alert("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
+			swal("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
 			return;
 		}
 		$.ajax({
@@ -110,12 +123,12 @@ $(function(){
 			dataType: "text",
 			success: function(data){
 				if(data=="true"){
-					alert("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
+					swal("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
 					$('.phoneCheck_fail').css("display","inline-block");
 					$('.phoneCheck_success').css("display","none");
 					return;
 				}else{
-					alert("사용 가능한 번호입니다.");
+					swal("사용 가능한 번호입니다.");
 					$('.phoneCheck_success').css("display","inline-block");
 					$('.phoneCheck_fail').css("display","none");
 					isPhoneChecked = true;
@@ -123,7 +136,7 @@ $(function(){
 				}
 			}, //success 끝
 			error: function(err){
-				alert(err + "에러 발생");
+				swal(err + "에러 발생");
 			}
 		})
 	})
@@ -146,16 +159,16 @@ $(function(){
 		중복체크 여부
 		*/
 		if(!isPhoneChecked){
-			alert("핸드폰 번호 중복체크를 진행해주세요")
+			swal("핸드폰 번호 중복체크를 진행해주세요")
 			event.preventDefault();
 		}else if(!isValidPhone()){
-			alert("핸드폰 번호를 형식에 맞게 입력해주세요.");
+			swal("핸드폰 번호를 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}else if(!isValidEmail()){
-			alert("이메일을 형식에 맞게 입력해주세요.");
+			swal("이메일을 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}else{
-			alert("회원정보가 수정되었습니다.")
+			swal("회원정보가 수정되었습니다.")
 		}
 	})
 	
