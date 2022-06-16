@@ -62,9 +62,9 @@ public class FaqController {
 		//페이징 처리하기
 		Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "faqNo");
 		Page<Faq> faqlist = faqService.userselectAllfqa(page);
-
-		model.addAttribute("faqlist", faqlist);
 		
+		model.addAttribute("faqlist", faqlist);
+		System.out.println("faqlist 입니다"+ faqlist);
 		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
 		 int startPage = nowPage-temp;
 		 
@@ -212,11 +212,22 @@ public class FaqController {
 	 * 검색 하기 - 유저
 	 */
 	@RequestMapping("/main/board/FAQ/userfaqSearch")
-    public ModelAndView userselectBykeyword(String keyword) {
-        List<Faq> list = faqService.userselectBykeyword(keyword);
-        
-        return new ModelAndView("main/board/FAQ/faqList","faqlist",list);
+    public String userselectBykeyword(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+		// 페이징 처리
+				Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+				Page<Faq> faqlist = faqService.selectBykeyword(keyword,page);
 
+				model.addAttribute("faqlist", faqlist);
+
+				int temp = (nowPage - 1) % BLOCK_COUNT;
+				int startPage = nowPage - temp;
+
+				model.addAttribute("blockCount", BLOCK_COUNT);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("nowPage", nowPage);
+
+
+			return "main/board/FAQ/faqList";
 	}
 
 	/**
