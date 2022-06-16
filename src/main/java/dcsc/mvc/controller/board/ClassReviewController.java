@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.board.ClassReview;
@@ -42,6 +40,7 @@ public class ClassReviewController {
 	 * 클래스 ID로 후기 리스트 가져오기
 	 * */
 	@RequestMapping("/board/review/selectByClassId")
+	@ResponseBody
 	public Map<String, Object> selectByClassId(Model model, Long classId, int page){
 		//페이징 처리하기
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
