@@ -12,7 +12,7 @@
 	#reviewDetail-form fieldset{display: inline-block; border: 0;}
 	 	
 	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
-	.checked {color: #EB5353;}
+	.checked {color: #ffab00;}
 	
  	.modal img{ 
 		width: 100px; 
@@ -22,29 +22,29 @@
  	
 /* 수정하기 모달 폼 */
 
-	#reviewUpdate-form .fa-star{font-size: 1em; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
+/* 	#reviewUpdate-form .fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;} */
 
  	#reviewUpdate-form fieldset{ 
  		display: inline-block;
-  		direction: rtl;
+/*     		direction: rtl; */
  		border: 0;
  	}
  	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
  	
- 	#reviewUpdate-form i:hover{
- 		color: #EB5353;
+ 	#reviewUpdate-form label:hover{
+ 		color: #ffab00;
  	}
  	
- 	#reviewUpdate-form label:hover~label i{
- 		color: #EB5353;
+ 	#reviewUpdate-form label~label:hover i{
+ 		color: #ffab00;
  	}
  	
  	#reviewUpdate-form [type=radio]{ 
  		display: none;
  	}
  	
- 	#reviewUpdate-form [type=radio]:checked~label i{ 
- 		color: #EB5353;
+ 	#reviewUpdate-form label~[type=radio]:checked i{ 
+ 		color: #ffab00;
  	}
  	
  	
@@ -65,7 +65,7 @@ $(function(){
 	$(".list-reviewContent").click(function(){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/main/board/review/read",
+			url:"${pageContext.request.contextPath}/review/read",
 			type: "post",
 			data:{"${_csrf.parameterName}": "${_csrf.token}",
 				  "reviewId" : $(this).val()	
@@ -107,13 +107,14 @@ $(function(){
 					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
 				}
 				
+				let str="";
 				let image = `\${result.reviewImg}`;
-				
+								
 				if(image!='null'){
-					$("#reviewDetail-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
-				} else {
-					$("#reviewDetail-form .reviewImg").attr("src","");
+					str += `<img class="reviewImg" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`;
 				}
+								
+				$(".imgDiv").html(str);
 				
 				$("#reviewDetail-form .reviewRate").html(text);
 				
@@ -150,15 +151,48 @@ $(function(){
 				
 // 				alert(result);
 				$("#reviewUpdate-form .reviewId").val(`\${result.reviewId}`);
-				$("#reviewUpdate-form .reviewId").val(`\${result.reviewId}`);
 				$("#reviewUpdate-form .studentId").val(`\${result.studentId}`);
 				$("#reviewUpdate-form .className").val(`\${result.className}`);
 				$("#reviewUpdate-form .reviewContent").html(`\${result.reviewContent}`);
+
+				//별점 불러오기
+				let text = "";
+				let rate = result.reviewRate;
+				if(rate==1){
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate1" checked><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>';
+				}else if(rate==2){
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2" checked><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>';
+				}else if(rate==3){
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3" checked><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>';
+				}else if(rate==4){
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4" checked><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>';
+				}else if(rate==5){
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>';
+					text+= '<input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5" checked><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>';
+				}
+				$("#update-star").html(text);
 				
-				
-				
+				//이미지 불러오기
 				let image = `\${result.reviewImg}`;
-				
 				if(image!='null'){
 					$("#reviewUpdate-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
 				}else {
@@ -263,7 +297,6 @@ $(function(){
 		      <th>클래스 이름</th>
 		      <th>내용</th>
 		      <th>작성 날짜</th>
-		      <th>블라인드 유무</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -347,7 +380,7 @@ $(function(){
 		
 	<!---------------------상세보기 모달 ------------------------------->
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLabel">후기 상세보기</h5>
@@ -396,7 +429,7 @@ $(function(){
 					  	<tr>
 					    	<th rowspan="2">후기</th>
 					    	<td>
-					    	  <div><img class="reviewImg" alt=""></div>
+					    	  <div class="imgDiv"></div>
 					    	</td>
 					    </tr>
 					    <tr>
@@ -422,7 +455,7 @@ $(function(){
 	<!--------------------- 수정하기 모달-------------------->
 	
 	<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">후기 수정하기</h5>
@@ -456,11 +489,11 @@ $(function(){
 				    	<th>별점</th>
 				    	<td>
 				    		<fieldset id="update-star">
-						        <input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label>
-						        <input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label>
+<!-- 						        <input type="radio" name="reviewRate" class="reviewRate" value="5" id="rate1"><label for="rate1"><i class="fa-solid fa-star fa-sm"></i></label> -->
+<!-- 						        <input type="radio" name="reviewRate" class="reviewRate" value="4" id="rate2"><label for="rate2"><i class="fa-solid fa-star fa-sm"></i></label> -->
+<!-- 						        <input type="radio" name="reviewRate" class="reviewRate" value="3" id="rate3"><label for="rate3"><i class="fa-solid fa-star fa-sm"></i></label> -->
+<!-- 						        <input type="radio" name="reviewRate" class="reviewRate" value="2" id="rate4"><label for="rate4"><i class="fa-solid fa-star fa-sm"></i></label> -->
+<!-- 						        <input type="radio" name="reviewRate" class="reviewRate" value="1" id="rate5"><label for="rate5"><i class="fa-solid fa-star fa-sm"></i></label> -->
 							</fieldset>
 				    	</td>
 				  	</tr>
@@ -495,7 +528,7 @@ $(function(){
 <!---------------------------------- 삭제 확인 모달 -------------------------------------->
 
 	<div class="modal fade" id="deleteModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="staticBackdropLabel">후기 삭제</h5>
