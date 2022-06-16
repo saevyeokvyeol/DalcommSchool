@@ -65,7 +65,7 @@ $(function(){
 	$(".list-reviewContent").click(function(){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/main/board/review/read",
+			url:"${pageContext.request.contextPath}/review/read",
 			type: "post",
 			data:{"${_csrf.parameterName}": "${_csrf.token}",
 				  "reviewId" : $(this).val()	
@@ -107,13 +107,14 @@ $(function(){
 					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
 				}
 				
+				let str="";
 				let image = `\${result.reviewImg}`;
-				
+								
 				if(image!='null'){
-					$("#reviewDetail-form .reviewImg").attr("src",`${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}`);
-				} else {
-					$("#reviewDetail-form .reviewImg").attr("src","");
+					str += `<img class="reviewImg" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`;
 				}
+								
+				$(".imgDiv").html(str);
 				
 				$("#reviewDetail-form .reviewRate").html(text);
 				
@@ -296,7 +297,6 @@ $(function(){
 		      <th>클래스 이름</th>
 		      <th>내용</th>
 		      <th>작성 날짜</th>
-		      <th>블라인드 유무</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -380,7 +380,7 @@ $(function(){
 		
 	<!---------------------상세보기 모달 ------------------------------->
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLabel">후기 상세보기</h5>
@@ -429,7 +429,7 @@ $(function(){
 					  	<tr>
 					    	<th rowspan="2">후기</th>
 					    	<td>
-					    	  <div><img class="reviewImg" alt=""></div>
+					    	  <div class="imgDiv"></div>
 					    	</td>
 					    </tr>
 					    <tr>
@@ -455,7 +455,7 @@ $(function(){
 	<!--------------------- 수정하기 모달-------------------->
 	
 	<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">후기 수정하기</h5>
@@ -528,7 +528,7 @@ $(function(){
 <!---------------------------------- 삭제 확인 모달 -------------------------------------->
 
 	<div class="modal fade" id="deleteModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="staticBackdropLabel">후기 삭제</h5>

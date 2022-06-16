@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-		
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
 			    z-index: 1050!important;
@@ -44,10 +44,6 @@
 /* 			textarea{width:100%; height:6.25em; resize:none;} */
 
 			/* 지도 API CSS*/
-			#map {
-			  height: 500px;
-			  width: 750px;
-			}
 		</style>
 		<script>
 			// 풀캘린더 API 사용
@@ -206,10 +202,10 @@
 					})
 				})
 				
-				/* // 클래스 후기 아작스
+				// 클래스 후기 아작스
 				function classQna(num) {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/board/qna/selectByClassId",
+						url: "${pageContext.request.contextPath}/board/review/selectByClassId",
 						type: "post",
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}, "page": num},
 						dataType : "json",
@@ -217,7 +213,7 @@
 							text = "<tbody>"
 							
 							if(result.list.length == 0){
-								text = "<tr><td><h5 class='no-record'>아직 질문이 없어요!</h5></td></tr>"
+								text = "<tr><td><h5 class='no-record'>아직 후기가 없어요!</h5></td></tr>"
 							} else {
 								$.each(result.list, function(index, item){
 									if(item.blindState == 'T'){
@@ -264,7 +260,7 @@
 								})
 							}
 							text += "</tbody>"
-							$("#qnaTable").html(text);
+							$("#reviewTable").html(text);
 							
 							pageText = ""
 							
@@ -305,14 +301,14 @@
 							$(".qnaPaging").html(pageText)
 						},
 						error: function(err){
-							alert(123)
+							alert("Q&A를 조회할 수 없습니다.")
 						}
 					})
-				} // 클래스 후기 아작스 함수 종료 */
+				} // 클래스 후기 아작스 함수 종료
 				
 				
 				// 클래스 문의글 아작스
-				function classQna(num) {
+				function classReview(num) {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/board/qna/selectByClassId",
 						type: "post",
@@ -410,7 +406,7 @@
 							$(".qnaPaging").html(pageText)
 						},
 						error: function(err){
-							alert(123)
+							alert("Q&A를 조회할 수 없습니다.")
 						}
 					})
 				} // 클래스 문의글 아작스 함수 종료
@@ -562,6 +558,7 @@
 				})
 				
 				classQna(1)
+				classReview(1)
 			})
 			
 			  var geocoder;
@@ -702,27 +699,49 @@
 					<div class="classInfoBox" id="teacher">
 						<h4 class="classBoxName">강사 소개</h4>
 					<hr>
-						<!-- 여기부터 지도 -->
-						<h4>공방 정보</h4>
-						<div class="classPlace">
-							<table class="placeTable">
-						    	<tr>
-						    		<th>공방 이름</th>
-						    		<td>${classes.teacher.place.placeName}</td>
-						    		<th>공방 주소</th>
-						    		<td>${classes.teacher.place.placeAddr}, ${classes.teacher.place.detailAddr}</td>
-						    		<input type="hidden" id="placeAddr" value="${classes.teacher.place.placeAddr}">
-						    	</tr>
-						    	<tr>
-						    		<th>위치</th>
-						    		<td colspan="3">
-						    			<div id="map"></div>
-	  										<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
-						    			
-						    		</td>
-						    	</tr>
-							</table>
-						</div>
+					<!-- 여기부터 지도 -->
+					<div class="classInfoBox" id="review">
+						<h4 class="classBoxName">공방 정보</h4>
+						<hr>
+						
+						<h5>${classes.teacher.place.placeName}</h5>
+					    ${classes.teacher.place.placeAddr} ${classes.teacher.place.detailAddr}
+					    <div id="route">${classes.teacher.place.placeRoute}</div>
+					    <input type="hidden" id="placeAddr" value="${classes.teacher.place.placeAddr}">
+		    			<div id="map"></div>
+					    <ul class="infraList">
+					    	<c:if test="${classes.teacher.place.placeInfra != null}">
+					    		<c:forEach items="${classes.teacher.place.placeInfra}" var="placeInfra">
+					    			<li>
+						    			<c:choose>
+						    				<c:when test="${placeInfra.infra.infraId == 1}">
+						    					<i class="fa-solid fa-square-parking fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 2}">
+						    					<i class="fa-solid fa-wifi fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 3}">
+						    					<i class="fa-solid fa-elevator fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 4}">
+						    					<i class="fa-solid fa-restroom fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 5}">
+						    					<i class="fa-solid fa-baby-carriage fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 6}">
+						    					<i class="fa-solid fa-paw fa-2xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 7}">
+						    					<i class="fa-brands fa-accessible-icon fa-xl"></i>
+						    				</c:when>
+						    			</c:choose>
+						    			<div>${placeInfra.infra.infraName}</div>
+					    			</li>
+					    		</c:forEach>
+					    	</c:if>
+					    </ul>
+					</div>
 						
 						
 					</div>
@@ -733,8 +752,7 @@
 						</h4>
 						<hr>
 						<div class="boardTable">
-							<table class="table">
-							
+							<table class="table" id="reviewTable">
 							</table>
 						</div>
 						<nav aria-label="Page navigation example">
@@ -750,7 +768,6 @@
 						<hr>
 						<div class="boardTable">
 							<table class="table" id="qnaTable">
-								
 							</table>
 						</div>
 						<nav aria-label="Page navigation example">
