@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,24 +54,28 @@ public class PlaceController {
 	/**
 	 * 공방 수정 폼
 	 * */
-	@RequestMapping("/teacher/teacherMypage/place/updateForm")
-	public ModelAndView updateForm(Long placeId) {
-		placeId=24L;
-		Place place = teacherService.selectByPlaceId(placeId);
+	@RequestMapping("/teacher/mypage/place/updateForm")
+	public ModelAndView updateForm() {
+		String teacherId="Tpark1234";
+		Place place = teacherService.selectByTeacherId(teacherId);
 		
-		return new ModelAndView("teacher/teacherMypage/place/updateForm", "place", place);
+		return new ModelAndView("teacher/mypage/place/updateForm", "place", place);
 	}
 	
 	/**
 	 * 공방 수정하기
 	 * */
-	@RequestMapping("/teacher/teacherMypage/place/update")
+	@RequestMapping("/place/update")
 	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam List<Long> infraId) {
+
+		Teacher teacher = new Teacher("Tpark1234");
+		System.out.println(place.getPlaceId()); 
 		
+		place.setTeacher(teacher);
 		place.setPlaceRegion(placeRegion);
 		teacherService.updatePlace(place, infraId);
 		
-		return "redirect:/teacher/teacherMypage/place/detail";
+		return "redirect:/teacher/mypage/place/updateForm";
 		//redirect:/ 는 오른쪽의 주소로 URL요청을 다시 하는 것. 즉 매핑 주소를 입력.(컨트롤러 재사용)
 		//ModelAndView에 들어오는 view는 viewname 그대로 받음.
 	}
@@ -77,13 +83,14 @@ public class PlaceController {
 	/**
 	 * 공방 상세보기
 	 * */
-	@RequestMapping("/teacher/teacherMypage/place/detail")
-	public ModelAndView readPlace(Long placeId) {
-		placeId=24L;
-		
-		Place place = teacherService.selectByPlaceId(placeId);
-		return new ModelAndView("teacher/mypage/place/placeDetail", "place", place);
-	}
+//	@RequestMapping("/teacher/teacherMypage/place/detail")
+//	public ModelAndView readPlace(Long placeId) {
+//		placeId=24L;
+//		
+//		Place place = teacherService.selectByPlaceId(placeId);
+//		return new ModelAndView("teacher/mypage/place/placeDetail", "place", place);
+//	}
+
 	
 	/**
 	 * 공방 인프라 리스트 가져오기

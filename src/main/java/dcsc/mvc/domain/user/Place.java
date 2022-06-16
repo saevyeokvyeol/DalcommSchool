@@ -27,11 +27,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class Place {
 	
 	@Id
-	@NonNull
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_id_seq")
 	@SequenceGenerator(sequenceName = "place_id_seq", allocationSize = 1, name = "place_id_seq")
 	private Long placeId;

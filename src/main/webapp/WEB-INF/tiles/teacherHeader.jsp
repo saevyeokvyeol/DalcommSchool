@@ -191,7 +191,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/place/updateForm" class="menu-link">
                 <i class="fa-solid fa-location-dot menu-icon"></i>
                 <div data-i18n="Form Elements">공방 정보 수정</div>
               </a>

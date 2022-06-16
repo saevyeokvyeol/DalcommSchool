@@ -116,9 +116,9 @@ public interface TeacherService {
 	void updatePlace (Place place, @RequestParam List<Long> infraId);
 	
 	/**
-	 * 공방 조회하기
+	 * 선생님 아이디로 공방 가져오기
 	 * */
-	Place selectByPlaceId(Long placeId);
+	Place selectByTeacherId(String teacherId);
 	
 	/**
 	 * 공방 인프라 가져오기
