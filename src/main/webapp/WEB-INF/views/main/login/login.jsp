@@ -79,35 +79,13 @@
 <body>
 
 
-<!--------------------------------- sns 로그인 ------------------------------------>
 		<br>
           <div class="loginbox-social">
 			<div class="logo">
 					<img src="${pageContext.request.contextPath}/img/main/login_logo.png" class="logo-img" alt="...">
 			</div><br><br>
-              <div class="social-title ">SNS계정으로 10초만에 로그인</div><br>
-              <div class="social-buttons">
-              	<div class="kakao">
-                   <a href="/oauth2/authorization/kakao" class="button-kakao">
-               		<img src="${pageContext.request.contextPath}/img/main/login_kakao.png" class="d-block w-100" alt="...">
-                   </a>
-                  </div>
-                  <div class="naver">
-                   <a href="/oauth2/authorization/naver" class="button-naver">
-                     <img src="${pageContext.request.contextPath}/img/main/login_naver.png" class="d-block w-100" alt="...">
-                   </a>
-                  </div>
-                  <div class="google">
-                   <a href="/oauth2/authorization/google" class="button-google">
-				<img src="${pageContext.request.contextPath}/img/main/login_google.png" class="d-block w-100" alt="...">	                        </a>
-                  </div>
-              </div>
-          </div>
-              <div class="loginbox-or">
-                  <div class="line"></div>
-                  <div class="or">OR</div>
-              </div><br>
-<!-- 일반 로그인  -->
+
+	<!-- 일반 로그인  -->
 
               <form name="login" method="post" action="${pageContext.request.contextPath}/login">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
