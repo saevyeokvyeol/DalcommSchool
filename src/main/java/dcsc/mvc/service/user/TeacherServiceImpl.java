@@ -131,6 +131,7 @@ public class TeacherServiceImpl implements TeacherService {
 		newTeacher.setTeacherNickname(teacher.getTeacherNickname());
 		newTeacher.setTeacherTel(teacher.getTeacherTel());
 		newTeacher.setTeacherImg(teacher.getTeacherImg());
+		newTeacher.setTeacherInfo(teacher.getTeacherInfo());
 		
 		teacherSnsRepository.deleteByTeacherId(teacher.getTeacherId());
 		for(TeacherSns s : teacher.getTeacherSns()) {

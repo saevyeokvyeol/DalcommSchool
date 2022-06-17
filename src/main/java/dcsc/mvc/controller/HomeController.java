@@ -78,7 +78,7 @@ public class HomeController {
 	
 	@RequestMapping("/teacher") 
 	public String teacherIndex(Model model) {
-		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Teacher teacher = teacherService.selectById("Tkim1234")/*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
 
 		
 		List<Book> bookList = bookService.selectByTeacherIdAndDate(teacher.getTeacherId());
@@ -92,7 +92,7 @@ public class HomeController {
 		
 		List<Classes> classList = classesService.selectByTeacherId(teacher.getTeacherId());
 		
-		model.addAttribute("title", " 선생님");
+		model.addAttribute("title", teacher.getTeacherNickname() + " 선생님");
 		model.addAttribute("teacher", teacher);
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("classList", classList);
