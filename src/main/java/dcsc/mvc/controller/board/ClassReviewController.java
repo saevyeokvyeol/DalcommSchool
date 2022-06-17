@@ -71,22 +71,22 @@ public class ClassReviewController {
 	 * 강사 ID로 후기 리스트 가져오기
 	 * */
 	@RequestMapping("/teacher/mypage/reviewList")
-	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int nowPage){
+	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int page){
 		teacherId = "Tlee1234";
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, pageable);
 		
 		
-		model.addAttribute("classReviews", pageList);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",page);
 		
 		
 		return "teacher/mypage/reviewList";
@@ -114,46 +114,25 @@ public class ClassReviewController {
 	}
 	
 	/**
-	 * 전체 후기 가져오기(메인페이지)
-	 * */
-	@RequestMapping("/main/review/list")
-	public String selectAllUser(Model model, @RequestParam(defaultValue="1") int nowPage){
-//		List<ClassReview> list = reviewService.selectAll();
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectAll(page);
-		
-		model.addAttribute("classReviews", pageList);
-		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
-	
-		model.addAttribute("blockCount",BLOCK_COUNT);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
-		
-		return "main/board/review/reviewList";
-	}
-	
-	/**
 	 * 학생 ID로 리스트 가져오기
 	 * */
 	@RequestMapping("/main/mypage/reviewList")
-	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int nowPage){
+	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int page){
 //		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
 		studentId="kim1234";
 		
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, pageable);
 		
-		model.addAttribute("classReviews", pageList);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",page);
 		
 		return "main/mypage/reviewList";
 	}
