@@ -23,6 +23,11 @@
 	h6 {
 		text-align: left;
 	}
+	#teacherInfo{
+		width: 748px;
+		height: 140px;
+		resize: none;
+	}
 	
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -298,6 +303,20 @@ $(function(){
 					          <label for="teacherEmail">이메일 주소</label>
 		          </div>
 		          <span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span>
+	          </td>
+	      </tr>
+	      <tr>
+			<td>
+				<h5>소개</h5>
+				<h6>* 강사님을 소개해주세요 </h6>
+				<hr>
+			</td>
+		  </tr>
+	      <tr>
+	          <td>
+		          <div class="form-floating mb-3">
+					          <textarea id="teacherInfo" name="teacherInfo" placeholder="소개글" class="form-control">${teacher.teacherInfo}</textarea>
+		          </div>
 	          </td>
 	      </tr>
 	      <tr>

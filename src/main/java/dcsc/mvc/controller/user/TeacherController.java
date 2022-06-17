@@ -100,6 +100,7 @@ public class TeacherController {
 		tea.setTeacherNickname(teacher.getTeacherNickname());
 		tea.setTeacherTel(teacher.getTeacherTel());
 		tea.setTeacherSns(teacher.getTeacherSns());
+		tea.setTeacherInfo(teacher.getTeacherInfo());
 		
 		return "redirect:/teacher/mypage/updateForm";
 	}

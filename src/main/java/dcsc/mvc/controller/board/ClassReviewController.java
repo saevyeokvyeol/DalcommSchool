@@ -88,7 +88,7 @@ public class ClassReviewController {
 		model.addAttribute("nowPage",nowPage);
 		
 		
-		return "teacher/teacherMypage/reviewList";
+		return "teacher/mypage/reviewList";
 	}
 	
 	/**
