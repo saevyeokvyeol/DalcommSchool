@@ -86,13 +86,13 @@
               <span class="menu-header-text">회원 관리</span>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/createClass" class="menu-link">
+              <a href="${pageContext.request.contextPath}/admin/user/teacherList" class="menu-link">
               	<i class="fa-solid fa-chalkboard-user menu-icon"></i>
                 <div data-i18n="Account Settings">선생님 조회</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/classList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/admin/user/userList" class="menu-link">
                 <i class="fa-solid fa-users-between-lines menu-icon"></i>
                 <div data-i18n="Authentications">학생 조회</div>
               </a>
