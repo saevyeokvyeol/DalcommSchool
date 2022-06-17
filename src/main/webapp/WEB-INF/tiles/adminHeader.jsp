@@ -135,7 +135,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/review/list" class="menu-link">
                     <div data-i18n="Notifications">클래스 후기 조회</div>
                   </a>
                 </li>

@@ -29,6 +29,29 @@
 			}
 		})
 		
+		//정산신청시 값 비워져있으면 alert 창 띄우기
+		$("#adjust-insert-btn").click(function() {
+			let adjustPrice = $(".adjustPrice").val();
+			let bank = $(".bank").val();
+			let depositor = $(".depositor").val();
+			let account = $(".account").val();
+			
+			if(adjustPrice==""){
+				alert("정산 신청 금액을 적어주세요");
+				return false;
+			}else if(bank==""){
+				alert("은행을 적어주세요");
+				return false;
+			}else if(depositor==""){
+				alert("예금주 이름을 적어주세요");
+				return false;
+			}else if(account==""){
+				alert("계좌번호를 적어주세요");
+				return false;
+			}
+				
+		});
+		
 		
 	});//ready 끝
 
@@ -65,23 +88,23 @@
       			<tr>
       				<th class="col-form-label">3. 정산 받으실 은행</th>
       				<td>
-						<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ex) 우리은행, 신한은행...." name="bank">
+						<input type="text" class="form-control bank" id="exampleFormControlInput1" placeholder="ex) 우리은행, 신한은행...." name="bank">
 					</td>
       			</tr>
       			<tr>
       				<th class="col-form-label">4. 예금주</th>
-      				<td><input type="text" class="form-control" id="exampleFormControlInput1" name="depositor"></td>
+      				<td><input type="text" class="form-control depositor" id="exampleFormControlInput1" name="depositor"></td>
       			</tr>
       			<tr>
       				<th class="col-form-label">5. 계좌번호</th>
       				<td>
-      					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ex) 1002-333-123456" name="account">
+      					<input type="text" class="form-control account" id="exampleFormControlInput1" placeholder="ex) 1002-333-123456" name="account">
       				</td>
       			</tr>
       			
      		</table>
             
-            <input type="submit" class="btn btn-dark mt-3" id="coupon-insert-btn" value="정산신청하기">
+            <input type="submit" class="btn btn-dark mt-3" id="adjust-insert-btn" value="정산신청하기">
      	 </form>
      </div>
  </div>

@@ -138,6 +138,10 @@
 						<li><a href="${pageContext.request.contextPath}/teacher"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 						<li><a class="logout"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="${pageContext.request.contextPath}/admin"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a class="logout"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
+					</sec:authorize>
 				</ul>
 			</div>
 		</div>
