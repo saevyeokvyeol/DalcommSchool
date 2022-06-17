@@ -248,24 +248,24 @@
 	<c:set var="doneLoop" value="false"/>
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
 	      	<li class="page-item">
-		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">이전</a>
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage-1}">이전</a>
 		  	</li>
 		  </c:if>
 		
 	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		    <c:if test="${(i-1)>=eventList.getTotalPages()}">
+		    <c:if test="${(i-1)>=askList.getTotalPages()}">
 		       <c:set var="doneLoop" value="true"/>
 		    </c:if> 
 			  <c:if test="${not doneLoop}" >
 			  <li class="page-item">
-			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${i}">${i}</a> 
 			  </li>
 			  </c:if>
 		</c:forEach>
 				
-		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
+		 <c:if test="${(startPage+blockCount)<=askList.getTotalPages()}">
 	     <li class="page-item">
-		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">다음</a>
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">다음</a>
 		 </li>
 		 </c:if>
 		</ul>
