@@ -122,7 +122,7 @@ $(function(){
 		  </thead>
 		  <tbody>
 		    <c:choose>
-		      <c:when test="${requestScope.classReviews.content==null}">
+		      <c:when test="${empty requestScope.classReviews.content}">
 		        <tr>
 		          <th colspan="7">
 		            <span>등록된 후기가 없습니다.</span>

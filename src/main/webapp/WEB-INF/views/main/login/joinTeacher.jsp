@@ -393,7 +393,7 @@
 		  				</div>
 						<div class="col-md-8">
 							<div class="form-floating mb-3">
-			    			<input type="text" id="teacherId" class="form-control" name="teacherId" placeholder="영소문자+숫자, 최소 6글자 이상 10글자 이하로 입력해주세요." required/>
+			    			<input type="text" id="teacherId" class="form-control" name="teacherId" placeholder="아이디" required/>
 			    			<label for="teacherId">아이디</label>
 			    				<span id="notValidId" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp; 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
 			    			</div>
@@ -413,7 +413,7 @@
 				</div>
 		    	<div class="col-md-8">
 			    	<div class="form-floating mb-3">
-				    	<input type="password" id="teacherPwd" name="teacherPwd" class="form-control" placeholder="영소문자+대문자+숫자, 최소 8글자 이상 입력해주세요." required/>
+				    	<input type="password" id="teacherPwd" name="teacherPwd" class="form-control" placeholder="비밀번호" required/>
 				    	<label for="teacherPwd">비밀번호</label>
 				    		<span id="notValidPwd" class="message">비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span>
 			    	</div>
@@ -432,7 +432,7 @@
 	  				</div>
 		    		<div class="col-md-8">
 			  		<div class="form-floating mb-3">
-			    		<input type="password" id="teacherPwd2" name="teacherPwd2" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." required/>
+			    		<input type="password" id="teacherPwd2" name="teacherPwd2" class="form-control" placeholder="비밀번호 확인" required/>
 			    		<label for="studentPwd2">비밀번호 확인</label>
 			    	</div>	
 		    		</div>
@@ -451,7 +451,7 @@
 	  				</div>
 		    		<div class="col-md-8">
 			  		<div class="form-floating mb-3">
-    					<input type="text" id="teacherName" name="teacherName" class="form-control" placeholder="" required="required"/>
+    					<input type="text" id="teacherName" name="teacherName" class="form-control" placeholder="이름" required="required"/>
     					<label for="teacherName">이름</label>
    					</div>
    					</div>
@@ -469,7 +469,7 @@
 	  				</div>
 		    		<div class="col-md-8">
 				  		<div class="form-floating mb-3">
-							<input type="text" id="teacherNick" name="teacherNickname" class="form-control" placeholder="달콤스쿨에서 보여지는 강사님의 닉네임을 입력해주세요." required="required"/>
+							<input type="text" id="teacherNick" name="teacherNickname" class="form-control" placeholder="닉네임" required="required"/>
 					  		<label for="teacherNick">닉네임</label>
 				  			<span id="nickCheck_success" class="message">사용가능한 닉네임입니다^^</span>
 							<span id="nickCheck_fail" class="message">이미 존재하는 닉네임입니다.</span>
@@ -490,7 +490,7 @@
 	  				</div>
 		    		<div class="col-md-8">
 			  		<div class="form-floating mb-3">
-	    				<input type="text" id="teacherPhone" name="teacherPhone" class="form-control" placeholder="'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요." required="required"/>
+	    				<input type="text" id="teacherPhone" name="teacherPhone" class="form-control" placeholder="휴대폰 번호" required="required"/>
 	    				<label for="teacherPhone">휴대폰 번호</label>
     						<span id="notValidPhone" class="message">'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
    					</div>
@@ -510,7 +510,7 @@
 		  			</div>
 					<div class="col-md-8">
 			  		<div class="form-floating mb-3">
-		    			<input type="text" id="teacherEmail" name="teacherEmail" class="form-control" placeholder="" required="required"/>
+		    			<input type="text" id="teacherEmail" name="teacherEmail" class="form-control" placeholder="이메일" required="required"/>
 		    			<label for="teacherEmail">이메일</label>
 		    			<span id="notValidEmail" class="message">올바른 이메일 주소가 아닙니다.</span>
 		    		</div>

@@ -345,7 +345,7 @@
 	  				</div>
 					<div class="col-md-8">
 					<div class="form-floating mb-3">
-		  				<input type="text" id="studentId" class="form-control" name="studentId" required/>
+		  				<input type="text" id="studentId" class="form-control" placeholder="아이디" name="studentId" required/>
 		  				<label for="studentId">아이디</label>
 				  			<span id="notValidId" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp; 공백 없이 영소문자와 숫자를 조합하여 6글자 이상 10글자 이하로 입력해주세요</span>
 		  			</div>
@@ -364,7 +364,7 @@
 	  				</div>
 				<div class="col-md-8">
 					<div class="form-floating mb-3">
-						<input type="password" id="studentPwd" name="studentPwd" class="form-control" required/>
+						<input type="password" id="studentPwd" name="studentPwd" placeholder="비밀번호" class="form-control" required/>
 						<label for="studentPwd">비밀번호</label>
 							<span id="notValidPwd" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp;공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span>
 					</div>
@@ -382,7 +382,7 @@
   				</div>
 				<div class="col-md-8">
 		  		<div class="form-floating mb-3">
-			  		<input type="password" id="studentPwd2" class="form-control" required="required"/><br>
+			  		<input type="password" id="studentPwd2" class="form-control" placeholder="비밀번호 확인" required="required"/><br>
 			  		<label for="studentPwd2">비밀번호 확인</label>
 		  		</div>
 		  		</div>
@@ -401,7 +401,7 @@
   				</div>
 				<div class="col-md-8">
 	  			<div class="form-floating mb-3">
-			  		<input type="text" id="studentName" name="studentName" class="form-control" placeholder="" required="required"/>
+			  		<input type="text" id="studentName" name="studentName" class="form-control" placeholder="이름" required="required"/>
 			  		<label for="studentName">이름</label>
 		  		</div>
 		  		</div>
@@ -418,7 +418,7 @@
 	  				</div>
 					<div class="col-md-8">
 					<div class="form-floating mb-3">
-						<input type="text" id="studentPhone" name="studentPhone" class="form-control" required="required"/>
+						<input type="text" id="studentPhone" name="studentPhone" class="form-control" placeholder="휴대폰 번호" required="required"/>
 						<label for="studentPhone">휴대폰 번호</label>
 							<span id="notValidPhone" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp;'-'를 제외하고 010으로 시작하는 핸드폰 번호 11자리를 입력해주세요.</span>
 		  			</div>
@@ -437,7 +437,7 @@
 	  			</div>
 				<div class="col-md-8">
 		  		<div class="form-floating mb-3">
-		  			<input type="text" id="studentEmail" name="studentEmail" class="form-control" required="required"/>
+		  			<input type="text" id="studentEmail" name="studentEmail" class="form-control" placeholder="이메일" required="required"/>
 		  			<label for="studentEmail">이메일</label>
 		  			<span id="notValidEmail" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp;올바른 이메일 주소가 아닙니다.</span>
 		  		</div>

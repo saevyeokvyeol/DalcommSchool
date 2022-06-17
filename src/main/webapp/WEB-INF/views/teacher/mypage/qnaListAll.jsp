@@ -90,6 +90,7 @@ $(function() {
 						$("#replyRequestForm").remove();
 					}
 					
+					
 				},
 				error: function(err){
 					alert(err + "에러 발생");

@@ -83,6 +83,14 @@
 				</tr>
 				<tr>
 					<td>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="teacherInfo" placeholder="소개글" value="${teacher.teacherInfo}" name="teacherInfo">
+							<label for="teacherInfo">소개글</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<h5>SNS</h5>
 					</td>
 				</tr>
