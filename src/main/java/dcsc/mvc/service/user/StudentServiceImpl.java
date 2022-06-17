@@ -164,6 +164,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		JPQLQuery<Student> query = jpqlQueryFactory.selectFrom(student)
 				.where(booleanBuilder)
+				.orderBy(student.studentInsertDate.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize());
 		
