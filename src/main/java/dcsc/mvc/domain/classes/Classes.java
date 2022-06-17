@@ -35,7 +35,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString
 public class Classes {
 
 	@Id

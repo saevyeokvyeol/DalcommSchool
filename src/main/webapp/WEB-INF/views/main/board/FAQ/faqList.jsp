@@ -1,6 +1,8 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head> 
@@ -50,7 +52,7 @@
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
 
-	<c:forEach items="${requestScope.faqlist}" var="faq">
+	<c:forEach items="${requestScope.faqlist.content}" var="faq">
 		<c:choose>
 
 			<c:when test="${faq.faqCategory.faqCategoryId eq 1}">
@@ -58,6 +60,15 @@
 					<h2 class="accordion-header" id="flush-headingOne">
 						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
 							${faq.faqTitle}
+							 &nbsp;
+							<c:set var="today" value="<%=LocalDateTime.now().minusDays(1)%>"/>
+				  <c:if test="${faq.faqInsertDate >= today}">
+				  	<span class="badge rounded-pill bg-primary">new</span>
+				  </c:if>
+				  &nbsp;
+				  <c:if test="${faq.faqImg != null}">
+					<i class="fa fa-file-image-o" aria-hidden="true"></i>
+				</c:if>
 							</button>
 					</h2>
 					<div id="flush-collapseOne${faq.faqNo}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
