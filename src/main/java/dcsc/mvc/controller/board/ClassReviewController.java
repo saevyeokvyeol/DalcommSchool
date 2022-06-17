@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -192,13 +193,13 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/review/insert")
 	@ResponseBody
-	public void insertReview(ClassReview review, Long classId, @RequestParam("file") MultipartFile file) throws Exception{
+	public void insertReview(ClassReview review, Long classId, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
 		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
 		
 		review.setStudent(student);
 		review.setClasses(new Classes(classId));
 		
-		if(file.getSize()>0) {
+		if(file != null) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);
 			
@@ -229,7 +230,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/review/update")
 	@ResponseBody
-	public void updateReview(ClassReview review, @RequestParam("file") MultipartFile file) throws Exception{
+	public void updateReview(ClassReview review, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
 		if(file != null) {
 			File img = new File(ImageLink.CLASSREVIEW_IMG + file.getOriginalFilename());
 			file.transferTo(img);

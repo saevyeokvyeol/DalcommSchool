@@ -66,7 +66,7 @@
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
           <div class="app-brand demo">
-            <a href="${pageContext.request.contextPath}/teacher" class="app-brand-link">
+            <a href="${pageContext.request.contextPath}/" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="${pageContext.request.contextPath}/img/main/mainLogoblack.png" style="height: 50px;">
               </span>
@@ -121,7 +121,7 @@
               </ul>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/reviewList" class="menu-link">
                 <i class="fa-solid fa-pen menu-icon"></i>
                 <div data-i18n="Misc">클래스 리뷰 조회</div>
               </a>
@@ -136,7 +136,7 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">수익 관리</span></li>
             <!-- Cards -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
+              <a href="/teacher/adjust/adjustList" class="menu-link">
                 <i class="fa-solid fa-coins menu-icon"></i>
                 <div data-i18n="User interface">내 수익 조회</div>
               </a>
@@ -182,12 +182,6 @@
               <a href="${pageContext.request.contextPath}/teacher/mypage/modifyPwd" class="menu-link">
                 <i class="fa-solid fa-key menu-icon"></i>
                 <div data-i18n="Form Elements">비밀번호 수정</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/mypage/updateProfile" class="menu-link">
-                <i class="fa-solid fa-address-card menu-icon"></i>
-                <div data-i18n="Form Elements">선생님 프로필 수정</div>
               </a>
             </li>
             <li class="menu-item">

@@ -10,6 +10,8 @@
 <title> 자신이 쓴 QnA 글 전체 조회</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -37,7 +39,7 @@
 $(function() {
 	
 	$(".qnaTitle").click(function(){
-			//alert($(this).val());
+			//swal($(this).val());
 			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
@@ -74,14 +76,14 @@ $(function() {
 					
 				},
 				error: function(err){
-					alert(err + "에러 발생");
+					swal(err + "에러 발생");
 				}
 			})//ajax 끝
 		})// $(".qnaTitle").click 끝
 		
 		
 		 $(".deleteBtn").click(function(){
-			   //alert(111);
+			   //swal(111);
 			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaDelete");
 			   $("#requestForm").submit();
 		   
@@ -90,7 +92,7 @@ $(function() {
 	   
 	// 선택한 QnA글 가지고 수정폼으로 가기
 		$(".updateBtn").click(function() {
-			//alert($("#qnaDetail-form #qnaId").html());
+			//swal($("#qnaDetail-form #qnaId").html());
 			$.ajax({
 				url : "${pageContext.request.contextPath}/qnaUpdateForm",
 				type : "post",
@@ -104,14 +106,14 @@ $(function() {
 					$('body').removeClass('modal-open');
 					$('.modal-backdrop').remove();
 					
-					//alert(result)
+					//swal(result)
 					$("#qna-main-update .qnaId").val(`\${result.qnaId}`);
 					$("#qna-main-update .updateQnaTitle").val(`\${result.qnaTitle}`);
 					$("#qna-main-update .qnaContent").val(`\${result.qnaContent}`);
 					$("#qna-main-update .secretState").val(`\${result.secretState}`);
 				},
 				error : function(error) {
-					alert("QnA 글을 가져올 수 없습니다.");
+					swal("QnA 글을 가져올 수 없습니다.");
 				}
 			}); // 아작스 종료
 		})//$(".updateBtn").click 끝
