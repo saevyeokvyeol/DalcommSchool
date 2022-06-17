@@ -58,22 +58,22 @@ public class NoticeController {
 		 * */
 		
 		 @RequestMapping("/main/board/Notice/noticeList")
-		 private void usernoticeList(Model model, @RequestParam(defaultValue = "1")int nowPage) {
+		 private void usernoticeList(Model model, @RequestParam(defaultValue = "1")int page) {
 			 //List<Notice> nolist = noticeService.selectAllNotice();
 			 
 			//페이징 처리하기
-			 Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "noticeNo");
-	         Page<Notice> noList = noticeService.selectAllNotice(page);
+			 Pageable pageable = PageRequest.of((page-1), PAGE_COUNT, Direction.DESC, "noticeNo");
+	         Page<Notice> noList = noticeService.selectAllNotice(pageable);
 			 
-			 model.addAttribute("noList",noList);
+			 model.addAttribute("list",noList);
 			 
 			 
-			 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
-			 int startPage = nowPage-temp;
+			 int temp=(page-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
+			 int startPage = page-temp;
 				
 			model.addAttribute("blockCount",BLOCK_COUNT);
 			model.addAttribute("startPage",startPage);
-			model.addAttribute("nowPage",nowPage);
+			model.addAttribute("page",page);
 				
 		 }
 	 	/**
@@ -190,20 +190,20 @@ public class NoticeController {
 	 * 공지사항 검색 - 유저
 	 * */
 	@RequestMapping("/main/board/Notice/noticeSearch")
-	public String userselectByKeyword(String keyword,Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public String userselectByKeyword(String keyword,Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		 Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "noticeNo");
-         Page<Notice> noList = noticeService.selectByKeyword(keyword,page);
+		 Pageable pageable = PageRequest.of((page-1), PAGE_COUNT, Direction.DESC, "noticeNo");
+         Page<Notice> noList = noticeService.selectByKeyword(keyword,pageable);
 		 
-		 model.addAttribute("noList",noList);
+		 model.addAttribute("list",noList);
 		 
-		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
-		 int startPage = nowPage-temp;
+		 int temp=(page-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
+		 int startPage = page-temp;
 		 
 		 model.addAttribute("blockCount", BLOCK_COUNT);
 		 model.addAttribute("startPage", startPage);
-		 model.addAttribute("nowPage", nowPage);
+		 model.addAttribute("page", page);
 		 
 		return "main/board/Notice/noticeList";
 	}
