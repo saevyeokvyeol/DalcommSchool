@@ -395,8 +395,10 @@
 				
 				// 클래스 후기 등록폼
 				$("#reviewInsertModalBtn").click(function() {
-					$("#reviewInsertForm .mainImgCon").css("display", "none")
-					$("#reviewInsertForm .mainFileBtn").css("display", "block")
+				    $("#insertImgCon").css("display", "none")
+				    $("#insertPreviewImage").attr("src", "")
+				    $("#insertImgBtn").css("display", "block")
+				    $("#insertImgInput").val("")
 					$("#reviewInsertForm [name=reviewContent]").val("")
 					$("#reviewInsertForm [name=reviewRate]:checked").prop("checked", false);
 				})
@@ -410,9 +412,6 @@
 						contentType: false,
 						processData: false,
 						success: function(){
-							$('#reviewInsertModal').modal("hide");
-							$('body').removeClass('modal-open');
-							$('.modal-backdrop').remove();
 							classReview(1);
 						},
 						error:function(xhr, status, error){
@@ -454,9 +453,10 @@
 								$("#updateImgCon").css("display", "blobk")
 								$("#updateImgBtn").css("display", "none")
 							} else {
-								$("#updatePreviewImage").attr("src", "")
-								$("#updateImgCon").css("display", "none")
-								$("#updateImgBtn").css("display", "block")
+							    $("#updateImgCon").css("display", "none")
+							    $("#updatePreviewImage").attr("src", "")
+							    $("#updateImgBtn").css("display", "block")
+							    $("#updateImgInput").val("")
 							}
 							
 							$("#reviewUpdateForm [name=reviewContent]").val(result.reviewContent)
@@ -480,9 +480,6 @@
 						contentType: false,
 						processData: false,
 						success: function(){
-							$('#reviewUpdateModal').modal("hide");
-							$('body').removeClass('modal-open');
-							$('.modal-backdrop').remove();
 							classReview($(".nowReview").val())
 						},
 						error:function(xhr, status, error){
@@ -616,9 +613,6 @@
 							"qnaTitle": $("#qnaInsertTitle").val(), "qnaContent": $("#qnaInsertContent").val(), "secretState": $("[name=qnaInsertSecretState]:checked").val()},
 						success: function(){							
 							classQna(1)
-							$('#qnaInsertForm').modal("hide");
-							$('body').removeClass('modal-open');
-							$('.modal-backdrop').remove();
 						},
 						error: function(err){
 							alert("Q&A를 등록할 수 없습니다.")
@@ -726,9 +720,6 @@
 						success: function(){
 							
 							classQna($(".nowQna").val())
-							$('#qnaUpdateForm').modal("hide");
-							$('body').removeClass('modal-open');
-							$('.modal-backdrop').remove();
 						},
 						error: function(err){
 							alert("Q&A를 수정할 수 없습니다.")
@@ -738,69 +729,60 @@
 				
 				classQna(1)
 				classReview(1)
+				
+				$("#bookForm").submit(function() {
+					if($("#bookSeat").val() == 0){
+						alert("남은 수강 인원이 부족해 예약할 수 없습니다.")
+						return false;
+					}
+				})
 			})
 			
-		var geocoder;
-		var map;
-		
-		function initialize() {
-		  geocoder = new google.maps.Geocoder();
-		  var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
-		  var mapOptions = {
-		    zoom: 16,
-		    center: latlng
-		  }
-		  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-		}
-			  
-		function codeAddress() {
-		    var address = document.getElementById('placeAddr').value;
-		    geocoder.geocode( { 'address': address}, function(results, status) {
-		      if (status == 'OK') {
-		    	  
-		    	  var lat = results[0].geometry.location.lat();
-		 	      var lng = results[0].geometry.location.lng(); 
-		    	  
-		        map.setCenter(results[0].geometry.location);
-		        var marker = new google.maps.Marker({
-		            map: map,
-		            position: results[0].geometry.location
-		        });
-		        
-		      } else {
-		        alert('Geocode was not successful for the following reason: ' + status);
-		      }
-		    });
-		}
-			  
-		$(function(){	
-			codeAddress();
-		})
+			var geocoder;
+			var map;
+			
+			function initialize() {
+			  geocoder = new google.maps.Geocoder();
+			  var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+			  var mapOptions = {
+			    zoom: 16,
+			    center: latlng
+			  }
+			  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+			}
+				  
+			function codeAddress() {
+			    var address = document.getElementById('placeAddr').value;
+			    geocoder.geocode( { 'address': address}, function(results, status) {
+			      if (status == 'OK') {
+			    	  
+			    	  var lat = results[0].geometry.location.lat();
+			 	      var lng = results[0].geometry.location.lng(); 
+			    	  
+			        map.setCenter(results[0].geometry.location);
+			        var marker = new google.maps.Marker({
+			            map: map,
+			            position: results[0].geometry.location
+			        });
+			        
+			      } else {
+			        alert('Geocode was not successful for the following reason: ' + status);
+			      }
+			    });
+			}
+				  
+			$(function(){	
+				codeAddress();
+			})
 		</script>
 	</head>
 	<body>
-		<!-- 클래스 후기 조회 모달 -->
-		<div class="modal fade" id="reviewSelectForm" tabindex="-1" aria-labelledby="reviewSelectFormLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="reviewSelectFormLabel">클래스 후기</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					</div>
-				</div>
-			</div>
-		</div>
 		
 		<!-- 클래스 후기 등록 모달 -->
 		<div class="modal fade" id="reviewInsertModal" tabindex="-1" aria-labelledby="reviewInsertModalFormLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form id="reviewInsertForm">
+					<form id="reviewInsertForm" enctype="multipart/form-data">
 						<div class="modal-header">
 							<h5 class="modal-title" id="reviewInsertModalLabel">클래스 후기 등록</h5>
 							<input type="hidden" name="classId" value="${classes.classId}"/>
@@ -836,7 +818,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary" id="reviewInsertBtn">등록</button>
+							<button type="button" class="btn btn-primary" id="reviewInsertBtn" data-bs-dismiss="modal" aria-label="Close">등록</button>
 						</div>
 					</form>
 				</div>
@@ -884,7 +866,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary" id="reviewUpdateBtn">수정</button>
+							<button type="button" class="btn btn-primary" id="reviewUpdateBtn" data-bs-dismiss="modal" aria-label="Close">수정</button>
 						</div>
 					</form>
 				</div>
@@ -915,7 +897,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary" id="qnaInsertBtn">등록</button>
+						<button type="button" class="btn btn-primary" id="qnaInsertBtn" data-bs-dismiss="modal" aria-label="Close">등록</button>
 					</div>
 				</div>
 			</div>
@@ -946,7 +928,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary" id="qnaUpdateBtn">수정</button>
+						<button type="button" class="btn btn-primary" id="qnaUpdateBtn" data-bs-dismiss="modal" aria-label="Close">수정</button>
 					</div>
 				</div>
 			</div>
