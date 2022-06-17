@@ -10,21 +10,9 @@
 	<body>
 		<div id="inner-sidebar">
 			<h4>고객센터</h4>
-			<a href=""><h5>공지사항</h5></a>
-			<a href=""><h5>자주 묻는 질문</h5></a>
-			<ul>
-				<li><a href="">자주</a></li>
-			</ul>
-			<ul>
-				<li><a href="">묻는</a></li>
-			</ul>
-			<ul>
-				<li><a href="">질문</a></li>
-			</ul>
-			<ul>
-				<li><a href="">카테고리</a></li>
-			</ul>
-			<a href=""><h5>이벤트</h5></a>
+			<a href="${pageContext.request.contextPath}/main/board/Notice/noticeList"><h5>공지사항</h5></a>
+			<a href="${pageContext.request.contextPath}/main/board/FAQ/faqList"><h5>자주 묻는 질문</h5></a>
+			<a href="${pageContext.request.contextPath}/main/board/event/eventList"><h5>이벤트</h5></a>
 		</div>
 	</body>
 </html>

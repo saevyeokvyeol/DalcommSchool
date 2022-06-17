@@ -113,7 +113,7 @@
 						<li><a href="${pageContext.request.contextPath}/main/class/classList">전체 클래스</a></li>
 						<li><a href="${pageContext.request.contextPath}/main/class/newClass">신규 클래스</a></li>
 						<li><a href="${pageContext.request.contextPath}/main/class/nearClass">바로 수강 클래스</a></li>
-						<li><a href="">고객센터</a></li><div class="btn-group">
+						<li><a href="${pageContext.request.contextPath}/main/board/Notice/noticeList">고객센터</a></li><div class="btn-group">
 					</ul>
 				
 				</div>
