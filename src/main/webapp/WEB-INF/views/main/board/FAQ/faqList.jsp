@@ -109,37 +109,34 @@
 
 	</c:forEach>
 
-<div style="text-align: center">
-		<!--  블럭당  -->
- <nav class="pagination-container">
-	<div class="pagination">
+
+<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
 	<c:set var="doneLoop" value="false"/>
-		
 		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-		      <a class="pagination-newer" href="${pageContext.request.contextPath}/main/board/FAQ/faqList?nowPage=${startPage-1}">PREV</a>
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage-1}">이전</a>
+		  	</li>
 		  </c:if>
-		  
-		<span class="pagination-inner"> 
-		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		  
-			    <c:if test="${(i-1)>=faqlist.getTotalPages()}">
-			       <c:set var="doneLoop" value="true"/>
-			    </c:if> 
-		    
-		  <c:if test="${not doneLoop}" >
-		         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/FAQ/faqList?nowPage=${i}">${i}</a> 
-		  </c:if>
-		   
+		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=faqlist.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
 		</c:forEach>
-		</span> 
 				
 		 <c:if test="${(startPage+blockCount)<=faqlist.getTotalPages()}">
-		     <a class="pagination-older" href="${pageContext.request.contextPath}/main/board/FAQ/faqList?nowPage=${startPage+blockCount}">&nbsp;NEXT</a>
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
 		 </c:if>
-		</div>
-	</nav>  
-</div>
-
+		</ul>
+	</nav> 
 
 </div>
 
