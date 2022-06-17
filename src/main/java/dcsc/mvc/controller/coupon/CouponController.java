@@ -40,26 +40,22 @@ public class CouponController {
 	 * 자신이 보유한(발급 받은) 쿠폰 조회 기능; 학생
 	 * */
 	@RequestMapping("main/mypage/couponList")
-	public void selectAllIssueCouponByStudentId(String couponUseable, Model model, @RequestParam(defaultValue="1") int nowPage) {
+	public void selectAllIssueCouponByStudentId(String couponUseable, Model model, @RequestParam(defaultValue="1") int page) {
 		String studentId = "kim1234";
 		
 		if(couponUseable == null) couponUseable = "useable";
 		
 		//페이징 처리하기
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT);
-		Page<IssueCoupon> issueCouponList = couponService.selectByStudentId(studentId, couponUseable, page);
-		model.addAttribute("issueCouponList", issueCouponList);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT);
+		Page<IssueCoupon> pageList = couponService.selectByStudentId(studentId, couponUseable, pageable);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
-		
-		System.out.println(BLOCK_COUNT);
-		System.out.println(startPage);
-		System.out.println(nowPage);
+		model.addAttribute("page",page);
 			
 	
 	}
@@ -92,25 +88,22 @@ public class CouponController {
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님-페이징처리
 	 * */
 	@RequestMapping("teacher/coupon/couponAllList")
-	public void selectAllCouponByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int nowPage) {
+	public void selectAllCouponByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int page) {
 		teacherId = "Tkim1234";
 		
 		//페이징 처리하기
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"couponId");
-		Page<Coupon> couponList = couponService.selectByTeacherId(teacherId, page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"couponId");
+		Page<Coupon> pageList = couponService.selectByTeacherId(teacherId, pageable);
 		
-		model.addAttribute("couponList", couponList);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",page);
 		
-		System.out.println(BLOCK_COUNT);
-		System.out.println(startPage);
-		System.out.println(nowPage);
 	}
 	
 	/**
@@ -128,23 +121,23 @@ public class CouponController {
 	 * @return List<Coupon>
 	 * */
 	@RequestMapping("admin/coupon/selectAllCoupon")
-	public void selectAllCoupon(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public void selectAllCoupon(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징처리하기
-		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "couponId");
-		Page<Coupon> couponList = couponService.selectAll(page);
+		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "couponId");
+		Page<Coupon> pageList = couponService.selectAll(pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		
-		model.addAttribute("couponList", couponList);
+		model.addAttribute("list", pageList);
 		
 		
-		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
-		int startPage = nowPage-temp;
+		int temp = (page-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = page-temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("nowPage", page);
 	}
 	
 	/**

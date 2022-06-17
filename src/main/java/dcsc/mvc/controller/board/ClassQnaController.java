@@ -187,11 +187,9 @@ public class ClassQnaController {
 		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "qnaId");
 		Page<ClassQna> pageList = classQnaService.selectAllQna(pageable);
 		
-		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
-		
 		model.addAttribute("list", pageList);
 		
-		int temp = (page-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int temp = (page-1)%BLOCK_COUNT; 
 		int startPage = page-temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
