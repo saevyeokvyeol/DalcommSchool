@@ -21,8 +21,8 @@
 			</ul>
 			<h5>나의 글 관리</h5>
 			<ul>
-				<li><a href="">1:1 문의</a></li>
-				<li><a href="">클래스 후기</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById">1:1 문의</a></li>
+				<li><a href="${pageContext.request.contextPath}/main/mypage/reviewList">클래스 후기</a></li>
 				<li><a href="${pageContext.request.contextPath}/main/mypage/qnaList">클래스 Q&A</a></li>
 			</ul>
 			<h5>회원 정보</h5>
