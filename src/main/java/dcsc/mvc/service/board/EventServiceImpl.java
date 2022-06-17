@@ -102,8 +102,11 @@ public class EventServiceImpl implements EventService {
 		QEvent event = QEvent.event;
 		booleanBuilder.and(event.eventContent.like("%"+keyword+"%"));
 		booleanBuilder.or(event.eventTitle.like("%"+keyword+"%"));
-		JPQLQuery<Event> jpqlQuery = factory.selectFrom(event).where(booleanBuilder)
-				.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		JPQLQuery<Event> jpqlQuery = factory
+				.selectFrom(event).where(booleanBuilder)
+				.orderBy(event.eventNo.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
 		
 		Page<Event> list = new PageImpl<Event>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
