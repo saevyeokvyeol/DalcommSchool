@@ -84,33 +84,34 @@ a{
 		</table>
 	</div>
 
-<div style="text-align: center">
-		<!--  블럭당  -->
-	<nav aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">
-			<c:set var="doneLoop" value="false" />
-			<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
-				<li class="page-item">
-					<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
-				</li>
-			</c:if>
-				<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
-					<c:if test="${(i-1)>=list.getTotalPages()}">
-						<c:set var="doneLoop" value="true" />
-					</c:if>
-					<c:if test="${not doneLoop}">
-						<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
-					</c:if>
-				</c:forEach>
-			<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
-				<li class="page-item">
-					<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
-				</li>
-			</c:if>
+ 
+ <nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+	<c:set var="doneLoop" value="false"/>
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/main/board/Notice/noticeList?page=${startPage-1}">이전</a>
+		  	</li>
+		  </c:if>
+		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=list.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/main/board/Notice/noticeList?page=${i}">${i}</a> 
+			  </li>
+			  </c:if>
+		</c:forEach>
+				
+		 <c:if test="${(startPage+blockCount)<=list.getTotalPages()}">
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/main/board/Notice/noticeList?page=${startPage+blockCount}">다음</a>
+		 </li>
+		 </c:if>
 		</ul>
 	</nav> 
-</div>
-
 </body>
 
 </html>
