@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -25,14 +26,61 @@
 	table,th,td{
 		text-align: center;
 	}
-
+	.askSearch{
+		width: 150px;
+		height: 40px;
+	}
+	#askCategoryId{
+		width: 150px;
+		height: 40px;
+	}
 
 </style>
+
+<script type="text/javascript">
+	$(function() {
+
+		$(document).on("change", "#askCategoryId", function() {
+			location.href="${pageContext.request.contextPath}/admin/board/askCategoryId?askCategoryId=" + $(this).val()
+		})
+	})
+
+</script>
 </head>
 <body>
 
 <div class="main-content">
-
+		
+     		
+	     		 
+		
+      
+     <div class="alert alert-dark" role="alert">
+		     <span>
+				<h1>1대1 문의목록</h1>
+			</span> 
+	</div>
+					<select name="askCategoryId" id="askCategoryId" class="form-select" aria-label="Default select example">
+						  <option value="">카테고리 종류</option>
+						  <option value="1">클래스</option>
+						  <option value="2">결제</option>
+						  <option value="3">환불</option>
+						  <option value="4">후기</option>
+						  <option value="5">탈퇴</option>
+					</select>
+	
+		  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		       <div class="container-fluid">
+		           <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/board/askAnswerList">전체보기</a>
+						<form class="d-flex" action="${pageContext.request.contextPath}/admin/board/askAnswerSearch" method="post">
+						     <div class="askSearch"> 
+						        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyword" name="keyword">
+						     </div>
+						        <button class="btn btn-primary" type="submit" id="search">Search</button>
+					    </form> 
+			    </div>
+		  </nav>   
 	<table class="table"> 
 		<thead>
             <tr>
@@ -41,7 +89,7 @@
              <th>글 제목</th>
              <th>카테고리</th>
              <th>문의 내용</th>
-             <th>첨부 파일명</th>
+             <th>첨부 파일</th>
              <th>문의 일자</th>
              <th>답변 유무</th>
             </tr>
@@ -78,7 +126,11 @@
 				        </td>
 				        <td>
 				        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
-				        	     ${askList.askTitle}<p>
+				        	     ${askList.askTitle}
+				        	     <c:set var="today" value="<%=LocalDateTime.now().minusDays(1)%>"/>
+								  <c:if test="${askList.askInsertDate >= today}">
+								  	<span class="badge rounded-pill bg-primary">new</span>
+								  </c:if>
 				        	</a>
 				        </td>
 				        <td>
@@ -86,19 +138,29 @@
 				        </td>
 				        <td>
 					        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-					            ${askList.askContent}<p>
+					            ${askList.askContent}
 					        </span>
 					        
 				        </td>
 				        <td>
-				         	${askList.askImg}<p>
+				        	
+				         	<c:if test="${askList.askImg != null}">
+								<i class="fa fa-file-image-o" aria-hidden="true"></i>
+							</c:if>
 				        </td>
 				        <td>
 				        	<fmt:parseDate value="${askList.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
 				        </td>
 				        <td>
-				        	${askList.askComplete}<p>
+				        	<c:choose>
+	                        	<c:when test="${askList.askComplete == 'F'}">
+	                        		<span class="badge bg-secondary">미답변</span>
+	                        	</c:when>
+	                        	<c:when test="${askList.askComplete == 'T'}">
+	                        		<span class="badge bg-primary">답변 완료</span>
+	                        	</c:when>
+	                       	</c:choose>
 				        </td>
 				       <%-- 	<td>
 				       		<span>
@@ -109,12 +171,19 @@
 		    </c:forEach>
 		</c:otherwise>
     </c:choose>
+    	<tr>
+			<td>
+				<div align="right">
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+				</div>
+			</td>
+		</tr>
    </tbody>
 	</table>
 	
 	<hr>
 		
-	 <div style="text-align: center">
+	<%--  <div style="text-align: center">
 		<!--  블럭당  -->
  <nav class="pagination-container">
 	<div class="pagination justify-content-center">
@@ -147,32 +216,60 @@
 		 </c:if>
 		</div>
 	</nav>  
-</div>	 
+</div> --%>	 
 
-		<%-- 	<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<c:set var="doneLoop" value="false" />
-					<c:if test="${(startPage-blockCount) > 0 and askList.content.size() != 0}">
-						<li class="page-item">
-							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
-						</li>
-					</c:if>
-						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<askList.totalPages?(startPage-1)+blockCount:askList.totalPages}'>
-							<c:if test="${(i-1)>=list.getTotalPages()}">
-								<c:set var="doneLoop" value="true" />
-							</c:if>
-							<c:if test="${not doneLoop}">
-								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
-							</c:if>
-						</c:forEach>
-					<c:if test="${(startPage+blockCount) <= askList.getTotalPages()}">
-						<li class="page-item">
-							<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
-						</li>
-					</c:if>
-				</ul>
-			</nav> --%>
+		<%-- <nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<c:set var="doneLoop" value="false" />
+						<c:if test="${(startPage-blockCount) > 0 and askList.content.size() != 0}">
+							<li class="page-item">
+								<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+							</li>
+						</c:if>
+							<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<askList.totalPages?(startPage-1)+blockCount:askList.totalPages}'>
+								<c:if test="${(i-1)>=askList.getTotalPages()}">
+									<c:set var="doneLoop" value="true" />
+								</c:if>
+								<c:if test="${not doneLoop}">
+									<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+								</c:if>
+							</c:forEach>
+						<c:if test="${(startPage+blockCount) <= askList.getTotalPages()}">
+							<li class="page-item">
+								<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>	 --%>
+				
+				
+		<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+	<c:set var="doneLoop" value="false"/>
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage-1}">이전</a>
+		  	</li>
+		  </c:if>
 		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=askList.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
+		</c:forEach>
+				
+		 <c:if test="${(startPage+blockCount)<=askList.getTotalPages()}">
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
+		 </c:if>
+		</ul>
+	</nav> 		
 		
 </div>	
 	

@@ -39,7 +39,7 @@ public class AskAnswerUserController {
 	 /**            
 	  * 학생 ID로 자신 1대1문의 조회 
 	  * */
-	@RequestMapping("main/board/askanswer/askAnswerSelectById") 
+	@RequestMapping("main/mypage/askAnswerSelectById") 
 	public void selectByStudentId(String studentId, Model model,@RequestParam(defaultValue = "1") int page) {
 		
 		studentId = "jang1234"; 
@@ -128,7 +128,7 @@ public class AskAnswerUserController {
 	/** 
 	 * 등록폼(학생)  
 	 * */
-	@RequestMapping("main/board/askanswer/askAnswerWriteStudent")
+	@RequestMapping("main/mypage/askForm")
 	public void askAnswerWriteStudent() {}
 	 
 	 
@@ -170,10 +170,10 @@ public class AskAnswerUserController {
 			ask.setAskImg(file.getOriginalFilename());
 			
 		} 
-		  
+		   
 		askAnswerService.insertAsk(ask);
 		
-		return "redirect:/main/board/askanswer/askAnswerSelectById";
+		return "redirect:/main/mypage/askAnswerSelectById";
 	} 
 	  
 	
@@ -217,7 +217,7 @@ public class AskAnswerUserController {
 	public ModelAndView updateFormStudent(Long askNo) {
 		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
-		return new ModelAndView("/main/mypage/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
+		return new ModelAndView("main/mypage/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
 	
 	/** 
@@ -243,7 +243,7 @@ public class AskAnswerUserController {
 		 
 		Ask dbAsk=askAnswerService.updateAsk(ask);
 		//return new ModelAndView("/main/board/askanswer/askAnswerSelectById","askSelectByIdList",dbAsk); 
-		return "redirect:/main/board/askanswer/askAnswerSelectById"; 
+		return "redirect:/main/mypage/askAnswerSelectById"; 
 	}
 					
 	/**
@@ -253,7 +253,7 @@ public class AskAnswerUserController {
 	public ModelAndView updateFormTeacher(Long askNo) {
 		Ask askSelectByIdList=askAnswerService.selectByAskNo(askNo);
 		System.out.println("askSelectByIdList.getAskNo()"+askSelectByIdList.getAskNo());
-		return new ModelAndView("/teacher/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
+		return new ModelAndView("teacher/board/askanswer/askAnswerUpdate","askSelectByIdList",askSelectByIdList);
 	}
 	 
 	/** 
@@ -287,7 +287,7 @@ public class AskAnswerUserController {
 		
 		askAnswerService.deleteAsk(askNo); 
 		
-		return "redirect:/main/board/askanswer/askAnswerSelectById";
+		return "redirect:/main/mypage/askAnswerSelectById";
 	} 
 	
 	/** 
@@ -301,7 +301,54 @@ public class AskAnswerUserController {
 		return "redirect:/teacher/board/askanswer/askAnswerSelectById";
 	}
 
+	/**
+	 * 1대1문의 검색하기(학생)
+	 * */
+	@RequestMapping("main/board/askAnswerSearch")
+	 public String selectByKeyword(String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
+		 
+		 //List<Ask> list=askAnswerService.selectByKeyword(keyword);
+		 
+		 Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "askNo");
+			Page<Ask> askSelectByIdList = askAnswerService.selectBykeyword(keyword,pageable);
+
+			model.addAttribute("askSelectByIdList", askSelectByIdList);
+
+			int temp = (page-1)%BLOCK_COUNT;
+			int startPage = page - temp;
+
+			model.addAttribute("blockCount", BLOCK_COUNT);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("page", page);
+		 
+		 
+		 return "main/mypage/askAnswerSelectById";
+	 }
 	
+	
+	/**
+	 * 1대1문의 검색하기(선생님)
+	 * */
+	@RequestMapping("teacher/board/askAnswerSearchTeacher")
+	 public String selectByKeywordTeacher(String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
+		 
+		 //List<Ask> list=askAnswerService.selectByKeyword(keyword);
+		 
+		 Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "askNo");
+			Page<Ask> askSelectByIdList = askAnswerService.selectBykeyword(keyword,pageable);
+
+			model.addAttribute("askSelectByIdList", askSelectByIdList);
+
+			int temp = (page-1)%BLOCK_COUNT;
+			int startPage = page - temp;
+
+			model.addAttribute("blockCount", BLOCK_COUNT);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("page", page);
+		 
+		 
+		 return "teacher/board/askanswer/askAnswerSelectById";
+	 }
 }
 
 

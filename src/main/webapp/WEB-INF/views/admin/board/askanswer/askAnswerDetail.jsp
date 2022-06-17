@@ -36,7 +36,14 @@
 	    width: 500px;
 	    
 	}
-
+	
+	#preview-image{
+		width: 350px;
+		height: 350px;
+		/* object-fit:cover; */
+		background-size: contain;
+	
+	}
 
 
 </style>
@@ -46,23 +53,41 @@
 	$(function getAnswerList(){
 		//alert(1);
 		$("#answerBtn").click(function(){
-		   alert(123)
+		   
 		    $.ajax({
 			   url: "${pageContext.request.contextPath}/admin/board/insertAnswer",
 			   type: "post",
 			   data: {"${_csrf.parameterName}": "${_csrf.token}" , askNo:"${askAnswerDetail.askNo}" , answerContent: $("#answerArea").val()},
 			   dataType: "json",
 			   success: function(result) {
-				   var data="<table border='1' cellpadding='5'>";
 				  
-					   alert("성공");
-						 data+="<tr>";
-							data+="<td>답변 번호 : "+result.answerNo+"</td><p>";
-							data+="<td>답변 내용 : "+result.answerContent+"</td><p>";
-							data+="<td>답변 일자 : "+result.answerInsertDate+"</td><p>";
-							data+="</tr>";
+
+				   alert("답변을 등록하였습니다.");
+				   
 					
-					data+="</table>";
+					
+				var data="";
+				 
+				  
+				   data+="<table align='center' class='table'>";	
+				   		data+="<tr>";
+					 	data+="<td>답변 번호</td>";
+						data+="<td>"+result.answerNo+"</td>";
+						data+="</tr>";
+						
+						data+="<tr>";
+						data+="<td>답변 일자</td>";					
+						data+="<td>"+result.answerInsertDate.toString().substring(0,10)+"</td>";
+						
+						data+="</tr>";
+						
+						data+="<tr>";
+						data+="<td>답변 내용</td>";
+						data+="<td>"+result.answerContent+"</td>";
+						data+="</tr>";
+						
+				data+="</table>";
+					
 					
 				   $("#answerView").html(data);
 				   $("#span").hide();
@@ -128,39 +153,36 @@
 		 </tr>
 		 	<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
 		<tr>
+			<td>
+				첨부 파일
+			</td>
 		     <td colspan="2" style="text-align: center;">
-				<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+				<img  id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
 				<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
 		     </td>
 	    </tr>
 		
-		
-	
-		
-		
-		<tr>
-			<td>
-				<div align="right">
-					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
-				</div>
-			</td>
-		</tr>
-	
 
 
 </table>
-	<div align="center">
-		<div id="answerView">
-			
-			<c:if test="${not empty askAnswerDetail.answer}">
-				 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
-				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-												<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-			</c:if>
 			
 				
-			</div>
+				
+
+				
+	<div align="center">
+		<div id="answerView">
+			<c:if test="${not empty askAnswerDetail.answer}">
+				 답변 번호 : ${askAnswerDetail.answer.answerNo}<p>
+				 
+				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
+				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/><p>
+			
+				답변 내용 : ${askAnswerDetail.answer.answerContent}
+			</c:if>		
+		</div>
+				
 				
 			<c:if test="${empty askAnswerDetail.answer}">
 				<c:remove var="span"/>
@@ -175,6 +197,8 @@
 			</span>
 			</c:if>
 	</div>
+	
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
 </div>
 
 </body>

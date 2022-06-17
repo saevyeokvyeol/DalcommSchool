@@ -121,13 +121,13 @@
               </ul>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/mypage/reviewList" class="menu-link">
                 <i class="fa-solid fa-pen menu-icon"></i>
                 <div data-i18n="Misc">클래스 리뷰 조회</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/board/qna" class="menu-link">
                 <i class="fa-solid fa-circle-question menu-icon"></i>
                 <div data-i18n="Misc">클래스 Q&A 조회</div>
               </a>
@@ -136,7 +136,7 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">수익 관리</span></li>
             <!-- Cards -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link">
+              <a href="/teacher/adjust/adjustList" class="menu-link">
                 <i class="fa-solid fa-coins menu-icon"></i>
                 <div data-i18n="User interface">내 수익 조회</div>
               </a>

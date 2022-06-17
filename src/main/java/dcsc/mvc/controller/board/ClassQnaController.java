@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class QnaController {
+public class ClassQnaController {
 	private final ClassQnaService classQnaService;
 	
 	private final static int PAGE_COUNT = 10;
@@ -96,63 +96,11 @@ public class QnaController {
 	}
 	
 	/**
-	 * Q&A 상세조회 - 관리자
-	 * */
-	@RequestMapping("admin/board/qna/qnaRead/{qnaId}")
-	public String qnaReadAdmin(@PathVariable Long qnaId, Model model ) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
-		model.addAttribute("qna", classQna);
-		model.addAttribute("qnaReply", classReply);
-		
-		return "admin/board/qna/qnaRead";
-	}
-	
-	/**
-	 * 선생님 - Q&A 상세조회
-	 * */
-	@RequestMapping("teacher/board/qna/qnaRead/{qnaId}")
-	public String qnaReadth(@PathVariable Long qnaId , Model model) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
-		
-		model.addAttribute("qna", classQna);
-		model.addAttribute("qnaReply", classReply);
-		
-
-		return "teacher/board/qna/qnaRead";
-		
-	}
-	
-	/**
 	 * Q&A 등록 폼
 	 * */
 	@RequestMapping("main/board/qna/qnaWrite")
 	public void qnaWrite() {
 	}
-	
-	/**
-	 * Q&A 등록  - 학생 마이페이지
-	 * */
-	/*@RequestMapping("main/board/qna/qnaInsert")
-	public String qnaInsert(ClassQna classQna, Classes classes, Student student) {
-		
-		String blindState = "F";
-		String qnaComplete = "F";
-		
-		if(classQna.getSecretState()==null) {
-			classQna.setSecretState("T");
-		}
-		
-		classQna.setClasses(classes);
-		classQna.setStudent(student);
-		classQna.setBlindState(blindState);
-		classQna.setQnaComplete(qnaComplete);
-		classQnaService.insertQuestion(classQna);
-		System.out.println("classQna = "+classQna );
-		
-		return "redirect:/main/mypage/qnaList";
-	}*/
 	
 	/**
 	 * Q&A 수정폼 - 모달(학생 마이페이지)
@@ -230,15 +178,6 @@ public class QnaController {
 	}
 	
 	/**
-	 * 관리자 QnA전체조회 
-	 * */
-	/*@RequestMapping("admin/board/qna/qnaListBlind")
-	public void qnaAll(Model model) {
-		List<ClassQna> list = classQnaService.selectAllQna();
-		model.addAttribute("list", list);
-	}*/
-	
-	/**
 	 * 관리자 QnA전체조회 - 페이징처리
 	 * */
 	@RequestMapping("admin/board/qna/qnaListBlind")
@@ -261,26 +200,13 @@ public class QnaController {
 	}
 	
 	/**
-	 * 선생님 QnA전체조회 -- 사이트내 전체 QnA 글 보기 필요?
-	 * */
-	@RequestMapping("teacher/board/qna/qnaList")
-	public void qnaSelectAll(Model model) {
-		List<ClassQna> list = classQnaService.selectAllQna();
-		
-		model.addAttribute("list", list);
-	}
-	
-	/**
 	 * 블라인드처리
 	 * */
 	@RequestMapping("admin/board/qna/qnaBlind")
 	@ResponseBody
-	public String qnaBlind(Long qnaId ,String blindState) {
+	public void qnaBlind(Long qnaId ,String blindState) {
 		
 		classQnaService.updateBlind(qnaId, blindState);
-		
-		return "redirect:/";
-		//return "admin/board/qnaListBI_ad";
 	}
 	
 	/**
@@ -320,59 +246,45 @@ public class QnaController {
 	/*
 	 * 강사ID로 클래스 Q&A 검색 - 페이징
 	 * */
-	@RequestMapping("teacher/mypage/qnaListAll")
-	public void selectByteacherId(String teacherId , Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	@RequestMapping("/teacher/board/qna")
+	public ModelAndView selectByteacherId(String teacherId, @RequestParam(defaultValue = "1") int page) {
 		teacherId = "Tkim1234";
 		
+		ModelAndView modelAndView = new ModelAndView("teacher/board/qna/qnaList");
+		
 		//페이징처리하기
-		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
-		Page<ClassQna> pageList = classQnaService.selectByTeacherId(teacherId, page);
+		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByTeacherId(teacherId, pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		
-		model.addAttribute("pageList", pageList);
+		modelAndView.addObject("list", pageList);
 		
 		
-		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
-		int startPage = nowPage-temp;
+		int temp = (page-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = page-temp;
 		
-		model.addAttribute("blockCount", BLOCK_COUNT);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
-	}
-	
-	
-	/**
-	 * 선생님 Q&A 답변 폼
-	 * */
-	@RequestMapping("qnaReplyWriteForm")
-	public String qnaReplyWriteFrom(Long qnaId, Model model) {
-		model.addAttribute("qnaId", qnaId);
+		modelAndView.addObject("blockCount", BLOCK_COUNT);
+		modelAndView.addObject("startPage", startPage);
+		modelAndView.addObject("page", page);
+		modelAndView.addObject("title", "클래스 Q&A 목록");
 		
-		return "teacher/board/qna/qnaReplyWrite";
+		return modelAndView;
 	}
 	
 	/**
 	 * 선생님 Q&A 답변하기
 	 * */
 	@RequestMapping("qnaReplyInsert")
-	public String qnaReplyInsert(ClassReply classReply, Long qnaId, Teacher teacher) {
+	public String qnaReplyInsert(ClassReply classReply, Long qnaId) {
+		Teacher teacher = new Teacher("Tkim1234");
+		
 		classReply.setClassQna(new ClassQna(qnaId));
 		classReply.setTeacher(teacher);
 		classQnaService.insertReply(classReply);
 		
-		return "redirect:/teacher/mypage/qnaListAll";
+		return "redirect:/teacher/board/qna";
 	}
-	
-	/**
-	 * 선생님 Q&A 답변 수정폼
-	 * */
-	/*@RequestMapping("qnaReplyUpdateForm/{replyId}")
-	public ModelAndView qnaReplyUpdateForm(@PathVariable Long replyId){
-		ClassReply classReply= classQnaService.selectByReplyId(replyId);
-		
-		return new ModelAndView("teacher/board/qna/qnaReplyUpdateForm", "qnaReply", classReply);
-	}*/
 	
 	/**
 	 * 선생님 Q&A 답변 수정폼 - 모달
@@ -392,18 +304,8 @@ public class QnaController {
 	public String qnaReplyUpdate(ClassReply classReply) {
 		classQnaService.updateReply(classReply);
 		
-		return "redirect:/teacher/mypage/qnaListAll";
+		return "redirect:/teacher/board/qna";
 	}
-
-	/**
-	 * 선생님 Q&A 답변 삭제하기 - 기존 포워드
-	 * */
-	/*@RequestMapping("qnaReplyDelete/{replyId}")
-	public String qnaReplyDelete(@PathVariable Long replyId) {
-		classQnaService.deleteReply(replyId);
-		
-		return "redirect:/teacher/mypage/qnaListAll";
-	}*/
 	
 	/**
 	 * 선생님 Q&A 답변 삭제하기
@@ -412,7 +314,7 @@ public class QnaController {
 	public String qnaReplyDeleteTeacherMypage(Long replyId) {
 		classQnaService.deleteReply(replyId);
 		
-		return "redirect:/teacher/mypage/qnaListAll";
+		return "redirect:/teacher/board/qna";
 	}
 	
 	/**

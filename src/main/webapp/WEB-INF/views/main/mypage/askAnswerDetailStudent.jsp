@@ -50,9 +50,17 @@
 	    
 	}
 
-
+	#preview-image{
+		width: 350px;
+		height: 350px;
+		/* object-fit:cover; */
+		background-size: contain;
+	
+	}
 
 </style>
+
+
 
 </head>
 <body>
@@ -89,7 +97,15 @@
 			    	답변 유무
 			    </td>
 			    <td> 
-			    	${askAnswerDetail.askComplete}
+			    	
+			    	<c:choose>
+                       	<c:when test="${askAnswerDetail.askComplete == 'F'}">
+                       		<span class="badge bg-secondary">미답변</span>
+                       	</c:when>
+                       	<c:when test="${askAnswerDetail.askComplete == 'T'}">
+                       		<span class="badge bg-primary">답변 완료</span>
+                       	</c:when>
+                     </c:choose>
 			    </td>
 			</tr>
 			<tr> 
@@ -102,66 +118,97 @@
 				</td>
 			</tr>
 			<tr>
+				<td>
+					첨부 파일
+				</td>
 			     <td colspan="2" style="text-align: center;">
-					<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+					<img id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
 					<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
 			     </td>
     		</tr>
 	
 		    
-		
-		<hr>
-			
-				<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-					 	<%-- <input type=hidden name="askNo" value="${askSelectByIdList.askNo}">
-						<input type=button value="수정하기" > --%>
-						<tr>
-							<td>
-								<div  class="col-6 col-md-4">
-									
-									<c:choose>
-										<c:when test="${askAnswerDetail.askComplete eq 'T'}">
-											
-										</c:when>
-										<c:when test="${askAnswerDetail.askComplete eq 'F'}">
-											<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${askAnswerDetail.askNo}">수정하기</a>
-										</c:when>
-									</c:choose>
-									
-									
-									
-									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
-								</div>
-							</td>
-							<td>
-								<div class="col-6 col-md-4">
-									
-								</div>
-							</td>		
-						</tr>
-						<div align=right><span style="font-size:9pt;"><a class="btn btn-primary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerSelectById">뒤로가기</a></span></div>
 												
 			    <hr>
-			 <tr>
-			 	<td>
-			    <c:choose>
-			    	<c:when test="${empty askAnswerDetail.answer}">
-					<span>답변 내용이 없습니다.</span>
-			    	
-			    	</c:when>
-			    	<c:otherwise>
-					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : ${askAnswerDetail.answer.answerInsertDate}
-					 </c:otherwise>
-			    </c:choose>
-			    </td>
-			</tr>
-			
-	
-    
+			 	 
 
 		
 	</table>
+	
+	<div class="main-content">
+		<table align="center" class="table">
+			
+			<tr>
+				<td>
+					답변 일자
+				</td>
+				<td>
+					 <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>			    	
+					    	</c:when>
+					    	<c:otherwise> 
+							 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+							 </c:otherwise>
+					 </c:choose>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td>
+					답변 내용
+				</td>
+				<td>
+					 <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>
+		
+					    	</c:when>
+					    	<c:otherwise>
+							  ${askAnswerDetail.answer.answerContent}
+							 </c:otherwise>
+					    </c:choose>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	
+				<%-- <div class="card" style="width: 18rem;">
+ 					 <div class="card-body">
+					    <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>
+					    	
+					    	</c:when>
+					    	<c:otherwise>
+							 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
+							 답변 일자 : 
+							 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+							 </c:otherwise>
+					    </c:choose>
+					  </div>
+				</div> --%>
+	
+	<div class="row">
+		<div  class="col text-center"> 
+			<c:choose>
+				<c:when test="${askAnswerDetail.askComplete eq 'T'}">
+					
+				</c:when>
+				<c:when test="${askAnswerDetail.askComplete eq 'F'}">
+					<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${askAnswerDetail.askNo}">수정하기</a>
+				</c:when>
+			</c:choose>
+			
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
+		</div>
+	</div>
+	<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById">뒤로가기</a>
+	
 	
 					
 	<form name="askInfo" method="post">
@@ -188,5 +235,7 @@
 	</div>
 	
 </div>
+	
+
 </body>
 </html>

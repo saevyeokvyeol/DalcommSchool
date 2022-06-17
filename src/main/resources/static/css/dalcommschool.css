@@ -161,8 +161,20 @@ li {
 	 padding: 10px;
 }
 
+#teacherInfoBox {
+	display: flex; justify-content: flex-start; margin: 30px 0 0;
+}
+
+#teacherInfoBox .teacherImage {
+	margin: 0 50px 0 0; width: 100px; height: 100px; border-radius: 100px;
+}
+
 .boardTable, .boardTable button {
 	font-size: 15px;
+}
+
+#teacherInfo {
+	margin: auto 0;
 }
 
 .boardTable .no-record {
@@ -607,8 +619,83 @@ li {
 	margin: 100px 0;
 }
 
+#allBookList .qnaTable td:first-child {
+	width: 100px;
+}
+
+#allBookList .qnaTable td:nth-child(2) {
+	width: 350px;
+}
+
+#allBookList .qnaTable td:nth-child(3) {
+	text-align: left;
+}
+
+#allBookList .qnaTable td:nth-child(4),
+#allBookList .qnaTable td:nth-child(5),
+#allBookList .qnaTable td:nth-child(6) {
+	width: 120px;
+}
+
+#allBookList .reviewTable td:first-child {
+	width: 300px;
+}
+
+#allBookList .reviewTable td:nth-child(2) {
+	width: 130px;
+}
+
+#allBookList .reviewTable td:nth-child(3) {
+	text-align: left;
+}
+
+#allBookList .reviewTable td:nth-child(4) {
+	width: 100px;
+}
+
+#allBookList .reviewTable td:nth-child(5) {
+	width: 120px;
+}
+
+#allBookList .reviewTable td:nth-child(6) {
+	width: 80px;
+}
+
+.questionModalTable td {
+	height: 50px; text-align: left;
+}
+
+.questionModalTable tr:first-child td {
+	text-align: center;
+}
+
+.questionModalTable tr:nth-child(2) td {
+	vertical-align: bottom;
+}
+
+.questionModalTable tr:nth-child(3) td {
+	vertical-align: top;
+}
+
+
+.questionModalTable td:nth-child(2) {
+	text-align: right;
+}
+
+.answerModalTable td {
+	text-align: left;
+}
+
+.answerModalTable td:nth-child(2) {
+	text-align: right;
+}
+
 #pagenation {
 	margin-top: 50px;
+}
+
+.modalReviewImage {
+	max-width: 450px; border-radius: 5px;
 }
 
 .likeBox {
@@ -716,6 +803,10 @@ button.page-link {
 
 .swal-button:not([disabled]):hover {
 	 background-color: #EB5353;
+}
+
+i.fa-star{
+	padding: 0;
 }
 
 #map {

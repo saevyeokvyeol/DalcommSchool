@@ -95,19 +95,19 @@ public class ClassReviewController {
 	 * 전체 후기 가져오기(관리자)
 	 * */
 	@RequestMapping("/admin/review/list")
-	public String selectAllAdmin(Model model, @RequestParam(defaultValue="1") int nowPage){
+	public String selectAllAdmin(Model model, @RequestParam(defaultValue="1") int page){
 //		List<ClassReview> list = reviewService.selectAll();
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectAll(page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
+		Page<ClassReview> pageList = reviewService.selectAll(pageable);
 		
-		model.addAttribute("classReviews", pageList);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",page);
 		
 		return "admin/board/review/reviewList";
 	}
