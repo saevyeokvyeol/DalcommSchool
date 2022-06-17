@@ -49,7 +49,7 @@
 		             <th>카테고리</th>
 		             <th>문의제목</th>
 		             <th>문의내용</th>
-		             <th>첨부파일명</th>
+		             <th>첨부파일</th>
 		             <th>문의일자</th>
 		             <th>답변유무</th>
 		            </tr>
@@ -90,7 +90,9 @@
 									        	</span> 
 									        </td>  
 									        <td>
-									        	${ask.askImg}
+									        	<c:if test="${ask.askImg != null}">
+													<i class="fa fa-file-image-o" aria-hidden="true"></i>
+												</c:if>
 									        </td> 
 									        <td>
 									        	<fmt:parseDate value="${ask.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>

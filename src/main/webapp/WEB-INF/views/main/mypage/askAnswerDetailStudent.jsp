@@ -60,6 +60,8 @@
 
 </style>
 
+
+
 </head>
 <body>
 
@@ -128,28 +130,69 @@
 		    
 												
 			    <hr>
-			 <tr>
-			 	<td>
-			    <c:choose>
-			    	<c:when test="${empty askAnswerDetail.answer}">
-					<span>답변 내용이 없습니다.</span>
-			    	
-			    	</c:when>
-			    	<c:otherwise>
-					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : 
-					 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-					 </c:otherwise>
-			    </c:choose>
-			    </td>
-			</tr>
-			
-	
-    
+			 	 
 
 		
 	</table>
+	
+	<div class="main-content">
+		<table align="center" class="table">
+			
+			<tr>
+				<td>
+					답변 일자
+				</td>
+				<td>
+					 <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>			    	
+					    	</c:when>
+					    	<c:otherwise> 
+							 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+							 </c:otherwise>
+					 </c:choose>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td>
+					답변 내용
+				</td>
+				<td>
+					 <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>
+		
+					    	</c:when>
+					    	<c:otherwise>
+							  ${askAnswerDetail.answer.answerContent}
+							 </c:otherwise>
+					    </c:choose>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	
+				<%-- <div class="card" style="width: 18rem;">
+ 					 <div class="card-body">
+					    <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>
+					    	
+					    	</c:when>
+					    	<c:otherwise>
+							 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
+							 답변 일자 : 
+							 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+							 </c:otherwise>
+					    </c:choose>
+					  </div>
+				</div> --%>
+	
 	<div class="row">
 		<div  class="col text-center"> 
 			<c:choose>

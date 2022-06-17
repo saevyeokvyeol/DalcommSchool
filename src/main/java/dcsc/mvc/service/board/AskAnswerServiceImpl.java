@@ -109,9 +109,20 @@ public class AskAnswerServiceImpl implements AskAnswerService {
 	@Override
 	public Page<Ask> selectAll(Pageable pageable) {
 		
-		
+		/*
+		 * BooleanBuilder booleanBuilder = new BooleanBuilder();
+		 * 
+		 * QAsk ask = QAsk.ask;
+		 * 
+		 * JPQLQuery<Ask> jpqlQuery = factory.selectFrom(ask).where(booleanBuilder)
+		 * .offset(pageable.getOffset()).limit(pageable.getPageSize())
+		 * .orderBy(ask.askNo.desc());
+		 * 
+		 * Page<Ask>list = new PageImpl<Ask>(jpqlQuery.fetch(), pageable,
+		 * jpqlQuery.fetchCount());
+		 */	
 		return askRep.findAll(pageable);
-	
+		//return list;
 	}
 	
 	/**

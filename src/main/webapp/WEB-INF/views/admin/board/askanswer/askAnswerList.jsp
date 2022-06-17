@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -88,7 +89,7 @@
              <th>글 제목</th>
              <th>카테고리</th>
              <th>문의 내용</th>
-             <th>첨부 파일명</th>
+             <th>첨부 파일</th>
              <th>문의 일자</th>
              <th>답변 유무</th>
             </tr>
@@ -126,6 +127,10 @@
 				        <td>
 				        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
 				        	     ${askList.askTitle}
+				        	     <c:set var="today" value="<%=LocalDateTime.now().minusDays(1)%>"/>
+								  <c:if test="${askList.askInsertDate >= today}">
+								  	<span class="badge rounded-pill bg-primary">new</span>
+								  </c:if>
 				        	</a>
 				        </td>
 				        <td>
@@ -138,7 +143,10 @@
 					        
 				        </td>
 				        <td>
-				         	${askList.askImg}<p>
+				        	
+				         	<c:if test="${askList.askImg != null}">
+								<i class="fa fa-file-image-o" aria-hidden="true"></i>
+							</c:if>
 				        </td>
 				        <td>
 				        	<fmt:parseDate value="${askList.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
@@ -175,7 +183,7 @@
 	
 	<hr>
 		
-	 <div style="text-align: center">
+	<%--  <div style="text-align: center">
 		<!--  블럭당  -->
  <nav class="pagination-container">
 	<div class="pagination justify-content-center">
@@ -208,32 +216,60 @@
 		 </c:if>
 		</div>
 	</nav>  
-</div>	 
+</div> --%>	 
 
-		<%-- 	<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<c:set var="doneLoop" value="false" />
-					<c:if test="${(startPage-blockCount) > 0 and askList.content.size() != 0}">
-						<li class="page-item">
-							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
-						</li>
-					</c:if>
-						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<askList.totalPages?(startPage-1)+blockCount:askList.totalPages}'>
-							<c:if test="${(i-1)>=list.getTotalPages()}">
-								<c:set var="doneLoop" value="true" />
-							</c:if>
-							<c:if test="${not doneLoop}">
-								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
-							</c:if>
-						</c:forEach>
-					<c:if test="${(startPage+blockCount) <= askList.getTotalPages()}">
-						<li class="page-item">
-							<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
-						</li>
-					</c:if>
-				</ul>
-			</nav> --%>
+		<%-- <nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<c:set var="doneLoop" value="false" />
+						<c:if test="${(startPage-blockCount) > 0 and askList.content.size() != 0}">
+							<li class="page-item">
+								<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+							</li>
+						</c:if>
+							<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<askList.totalPages?(startPage-1)+blockCount:askList.totalPages}'>
+								<c:if test="${(i-1)>=askList.getTotalPages()}">
+									<c:set var="doneLoop" value="true" />
+								</c:if>
+								<c:if test="${not doneLoop}">
+									<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+								</c:if>
+							</c:forEach>
+						<c:if test="${(startPage+blockCount) <= askList.getTotalPages()}">
+							<li class="page-item">
+								<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>	 --%>
+				
+				
+		<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+	<c:set var="doneLoop" value="false"/>
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">이전</a>
+		  	</li>
+		  </c:if>
 		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=eventList.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
+		</c:forEach>
+				
+		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
+		 </c:if>
+		</ul>
+	</nav> 		
 		
 </div>	
 	

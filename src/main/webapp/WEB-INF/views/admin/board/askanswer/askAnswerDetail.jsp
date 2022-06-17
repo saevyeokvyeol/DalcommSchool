@@ -60,16 +60,34 @@
 			   data: {"${_csrf.parameterName}": "${_csrf.token}" , askNo:"${askAnswerDetail.askNo}" , answerContent: $("#answerArea").val()},
 			   dataType: "json",
 			   success: function(result) {
-				   var data="<table border='1' cellpadding='5'>";
 				  
-					   alert("답변을 등록하였습니다.");
-						 data+="<tr>";
-							data+="<td>답변 번호 : "+result.answerNo+"</td><p>";
-							data+="<td>답변 내용 : "+result.answerContent+"</td><p>";
-							data+="<td>답변 일자 : "+result.answerInsertDate+"</td><p>";
-							data+="</tr>";
+
+				   alert("답변을 등록하였습니다.");
+				   
 					
-					data+="</table>";
+					
+				var data="";
+				 
+				  
+				   data+="<table align='center' class='table'>";	
+				   		data+="<tr>";
+					 	data+="<td>답변 번호</td>";
+						data+="<td>"+result.answerNo+"</td>";
+						data+="</tr>";
+						
+						data+="<tr>";
+						data+="<td>답변 일자</td>";					
+						data+="<td>"+result.answerInsertDate.toString().substring(0,10)+"</td>";
+						
+						data+="</tr>";
+						
+						data+="<tr>";
+						data+="<td>답변 내용</td>";
+						data+="<td>"+result.answerContent+"</td>";
+						data+="</tr>";
+						
+				data+="</table>";
+					
 					
 				   $("#answerView").html(data);
 				   $("#span").hide();
@@ -148,20 +166,23 @@
 
 </table>
 			
-					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+				
+				
+
 				
 	<div align="center">
 		<div id="answerView">
-			
 			<c:if test="${not empty askAnswerDetail.answer}">
-				 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
+				 답변 번호 : ${askAnswerDetail.answer.answerNo}<p>
+				 
 				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
 				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-												<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-			</c:if>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/><p>
 			
+				답변 내용 : ${askAnswerDetail.answer.answerContent}
+			</c:if>		
+		</div>
 				
-			</div>
 				
 			<c:if test="${empty askAnswerDetail.answer}">
 				<c:remove var="span"/>
@@ -176,6 +197,8 @@
 			</span>
 			</c:if>
 	</div>
+	
+					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
 </div>
 
 </body>

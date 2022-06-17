@@ -100,13 +100,16 @@
 
 
 	<div class="main-content">
-		<table align="center" class="table">
-				<form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
+	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
-				
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 				 <div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById" role="button">목록으로</a></span></div>
 		   
+		
+		<table align="center" class="table">
+				
+				
+				
 				<tr>
 					<td>
 						카테고리
@@ -167,7 +170,7 @@
 				</tr>
 			  	
 			  	
-			</form>
+			
 		</table>
 		<div class="row">
 			<div class="col text-center">
@@ -175,8 +178,10 @@
 				<input type=reset class="btn btn-primary" value=다시쓰기>
 			</div>
 		</div>
+		
+		</form>
 	</div>
-
+	
 
 
 

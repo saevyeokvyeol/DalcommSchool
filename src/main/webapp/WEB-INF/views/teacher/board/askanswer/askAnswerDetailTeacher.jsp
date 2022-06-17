@@ -120,8 +120,10 @@
 	
 											
 			    <hr>
-			 <tr>
-			 	<td>
+	</table>
+	
+	<div class="card" style="width: 18rem;">
+  		<div class="card-body">
 			    <c:choose>
 			    	<c:when test="${empty askAnswerDetail.answer}">
 					<span>답변 내용이 없습니다.</span>
@@ -129,17 +131,16 @@
 			    	</c:when>
 			    	<c:otherwise>
 					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : ${askAnswerDetail.answer.answerInsertDate}
+					 답변 일자 : 
+						 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+						<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+					
 					 </c:otherwise>
 			    </c:choose>
-			    </td>
-			</tr>
-			
+	    	</div>
+	    </div>
 	
-    
-
-		
-	</table>
+	
 		<div class="row">
 			<div  class="col text-center">
 					
