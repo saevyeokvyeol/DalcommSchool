@@ -47,26 +47,23 @@ public class AdjustController {
 	 * @return List<Adjust>
 	 * */
 	@RequestMapping("teacher/adjust/adjustList")
-	public void selectAllAdjustByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int nowPage) {
+	public void selectAllAdjustByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int page) {
 		teacherId="Tkim1234";
 		//teacherId="Tann1234";
 		
 		//페이징 처리하기
-		Pageable page = PageRequest.of((nowPage-1),PAGE_COUNT, Direction.DESC,"adjustNo");
-		Page<Adjust> adjustList = adjustService.selectByTeacherId(teacherId, page);
+		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"adjustNo");
+		Page<Adjust> pageList = adjustService.selectByTeacherId(teacherId, pageable);
 		
-		model.addAttribute("adjustList", adjustList);
+		model.addAttribute("list", pageList);
 		
-		int temp=(nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage-temp;
+		int temp=(page-1)%BLOCK_COUNT;
+		int startPage = page-temp;
 	
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",page);
 		
-		System.out.println(BLOCK_COUNT);
-		System.out.println(startPage);
-		System.out.println(nowPage);
 		
 	}
 	
