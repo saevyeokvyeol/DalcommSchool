@@ -76,6 +76,7 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public Page<Faq> userselectAllfqa(Pageable pageable) {
+		System.out.println("pageable 입니다 "+pageable);
 		return faqRepository.findAll(pageable);
 	}
 
