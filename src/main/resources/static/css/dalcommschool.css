@@ -102,7 +102,7 @@ li {
 }
 
 .main-content {
-	margin: 100px auto; max-width: 1200px; position: relative;
+	margin: 100px auto; max-width: 1200px; min-height: 537px; position: relative;
 }
 
 #sidebar-layout {
