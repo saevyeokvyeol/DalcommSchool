@@ -11,16 +11,7 @@
 <style type="text/css">
 	#reviewDetail-form fieldset{display: inline-block; border: 0;}
 	 	
-	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
 	.checked {color: #ffab00;}
-	
- 	.modal img{ 
-		width: 100px; 
- 		height:100px; 
- 	} 
-	
- 	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
-
 </style>
 <meta charset="UTF-8">
 <title>관리자용 리뷰 리스트</title>
@@ -47,54 +38,27 @@ $(function(){
 			success:function(result){
 				let text = "";
 				let rate = result.reviewRate;
-				if(rate==1) {
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text +=	'<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-				}else if(rate==2){
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-				}else if(rate==3){
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-				}else if(rate==4){
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm"></i>';
-				}else if(rate==5){
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
-					text += '<i class="fa-solid fa-star fa-sm checked"></i>';
+				for(var i = 1; i <= rate; i++){
+					text += `<i class="fa-solid fa-star text-warning"></i>`
+				}
+				for(var i = 5; i > rate; i--){
+					text += `<i class="fa-solid fa-star text-black text-opacity-25"></i>`
 				}
 				
 				let str="";
 				let image = `\${result.reviewImg}`;
 								
 				if(image!='null'){
-					str += `<img class="reviewImg" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`;
+					str += `<img class="modalReviewImage" src="${pageContext.request.contextPath}/img/classReview/\${result.reviewImg}">`;
 				}
 								
 				$(".imgDiv").html(str);
 				$("#reviewDetail-form .reviewRate").html(text);
 				
-				
-				$("#reviewDetail-form .reviewId").val(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
-				$("#reviewDetail-form .studentId").val(`\${result.studentId}`);
-				$("#reviewDetail-form .reviewInsertDate").val(`\${result.reviewInsertDate.toString().substring(0, 10)}`);
-				$("#reviewDetail-form .reviewUpdateDate").val(`\${result.reviewUpdateDate.toString().substring(0, 10)}`);
-				$("#reviewDetail-form .className").val(`\${result.className}`);
+				$("#reviewId").val(`\${result.reviewId}`); //span, div 같은 태그에는 .html 속성으로 부여.
+				$("#reviewDetail-form .studentId").html(`\${result.studentId}`);
+				$("#reviewDetail-form .reviewInsertDate").html(`\${result.reviewInsertDate.toString().substring(0, 10)}`);
+				$("#reviewDetail-form .className").html(`\${result.className}`);
 				$("#reviewDetail-form .reviewContent").html(`\${result.reviewContent}`);
 			},
 			error: function(err){
@@ -107,137 +71,89 @@ $(function(){
 	블라인드 처리
 	*/
 	$("#blindBtn").click(function(){
-			$("#blindModal").modal("hide");
-			
-			var target = $("#reviewDetail-form .reviewId").val()
-			
-			$.ajax({
-	        url: "${pageContext.request.contextPath}/review/blind" , //서버요청주소
-	        type: "post" , //요청방식 (get,post...)
-	        data: {"${_csrf.parameterName}": "${_csrf.token}",
-	        	reviewId: target,
-	        	reviewBlindState: 'true'
-	        } , //서버에게 보낼 데이터정보(parameter정보)
-	        success: function(result){
-	            alert("블라인드 처리되었습니다.")
-	            location.reload()
-	        },
-	
-	        error: function(err){//실패했을 때 콜백함수
-	            alert(err+"오류가 발생했습니다.")
-	        } 
-	
-	        })
+		$("#blindModal").modal("hide");
+		
+		var target = $("#reviewDetail-form .reviewId").val()
+		
+		$.ajax({
+        url: "${pageContext.request.contextPath}/review/blind" , //서버요청주소
+        type: "post" , //요청방식 (get,post...)
+        data: {"${_csrf.parameterName}": "${_csrf.token}",
+        	reviewId: target,
+        	reviewBlindState: 'true'
+        } , //서버에게 보낼 데이터정보(parameter정보)
+        success: function(result){
+            alert("블라인드 처리되었습니다.")
+            location.reload()
+        },
+
+        error: function(err){//실패했을 때 콜백함수
+            alert(err+"오류가 발생했습니다.")
+        } 
+
+        })
 	})
 })
-</script>	
-
+</script>
 </head>
 <body>
-	
-	<table>
-		  <thead>
-		    <tr>
-		      <th>후기 번호</th>
-		      <th>아이디</th>
-		      <th>별점</th>
-		      <th>클래스 이름</th>
-		      <th>내용</th>
-		      <th>작성 날짜</th>
-		      <th>블라인드 유무</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <c:choose>
-		      <c:when test="${requestScope.classReviews.content==null}">
-		        <tr>
-		          <th colspan="7">
-		            <span>등록된 후기가 없습니다.</span>
-		          </th>
-		        </tr>
-		      </c:when>
-		      <c:otherwise>
-		        <c:forEach items="${classReviews.content}" var="review">
-		          <div id="review">
-		          <tr>
-		          	<td><span>${review.reviewId }</span></td>
-		            <td><span>${review.student.studentId}</span></td>
-		            <td>
-				    	<fieldset>
-						  <c:choose>
-						  	<c:when test="${review.reviewRate==1}">
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						  		<i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						  	</c:when>
-						  	<c:when test="${review.reviewRate==2}">
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						  	</c:when>
-						  	<c:when test="${review.reviewRate==3}">
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						  	</c:when>
-						  	<c:when test="${review.reviewRate==4}">
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm"></i>
-						  	</c:when>
-						  	<c:when test="${review.reviewRate==5}">
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						  		<i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						        <i class="fa-solid fa-star fa-sm checked"></i>
-						  	</c:when>
-						  </c:choose>
-						</fieldset>
-					</td>
-		            <td><span>${review.classes.className}</span></td>
-		            <td>
-		            	<c:choose>
-		            		<c:when test="${review.reviewBlindState eq 'true'}">
-		            			<a>이 후기는 비공개 상태입니다.</a>
-		            		</c:when>
-		            		<c:when test="${review.reviewBlindState eq 'false'}">
-		            			<button id="list-reviewContent" class="list-reviewContent" data-bs-toggle="modal" data-bs-target="#detailModal" value="${review.reviewId}">${review.reviewContent}</button>
-		            			<c:if test="${review.reviewImg != null}">
-									<i class="fa fa-file-image-o" aria-hidden="true"></i>
-								</c:if>
-		            		</c:when>
-		            	</c:choose>
-		            </td>
-		            <td>
-		            	<span><fmt:parseDate value="${review.reviewInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
-		            	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
-		            </td>
-		           	<td>
-		            	<c:choose>
-		            		<c:when test="${review.reviewBlindState eq 'true'}">
-		            			<b>T</b>
-		            		</c:when>
-		            		<c:when test="${review.reviewBlindState eq 'false'}">
-		            			<b>F</b>
-		            		</c:when>
-		            	</c:choose>
-		            </td>
-		          </tr>
-				  </div>
-		        </c:forEach>
-		      </c:otherwise>
-		    </c:choose>
-		  </tbody>
-		</table>
+	<div id="allBookList">
+		<table class="table reviewTable">
+			  <thead>
+			    <tr>
+			      <th>클래스 이름</th>
+			      <th>별점</th>
+			      <th>내용</th>
+			      <th>아이디</th>
+			      <th>작성 날짜</th>
+			      <th>블라인드</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <c:choose>
+			      <c:when test="${requestScope.list.content==null}">
+			        <tr>
+			          <th colspan="7">
+			            <span>등록된 후기가 없습니다.</span>
+			          </th>
+			        </tr>
+			      </c:when>
+			      <c:otherwise>
+			        <c:forEach items="${list.content}" var="review">
+			          <div id="review">
+			          <tr>
+			            <td><span>${review.classes.className}</span></td>
+			            <td>
+				    		<c:forEach begin="1" end="${review.reviewRate}" var="i">
+				    			<i class="fa-solid fa-star text-warning"></i>
+				    		</c:forEach>
+				    		<c:forEach begin="${review.reviewRate}" end="4" var="j">
+				    			<i class="fa-solid fa-star text-black text-opacity-25"></i>
+				    		</c:forEach>
+						</td>
+			            <td>
+	            			<button class="btn btn-light list-reviewContent" data-bs-toggle="modal" data-bs-target="#detailModal" value="${review.reviewId}">${review.reviewContent.length() >= 30 ? review.reviewContent.substring(0, 30).concat("...") : review.reviewContent}</button>
+	            			<c:if test="${review.reviewImg != null}">
+								<i class="fa-solid fa-image"></i>
+							</c:if>
+			            </td>
+			            <td><span>${review.student.studentId}</span></td>
+			            <td>
+			            	${review.reviewInsertDate.toString().substring(0, 10)}
+			            </td>
+			            <td>
+			            	<c:if test="${review.reviewBlindState == 'T'}">
+			            		<span class="badge bg-danger">블라인드</span>
+			            	</c:if>
+			            </td>
+			          </tr>
+					  </div>
+			        </c:forEach>
+			      </c:otherwise>
+			    </c:choose>
+			  </tbody>
+			</table>
+		</div>
 	
 		
 	<!---------------------상세보기 모달 ------------------------------->
@@ -251,52 +167,26 @@ $(function(){
 		      <div class="modal-body">
 		      
 		      	<form id="reviewDetail-form">
-			        <table id="table">
-						<tr>
-					    	<th>글번호</th>
-					    	<td>
-					    	  <div><input type="text" class="reviewId" readonly></div>
+			        <table class="table table-borderless">
+					  	<tr>
+					    	<td class="className">
 					    	</td>
 					  	</tr>
 					  	<tr>
-					    	<th>작성자</th>
-					    	<td>
-					    	  <div><input type="text" class="studentId" readonly></div>
+					    	<td class="reviewRate">
+					    	</td>
+					    	<td class="studentId">
+					    	</td>
+					    	<td class="reviewInsertDate">
 					    	</td>
 					  	</tr>
 					  	<tr>
-					    	<th>클래스 이름</th>
-					    	<td>
-					    	  <div><input type="text" class="className" readonly></div>
-					    	</td>
-					  	</tr>
-					  	<tr>
-					    	<th>작성 날짜</th>
-					    	<td>
-					    	  <div><input type="text" class="reviewInsertDate" readonly></div>
-					    	</td>
-					  	</tr>
-					  	<tr>
-					    	<th>수정 날짜</th>
-					    	<td>
-					    	  <div><input type="text" class="reviewUpdateDate" readonly></div>
-					    	</td>
-					  	</tr>
-					  	<tr>
-					    	<th>별점</th>
-					    	<td>
-					    	  <div class="reviewRate"></div>
-					    	</td>
-					  	</tr>
-					  	<tr>
-					    	<th rowspan="2">후기</th>
-					    	<td>
+					    	<td colspan="3">
 					    	  <div class="imgDiv"></div>
 					    	</td>
 					    </tr>
 					    <tr>
-					    	<td>
-					    	  <div><textarea class="reviewContent" readonly></textarea></div>
+					    	<td colspan="3" class="reviewContent">
 					    	</td>
 					  	</tr>
 					</table>
@@ -306,11 +196,11 @@ $(function(){
 
 		      <div class="modal-footer">
 		      	<form id="requestForm">
-		  	    <input type="hidden" id=reviewId name=reviewId value="${review.reviewId }">
+		  	    <input type="hidden" id="reviewId" name="reviewId" value="${review.reviewId}">
 		            <td>
 		            	<div class="blindBtnDiv">
-                             <button type="button" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#blindModal" name="${review.reviewId}" value="false">게시글 숨기기</button>
-                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                             <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#blindModal" name="${review.reviewId}" value="false">게시글 숨기기</button>
+                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">닫기</button>
                       	</div>
 	                </td>
 				</form>
@@ -334,7 +224,7 @@ $(function(){
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-primary" id="blindBtn">예</button>
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+		        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">아니오</button>
 		      </form>
 		      </div>
 		    </div>
@@ -343,35 +233,28 @@ $(function(){
 	
 		
 	<!-- 페이징 처리 -->
-		<div>
-		  <nav class="pagination-container">
-		    <div class="pagination">
-		      <c:set var="doneLoop" value="false"/>
-		      		<c:if test="${(startPage-blockCount)>0 }">
-		      		  <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/review/list?nowPage=${startPage-1}">이전</a>	      		
-		      		</c:if>
-		      		
-		      		<span class="pagination-inner">
-		      		  <c:forEach var='i' begin="${startPage}" end="${(startPage-1)+blockCount}">
-		      		    
-		      		    <c:if test="${(i-1)>=classReviews.getTotalPages()}">
-		      		      <c:set var="doneLoop" value="true"/>
-		      		    </c:if>
-		      		    <c:if test="${not doneLoop}">
-		      		      <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/review/list?nowPage=${i}">${i}</a>
-		      		    </c:if>
-		      		    
-		      		  </c:forEach>
-		      		</span>
-		      		
-		      		<c:if test="${(startPage+blockCount)<=classReviews.getTotalPages()}">
-		      		  <a class="pagination-older" href="${pageContext.request.contextPath}/admin/review/list?nowPage=${startPage+blockCount}">다음</a>
-		      		</c:if>
-		    </div>
-		  
-		  </nav>
-		</div>
-	
-
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<c:set var="doneLoop" value="false" />
+			<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+				<li class="page-item">
+					<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+				</li>
+			</c:if>
+				<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+					<c:if test="${(i-1)>=list.getTotalPages()}">
+						<c:set var="doneLoop" value="true" />
+					</c:if>
+					<c:if test="${not doneLoop}">
+						<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+					</c:if>
+				</c:forEach>
+			<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+				<li class="page-item">
+					<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+				</li>
+			</c:if>
+		</ul>
+	</nav>
 </body>
 </html>
