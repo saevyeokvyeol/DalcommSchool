@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/mypage/qnaListAll" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/board/qna" class="menu-link">
                 <i class="fa-solid fa-circle-question menu-icon"></i>
                 <div data-i18n="Misc">클래스 Q&A 조회</div>
               </a>

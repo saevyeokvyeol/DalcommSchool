@@ -6700,7 +6700,6 @@ label.btn {
   color: #435971;
   background-color: #fcfdfd;
   border-color: #fcfdfd;
-  transform: translateY(-1px);
 }
 .btn-check:focus + .btn-light, .btn-light:focus, .btn-light.focus {
   color: #435971;
