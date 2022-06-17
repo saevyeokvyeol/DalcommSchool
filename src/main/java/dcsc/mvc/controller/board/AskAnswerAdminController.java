@@ -36,7 +36,7 @@ public class AskAnswerAdminController {
 	private final static int PAGE_COUNT=8;
 	private final static int BLOCK_COUNT=4;
 	
-	    
+	   
 	/**
 	 * 1대1 문의 전체 리스트 조회하는 기능
 	 * */ 
