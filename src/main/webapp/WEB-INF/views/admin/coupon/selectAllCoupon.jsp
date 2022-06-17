@@ -87,6 +87,28 @@
 			}
 		});
 		
+		//쿠폰등록시 값 비워져있으면 alert 창 띄우기
+		$(".coupon-insert-btn").click(function() {
+			let couponState = $(".couponState-insert").val();
+			let couponName = $(".couponName-insert").val();
+			let couponDc = $(".couponDc-insert").val();
+			let couponEndDate = $(".couponEndDate-insert").val();
+			
+			if(couponState==0){
+				alert("쿠폰상태를 선택해주세요");
+				return false;
+			}else if(couponName==""){
+				alert("쿠폰이름을 적어주세요");
+				return false;
+			}else if(couponDc==""){
+				alert("할인금액을 적어주세요");
+				return false;
+			}else if(couponEndDate==""){
+				alert("사용기간을 적어주세요");
+				return false;
+			}
+				
+		});
 		
 	}); //ready 끝	
 			
@@ -265,7 +287,7 @@
 			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			             <div>
 			               쿠폰상태 
-			              <select name="couponStateId" id="couponStateId" class="form-select">
+			              <select name="couponStateId" id="couponStateId" class="form-select couponState-insert">
 			                <option value="0">-쿠폰상태 선택-</option>
 			                <option value="1">발급</option>
 			                <option value="2">발급중지</option>
@@ -273,19 +295,19 @@
 			             </div>
 			             <div>
 			               쿠폰명 
-			               <input class="form-control" type="text" name="couponName" id="couponName">	
+			               <input class="form-control couponName-insert" type="text" name="couponName" id="couponName">	
 			             </div>
 			             <div>
 			               할인금액 
-			               <input class="form-control" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
+			               <input class="form-control couponDc-insert" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
 			             </div>
 			             <div>
 			               사용기간 
-			               <input class="form-control" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
+			               <input class="form-control couponEndDate-insert" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
 			             </div>
 			             
 			                <div class="modal-footer">
-			                  <input type="submit" class="btn btn-primary" id="coupon-insert-btn" value="등록하기">
+			                  <input type="submit" class="btn btn-primary coupon-insert-btn" id="coupon-insert-btn" value="등록하기">
 			                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			                </div>
 			            </form>

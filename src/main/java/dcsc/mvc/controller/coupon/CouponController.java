@@ -176,7 +176,9 @@ public class CouponController {
 	 * 클래스 쿠폰 등록하기
 	 * */
 	@RequestMapping("couponInsert")
-	public String couponInsert(Coupon coupon, Classes classes, Teacher teacher, CouponState couponState) {
+	public String couponInsert(Coupon coupon, Classes classes, CouponState couponState) {
+		Teacher teacher = new Teacher("Tkim1234");
+		
 		coupon.setClasses(classes);
 		coupon.setTeacher(teacher);
 		coupon.setCouponState(couponState);

@@ -36,32 +36,9 @@
 <script type="text/javascript">
 	$(function() {
 		
-		//쿠폰상태 변경하기
-		/*$(document).on("change", "#select_couponStateName", function() {
-			//var idValue = $(this).parent().siblings().eq(1).text(); //couponId
-			//var idValue = $(this).val(); //couponStateId
-			//alert(idValue);
-			
-			$.ajax({
-				url: "${pageContext.request.contextPath}/teacher/coupon/changeCouponState",
-				type: "post",
-				dataType : "text",
-				data: {"${_csrf.parameterName}": "${_csrf.token}", couponId: $(this).parent().siblings().eq(1).text(), couponStateId: $(this).val()},
-				success: function(result) {
-					alert("수정되었습니다.");
-				},
-				error: function(err) {
-					alert(err + "\n에러발생");
-				}
-			}) // ajax 종료	
-			
-		})//onchang 끝*/	
 		
 		//쿠폰상태변경 버튼으로
 		$(document).on("click", ".couponStateChange", function() {
-			//var idValue = $(this).parent().siblings().eq(1).text(); //couponId
-			//var idValue = $(this).val(); //couponStateId
-			//alert(idValue);
 			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/teacher/coupon/changeCouponState",
@@ -132,6 +109,29 @@
 				return false;
 			}
 		}); //$(".deleteCoupon").click 끝
+		
+		//쿠폰등록시 값 비워져있으면 alert 창 띄우기
+		$(".coupon-insert-btn").click(function() {
+			let classId = $(".select-classId").val();
+			let couponName = $(".couponName-insert").val();
+			let couponDc = $(".couponDc-insert").val();
+			let couponEndDate = $(".couponEndDate-insert").val();
+			
+			if(classId==0){
+				alert("클래스명을 선택해주세요");
+				return false;
+			}else if(couponName==""){
+				alert("쿠폰이름을 적어주세요");
+				return false;
+			}else if(couponDc==""){
+				alert("할인금액을 적어주세요");
+				return false;
+			}else if(couponEndDate==""){
+				alert("사용기간을 적어주세요");
+				return false;
+			}
+				
+		});
 		
 		
 	}); //ready 끝	
@@ -303,12 +303,12 @@
 			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			             <div>
 			             	<!-- 선생님ID -->
-			             	<input type="hidden" name="teacherId" value="Tkim1234" id="teacherId" required readonly="readonly">
+			             	<!-- <input type="hidden" name="teacherId" value="Tkim1234" id="teacherId" required readonly="readonly"> -->
 			           		<%-- <input type="hidden" name="teacherId" value="${coupon.teacher.teacherId}" id="teacherId"> --%>
 			             </div>
 			             <div>
 			             	클래스명
-			             	<select name="classId" id="classId" class="form-select">
+			             	<select name="classId" id="classId" class="form-select select-classId">
 						        <option value="0">-클래스 선택-</option>          
 						    </select>
 			             </div>
@@ -319,19 +319,19 @@
 			             </div>
 			             <div>
 			               쿠폰명 
-			               <input class="form-control" type="text" name="couponName" id="couponName">	
+			               <input class="form-control couponName-insert" type="text" name="couponName" id="couponName">	
 			             </div>
 			             <div>
 			               할인금액 
-			               <input class="form-control" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
+			               <input class="form-control couponDc-insert" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
 			             </div>
 			             <div>
 			               사용기간 
-			               <input class="form-control" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
+			               <input class="form-control couponEndDate-insert" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
 			             </div>
 			             
 			                <div class="modal-footer">
-			                  <input type="submit" class="btn btn-primary" id="coupon-insert-btn" value="등록하기">
+			                  <input type="submit" class="btn btn-primary coupon-insert-btn" id="coupon-insert-btn" value="등록하기">
 			                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			                </div>
 			            </form>
