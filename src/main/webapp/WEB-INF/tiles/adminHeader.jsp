@@ -197,7 +197,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/Notice/noticeList" class="menu-link">
                     <div data-i18n="Notifications">전체 공지사항 조회</div>
                   </a>
                 </li>
@@ -215,10 +215,12 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" class="menu-link">
                     <div data-i18n="Notifications">전체 FAQ 조회</div>
                   </a>
                 </li>
+                
+                
               </ul>
             </li>
             <li class="menu-item">
