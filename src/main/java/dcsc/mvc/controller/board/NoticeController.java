@@ -49,7 +49,7 @@ public class NoticeController {
 			
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage",startPage);
-		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("page",nowPage);
 			
 	 }
 	 

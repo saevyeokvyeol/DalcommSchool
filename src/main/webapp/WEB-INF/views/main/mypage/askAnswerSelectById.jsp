@@ -49,7 +49,6 @@
 		             <th>문의 ID</th>
 		             <th>카테고리</th>
 		             <th>문의제목</th>
-		             <th>문의내용</th>
 		             <th>첨부파일</th>
 		             <th>문의일자</th>
 		             <th>답변유무</th>
@@ -85,11 +84,7 @@
 									        	${ask.askTitle}
 									        	</a>
 									        </td>
-									        <td>
-									        	<span class="d-inline-block text-truncate" style="max-width: 150px;">
-									        		${ask.askContent}
-									        	</span> 
-									        </td>  
+									        
 									        <td>
 									        	<c:if test="${ask.askImg != null}">
 													<i class="fa fa-file-image-o" aria-hidden="true"></i>

@@ -179,6 +179,7 @@ $(function(){
         <%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
 			
 <!--  페이징처리  -->
+			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<c:set var="doneLoop" value="false" />
 					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">

@@ -57,7 +57,7 @@
 	
 	<tbody>
 	<c:choose>
-	<c:when test="${empty requestScope.eventList}">
+	<c:when test="${empty requestScope.list}">
 		<tr>
           <th colspan="10">
           <span> 조회가능한 이벤트가 없습니다.</span>
@@ -65,7 +65,7 @@
        </tr>
 	</c:when>
 	<c:otherwise>
-		<c:forEach items="${requestScope.eventList.content}" var="event">
+		<c:forEach items="${requestScope.list.content}" var="event">
 			<tr>
 				<td>
 					${event.eventNo}
@@ -95,31 +95,27 @@
 <!--  페이징처리  -->
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
-	<c:set var="doneLoop" value="false"/>
-		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-	      	<li class="page-item">
-		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage-1}">이전</a>
-		  	</li>
-		  </c:if>
-		
-	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-		    <c:if test="${(i-1)>=eventList.getTotalPages()}">
-		       <c:set var="doneLoop" value="true"/>
-		    </c:if> 
-			  <c:if test="${not doneLoop}" >
-			  <li class="page-item">
-			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${i}">${i}</a> 
-			  </li>
-			  </c:if>
-		</c:forEach>
-				
-		 <c:if test="${(startPage+blockCount)<=eventList.getTotalPages()}">
-	     <li class="page-item">
-		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/event/eventList?nowPage=${startPage+blockCount}">다음</a>
-		 </li>
-		 </c:if>
-		</ul>
-	</nav>  
+		<c:set var="doneLoop" value="false" />
+		<c:if test="${(startPage-blockCount) > 0}">
+			<li class="page-item disabled">
+				<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+			</li>
+		</c:if>
+			<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+				<c:if test="${(i-1)>=pageList.getTotalPages()}">
+					<c:set var="doneLoop" value="true" />
+				</c:if>
+				<c:if test="${not doneLoop}">
+					<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/admin/board/event/eventList?page=${i}">${i}</a></li>
+				</c:if>
+			</c:forEach>
+		<c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
+			<li class="page-item">
+				<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
+			</li>
+		</c:if>
+	</ul>
+</nav>
 
 	<div align=right>
 		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/event/eventWrite" role="button">글쓰기</a>

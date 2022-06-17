@@ -98,7 +98,7 @@ a{
 </table>
 
 <hr>
-<div style="text-align: center">
+<%-- <div style="text-align: center">
 		<!--  블럭당  -->
  <nav class="pagination-container">
 	<div class="pagination">
@@ -127,7 +127,36 @@ a{
 		 </c:if>
 		</div>
 	</nav>  
-</div>
+</div> --%>
+
+		<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+	<c:set var="doneLoop" value="false"/>
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage-1}">이전</a>
+		  	</li>
+		  </c:if>
+		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=faqlist.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
+		</c:forEach>
+				
+		 <c:if test="${(startPage+blockCount)<=faqlist.getTotalPages()}">
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/FAQ/faqList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
+		 </c:if>
+		</ul>
+	</nav> 
+
 
 	<div align=right>
 		<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/FAQ/write" role="button">글쓰기</a></div>

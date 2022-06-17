@@ -72,7 +72,7 @@
         </thead>
         <tbody>
             <c:choose>
-                <c:when test ="${empty studentList}">
+                <c:when test ="${empty requestScope.list}">
                     <tr>
                         <th colspan="10">
                             <span> 조회할 회원 정보가 없습니다.</span>
@@ -80,8 +80,8 @@
                     </tr>
                 </c:when>
                 
-                 <c:when test ="${not empty studentList}">
-		              <c:forEach items="${studentList.content}" var="student">
+                 <c:when test ="${not empty requestScope.list}">
+		              <c:forEach items="${requestScope.list.content}" var="student">
 		                        <tr>
 		                            <td><span>
 			                            ${student.studentId}</span>
@@ -120,31 +120,27 @@
 <!--  페이징처리  -->
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
-	<c:set var="doneLoop" value="false"/>
-		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+		<c:set var="doneLoop" value="false" />
+		<c:if test="${(startPage-blockCount) > 0}">
+			<li class="page-item disabled">
+				<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+			</li>
+		</c:if>
+			<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+				<c:if test="${(i-1)>=pageList.getTotalPages()}">
+					<c:set var="doneLoop" value="true" />
+				</c:if>
+				<c:if test="${not doneLoop}">
+					<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/admin/user/userList?page=${i}">${i}</a></li>
+				</c:if>
+			</c:forEach>
+		<c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
 			<li class="page-item">
-		      <a class="page-link" href="${pageContext.request.contextPath}/admin/user/userList?nowPage=${startPage-1}">PREV</a>
-		  	</li>
-		  </c:if>
-		  
-		  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<studentList.totalPages?(startPage-1)+blockCount:studentList.totalPages}'> 
-			    <c:if test="${(i-1)>=pageList.getTotalPages()}">
-			       <c:set var="doneLoop" value="true"/>
-			    </c:if> 
-		  <c:if test="${not doneLoop}" >
-		  	<li class="page-item">
-		         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/user/userList?nowPage=${i}">${i}</a> 
-		  	</li>
-		  </c:if>
-		</c:forEach>
-				
-		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-			<li class="page-item">
-		     	<a class="pagination-older" href="${pageContext.request.contextPath}/admin/user/userList?nowPage=${startPage+blockCount}">NEXT</a>
-		 	</li>
-		 </c:if>
-		 </ul>
-	</nav>  
+				<a class="page-link" href="${URL}?page=${startPage+blockCount}">다음</a>
+			</li>
+		</c:if>
+	</ul>
+</nav>
 	   
 </body>
 </html>
