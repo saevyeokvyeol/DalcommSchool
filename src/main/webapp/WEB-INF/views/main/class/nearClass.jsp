@@ -175,7 +175,7 @@
 							<div class="classBox">
 								<div class="classBoxImg">
 									<a href="${pageContext.request.contextPath}/main/class/${classes.classId}">
-										<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
+										<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${schedule.classes.classImage}">
 									</a>
 								</div>
 								<div class="classBoxContent">

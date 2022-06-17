@@ -73,11 +73,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<c:if test="${classes.classImages != null}">
-												<c:forEach items="${classes.classImages}" var="classImage">
-													<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classImage.imageName}" class="d-block w-100 h-100 rounded-3">
-												</c:forEach>
-											</c:if>
+											<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}" class="d-block w-100 h-100 rounded-3">
 											<div class="classBoxContent">
 												<h5 class="classBoxName">
 													<span>${classes.className}</span>
