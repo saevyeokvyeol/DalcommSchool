@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 수정 페이지입니다</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -13,12 +15,31 @@
 
 <style type="text/css">
 
-.message{display: none; position: fixed; color: red;}
+	.message{display: none}
+
+	.pwdCheck_success {
+		font-size: 14px;
+		color: #00944a;
+		display: none;
+		padding: 20px;
+	}
+	.pwdCheck_Fail {
+		font-size: 14px;
+		color: #f85656;
+		display: none;
+		padding: 20px;
+		
+	}
+	
+	span{
+		font-size: 14px;
+		padding: 4px 10px;
+		color: #f85656;
+	
+	}
 
 </style>
 <script type="text/javascript">
-
-
 
 $(function(){
 	
@@ -63,13 +84,21 @@ $(function(){
 		
 		if(pwd1!="" && pwd2!=""){
 			if(pwd1 == pwd2){
+				$('.pwdCheck_Fail').css("display", "none");
+				$('.pwdCheck_success').css("display", "inline-block");
 				isSamePwd = true;
 			}else{
+				$('.pwdCheck_success').css("display", "none");
+				$('.pwdCheck_Fail').css("display", "inline-block");
 				isSamePwd = false;
 			}
 		}else if(pwd1 != "" && pwd2 == ""){
+			$('.pwdCheck_success').css("display", "none");
+			$('.pwdCheck_Fail').css("display", "none");
 			isSamePwd = false;
 		}else{
+			$('.pwdCheck_success').css("display", "none");
+			$('.pwdCheck_Fail').css("display", "none");
 			isSamePwd = false;
 		}
 	})
@@ -79,6 +108,7 @@ $(function(){
 		let pwd2 = $("#newUserPwd2").val();
 		
 		if(pwd1=="" && pwd2!=""){
+			$('.pwdCheck_Fail').css("display", "inline-block");
 			isSamePwd = false;
 		}
 		
@@ -89,7 +119,7 @@ $(function(){
 	 */
 	$("#updatePwdForm").submit(function(event){	
 		if(!isSamePwd){
-			alert("비밀번호 일치 여부를 확인해주세요.")
+			swal("비밀번호 일치 여부를 확인해주세요.")
 			event.preventDefault();
 		}
 		
@@ -97,49 +127,96 @@ $(function(){
 		let newPwd = $("#newUserPwd").val();
 		
 		if(pwd==newPwd){
-			alert("새로운 비밀번호는 기존 비밀번호와 달라야합니다.")
+			swal("새로운 비밀번호는 기존 비밀번호와 달라야합니다.")
 			event.preventDefault();
 		}
 		
 		if(!isValidPwd()){
-			alert("비밀번호를 형식에 맞게 입력해주세요.");
+			swal("비밀번호를 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}
 		
-		
+		swal("비밀번호 변경 완료! \n 다시 로그인 해 주세요.");
+
 	})
 	
 })
-
 </script>
 </head>
 <body>
 		
 <div id="sidebar-content">
 
-<h3> 회원 비밀번호 수정</h3>
-<span id="notice">*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</span><br><br><hr>
-<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-  <table class="table">
-    <tr>
-      <th>기존 비밀번호</th>
-      <td><input type="password" id="userPwd" name="userPwd" required></td>
-    </tr>
-    <tr>
-      <th>새 비밀번호</th>
-      <td><input type="password" id="newUserPwd" name="newUserPwd" placeholder="영소문자,대문자,숫자를 조합하여 최소 8자리 이상 입력해주세요." required>
-      <span id="notValidPwd" class="message"> &nbsp 비밀번호는 공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span></td>
-    </tr>
-    <tr>
-      <th>새 비밀번호 확인</th>
-      <td><input type="password" id="newUserPwd2" placeholder="한번 더 입력해주세요." required></td>
-    </tr>
-  </table>
-  <div>
-  <input type="submit" id="submitBtn" value="확인">
-  <input type="reset" id="cancelBtn" value="취소">
-</div>
+<h3> 강사 비밀번호 수정</h3>
+<h6>*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</h6><br><br><hr>
+	<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
+	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	  
+	  <table id="classTable">
+	    
+	    <tr>
+			<!-- 기존 비밀번호 -->
+			<td>
+				<div class="row g-3">
+				<div class="col-md-2">
+	  				</div>
+				<div class="col-md-8">
+					<div class="form-floating mb-3">
+						<input type="password" id="userPwd" name="userPwd" placeholder="현재 비밀번호" class="form-control" required/>
+						<label for="studentPwd">기존 비밀번호</label>
+					</div>
+				</div>
+				<div class="col-md-2">
+				</div>
+				</div>	
+			</td>
+		</tr>
+	  	<tr>
+
+	    <tr>
+			<!-- 비밀번호 -->
+			<td>
+				<div class="row g-3">
+				<div class="col-md-2">
+	  				</div>
+				<div class="col-md-8">
+					<div class="form-floating mb-3">
+						<input type="password" id="newUserPwd" name="newUserPwd" placeholder="새 비밀번호" class="form-control" required/>
+						<label for="studentPwd">비밀번호</label>
+							<span id="notValidPwd" class="message"><i class="fa-solid fa-circle-exclamation"></i>&ensp;공백 없이 영소문자,대문자,숫자를 조합하여 8글자 이상으로 입력해주세요</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+				</div>
+				</div>	
+			</td>
+		</tr>
+	  	<tr>
+	  		<!-- 비밀번호 확인  -->
+	  		<td>
+	  			<div class="row g-3">
+	  			<div class="col-md-2">
+  				</div>
+				<div class="col-md-8">
+		  		<div class="form-floating mb-3">
+			  		<input type="password" id="newUserPwd2" name="newUserPwd2" class="form-control" placeholder="새 비밀번호 확인" required="required"/><br>
+			  		<label for="studentPwd2">새 비밀번호 확인</label>
+		  		</div>
+		  		</div>
+			  		<div class="col-md-2">
+			  				<span id="pwdCheck_success" class="pwdCheck_success"><i class="fa-solid fa-circle-check fa-2xl"></i></span>
+						    <span id="pwdCheck_Fail" class="pwdCheck_Fail"><i class="fa-solid fa-triangle-exclamation fa-2xl"></i></span>
+					</div>
+				</div>	
+	  		</td>
+	  	</tr>
+	  	<tr>
+
+	  </table>
+	  
+	  	<div class=".col-6 .col-sm-4 text-center">
+	  		<input type="submit" id="submitBtn" class="btn btn-primary" value="확인">
+	  	</div>
 </form>
 
 </div>	

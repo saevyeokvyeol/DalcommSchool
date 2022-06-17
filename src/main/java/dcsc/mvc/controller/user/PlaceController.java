@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +57,10 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/teacher/mypage/place/updateForm")
 	public ModelAndView updateForm() {
-		String teacherId="Tpark1234";
-		Place place = teacherService.selectByTeacherId(teacherId);
+//		String teacherId="Tpark1234";
+		Teacher dbteacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
+		Place place = teacherService.selectByTeacherId(dbteacher.getTeacherId());
 		
 		return new ModelAndView("teacher/mypage/place/updateForm", "place", place);
 	}
@@ -67,11 +70,12 @@ public class PlaceController {
 	 * */
 	@RequestMapping("/place/update")
 	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam List<Long> infraId) {
-
-		Teacher teacher = new Teacher("Tpark1234");
+		
+		Teacher dbteacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		Teacher teacher = new Teacher("Tpark1234");
 		System.out.println(place.getPlaceId()); 
 		
-		place.setTeacher(teacher);
+		place.setTeacher(dbteacher);
 		place.setPlaceRegion(placeRegion);
 		teacherService.updatePlace(place, infraId);
 		

@@ -7,8 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://unpkg.com/sweetswal/dist/sweetswal.min.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -123,7 +122,7 @@ $(function(){
 			dataType: "text",
 			success: function(data){
 				if(data=="true"){
-					swal("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
+					swal("가입한 이력이 있는 번호입니다. \n아이디 및 비밀번호 찾기를 이용해주세요.");
 					$('.phoneCheck_fail').css("display","inline-block");
 					$('.phoneCheck_success').css("display","none");
 					return;

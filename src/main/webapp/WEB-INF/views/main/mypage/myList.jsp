@@ -6,6 +6,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<script src="https://unpkg.com/sweetswal/dist/sweetswal.min.js"></script>
+		
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -30,7 +32,7 @@
 							$("#myList").html(text);
 					},
 					error: function(err){
-						alert("클래스 카테고리를 가져올 수 없습니다.")
+						swal("클래스 카테고리를 가져올 수 없습니다.")
 					}
 				})
 				
@@ -44,7 +46,7 @@
 							$("#myList").html("찜한 클래스가 없습니다.");
 						},
 						error: function(err){
-							alert("찜 목록을 삭제할 수 없습니다.")
+							swal("찜 목록을 삭제할 수 없습니다.")
 						}
 					})
 				})
