@@ -37,7 +37,7 @@
 	$(function() {
 		
 		//쿠폰상태 변경하기
-		$(document).on("change", "#select_couponStateName", function() {
+		/*$(document).on("change", "#select_couponStateName", function() {
 			//var idValue = $(this).parent().siblings().eq(1).text(); //couponId
 			//var idValue = $(this).val(); //couponStateId
 			//alert(idValue);
@@ -55,7 +55,31 @@
 				}
 			}) // ajax 종료	
 			
+		})//onchang 끝*/	
+		
+		//쿠폰상태변경 버튼으로
+		$(document).on("click", ".couponStateChange", function() {
+			//var idValue = $(this).parent().siblings().eq(1).text(); //couponId
+			//var idValue = $(this).val(); //couponStateId
+			//alert(idValue);
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/teacher/coupon/changeCouponState",
+				type: "post",
+				dataType : "text",
+				data: {"${_csrf.parameterName}": "${_csrf.token}", couponId: $(this).parent().siblings().eq(1).text(), couponStateId: $(this).val()},
+				success: function(result) {
+					alert("수정되었습니다.");
+					document.location.reload(true);
+				},
+				error: function(err) {
+					alert(err + "\n에러발생");
+				}
+			}) // ajax 종료	
+			
 		})//onchang 끝	
+		
+		
 		
 		//선생님이 보유한 클래스명 가져오기
 			$.ajax({
@@ -161,7 +185,19 @@
 			                        </td>
 	                                <td>${coupon.couponEndDate}일</td>
 	                                <td>
-										<select name="select_couponStateName" id="select_couponStateName" class="form-select">
+	                                	<c:choose>
+											<c:when test="${coupon.couponState.couponStateId == '1'}">
+												<button type="button" class="btn btn-secondary couponStateChange" id="couponStateChange" value="1">
+													${coupon.couponState.couponStateName}
+												</button>
+											</c:when>
+											<c:when test="${coupon.couponState.couponStateId == '2'}">
+												<button type="button" class="btn btn-primary couponStateChange" id="couponStateChange" value="2">
+													${coupon.couponState.couponStateName}
+												</button>
+											</c:when>
+										</c:choose>	
+										<%-- <select name="select_couponStateName" id="select_couponStateName" class="form-select">
 											<c:choose>
 											<c:when test="${coupon.couponState.couponStateId == '1'}">
 												<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
@@ -172,7 +208,7 @@
 												<option name="couponStateId" value="1">발급</option>
 											</c:when>
 											</c:choose>	        
-	        							</select>
+	        							</select> --%>
 	        						</td>
 	        						<!-- <td>
 										<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="">
