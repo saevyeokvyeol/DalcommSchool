@@ -989,7 +989,22 @@
 					
 					<div class="classInfoBox" id="teacher">
 						<h4 class="classBoxName">강사 소개</h4>
-					<hr>
+						<hr>
+						<div id="teacherInfoBox">
+							<c:choose>
+								<c:when test="${classes.teacher.teacherImg != null}">
+									<img class="teacherImage" alt="" src="${pageContext.request.contextPath}/img/teacher/${classes.teacher.teacherImg}">
+								</c:when>
+								<c:otherwise>
+									<img class="teacherImage" alt="" src="${pageContext.request.contextPath}/img/teacher/Profile.png">
+								</c:otherwise>
+							</c:choose>
+							<div id="teacherInfo">
+								<h5>${classes.teacher.teacherNickname} 선생님</h5>
+								<div>${classes.teacher.teacherInfo}</div>
+							</div>
+						</div>
+					</div>
 					<!-- 여기부터 지도 -->
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">공방 정보</h4>
@@ -1035,7 +1050,6 @@
 					</div>
 						
 						
-					</div>
 					<div class="classInfoBox" id="review">
 						<h4 class="classBoxName">
 							클래스 후기
@@ -1075,58 +1089,58 @@
 						
 						
 						<form action="${pageContext.request.contextPath}/main/book/bookForm" id="bookForm" method="post">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-							<input type="hidden" name="classId" value="${classes.classId}">
-							<input type="hidden" name="scheduleId" id="scheduleId">
-							<table class="table option-table table-borderless orderTable">
-								<tbody>
-									<tr>
-										<td colspan="2">
-											<button type="button" class="btn btn-outline-primary" id="calendarShow"><i class="fa-solid fa-angles-left"></i> 일정 다시 고르기</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											수강일
-										</td>
-										<td>
-											<input type="text" class="form-control-plaintext" id="scheduleDate" readonly="readonly">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											수강 시간
-										</td>
-										<td>
-											<input type="text" class="form-control-plaintext" id="scheduleTime" readonly="readonly">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											수강 가능 인원
-										</td>
-										<td>
-											<input type="text" class="form-control-plaintext" id="leftSeat" readonly="readonly">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											예약 인원
-										</td>
-										<td>
-											<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><i class="fa-solid fa-minus"></i></button>
-											<input type="number" class="form-control-plaintext num" name="bookSeat" id="bookSeat" min="1" max="9999" step="1" value="1" readonly="readonly">
-											<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><i class="fa-solid fa-plus"></i></button>
-										</td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td>
-											금액 
-										</td>
-										<td>
-											<input type="number" readonly class="form-control-plaintext" id="classPrice" value="${classes.classPrice}">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<input type="hidden" name="classId" value="${classes.classId}">
+						<input type="hidden" name="scheduleId" id="scheduleId">
+						<table class="table option-table table-borderless orderTable">
+							<tbody>
+								<tr>
+									<td colspan="2">
+										<button type="button" class="btn btn-outline-primary" id="calendarShow"><i class="fa-solid fa-angles-left"></i> 일정 다시 고르기</button>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										수강일
+									</td>
+									<td>
+										<input type="text" class="form-control-plaintext" id="scheduleDate" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										수강 시간
+									</td>
+									<td>
+										<input type="text" class="form-control-plaintext" id="scheduleTime" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										수강 가능 인원
+									</td>
+									<td>
+										<input type="text" class="form-control-plaintext" id="leftSeat" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										예약 인원
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><i class="fa-solid fa-minus"></i></button>
+										<input type="number" class="form-control-plaintext num" name="bookSeat" id="bookSeat" min="1" max="9999" step="1" value="1" readonly="readonly">
+										<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><i class="fa-solid fa-plus"></i></button>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td>
+										금액 
+									</td>
+									<td>
+										<input type="number" readonly class="form-control-plaintext" id="classPrice" value="${classes.classPrice}">
 										</td>
 									</tr>
 									<tr>
