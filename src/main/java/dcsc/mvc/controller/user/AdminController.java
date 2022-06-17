@@ -35,7 +35,7 @@ public class AdminController {
 	public ModelAndView adminStudent(Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentId");
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
 		Page<Student> studentList = studentService.selectAllStudent(page);
 
 		model.addAttribute("studentList", studentList);
@@ -57,7 +57,7 @@ public class AdminController {
 	public String studentInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
 		Page<Student> list = studentService.selectByStudentId(keyfield, keyword, page);
 
 		
@@ -80,7 +80,7 @@ public class AdminController {
 	public ModelAndView adminTeacher(Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherId");
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
 		Page<Teacher> teacherList = teacherService.selectAllTeacher(page);
 
 		model.addAttribute("teacherList", teacherList);
@@ -103,7 +103,7 @@ public class AdminController {
 	public String techerInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherId");
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
 		Page<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword, page);
 		
 		model.addAttribute("teacherList",list);

@@ -395,6 +395,7 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		JPQLQuery<Teacher> query = jpqlQueryFactory.selectFrom(teacher)
 				.where(booleanBuilder)
+				.orderBy(teacher.teacherInsertDate.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize());
 		

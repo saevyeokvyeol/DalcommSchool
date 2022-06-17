@@ -26,10 +26,11 @@
 	table{
 		width: 1500px;
 	}
-	.pagination{
-		display: block;
-		text-align: center;
-	}
+	
+/* 	.pagination{ */
+/* 		display: block; */
+/* 		text-align: center; */
+/* 	} */
 
 </style>
 
@@ -108,7 +109,6 @@ $(function(){
 
 
 	<section>
-    <div>
         <table class="table">
             <thead>
             	<tr>
@@ -127,7 +127,7 @@ $(function(){
             </thead>
             <tbody>
                 <c:choose>
-                    <c:when test ="${empty requestScope.pageList.content}">
+                    <c:when test ="${empty requestScope.list.content}">
                         <tr>
                             <th colspan="8">
                                 <span> 등록된 Q&A가 없습니다.</span>
@@ -135,7 +135,7 @@ $(function(){
                         </tr>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach items="${requestScope.pageList.content}" var="qna">
+                        <c:forEach items="${requestScope.list.content}" var="qna">
                             <tr>
                                 <td><span>${qna.qnaId}</span></td>
                                 <td><span>${qna.classes.classId}</span></td>
@@ -162,7 +162,7 @@ $(function(){
                                 <td>
                                 	<c:choose>
                                         <c:when test="${qna.blindState eq 'F'}">
-                                            <button type="button" class="btn btn-danger blind" name="${qna.qnaId}" value="F">게시글 숨기기</button>
+                                            <button type="button" class="btn btn-primary blind" name="${qna.qnaId}" value="F">게시글 숨기기</button>
                                         </c:when>
                                         <c:when test="${qna.blindState eq 'T'}">
                                             <button type="button" class="btn btn-secondary" name="${qna.qnaId}" value="T">블라인드 처리됨</button>
@@ -177,53 +177,30 @@ $(function(){
         </table>
         
         <%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
-		<div style="text-align: center">
 			
-				<!--  블럭당  -->
-		 <nav class="pagination-container">
-			<div class="pagination">
-			<c:set var="doneLoop" value="false"/>
-				
-				  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-				      <a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/qna/qnaListBlind?nowPage=${startPage-1}">PREV</a>
-				  </c:if>
-				  
-						<span class="pagination-inner"> 
-						  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-						  
-							<c:if test="${(i-1)>=pageList.getTotalPages()}">
-							       <c:set var="doneLoop" value="true"/>
-							</c:if> 
-						     
-						    <c:if test="${not doneLoop}" >
-						         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/qna/qnaListBlind?nowPage=${i}">${i}</a> 
-						    </c:if>
-						   
-						  </c:forEach>
-						</span> 
-						<!-- 
-						[다음]
-		 
-							  if( (시작페이지+한블록당뿌려질[]개수)<= 총페이지수){
-							      [다음]출력;
-							  }  
-							
-							  ex)if( (startPage+blockCount) <= pageCount){
-							
-							      }
-						 -->
-						 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-						     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/qna/qnaListBlind?nowPage=${startPage+blockCount}">NEXT</a>
-						 </c:if>
-						 
-					
-				
-				</div>
-			</nav>  
-		  </div>
-        
-    </div>
-    
+<!--  페이징처리  -->
+				<ul class="pagination justify-content-center">
+					<c:set var="doneLoop" value="false" />
+					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+						</li>
+					</c:if>
+						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+							<c:if test="${(i-1)>=list.getTotalPages()}">
+								<c:set var="doneLoop" value="true" />
+							</c:if>
+							<c:if test="${not doneLoop}">
+								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+					<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
 	</section>
 
 <!-- QnA 상세보기 모달 -->
