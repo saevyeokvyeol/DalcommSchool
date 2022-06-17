@@ -98,7 +98,7 @@
 					<c:set var="doneLoop" value="true" />
 				</c:if>
 				<c:if test="${not doneLoop}">
-					<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/main/class/classList?page=${i}">${i}</a></li>
+					<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${pageContext.request.contextPath}/main/board/event/eventList?page=${i}">${i}</a></li>
 				</c:if>
 			</c:forEach>
 		<c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">

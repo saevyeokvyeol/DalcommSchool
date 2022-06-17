@@ -32,20 +32,20 @@ public class AdminController {
 	
 	//관리자페이지 학생
 	@RequestMapping("/user/userList")
-	public ModelAndView adminStudent(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public ModelAndView adminStudent(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
-		Page<Student> studentList = studentService.selectAllStudent(page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
+		Page<Student> studentList = studentService.selectAllStudent(pageable);
 
-		model.addAttribute("studentList", studentList);
+		model.addAttribute("list", studentList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "학생 회원 조회");
 		
 		return new ModelAndView("admin/user/userList","studentList",studentList);
@@ -54,21 +54,21 @@ public class AdminController {
 	
 	//관리자페이지에서 특정 회원 검색
 	@RequestMapping("/user/userSearch")
-	public String studentInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public String studentInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
-		Page<Student> list = studentService.selectByStudentId(keyfield, keyword, page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "studentInsertDate");
+		Page<Student> list = studentService.selectByStudentId(keyfield, keyword, pageable);
 
 		
-		model.addAttribute("studentList",list);
+		model.addAttribute("list",list);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "학생 회원 조회");
 		
 		return "admin/user/userList";
@@ -77,20 +77,20 @@ public class AdminController {
 	
 	//관리자페이지 강사
 	@RequestMapping("/user/teacherList")
-	public ModelAndView adminTeacher(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public ModelAndView adminTeacher(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
-		Page<Teacher> teacherList = teacherService.selectAllTeacher(page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
+		Page<Teacher> teacherList = teacherService.selectAllTeacher(pageable);
 
-		model.addAttribute("teacherList", teacherList);
+		model.addAttribute("list", teacherList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "강사 회원 조회");
 
 		
@@ -100,20 +100,20 @@ public class AdminController {
 	
 	//관리자페이지에서 특정 강사 검색
 	@RequestMapping("/user/teacherSearch")
-	public String techerInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public String techerInquiry(String keyfield , String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
-		Page<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword, page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "teacherInsertDate");
+		Page<Teacher> list = teacherService.selectByTeacherId(keyfield, keyword, pageable);
 		
-		model.addAttribute("teacherList",list);
+		model.addAttribute("list",list);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "강사 회원 조회");
 		
 		return "admin/user/teacherList";
