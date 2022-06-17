@@ -28,8 +28,8 @@ public class EventController {
 	
 	private final EventService eventService;
 	
-	 private final static int PAGE_COUNT=8;
-	 private final static int BLOCK_COUNT=4;
+	 private final static int PAGE_COUNT=10;
+	 private final static int BLOCK_COUNT=5;
 	
 	/**
 	 * 이벤트 전체 조회 - 관리자
@@ -59,22 +59,22 @@ public class EventController {
 	 * 이벤트 전체 조회 - 메인
 	 * */
 	@RequestMapping("/main/board/event/eventList")
-	public void eventUserList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public void eventUserList(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//List<Event> list = eventService.selectAll();
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
-		Page<Event> eventList = eventService.selectAll(page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectAll(pageable);
 		
-		model.addAttribute("eventList", eventList);
+		model.addAttribute("list", eventList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("nowPage", page);
 		
 	}
 	
@@ -205,20 +205,20 @@ public class EventController {
 	 * 이벤트 키워드로 검색 - 유저
 	 * */
 	@RequestMapping("/user/eventSearch")
-	public String userEventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public String userEventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
-		Page<Event> eventList = eventService.selectByKeyword(keyword, page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectByKeyword(keyword, pageable);
 		
-		model.addAttribute("eventList", eventList);
+		model.addAttribute("list", eventList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		
 		return "main/board/event/eventList";
 	
