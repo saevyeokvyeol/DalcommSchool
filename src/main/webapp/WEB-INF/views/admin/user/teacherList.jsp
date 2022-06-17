@@ -140,7 +140,7 @@
 				
 		 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
 			 <li class="page-item">  
-			     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage+blockCount}">NEXT</a>
+			     <a class="page-link" href="${pageContext.request.contextPath}/admin/user/teacherList?nowPage=${startPage+blockCount}">NEXT</a>
 			 </li>
 		 </c:if>
 		 </ul>

@@ -197,7 +197,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/Notice/noticeList" class="menu-link">
                     <div data-i18n="Notifications">전체 공지사항 조회</div>
                   </a>
                 </li>
@@ -210,15 +210,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/FAQ/write" class="menu-link">
                     <div data-i18n="Account">새 FAQ 작성</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" class="menu-link">
                     <div data-i18n="Notifications">전체 FAQ 조회</div>
                   </a>
                 </li>
+                
+                
               </ul>
             </li>
             <li class="menu-item">
@@ -228,12 +230,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/event/eventWrite" class="menu-link">
                     <div data-i18n="Account">새 이벤트 작성</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/event/eventList" class="menu-link">
                     <div data-i18n="Notifications">전체 이벤트 조회</div>
                   </a>
                 </li>
@@ -246,13 +248,13 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/askAnswerList" class="menu-link">
                     <div data-i18n="Account">전체 1대1 문의 조회</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
-                    <div data-i18n="Notifications">1대1 문의 답변</div>
+                  <a href="${pageContext.request.contextPath}/admin/board/askUnanswerList" class="menu-link">
+                    <div data-i18n="Notifications">1대1 문의 미답변</div>
                   </a>
                 </li>
               </ul>

@@ -141,7 +141,6 @@ li {
 
 #sidebar-content h3 {
 	font-weight: 600;
-	margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #ddd;
 }
 
 #sidebar-content #calendar {
@@ -811,4 +810,40 @@ i.fa-star{
 
 #map {
 	height: 400px; width: 750px; border-radius: 10px; margin: 20px 0 ;
+}
+
+#boardHeader {
+	display: flex; justify-content: space-between; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #ddd;
+}
+
+#boardSearchBox {
+	display: flex; justify-content: space-between;
+}
+
+#boardListBox .table td {
+	height: 50px;
+}
+
+#boardListBox .table th:first-child {
+	width: 100px;
+}
+
+#boardListBox .table td:nth-child(2) {
+	text-align: left; padding: 0 30px;
+}
+
+#boardListBox .table th:nth-child(3) {
+	width: 120px;
+}
+
+#boardListBox .table th:nth-child(4) {
+	width: 120px;
+}
+
+#boardListBox .table th:nth-child(5) {
+	width: 80px;
+}
+
+#boardListBox .table span {
+	padding: 30px;
 }
