@@ -235,7 +235,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/board/event/eventList" class="menu-link">
                     <div data-i18n="Notifications">전체 이벤트 조회</div>
                   </a>
                 </li>
