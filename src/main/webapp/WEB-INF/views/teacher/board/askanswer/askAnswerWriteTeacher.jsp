@@ -95,69 +95,25 @@
 </head>
 <body>
 
-	<%-- <form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
-	enctype="multipart/form-data">
 	
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-	
-	 <select name="askCategoryId">
-		  <option value="">카테고리 종류</option>
-		  <option value="1">클래스</option>
-		  <option value="2">결제</option>
-		  <option value="3">환불</option>
-		  <option value="4">후기</option>
-		  <option value="5">탈퇴</option>
-	</select> 	
-<table>
-    <tr>
-        <td>
-            ID : <input type="text" name="teacherId"><p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-           	문의 제목 : <input type="text" name="askTitle"><p>
-        </td>
-    </tr>
-    <tr>
-    	<td>
-    		문의 내용 : <textarea rows="" cols="" name="askContent"></textarea><p>
-    	</td>
-    </tr>
-    <tr>
-    	<td>
-    		첨부 이미지 :<input type="file" name="file" multiple="multiple"><p>
-    	</td>
-  	</tr> 
-  	
-   	<!-- <tr>
-        <td width="150" height="20">
-            <p align="right"><b><span style="font-size:9pt;">*파일첨부</span></b></p>
-        </td>
-        <td width="450" height="20">
-        	<b><span style="font-size:9pt;">
-        		 <input type="file" name="file" maxlength="60" size="40">
-        	   </span></b>
-        </td>
-    </tr>  -->
-    
-</table>
-	<tr>
-        <span><input type=submit value=글쓰기></span> 
-        <span><input type=reset value=다시쓰기></span>
-    </tr>
-</form> --%>
-
 
 
 
 	<div class="main-content">
-		<table align="center" class="table">
-				<form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
+	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+				 <div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById" role="button">목록으로</a></span></div>
+		   
+		
+		<table align="center" class="table">
 				
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
+				
+				
 				<tr>
+					<td>
+						카테고리
+					</td>
 					<td>
 						 <select name="askCategoryId" id="askCategory" class="form-select" aria-label="Default select example">
 							  <option value="">카테고리 종류</option>
@@ -171,65 +127,61 @@
 				</tr> 	
 			<!-- <table> -->
 			    <tr>
+			    	<td>
+			    		문의 ID
+			    	</td>
 			        <td>
-			            ID : <input type="text" name="teacherId"><p>
-			        </td>
-			    </tr>
-			    <tr>
-			        <td>
-			           	문의 제목 : <input type="text" name="askTitle"><p>
+			            <input type="text" name="teacherId">
 			        </td>
 			    </tr>
 			    <tr>
 			    	<td>
-			    		문의 내용 : <textarea name="askContent" id="summernote"></textarea><p>
+			    		문의 제목
+			    	</td>
+			        <td>
+			             <input type="text" name="askTitle">
+			        </td>
+			    </tr>
+			    <tr>
+			    	<td>
+			    		문의 내용
+			    	</td>
+			    	<td>
+			    		 <textarea name="askContent" id="summernote"></textarea>
 			    	</td>
 			    </tr>
-			    <!-- <tr>
-			    	<td>
-			    		첨부 이미지 :<input type="file" name="file" multiple="multiple"><p>
-			    	</td>
-			  	</tr>  -->
 			  	
-					<tr>
-						<td>
-							<div class="mb-3">
-								<div class="image-container mainImgCon">
-								    <a><img id="preview-image" src=""></a>
-								</div>
-								<button type="button" class="fileBtn mainFileBtn">
-									<i class="fa-regular fa-image fa-2xl"></i>
-									첨부 이미지 추가
-								</button>
-								<input type="file" id="input-image" name="file">
-							</div>
-						</td>
-					</tr>
-			  	
-			  	
-			  	
-			   	<!-- <tr>
-			        <td width="150" height="20">
-			            <p align="right"><b><span style="font-size:9pt;">*파일첨부</span></b></p>
-			        </td>
-			        <td width="450" height="20">
-			        	<b><span style="font-size:9pt;">
-			        		 <input type="file" name="file" maxlength="60" size="40">
-			        	   </span></b>
-			        </td>
-			    </tr>  -->
-			    
-			<!-- </table> -->
 				<tr>
 					<td>
-			        <span><input type=submit value=글쓰기></span> 
-			        <span><input type=reset value=다시쓰기></span>
-			    	</td>
-			    </tr>
-			</form>
+						첨부 파일
+					</td>
+					<td>
+						<div class="mb-3">
+							<div class="image-container mainImgCon">
+							    <a><img id="preview-image" src=""></a>
+							</div>
+							<button type="button" class="fileBtn mainFileBtn">
+								<i class="fa-regular fa-image fa-2xl"></i>
+								첨부 이미지 추가
+							</button>
+							<input type="file" id="input-image" name="file">
+						</div>
+					</td>
+				</tr>
+			  	
+			  	
+			
 		</table>
+		<div class="row">
+			<div class="col text-center">
+				<input type=submit class="btn btn-primary" value=글쓰기>
+				<input type=reset class="btn btn-primary" value=다시쓰기>
+			</div>
+		</div>
+		
+		</form>
 	</div>
-
+	
 
 
 

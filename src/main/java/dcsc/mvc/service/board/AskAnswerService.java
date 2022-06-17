@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import dcsc.mvc.domain.board.Answer;
 import dcsc.mvc.domain.board.Ask;
+import dcsc.mvc.domain.board.Faq;
 
 /**
  * 1대1문의
@@ -67,4 +68,21 @@ public interface AskAnswerService {
 	 * @return Ask
 	 * */
 	Ask selectByAskNo(Long askNo);
+	
+	
+	/**
+	 * 1대1 문의 미답변 리스트(관리자)
+	 * */
+	public Page<Ask> askUnanswerList(Pageable pageable);
+	
+	/**
+	 * 1대1문의 검색하기(관리자)
+	 * */
+	Page<Ask> selectBykeyword(String keyword, Pageable pageable);
+
+	/**
+	  * 1대1 문의 카테고리 별 리스트 조회(관리자)
+	  * */
+	Page<Ask> askCategory(Long askCategoryId, Pageable pageable);
+
 }

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +17,6 @@
 
 <style type="text/css">
 
-	/* #answerBtn{
-    background-color: rgb(0, 128,255);
-    width: 5.5em;
-    height: 3.3em;;
-    font-size: 15px;
-    font-weight: bold;
-    color: aliceblue;
-	} */
 
 	#span{
 	    width: 100%;
@@ -35,7 +29,17 @@
 	    
 	}
 
-
+	.mainImgCon,#input-image {
+				display: none;
+			}
+			
+		#preview-image{
+			width: 350px;
+			height: 350px;
+			/* object-fit:cover; */
+			background-size: contain;
+		
+		}
 
 </style>
 
@@ -51,67 +55,7 @@
 
 </head>
 <body>
-		<!-- 아작스 클릭하면 자동으로 나오게 하는것
-		id값주고 remove하기 -->
-		<%-- <table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
-  		   <tr>  
-		        <td>
-		           글 번호 : ${askAnswerDetail.askNo}<p>
-		        </td>
-		        <td>
-		        	문의 ID : ${askAnswerDetail.student.studentId}<p>
-		        </td>
-		        <td>
-		        	문의제목 : ${askAnswerDetail.askTitle}<p>
-		        </td>
-		        <td>
-				    카테고리 : ${askAnswerDetail.askCategory.askCategoryId}<p>
-		        </td>
-		        <td>
-		            문의 내용 : ${askAnswerDetail.askContent}<p>
-		        </td>
-		        <td>
-		        	첨부 파일명 : ${askAnswerDetail.askImg}<p>
-		        </td>
-		        <td>
-		        	문의 일자 : ${askAnswerDetail.askInsertDate}<p>
-		        </td>
-		        <td>
-		        	답변 유무 : ${askAnswerDetail.askComplete}<p>
-		        </td>
-		    </tr>
-		    
-		</table>
-		<hr>
-			<tr>
-	        	<td >
-				<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-					 	<input type=hidden name="askNo" value="${askSelectByIdList.askNo}">
-						<input type=button value="수정하기" >
-						
-						<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${askAnswerDetail.askNo}">수정하기</a>
-						<a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/deleteStudent?askNo=${askAnswerDetail.askNo}">삭제하기</a>				
-					
-				</td>
-	    	</tr>
-			    <hr>
-			    <c:choose>
-			    	<c:when test="${empty askAnswerDetail.answer}">
-					<span>답변 내용이 없습니다.</span>
-			    	
-			    	</c:when>
-			    	<c:otherwise>
-					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : ${askAnswerDetail.answer.answerInsertDate}
-					 </c:otherwise>
-			    </c:choose>
 		
-
-	
-
-
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerStudent">리스트로 돌아가기</a>&gt;</span></div>
- --%>
 
 <div class="main-content">
 	<table align="center" class="table">
@@ -145,7 +89,16 @@
 			    	답변 유무
 			    </td>
 			    <td> 
-			    	${askAnswerDetail.askComplete}
+			    	
+			    	<c:choose>
+                       	<c:when test="${askAnswerDetail.askComplete == 'F'}">
+                       		<span class="badge bg-secondary">미답변</span>
+                       	</c:when>
+                       	<c:when test="${askAnswerDetail.askComplete == 'T'}">
+                       		<span class="badge bg-primary">답변 완료</span>
+                       	</c:when>
+                     </c:choose>
+			    	
 			    </td>
 			</tr>
 			<tr> 
@@ -158,48 +111,19 @@
 				</td>
 			</tr>
 			<tr>
-			     <td colspan="2" style="text-align: center;">
-					<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+				
+			     <td colspan="2" style="text-align: center;" align="left">
+					<img id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
 					<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
 			     </td>
     		</tr>
 	
-		    
-		
-		<hr>
-			
-				<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-					 	<%-- <input type=hidden name="askNo" value="${askSelectByIdList.askNo}">
-						<input type=button value="수정하기" > --%>
-						<tr>
-							<td>
-								<div  class="col-6 col-md-4">
-									
-									<c:choose>
-										<c:when test="${askAnswerDetail.askComplete eq 'T'}">
 											
-										</c:when>
-										<c:when test="${askAnswerDetail.askComplete eq 'F'}">
-											<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/updateFormTeacher?askNo=${askAnswerDetail.askNo}">수정하기</a>
-										</c:when>
-									</c:choose>
-									
-									
-									
-									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
-								</div>
-							</td>
-							<td>
-								<div class="col-6 col-md-4">
-									
-								</div>
-							</td>		
-						</tr>
-						<div align=right><span style="font-size:9pt;"><a class="btn btn-primary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a></span></div>
-												
 			    <hr>
-			 <tr>
-			 	<td>
+	</table>
+	
+	<div class="card" style="width: 18rem;">
+  		<div class="card-body">
 			    <c:choose>
 			    	<c:when test="${empty askAnswerDetail.answer}">
 					<span>답변 내용이 없습니다.</span>
@@ -207,18 +131,33 @@
 			    	</c:when>
 			    	<c:otherwise>
 					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : ${askAnswerDetail.answer.answerInsertDate}
+					 답변 일자 : 
+						 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+						<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+					
 					 </c:otherwise>
 			    </c:choose>
-			    </td>
-			</tr>
+	    	</div>
+	    </div>
+	
+	
+		<div class="row">
+			<div  class="col text-center">
+					
+					<c:choose>
+					<c:when test="${askAnswerDetail.askComplete eq 'T'}">
+						
+					</c:when>
+					<c:when test="${askAnswerDetail.askComplete eq 'F'}">
+						<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/updateFormTeacher?askNo=${askAnswerDetail.askNo}">수정하기</a>
+					</c:when>
+				</c:choose>
 			
-	
-    
-
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
+			</div>
+		</div>
+		<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a>
 		
-	</table>
-	
 					
 	<form name="askInfo" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->

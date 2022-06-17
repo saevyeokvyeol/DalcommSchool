@@ -94,34 +94,32 @@
 		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		    																							
 		    <input type='hidden' name='askNo' value="${askSelectByIdList.askNo}">
+		    <div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById" role="button">목록으로</a></span></div>
+		    
 			<table class="table">
 			    <tr>
 			        <td>
-			            <p align="center">${askSelectByIdList.askNo} 번 게시물 수정하기</p>
+			            ${askSelectByIdList.askNo} 번 게시물 수정하기
 			        </td>
 			    </tr>
 			    <tr>
 			        <td>
-			            <p align="center">문의 ID : ${askSelectByIdList.student.studentId}</p>
+			            문의 ID : ${askSelectByIdList.student.studentId}
 			        </td>
 			    </tr>
 			    <tr>
 			        <td>
-			            문의 제목 :<input type=text name="askTitle" size="30" value="${askSelectByIdList.askTitle}">
+			            문의 제목 
 			        </td>
 			        <td>
-						
+						<input type=text name="askTitle" size="20" value="${askSelectByIdList.askTitle}">
 					</td>
 			    </tr>
-			    <%-- <tr>
-			        <td>
-			           	파일 첨부
-			        </td>
-			        <td>
-						<input type="file" name="file" size="30" value="${askSelectByIdList.askImg}">
-					</td>
-			    </tr> --%>
+			   
 			    <tr>
+			    	<td>
+			    		첨부파일
+			    	</td>
 					<td>
 						 <div class="mb-3" align="center"> 
 							<div class="image-container mainImgCon">
@@ -137,30 +135,23 @@
 				</tr>
 			    
 			    <tr>
-			       <!--  <td>
-			            문의 내 용
-			        </td> -->
+			      	<td>
+			      		문의 내용
+			      	</td>
 			        <td>
 						<textarea name="askContent" id="summernote">${askSelectByIdList.askContent}</textarea>
 					</td>
 			    </tr>
-			    <tr>
-			        <td>
-			        	
-					</td>
-					<td>
-						<div align="left">
-							
-							<input type="submit" value="수정하기"> 
-							<input type="reset" value="다시쓰기">
-						</div>
-					</td>
-			    </tr>
+			 
 			</table>
+			<div class="col text-center">
+							
+				<input type="submit" class="btn btn-primary" value="수정하기"> 
+				<input type="reset" class="btn btn-primary" value="다시쓰기">
+			</div>
 		</form>													
 	<hr>
-	<div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/main/board/askanswer/askAnswerSelectById" role="button">목록으로</a></span></div>
-
+	
 </div>
 </body>
 </html>
