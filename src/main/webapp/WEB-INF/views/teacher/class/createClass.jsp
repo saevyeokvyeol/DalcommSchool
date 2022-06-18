@@ -19,7 +19,7 @@
 			$(function() {
 				function selectAllCategory() {
 					$.ajax({
-						url : "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
+						url : "${pageContext.request.contextPath}/class/selectAllCategory",
 						type : "post",
 						data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 		    			dataType: "json",
@@ -97,14 +97,6 @@
 							<select name='categoryId' id="categoryId" class="form-select" aria-label="Default select example">
 								<option value='0'>클래스 카테고리 선택</option>
 							</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="teacherId" name="teacherId" value="Tkim1234" placeholder="선생님ID">
-							<label for="teacherId">선생님ID</label>
 						</div>
 					</td>
 				</tr>
