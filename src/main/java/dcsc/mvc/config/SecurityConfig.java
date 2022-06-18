@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import dcsc.mvc.config.oauth.CustomOAuth2UserService;
 import dcsc.mvc.config.security.LoginFailureHandler;
 import dcsc.mvc.config.security.MemberAutenticationProvider;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final MemberAutenticationProvider authenticationProvider;
-	private final CustomOAuth2UserService customOAuth2UserService;
 	private final LoginFailureHandler authenticationFailHandler;
 	
 	
@@ -48,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().ignoringAntMatchers("/api/**") //rest API 사용 예외처리
 			.and()
 			.authorizeRequests() 
-			.antMatchers("/main/myPage/**").authenticated()
+			.antMatchers("/main/mypage/**").authenticated()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll() 
@@ -69,8 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and() /* OAuth */
 			.oauth2Login()
 			.loginPage("/main/login/loginForm")
-			.userInfoEndpoint()
-			.userService(customOAuth2UserService); 
+			.userInfoEndpoint();
 		
 		}
 	
