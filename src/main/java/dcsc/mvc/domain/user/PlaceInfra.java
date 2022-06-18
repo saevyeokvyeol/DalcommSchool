@@ -1,5 +1,6 @@
 package dcsc.mvc.domain.user;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,12 +32,12 @@ public class PlaceInfra{
 	@SequenceGenerator(sequenceName = "place_infra_id_seq",allocationSize = 1,name = "place_infra_id_seq")
 	private Long placeInfraId; 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "place_id")
 	@JsonIgnore
 	private Place place; 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="infra_id")
 	@JsonIgnore
 	private Infra infra;

@@ -297,10 +297,11 @@ public class TeacherServiceImpl implements TeacherService {
 		System.out.println(place.getPlaceId());
 		if(place.getPlaceId() == null) {
 			Place newPlace = placeRep.save(place);
-			
-			for(Long i : infraId) {
-				Infra infra = infraRep.findById(i).orElse(null);
-				placeInfraRep.save(new PlaceInfra(null, newPlace, infra));
+			if(infraId != null) {
+				for(Long i : infraId) {
+					Infra infra = infraRep.findById(i).orElse(null);
+					placeInfraRep.save(new PlaceInfra(null, newPlace, infra));
+				}
 			}
 		} else {
 			Place dbPlace = placeRep.findById(place.getPlaceId()).orElse(null);
@@ -310,12 +311,15 @@ public class TeacherServiceImpl implements TeacherService {
 			dbPlace.setPlaceRoute(place.getPlaceRoute());
 			
 			dbPlace.setPlaceRegion(place.getPlaceRegion());
-			
-			placeInfraRep.deletePlaceInfra(place.getPlaceId());
-			
-			for(Long i : infraId) {
-				Infra infra = infraRep.findById(i).orElse(null);
-				placeInfraRep.save(new PlaceInfra(null, dbPlace, infra));
+			if(dbPlace.getPlaceInfra() != null) {
+				placeInfraRep.deletePlaceInfra(place.getPlaceId());
+			}
+
+			if(infraId != null) {
+				for(Long i : infraId) {
+					Infra infra = infraRep.findById(i).orElse(null);
+					placeInfraRep.save(new PlaceInfra(null, dbPlace, infra));
+				}
 			}
 		}
 	}

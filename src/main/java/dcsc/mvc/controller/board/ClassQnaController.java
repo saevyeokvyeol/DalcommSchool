@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -139,9 +140,10 @@ public class ClassQnaController {
 	@RequestMapping("board/qna/qnaInsert")
 	@ResponseBody
 	public void qnaInsert(ClassQna classQna, Classes classes) {
-		System.out.println(classQna.getSecretState());
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		classQna.setClasses(classes);
-		classQna.setStudent(new Student("kim1234", null, null, null, null, null, null, null, null));
+		classQna.setStudent(new Student(student.getStudentId(), null, null, null, null, null, null, null, null));
 		classQnaService.insertQuestion(classQna);
 	}
 	
@@ -246,13 +248,14 @@ public class ClassQnaController {
 	 * */
 	@RequestMapping("/teacher/board/qna")
 	public ModelAndView selectByteacherId(String teacherId, @RequestParam(defaultValue = "1") int page) {
-		teacherId = "Tkim1234";
+		//teacherId = "Tkim1234";
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		ModelAndView modelAndView = new ModelAndView("teacher/board/qna/qnaList");
 		
 		//페이징처리하기
 		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "qnaId");
-		Page<ClassQna> pageList = classQnaService.selectByTeacherId(teacherId, pageable);
+		Page<ClassQna> pageList = classQnaService.selectByTeacherId(teacher.getTeacherId(), pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		
@@ -275,7 +278,8 @@ public class ClassQnaController {
 	 * */
 	@RequestMapping("qnaReplyInsert")
 	public String qnaReplyInsert(ClassReply classReply, Long qnaId) {
-		Teacher teacher = new Teacher("Tkim1234");
+		//Teacher teacher = new Teacher("Tkim1234");
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		classReply.setClassQna(new ClassQna(qnaId));
 		classReply.setTeacher(teacher);
@@ -320,11 +324,12 @@ public class ClassQnaController {
 	 * */
 	@RequestMapping("main/mypage/qnaList")
 	public void selectByStudentId(String studentId, Model model, @RequestParam(defaultValue = "1") int page) {
-		studentId="lee1234";
+		//studentId="lee1234";
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		//페이징처리하기
 		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "qnaId");
-		Page<ClassQna> pageList = classQnaService.selectByStudentId(studentId, pageable);
+		Page<ClassQna> pageList = classQnaService.selectByStudentId(student.getStudentId(), pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		

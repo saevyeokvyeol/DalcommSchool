@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dcsc.mvc.domain.board.ClassQna;
+import dcsc.mvc.domain.classes.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,16 +56,8 @@ public class Student {
 	@JsonIgnore
 	private List<ClassQna> qnaList;
 
-//	@Builder
-//	public Student(String studentId, String studentPwd, String studentName, String studentEmail,
-//			String provider, String providerId, LocalDateTime studentInsertDate, String studentQuit, String role
-//			) {
-//		this.studentPwd = studentPwd;
-//		this.studentName = studentName;
-//		this.studentEmail = studentEmail;
-//		this.studentInsertDate = studentInsertDate;
-//		this.studentQuit = studentQuit;
-//		this.role = role;
-//	}
+	@OneToMany(mappedBy = "student")
+	@JsonIgnore
+	private List<Book> books;
 
 }

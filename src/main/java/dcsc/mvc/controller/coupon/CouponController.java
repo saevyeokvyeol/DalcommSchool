@@ -42,13 +42,14 @@ public class CouponController {
 	 * */
 	@RequestMapping("main/mypage/couponList")
 	public void selectAllIssueCouponByStudentId(String couponUseable, Model model, @RequestParam(defaultValue="1") int page) {
-		String studentId = "kim1234";
+		//String studentId = "kim1234";
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		if(couponUseable == null) couponUseable = "useable";
 		
 		//페이징 처리하기
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT);
-		Page<IssueCoupon> pageList = couponService.selectByStudentId(studentId, couponUseable, pageable);
+		Page<IssueCoupon> pageList = couponService.selectByStudentId(student.getStudentId(), couponUseable, pageable);
 		model.addAttribute("list", pageList);
 		
 		int temp=(page-1)%BLOCK_COUNT;

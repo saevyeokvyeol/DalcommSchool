@@ -327,20 +327,25 @@
 			if(!isIdChecked){
 				swal("ID 중복체크를 진행해주세요.")
 				event.preventDefault();
+				return false;
 			}else if(!isNickChecked){
 				swal("닉네임 중복체크를 진행해주세요")
 				event.preventDefault();
+				return false;
 			}else if(!isPhoneChecked){
 				swal("핸드폰 번호 중복체크를 진행해주세요")
 				event.preventDefault();
+				return false;
 			}else if(!isSamePwd){
 				swal("비밀번호 일치 여부를 확인해주세요.")
 				event.preventDefault();
+				return false;
 			}
 			
 			if(!isValidPwd()){
 				swal("비밀번호를 형식에 맞게 입력해주세요.");
 				event.preventDefault();
+				return false;
 			}else if(!isValidId()){
 // 				swal("아이디를 형식에 맞게 입력해주세요.");
 				event.preventDefault();

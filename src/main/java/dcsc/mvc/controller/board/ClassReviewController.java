@@ -75,12 +75,10 @@ public class ClassReviewController {
 	@RequestMapping("/teacher/mypage/reviewList")
 	public String selectByTeacherId(Model model, @RequestParam(defaultValue="1") int page){
 		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
-		
+
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacher.getTeacherId(), pageable);
-		
-		
+
 		model.addAttribute("list", pageList);
 		
 		int temp=(page-1)%BLOCK_COUNT;
@@ -119,13 +117,13 @@ public class ClassReviewController {
 	 * 학생 ID로 리스트 가져오기
 	 * */
 	@RequestMapping("/main/mypage/reviewList")
-	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int page){
+	public String classReviewSearch(Model model, @RequestParam(defaultValue="1") int page){
 //		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
-		studentId="kim1234";
-		
+//		studentId="kim1234";
+		Student dbStudent = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, pageable);
+		Page<ClassReview> pageList = reviewService.selectByStudentId(dbStudent.getStudentId(), pageable);
 		
 		model.addAttribute("list", pageList);
 		
@@ -181,7 +179,7 @@ public class ClassReviewController {
 		} else {
 			throw new RuntimeException("로그인 후 작성해주세요.");
 		}
-		
+
 		review.setStudent(student);
 		review.setClasses(new Classes(classId));
 		
