@@ -95,10 +95,17 @@ $(function(){
 //					alert(result);
 				text=""
 				$.each(result, function(index,item){
-					text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>&nbsp\${item.infraName}&nbsp`;
+					$.each(${place.placeInfra}, function(index, infra) {
+
+						console.log(infra.infraId)
+						if(item.infraId==infra.infraId){
+							text += `<input type="checkbox" name='infraId' value='\${item.infraId}' checked>&nbsp\${item.infraName}&nbsp`;
+						}
 					})
+					text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>&nbsp\${item.infraName}&nbsp`;
+				})
 				text += ""
-				$("div[id=placeInfra]").html(text);
+				$("#placeInfra").html(text);
 			},
 			error: function(err){
 				alert("인프라 정보를 가져올 수 없습니다.")
@@ -114,7 +121,7 @@ $(function(){
 $(function(){
 	function selectPlaceRegion(){
 		$.ajax({
-			url: "/teacher/teacherMypage/place/selectPlaceRegion",
+			url: "/place/selectPlaceRegion",
 			type: "post",
 			data: {"${_csrf.parameterName}": "${_csrf.token}"},
 			dataType: "json",
@@ -196,7 +203,7 @@ $(function(){
 <!--         <th>공방 지역</th> -->
         <td>
         	<div class="mb-3">
-	         	<select name="placeRegion" class="form-select" aria-label="Default select example">
+	         	<select name="placeRegion" class="form-select" aria-label="Default select example" required>
 	            	<option value="0">공방 지역 선택</option>
 	          	</select>
           	</div>

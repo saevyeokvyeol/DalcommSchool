@@ -10,7 +10,7 @@ import dcsc.mvc.domain.user.PlaceInfra;
 
 public interface PlaceInfraRepository extends JpaRepository<PlaceInfra, Long> {
 	
-	@Query("delete from PlaceInfra p where p.place.placeId=?1")
+	@Query(value = "delete from place_infra where place_id=?1", nativeQuery = true)
 	@Modifying
 	void deletePlaceInfra(Long placeId);
 	
