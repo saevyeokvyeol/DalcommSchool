@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,23 +41,21 @@ public class AskAnswerUserController {
 	  * 학생 ID로 자신 1대1문의 조회 
 	  * */
 	@RequestMapping("main/mypage/askAnswerSelectById") 
-	public void selectByStudentId(String studentId, Model model,@RequestParam(defaultValue = "1") int page) {
-		
-		studentId = "jang1234"; 
+	public void selectByStudentId(Model model,@RequestParam(defaultValue = "1") int page) {
+		 
 		   
+		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String studentId = student.getStudentId();
 		
-		/*
-		 * List<Ask> askSelectByIdList=askAnswerService.selectById(studentId);
-		 * 
-		 * model.addAttribute("askSelectByIdList", askSelectByIdList);
-		 */
-		
+	
 		//페이징 처리
 			Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "askNo");
 			
 			//Pageable pageable = PageRequest.of(page - 1, PAGE_COUNT);
 			
 			Page<Ask> askSelectByIdList = askAnswerService.selectById(studentId, pageable);
+			
+			
 			
 			model.addAttribute("askSelectByIdList", askSelectByIdList);
 			
@@ -67,17 +66,20 @@ public class AskAnswerUserController {
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("page", page);
 	
-		//return "main/board/askanswer/askAnswerSelectById"; 
+	 
 	} 
 	
 	 /**
 	  * 선생님 ID로 자신 1대1문의 조회 
 	  * */
 	@RequestMapping("teacher/board/askanswer/askAnswerSelectById") 
-	public String selectByTeacherId(String teacherId, Model model,@RequestParam(defaultValue = "1") int nowPage) {
+	public String selectByTeacherId(Model model,@RequestParam(defaultValue = "1") int nowPage) {
 		
-		teacherId = "Tjang1234"; 
-		   
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String teacherId = teacher.getTeacherId();
+		
+		
+		
 		/*
 		 * List<Ask> askSelectByIdList=askAnswerService.selectById(teacherId);
 		 * 
@@ -144,23 +146,6 @@ public class AskAnswerUserController {
 		ask.setStudent(student);
 		ask.setAskComplete(askComplete);
 		
-		
-
-		//파일이 첨부되었다면 fname, fsize를 설정한다.
-		//MultipartFile mfile=elect.getFile();
-		     
-//		MultipartFile mfile = ask.getAskImg();
-//		
-//		if(mfile.getSize() > 0 ) { //첨부된 파일에 용량이 있다면..
-//			mfile.transferTo(new File(PATH_SAVE+"/"+mfile.getOriginalFilename())); //폴더에 저장
-//			
-//			electronics.setFname(mfile.getOriginalFilename());
-//			electronics.setFsize(mfile.getSize());
-//		
-//		ask.setFname(mfile.getOriginalFilename());
-//		ask.setFsize(mfile.getSize());
-//			
-//		} 
 		  
 		if(file.getSize() > 0) {
 			File img = new File(ImageLink.ASK_IMG + file.getOriginalFilename());
