@@ -64,9 +64,8 @@
 
 </head>
 <body>
-
-<div class="main-content">
-	<table align="center" class="table">
+<div id="sidebarHeader"><h3>1대1 문의</h3></div>
+	<table class="table">
 			
 			<tr> 
 				<td> 
@@ -234,8 +233,5 @@
 	  </div>
 	</div>
 	
-</div>
-	
-
 </body>
 </html>

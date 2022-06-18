@@ -116,7 +116,7 @@ $(function(){
             	</tr>
                 <tr>
 	                <th>번호</th>
-	                <th>클래스</th>
+	                <th>클래스명</th>
 	                <th>작성자</th>
 	                <th>제목</th>
 	                <th>등록일자</th>

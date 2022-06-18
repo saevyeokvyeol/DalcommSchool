@@ -19,80 +19,29 @@
 	
 </script>
 <title>Insert title here</title>
+</head>
+<body>
 
-<head>
-
-<div class="main-content">
-
-	<h5> 고객센터 > 공지사항 </h5><br><hr>
-	
-<table align="center" class="table">
-  
+<div id="sidebarHeader">
+	<h3>공지사항</h3>
+</div>
+<table class="table" id="boardDetailTable">
 	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	제목
-	    </td>
 	    <td> <!-- 글 제목 -->
-	    	${requestScope.notice.noticeTitle}
-	    </td>
-	</tr>
-	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	작성자
-	    </td>
-	    <td> <!-- 글 제목 -->
-	    	관리자
-	    </td>
-	</tr>
-	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	작성일
-	    </td>
-		<td>
-			<fmt:parseDate value="${notice.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-			<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+	    	<h4>${requestScope.notice.noticeTitle}</h4>
+			<div id="date">${notice.noticeInsertDate.toString().substring(0, 10)}</div>
 		</td>
 	</tr>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
 	<tr>
-	     <td colspan="2" style="text-align: center;">
-			<img alt="" src="${pageContext.request.contextPath}/img/notice/${requestScope.notice.noticeImg}">
-			<span style="font-size:9pt;"><b><pre>${requestScope.notice.noticeContent}</pre></b></span>
+	     <td>
+	     	<c:if test="${notice.noticeImg != null}">
+	     		<img alt="" src="${pageContext.request.contextPath}/img/notice/${requestScope.notice.noticeImg}">
+	     	</c:if>
+			<pre><h6>${requestScope.notice.noticeContent}</h6></pre>
 	     </td>
     </tr>
-    
-	<tr>
-        <td>
-        <!-- 관리자 버튼 권한-->
-	        <div class="col-6 col-md-4">
-				<form name="requestForm" method="post" id="requestForm">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-					<input type=hidden name="noticeNo" value="${notice.noticeNo}">
-					
-				</form>
-			</div>
-		</td>
-		<td>
-	        
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/Notice/noticeList" role="button" >목록으로</a>
-		</td>
-	</tr>
-    </table>
-    
-    <form name="noticeInfo" method="post">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
-		<input type=hidden name="noticeNo" value="${notice.noticeNo}">
-	</form>
-    
-
-    </div>
-
-
-</head>
+</table>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/Notice/noticeList">목록으로</a>
 </body>
-
 </html>

@@ -110,7 +110,7 @@ public class PlaceController {
 	/**
 	 * 공방 지역 가져오기
 	 * */
-	@RequestMapping("/teacher/teacherMypage/place/selectPlaceRegion")
+	@RequestMapping("/place/selectPlaceRegion")
 	@ResponseBody
 	public List<PlaceRegion> selectPlaceRegion() {
 		List<PlaceRegion> list = teacherService.selectPlaceRegion();

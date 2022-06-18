@@ -361,7 +361,7 @@ li {
 }
 
 #classInfomation .classImageBox img {
-	border-radius: 15px;
+	border-radius: 15px; max-width: 750px;
 }
 
 #classOrderCalendar {
@@ -641,7 +641,7 @@ li {
 }
 
 #allBookList .reviewTable td:nth-child(2) {
-	width: 130px;
+	width: 125px;
 }
 
 #allBookList .reviewTable td:nth-child(3) {
@@ -649,15 +649,7 @@ li {
 }
 
 #allBookList .reviewTable td:nth-child(4) {
-	width: 100px;
-}
-
-#allBookList .reviewTable td:nth-child(5) {
 	width: 120px;
-}
-
-#allBookList .reviewTable td:nth-child(6) {
-	width: 80px;
 }
 
 .questionModalTable td {
@@ -812,8 +804,12 @@ i.fa-star{
 	height: 400px; width: 750px; border-radius: 10px; margin: 20px 0 ;
 }
 
-#boardHeader {
+#sidebarHeader {
 	display: flex; justify-content: space-between; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #ddd;
+}
+
+#boardHeader a {
+	margin:auto 10px; line-height: 36px;
 }
 
 #boardSearchBox {
@@ -846,4 +842,32 @@ i.fa-star{
 
 #boardListBox .table span {
 	padding: 30px;
+}
+
+.accordion-body img {
+	max-width: 914px; border-radius: 5px; margin-bottom: 20px;
+}
+
+#boardDetailTable tr:first-child td {
+	padding: 0 30px 30px;
+}
+
+#boardDetailTable tr:nth-child(2) td {
+	padding: 30px;
+}
+
+#boardDetailTable h4 {
+	font-weight: 600;
+}
+
+#boardDetailTable #date {
+	color: #999;
+}
+
+#boardDetailTable p, #boardDetailTable pre, #boardDetailTable h6 {
+	margin: 0; max-width: 970px; white-space: pre-wrap; line-height: 30px;
+}
+
+p, pre {
+	margin: 0; max-width: 970px; white-space: pre-wrap; 
 }

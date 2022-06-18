@@ -105,46 +105,6 @@ public class TeacherController {
 		return "redirect:/teacher/mypage/updateForm";
 	}
 	
-//	/**
-//	 * 강사 정보 수정폼
-//	 * */
-//	@RequestMapping("/teacher/mypage/updateProfile")
-//	public ModelAndView updateProfile() {
-//		String teacherId = "Tkim1234" /*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
-//		
-//		Teacher teacher = teacherService.selectById(teacherId);
-//		
-//		ModelAndView modelAndView = new ModelAndView("teacher/mypage/updateProfile","teacher", teacher);
-//		modelAndView.addObject("title", "");
-//		return modelAndView;
-//	}
-//	
-//	/**
-//	 * 강사 프로필 수정
-//	 * */
-//	@RequestMapping("/teacher/mypage/updateTeacherProfile")
-//	public String updateTeacherProfile(Teacher teacher, String youtube, String instagram, String twitter, String facebook, MultipartFile file) throws Exception {
-//
-//		List<TeacherSns> list = new ArrayList<TeacherSns>();
-//		list.add(new TeacherSns(null, teacher, new Sns(1L), youtube));
-//		list.add(new TeacherSns(null, teacher, new Sns(2L), instagram));
-//		list.add(new TeacherSns(null, teacher, new Sns(3L), twitter));
-//		list.add(new TeacherSns(null, teacher, new Sns(4L), facebook));
-//		
-//		teacher.setTeacherSns(list);
-//		
-//		if(file.getSize() > 0) {
-//			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
-//			file.transferTo(img);
-//		   	
-//			teacher.setTeacherImg(file.getOriginalFilename());
-//		}
-//		
-//		teacherService.updateTeacherProfile(teacher);
-//		
-//		return "redirect:/teacher/mypage/updateProfile";
-//	}
-	
 	/**
 	 * 마이페이지
 	 * */

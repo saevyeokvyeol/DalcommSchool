@@ -37,40 +37,45 @@ public class HomeController {
 	@RequestMapping("/") 
 	public String index(Model model) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 		
 		Pageable pageable = PageRequest.of(0, 6);
 		
 		// 인기 클래스 목록
 		Page<Classes> popularList = classesService.selectByFilter(new Search(null, null, null, "likes"), pageable, 3L);
-		
-		// 학생의 마이리스트 가져오기
-		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
 
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(Classes c : popularList.getContent()) {
-				if(c.getClassId() == l.getClasses().getClassId()) {
-					c.setLikeId(l.getLikeId());
-					break;
-				}
-			}
-		}
-		model.addAttribute("popularList", popularList);
-		
 		// 신규 클래스 목록
 		Page<Classes> newList = classesService.selectNewClass(pageable);
+		
+		if(student != null) {
+			// 학생의 마이리스트 가져오기
+			List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
 
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(Classes c : newList.getContent()) {
-				if(c.getClassId() == l.getClasses().getClassId()) {
-					c.setLikeId(l.getLikeId());
-					break;
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(Classes c : popularList.getContent()) {
+					if(c.getClassId() == l.getClasses().getClassId()) {
+						c.setLikeId(l.getLikeId());
+						break;
+					}
+				}
+			}
+
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(Classes c : newList.getContent()) {
+					if(c.getClassId() == l.getClasses().getClassId()) {
+						c.setLikeId(l.getLikeId());
+						break;
+					}
 				}
 			}
 		}
-		
+
+		model.addAttribute("popularList", popularList);
 		model.addAttribute("newList", newList);
 		
 		return "index"; 
@@ -78,7 +83,7 @@ public class HomeController {
 	
 	@RequestMapping("/teacher") 
 	public String teacherIndex(Model model) {
-		Teacher teacher = teacherService.selectById("Tkim1234")/*(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal()*/;
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		
 		List<Book> bookList = bookService.selectByTeacherIdAndDate(teacher.getTeacherId());

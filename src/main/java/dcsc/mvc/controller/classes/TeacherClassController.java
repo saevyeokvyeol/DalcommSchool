@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.Classes;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.util.ImageLink;
@@ -28,15 +30,13 @@ public class TeacherClassController {
 	private final int SIZE = 9;
 	private final int BLOCK_COUNT = 5;
 	
-	private final int SCHEDULE_SIZE = 20;
-	
 	/**
 	 * 선생님 클래스 리스트
 	 * */
 	@RequestMapping("/classList")
 	public void selectAllClass(Model model, @RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Teacher teacher = new Teacher("Tkim1234");
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
@@ -65,7 +65,9 @@ public class TeacherClassController {
 	 * 클래스 등록하기
 	 * */
 	@RequestMapping("/insert")
-	public String insert(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file) throws Exception {
+	public String insert(Classes classes, ClassCategory category, MultipartFile file) throws Exception {
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
 		
@@ -82,7 +84,9 @@ public class TeacherClassController {
 	}
 	
 	@RequestMapping("/update")
-	public String update(Classes classes, Teacher teacher, ClassCategory category, MultipartFile file) throws Exception {
+	public String update(Classes classes, ClassCategory category, MultipartFile file) throws Exception {
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
 		

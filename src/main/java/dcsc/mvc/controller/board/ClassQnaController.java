@@ -319,24 +319,24 @@ public class ClassQnaController {
 	 * 학생ID로 클래스 Q&A 검색 -페이징처리
 	 * */
 	@RequestMapping("main/mypage/qnaList")
-	public void selectByStudentId(String studentId, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public void selectByStudentId(String studentId, Model model, @RequestParam(defaultValue = "1") int page) {
 		studentId="lee1234";
 		
 		//페이징처리하기
-		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "qnaId");
-		Page<ClassQna> pageList = classQnaService.selectByStudentId(studentId, page);
+		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "qnaId");
+		Page<ClassQna> pageList = classQnaService.selectByStudentId(studentId, pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		
-		model.addAttribute("pageList", pageList);
+		model.addAttribute("list", pageList);
 		
 		
-		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
-		int startPage = nowPage-temp;
+		int temp = (page-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = page-temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		
 	}
 }

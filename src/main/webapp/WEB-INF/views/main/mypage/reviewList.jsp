@@ -10,9 +10,6 @@
 <head>
 <style type="text/css">
 	#reviewDetail-form fieldset{display: inline-block; border: 0;}
-	 	
-	.fa-star{font-size: 10px; color: #b3b3b3; text-shadow: 0 0 0 #b3b3b3;}
-	.checked {color: #ffab00;}
 	
  	.modal img{ 
 		width: 100%; 
@@ -80,8 +77,8 @@ $(function(){
 </script>	
 
 </head>
-<h3>내가 쓴 후기</h3>
 <body>
+<h3>내가 쓴 후기</h3>
 <div id="allBookList">
 	<table class="table reviewTable">
 		  <thead>
@@ -120,7 +117,7 @@ $(function(){
 		            			<a>이 후기는 비공개 상태입니다.</a>
 		            		</c:when>
 		            		<c:when test="${review.reviewBlindState eq 'F'}">
-		            			<button class="btn btn-light list-reviewContent" data-bs-toggle="modal" data-bs-target="#detailModal" value="${review.reviewId}">${review.reviewContent.length() >= 30 ? review.reviewContent.substring(0, 30).concat("...") : review.reviewContent}</button>
+		            			<button class="btn btn-light list-reviewContent" data-bs-toggle="modal" data-bs-target="#detailModal" value="${review.reviewId}">${review.reviewContent.length() >= 23 ? review.reviewContent.substring(0, 23).concat("...") : review.reviewContent}</button>
 		            			<c:if test="${review.reviewImg != null}">
 									<i class="fa fa-file-image-o" aria-hidden="true"></i>
 								</c:if>
