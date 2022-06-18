@@ -48,9 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().ignoringAntMatchers("/api/**") //rest API 사용 예외처리
 			.and()
 			.authorizeRequests() 
-//			.antMatchers("/main/myPage/**").authenticated()
-//			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-//			.antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
+			.antMatchers("/main/myPage/**").authenticated()
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll() 
 		.and()
 		.formLogin()
