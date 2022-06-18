@@ -7,14 +7,9 @@
 <meta charset="UTF-8">
 <title>공방 수정 폼입니다.</title>
 <style type="text/css">
-	#map {
-  height: 400px;
-  
-  width: 800px;
-  
-}
-section{margin: auto; width: 1200px;}
-
+	
+	#map{width: 100%;}
+	
 	#placeRoute{ height: 100px; width: 800px;}
 	#etc{height: 50px; width: 800px;}
 	
@@ -25,6 +20,8 @@ section{margin: auto; width: 1200px;}
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
+
 
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -101,7 +98,7 @@ $(function(){
 					text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>&nbsp\${item.infraName}&nbsp`;
 					})
 				text += ""
-				$("fieldset[id=field]").after(text);
+				$("div[id=placeInfra]").html(text);
 			},
 			error: function(err){
 				alert("인프라 정보를 가져올 수 없습니다.")
@@ -181,63 +178,75 @@ $(function(){
 </script>
 </head>
 <body>
-공방 수정 폼입니다.
 
-<section>
   <form id="updateForm" method="post" action="${pageContext.request.contextPath}/place/update">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
   <input type="hidden" name="placeId"  value="${place.placeId}">
 <%--   <input type="hidden" name="teacherId" value="${teacherId}"> --%>
-    <table>
+    <table id="classTable">
       <tr>
-        <th>공방 이름</th>
-        <td><input type="text" id="placeName" class="" name="placeName" value ="${place.placeName}" placeholder="사용하시는 공방의 이름을 설정해주세요."/></td>
-      </tr>
-      <tr>
-        <th>공방 지역</th>
-        <td>
-          <select name="placeRegion">
-            <option value="0">--지역 선택--</option>
-          </select>
+      	<td>
+        	<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="placeName" name="placeName" value="${place.placeName}" placeholder="사용하시는 공방의 이름을 설정해주세요.">
+				<label for="placeName">공방 이름</label>
+			</div>
         </td>
       </tr>
       <tr>
-		<th>공방 주소</th>
+<!--         <th>공방 지역</th> -->
+        <td>
+        	<div class="mb-3">
+	         	<select name="placeRegion" class="form-select" aria-label="Default select example">
+	            	<option value="0">공방 지역 선택</option>
+	          	</select>
+          	</div>
+        </td>
+      </tr>
+      <tr>
+<!-- 		<th>공방 주소</th> -->
 		<td>
 			<input type="text" id="sample6_postcode" class="form-control" readonly="readonly" required hidden>
-			<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="주소 검색">
-			<input type="text" id="sample6_address" name="placeAddr" class="form-control" value="${place.placeAddr}" readonly="readonly" required>
+<!-- 			<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="주소 검색"> -->
+			<div class="form-floating mb-3"><input type="text" id="sample6_address" name="placeAddr" class="form-control" onclick="sample6_execDaumPostcode()" value="${place.placeAddr}" readonly="readonly" required>
+			<label for="placeAddr">공방 주소</label></div>
 			<input type="text" id="sample6_detailAddress" name="detailAddr" class="form-control" value="${place.detailAddr }"placeholder="상세주소1(선택)">
 			<input type="text" id="sample6_extraAddress" class="form-control" placeholder="상세주소2(선택)" hidden>
-			<div id="map"></div>
-      	   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td>
+			<div id="map" class="form-floating mb-3"></div>
 		</td>
 	  </tr>
 	  <tr>
-	    <th>찾아오는 방법</th>
+<!-- 	    <th>찾아오는 방법</th> -->
 	    <td>
-<%-- 	  <input type="text" name="placeRoute" value="${place.placeRoute}"> textarea는 value 속성이 적용되지 않는다. 대신 바깥에 적는다. --%>
-	      <textarea id="placeRoute" name="placeRoute" class="textbox" placeholder="공방을 찾아오는 방법을 간단하게 설명해주세요.&#13;&#10; ex)강동역에 내려서 341번 버스를 타고 길동사거리 앞에서 내리시면 됩니다^^">${place.placeRoute}</textarea>
+<%-- 	    <input type="text" name="placeRoute" value="${place.placeRoute}"> textarea는 value 속성이 적용되지 않는다. 대신 바깥에 적는다. --%>
+			<div class="form-floating mb-3">
+	    	<textarea id="placeRoute" name="placeRoute" class="form-control textbox" placeholder="공방을 찾아오는 방법을 간단하게 설명해주세요.&#13;&#10; ex)강동역에 내려서 341번 버스를 타고 길동사거리 앞에서 내리시면 됩니다^^">${place.placeRoute}</textarea>
+	    	<label for="placeRoute">찾아오는 방법</label>
+	    	</div>
 	    </td>
 	  </tr>     
       <tr>
-        <th>공방 편의 시설</th>
-          <td>
-            <fieldset id="field">
-
+<!--       공방 편의 시설 -->
+      	<td>
+      		<fieldset>*공방 편의 시설*
+      			<div class="form-floating mb-3" id="placeInfra">
+<!--         		<label for="placeInfra">*공방 편의 시설*</label> -->
+            	</div>
             </fieldset>
-          </td>
+        </td>
       </tr>
       <tr>
         <td>
-          <input type="submit" value="수정">
-          <input type="reset" value="취소">
+        	<div class="d-grid gap-2">
+        	  <input type="submit" class="btn btn-primary" value="수정">
+        	</div>
         </td>
       </tr>
     </table>
   </form>
-
-</section>
 
 </body>
 </html>

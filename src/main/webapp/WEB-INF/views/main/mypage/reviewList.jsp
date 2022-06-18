@@ -12,8 +12,8 @@
 	#reviewDetail-form fieldset{display: inline-block; border: 0;}
 	
  	.modal img{ 
-		width: 100px; 
- 		height:100px; 
+		width: 100%; 
+ 		height:100%; 
  	} 
 	
  	.star{font-size: 2em; color: transparent; text-shadow: 0 0 0 #b3b3b3;}
