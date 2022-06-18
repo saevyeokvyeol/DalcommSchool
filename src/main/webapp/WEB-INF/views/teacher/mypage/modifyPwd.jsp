@@ -10,7 +10,6 @@
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <style type="text/css">
@@ -71,7 +70,7 @@ $(function(){
 			return true;
 		}
 	}
-	
+
 	$("#newUserPwd").keyup(function(){
 		isSamePwd = false;
 		})
@@ -137,18 +136,12 @@ $(function(){
 		}
 		
 		swal("비밀번호 변경 완료! \n 다시 로그인 해 주세요.");
-
 	})
 	
 })
 </script>
 </head>
 <body>
-		
-<div id="sidebar-content">
-
-<h3> 강사 비밀번호 수정</h3>
-<h6>*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</h6><br><br><hr>
 	<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
 	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	  
@@ -219,6 +212,5 @@ $(function(){
 	  	</div>
 </form>
 
-</div>	
 </body>
 </html>

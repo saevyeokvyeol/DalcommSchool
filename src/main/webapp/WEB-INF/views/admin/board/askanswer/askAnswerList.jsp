@@ -88,7 +88,6 @@
              <th>문의 USER</th>
              <th>글 제목</th>
              <th>카테고리</th>
-             <th>문의 내용</th>
              <th>첨부 파일</th>
              <th>문의 일자</th>
              <th>답변 유무</th>
@@ -136,12 +135,7 @@
 				        <td>
 						   	${askList.askCategory.askCategoryName}<p>
 				        </td>
-				        <td>
-					        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-					            ${askList.askContent}
-					        </span>
-					        
-				        </td>
+				        
 				        <td>
 				        	
 				         	<c:if test="${askList.askImg != null}">
