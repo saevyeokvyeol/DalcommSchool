@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,22 +38,27 @@ public class MainClassController {
 	@RequestMapping("/classList")
 	public void selectByStateOpen(Model model, @RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 		
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
 		Page<Classes> list = classesService.selectByFilter(new Search(), pageable, 3L);
-		
-		// 학생의 마이리스트 가져오기
-		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
 
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(Classes c : list.getContent()) {
-				if(c.getClassId() == l.getClasses().getClassId()) {
-					c.setLikeId(l.getLikeId());
-					break;
+		if(student != null) {
+			// 학생의 마이리스트 가져오기
+			List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+	
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(Classes c : list.getContent()) {
+					if(c.getClassId() == l.getClasses().getClassId()) {
+						c.setLikeId(l.getLikeId());
+						break;
+					}
 				}
 			}
 		}
@@ -72,26 +78,30 @@ public class MainClassController {
 	@RequestMapping("/classSearch")
 	public ModelAndView classSearch(Search search, @RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
 		Page<Classes> list = classesService.selectByFilter(search, pageable, 3L);
 		
-		// 학생의 마이리스트 가져오기
-		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
-
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(Classes c : list.getContent()) {
-				if(c.getClassId() == l.getClasses().getClassId()) {
-					c.setLikeId(l.getLikeId());
-					break;
+		if(student != null) {
+			// 학생의 마이리스트 가져오기
+			List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+	
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(Classes c : list.getContent()) {
+					if(c.getClassId() == l.getClasses().getClassId()) {
+						c.setLikeId(l.getLikeId());
+						break;
+					}
 				}
 			}
 		}
-		
 		int temp = (page - 1) % BLOCK_COUNT;
 		int startPage = page - temp;
 
@@ -111,22 +121,27 @@ public class MainClassController {
 	@RequestMapping("/newClass")
 	public ModelAndView selectNewClass(@RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
 		Page<Classes> list = classesService.selectNewClass(pageable);
-		
-		// 학생의 마이리스트 가져오기
-		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
 
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(Classes c : list.getContent()) {
-				if(c.getClassId() == l.getClasses().getClassId()) {
-					c.setLikeId(l.getLikeId());
-					break;
+		if(student != null) {
+			// 학생의 마이리스트 가져오기
+			List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+	
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(Classes c : list.getContent()) {
+					if(c.getClassId() == l.getClasses().getClassId()) {
+						c.setLikeId(l.getLikeId());
+						break;
+					}
 				}
 			}
 		}
@@ -149,22 +164,27 @@ public class MainClassController {
 	@RequestMapping("/nearClass")
 	public ModelAndView selectNearClass(@RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// 공개된 리스트 목록 가져오기
 		Page<ClassSchedule> list = classesService.selectNearClass(pageable);
-		
-		// 학생의 마이리스트 가져오기
-		List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
 
-		// 마이 리스트에 추가했을 경우 체크
-		for(Likes l : likeList) {
-			for(ClassSchedule c : list.getContent()) {
-				if(c.getClasses().getClassId() == l.getClasses().getClassId()) {
-					c.getClasses().setClassId(l.getLikeId());
-					break;
+		if(student != null) {
+			// 학생의 마이리스트 가져오기
+			List<Likes> likeList = likeService.selectByStudentId(student.getStudentId());
+			
+			// 마이 리스트에 추가했을 경우 체크
+			for(Likes l : likeList) {
+				for(ClassSchedule c : list.getContent()) {
+					if(c.getClasses().getClassId() == l.getClasses().getClassId()) {
+						c.getClasses().setClassId(l.getLikeId());
+						break;
+					}
 				}
 			}
 		}
