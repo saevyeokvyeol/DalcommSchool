@@ -129,7 +129,8 @@ $(function() {
 	    <div>
 	    	<h1>QnA</h1>
 	    	
-	        <table class="table">
+<div id="allBookList">
+	        <table class="table qnaTable">
 	            <thead>
 	                <tr>
 		                <th>번호</th>
@@ -184,7 +185,7 @@ $(function() {
 	                </c:choose>
 	            </tbody>
 	        </table>
-	        
+       </div>
 	        <!--  페이징처리  -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
