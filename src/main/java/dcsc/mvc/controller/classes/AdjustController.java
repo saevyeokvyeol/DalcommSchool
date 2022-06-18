@@ -105,23 +105,23 @@ public class AdjustController {
 	 * @return List<Adjust>
 	 * */
 	@RequestMapping("admin/adjust/adjustAllList")
-	public void selectAllAdjust(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public void selectAllAdjust(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징처리하기
-		Pageable page = PageRequest.of( (nowPage-1), PAGE_COUNT, Direction.DESC, "adjustNo");
-		Page<Adjust> adjustList = adjustService.selectAll(page);
+		Pageable pageable = PageRequest.of( (page-1), PAGE_COUNT, Direction.DESC, "adjustNo");
+		Page<Adjust> pageList = adjustService.selectAll(pageable);
 		
 		//pageList.getContent() : 뷰단 상황 이해하기 //${requestScope.pageList.content}
 		
-		model.addAttribute("adjustList", adjustList);
+		model.addAttribute("list", pageList);
 		
 		
-		int temp = (nowPage-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
-		int startPage = nowPage-temp;
+		int temp = (page-1)%BLOCK_COUNT; //나머지는 항상 0 1 2 임 why? 3이므로 3보다 작은 값
+		int startPage = page-temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 	}
 	
 	/**

@@ -87,7 +87,7 @@
 				</thead>
 				<tbody>
 					<c:choose>
-	                    <c:when test ="${empty requestScope.adjustList.content}">
+	                    <c:when test ="${empty requestScope.list.content}">
 	                        <tr>
 	                            <th colspan="9">
 	                                <span> 정산 신청한 내역이 없습니다.</span>
@@ -95,7 +95,7 @@
 	                        </tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                        <c:forEach items="${requestScope.adjustList.content}" var="adjust">
+	                        <c:forEach items="${requestScope.list.content}" var="adjust">
 	                            <tr>
 	                                <td>${adjust.adjustNo}</td>
 	                                <td>${adjust.teacher.teacherId}</td>
@@ -155,41 +155,30 @@
 				
 			</table>
 			
-			<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
-			<div style="text-align: center">
-				
-					<!--  블럭당  -->
-	<nav aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">
-				<c:set var="doneLoop" value="false"/>
-					  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-					    <li class="page-item">
-					      <a class="page-link" href="${pageContext.request.contextPath}/admin/adjust/adjustAllList?nowPage=${startPage-1}">PREV</a>
-					  	</li>
-					  </c:if>
-					  
-							  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-								<c:if test="${(i-1)>=pageList.getTotalPages()}">
-								       <c:set var="doneLoop" value="true"/>
-								</c:if> 
-							     
-							    <c:if test="${not doneLoop}" >
-						     		<li class="page-item"> 
-						         		<a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/adjust/adjustAllList?nowPage=${i}">${i}</a> 
-						    		</li>
-							    </c:if>
-							   
-							  </c:forEach>
-							
-							 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-							 	<li class="page-item"> 
-							     	<a class="pagination-older" href="${pageContext.request.contextPath}/admin/adjust/adjustAllList?nowPage=${startPage+blockCount}">NEXT</a>
-							 	</li>
-							 </c:if>
-						</ul>
-					</nav>  
-				</div>
-			</div>
+			<!--  페이징처리  -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:set var="doneLoop" value="false" />
+					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+						</li>
+					</c:if>
+						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+							<c:if test="${(i-1)>=list.getTotalPages()}">
+								<c:set var="doneLoop" value="true" />
+							</c:if>
+							<c:if test="${not doneLoop}">
+								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+					<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
 			
 		</form>
 	</section>
