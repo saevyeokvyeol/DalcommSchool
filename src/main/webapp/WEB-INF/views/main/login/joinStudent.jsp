@@ -308,6 +308,10 @@
 				//alert("비밀번호 일치 여부를 확인해주세요.")
 				swal("비밀번호 일치 여부를 확인해주세요.");
 				return false;
+			}else if(!isValidPwd()){
+				swal("비밀번호를 형식에 맞게 입력해주세요.");
+				event.preventDefault();
+				return false;
 			}
 			
 			isValidId();
