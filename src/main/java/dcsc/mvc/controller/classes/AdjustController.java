@@ -48,7 +48,7 @@ public class AdjustController {
 	 * */
 	@RequestMapping("teacher/adjust/adjustList")
 	public void selectAllAdjustByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int page) {
-		teacherId="Tkim1234";
+		//teacherId="Tkim1234";
 		//teacherId="Tann1234";
 		
 		//페이징 처리하기
@@ -74,7 +74,7 @@ public class AdjustController {
 	 * */
 	@RequestMapping("teacher/adjust/adjustable")
 	public void adjustableByTeacherId(String teacherId, Model model) {
-		teacherId="Tkim1234";
+		//teacherId="Tkim1234";
 		int adjustable = adjustService.selectAdjust(teacherId);
 		System.out.println("adjustable = "+ adjustable);
 		model.addAttribute("adjustable", adjustable);
