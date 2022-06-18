@@ -73,6 +73,10 @@
 					})
 				})
 			})
+			
+			if(${sessionScope.msg != null}){
+				$("#myModal").modal("show");
+			}
 		</script>
 		
 		<style type="text/css">

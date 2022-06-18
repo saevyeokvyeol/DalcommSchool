@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,7 +70,7 @@ public class PlaceController {
 	 * 공방 수정하기
 	 * */
 	@RequestMapping("/place/update")
-	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam List<Long> infraId) {
+	public String updatePlace(Place place, PlaceRegion placeRegion, @RequestParam(required = false) List<Long> infraId) {
 		
 		Teacher dbteacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		Teacher teacher = new Teacher("Tpark1234");
@@ -78,7 +79,6 @@ public class PlaceController {
 		place.setTeacher(dbteacher);
 		place.setPlaceRegion(placeRegion);
 		teacherService.updatePlace(place, infraId);
-		
 		return "redirect:/teacher/mypage/place/updateForm";
 		//redirect:/ 는 오른쪽의 주소로 URL요청을 다시 하는 것. 즉 매핑 주소를 입력.(컨트롤러 재사용)
 		//ModelAndView에 들어오는 view는 viewname 그대로 받음.

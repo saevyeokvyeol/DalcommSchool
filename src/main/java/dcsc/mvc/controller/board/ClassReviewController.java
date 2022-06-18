@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.ClassReviewService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
@@ -71,12 +73,13 @@ public class ClassReviewController {
 	 * 강사 ID로 후기 리스트 가져오기
 	 * */
 	@RequestMapping("/teacher/mypage/reviewList")
-	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int page){
-		teacherId = "Tlee1234";
+	public String selectByTeacherId(Model model, @RequestParam(defaultValue="1") int page){
+//		teacherId = "Tlee1234";
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
+		Teacher dbTeacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, pageable);
+		Page<ClassReview> pageList = reviewService.selectByTeacherId(dbTeacher.getTeacherId(), pageable);
 		
 		
 		model.addAttribute("list", pageList);
@@ -117,13 +120,13 @@ public class ClassReviewController {
 	 * 학생 ID로 리스트 가져오기
 	 * */
 	@RequestMapping("/main/mypage/reviewList")
-	public String classReviewSearch(Model model,String studentId, @RequestParam(defaultValue="1") int page){
+	public String classReviewSearch(Model model, @RequestParam(defaultValue="1") int page){
 //		List<ClassReview> list = reviewService.selectByStudentId(studentId);
 		
-		studentId="kim1234";
-		
+//		studentId="kim1234";
+		Student dbStudent = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByStudentId(studentId, pageable);
+		Page<ClassReview> pageList = reviewService.selectByStudentId(dbStudent.getStudentId(), pageable);
 		
 		model.addAttribute("list", pageList);
 		
@@ -173,7 +176,8 @@ public class ClassReviewController {
 	@RequestMapping("/review/insert")
 	@ResponseBody
 	public void insertReview(ClassReview review, Long classId, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student dbStudent = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Student student = new Student(dbStudent.getStudentId(), null, null, null, null, null, null, null, null);
 		
 		review.setStudent(student);
 		review.setClasses(new Classes(classId));
