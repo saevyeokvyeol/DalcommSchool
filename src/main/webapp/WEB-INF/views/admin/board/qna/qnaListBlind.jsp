@@ -116,7 +116,7 @@ $(function(){
             	</tr>
                 <tr>
 	                <th>번호</th>
-	                <th>클래스</th>
+	                <th>클래스명</th>
 	                <th>작성자</th>
 	                <th>제목</th>
 	                <th>등록일자</th>
@@ -179,6 +179,7 @@ $(function(){
         <%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
 			
 <!--  페이징처리  -->
+			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<c:set var="doneLoop" value="false" />
 					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">

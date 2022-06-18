@@ -23,11 +23,8 @@
 	table,th,td{
 		text-align: center;
 	}
-	table{
-		width: 1500px;
-	}
-
-
+	
+	
 </style>
 
 <script type="text/javascript">
@@ -117,240 +114,233 @@
 
 <div class="main-content">
 	<section>
-
-			<h1>전체쿠폰조회 </h1>
-			
-			<table class="table" id="couponTable">
-				<thead>
-					<tr>
-						<th>클래스아이디</th>
-						<th>쿠폰아이디</th>
-						<th>쿠폰명</th>
-						<th>할인금액</th>
-						<th>등록일자</th>
-						<th>수정일자</th>
-						<th>사용기간</th>
-						<th>쿠폰상태</th>
-						<th>수정하기</th>
-						<th>삭제하기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-	                    <c:when test ="${empty requestScope.couponList.content}">
-	                        <tr>
-	                            <th colspan="10">
-	                                <span> 등록된 쿠폰이 없습니다.</span>
-	                            </th>
-	                        </tr>
-	                    </c:when>
-	                    <c:otherwise>
-	                        <c:forEach items="${requestScope.couponList.content}" var="coupon">
-	                            <tr>
-	                            	<td>${coupon.classes.classId}</td>
-	                                <td>${coupon.couponId}</td>
-	                                <td>${coupon.couponName}</td>
-	                                <td>${coupon.couponDc}</td>
-	                                <td>
-			                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
-			                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-			                        <td>
-			                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
-			                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
-			                        </td>
-	                                <td>${coupon.couponEndDate}일</td>
-	                                <td>
-	                                	<c:choose>
-	                                		<c:when test="${empty coupon.classes.classId}">
-												<select name="select_couponStateName" id="select_couponStateName" class="form-select">
-													<c:choose>
-														<c:when test="${coupon.couponState.couponStateId == '1'}">
-															<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
-															<option name="couponStateId" value="2">발급중지</option>
-														</c:when>
-														<c:when test="${coupon.couponState.couponStateId == '2'}">
-															<option name="couponStateId" value="2">${coupon.couponState.couponStateName}</option>
-															<option name="couponStateId" value="1">발급</option>
-														</c:when>
-														
-													</c:choose>
-			        							</select>
-			        						</c:when>
-			        						<c:otherwise>
-												${coupon.couponState.couponStateName}
-											</c:otherwise>
-	        							</c:choose>
-	        						</td>
-	        						<td>
+		<h1>전체쿠폰조회 </h1>
+		
+		<table class="table" id="couponTable">
+			<thead>
+				<tr>
+					<th>클래스아이디</th>
+					<th>쿠폰아이디</th>
+					<th>쿠폰명</th>
+					<th>할인금액</th>
+					<th>등록일자</th>
+					<th>수정일자</th>
+					<th>사용기간</th>
+					<th>쿠폰상태</th>
+					<th>수정하기</th>
+					<th>삭제하기</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+                    <c:when test ="${empty requestScope.list.content}">
+                        <tr>
+                            <th colspan="10">
+                                <span> 등록된 쿠폰이 없습니다.</span>
+                            </th>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${requestScope.list.content}" var="coupon">
+                            <tr>
+                            	<td>${coupon.classes.classId}</td>
+                                <td>${coupon.couponId}</td>
+                                <td>${coupon.couponName}</td>
+                                <td>${coupon.couponDc}</td>
+                                <td>
+		                        	<span><fmt:parseDate value="${coupon.couponInsertDate}" pattern="yyyy-mm-dd" var="parseDate"/></span>
+		                        	<span><fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
+		                        <td>
+		                        	<span><fmt:parseDate value="${coupon.couponUpdateDate}" pattern="yyyy-mm-dd" var="updateDate"/></span>
+		                        	<span><fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/></span>
+		                        </td>
+                                <td>${coupon.couponEndDate}일</td>
+                                <td>
+                                	<c:choose>
+                                		<c:when test="${empty coupon.classes.classId}">
+											<select name="select_couponStateName" id="select_couponStateName" class="form-select">
+												<c:choose>
+													<c:when test="${coupon.couponState.couponStateId == '1'}">
+														<option name="couponStateId" value="1">${coupon.couponState.couponStateName}</option>
+														<option name="couponStateId" value="2">발급중지</option>
+													</c:when>
+													<c:when test="${coupon.couponState.couponStateId == '2'}">
+														<option name="couponStateId" value="2">${coupon.couponState.couponStateName}</option>
+														<option name="couponStateId" value="1">발급</option>
+													</c:when>
+													
+												</c:choose>
+		        							</select>
+		        						</c:when>
+		        						<c:otherwise>
+											${coupon.couponState.couponStateName}
+										</c:otherwise>
+        							</c:choose>
+        						</td>
+        						<td>
+									<c:choose>
+										<c:when test="${empty coupon.classes.classId }">
+											<!-- <input class="btn btn-primary" type="submit" value="수정하기"> -->
+											<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="">
+										  	수정하기
+											</button>
+										</c:when>
+									</c:choose>
+										
+								</td>
+								<td>
+									<form method="post" id="delete" action="${pageContext.request.contextPath}/admin/coupon/eventCouponDelete">
+										<input type="hidden" name="couponId" value="${coupon.couponId}">
+										<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 										<c:choose>
 											<c:when test="${empty coupon.classes.classId }">
-												<!-- <input class="btn btn-primary" type="submit" value="수정하기"> -->
-												<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="">
-											  	수정하기
-												</button>
+												<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
 											</c:when>
 										</c:choose>
-											
-									</td>
-									<td>
-										<form method="post" id="delete" action="${pageContext.request.contextPath}/admin/coupon/eventCouponDelete">
-											<input type="hidden" name="couponId" value="${coupon.couponId}">
-											<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-											<c:choose>
-												<c:when test="${empty coupon.classes.classId }">
-													<input class="btn btn-primary deleteCoupon" type="submit" value="삭제하기">
-												</c:when>
-											</c:choose>
-										</form>
-									</td>
-	                            </tr>
-	                        </c:forEach>
-	                    </c:otherwise>
-	                </c:choose>
+									</form>
+								</td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+				
+			</tbody>
+			<tfoot>
+				<tr>
 					
-				</tbody>
-				<tfoot>
-					<tr>
-						
-					</tr>
-				</tfoot>
-				
-			</table>
+				</tr>
+			</tfoot>
 			
-			<%-- ${pageList.hasPrevious()}  /  ${pageList.hasNext()} --%>
-			<div style="text-align: center">
-				
-<!--  페이징처리  -->
-<nav aria-label="Page navigation example">
-	<ul class="pagination justify-content-center">
-				<c:set var="doneLoop" value="false"/>
-					  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-					    <li class="page-item"> 
-					      <a class="page-link" href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon?nowPage=${startPage-1}">PREV</a>
-					  	</li>
-					  </c:if>
-					  
-							  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-									<c:if test="${(i-1)>=pageList.getTotalPages()}">
-									       <c:set var="doneLoop" value="true"/>
-									</c:if> 
-							     
-							    <c:if test="${not doneLoop}" >
-								    <li class="page-item">  
-								         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon?nowPage=${i}">${i}</a> 
-								    </li>
-							    </c:if>
-							  </c:forEach>
-	
-							 <c:if test="${(startPage+blockCount)<=pageList.getTotalPages()}">
-							    <li class="page-item">
-							     <a class="pagination-older" href="${pageContext.request.contextPath}/admin/adjust/adjustAllList?nowPage=${startPage+blockCount}">NEXT</a>
-							 	</li>
-							 </c:if>
-						 </ul>
-					</nav>  
-					</div>
-			</div>
+		</table>
+		
 			
-			<!-- Button trigger modal 쿠폰등록하기-->
-			<div style="text-align: right">
-				<button type="button" class="btn btn-dark mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			  	쿠폰등록하기
-				</button>
-			</div>
+		  
+		<!--  페이징처리  -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:set var="doneLoop" value="false" />
+					<c:if test="${(startPage-blockCount) > 0 and list.content.size() != 0}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?page=${startPage-1}">이전</a>
+						</li>
+					</c:if>
+						<c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount<list.totalPages?(startPage-1)+blockCount:list.totalPages}'>
+							<c:if test="${(i-1)>=list.getTotalPages()}">
+								<c:set var="doneLoop" value="true" />
+							</c:if>
+							<c:if test="${not doneLoop}">
+								<li class="page-item"><a class="page-link ${i==page?'active':'page'}" href="${URL}?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+					<c:if test="${(startPage+blockCount) <= list.getTotalPages()}">
+						<li class="page-item">
+							<a class="page-link" href="${URL}?${location.search}page=${startPage+blockCount}">다음</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
+		
+
+		<!-- Button trigger modal 쿠폰등록하기-->
+		<div style="text-align: right">
+			<button type="button" class="btn btn-dark mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		  	쿠폰등록하기
+			</button>
+		</div>
+		
+		
+		<!-- Modal 쿠폰등록하기-->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">쿠폰 등록하기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="card" style="width: 28rem;">
+		        <div class="card-body">
+		           <form name="coupon-admin-insert" method="post" id="coupon-admin-insert" action="${pageContext.request.contextPath}/eventCouponInsert">
+		            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+		             <div>
+		               쿠폰상태 
+		              <select name="couponStateId" id="couponStateId" class="form-select couponState-insert">
+		                <option value="0">-쿠폰상태 선택-</option>
+		                <option value="1">발급</option>
+		                <option value="2">발급중지</option>
+		              </select>	
+		             </div>
+		             <div>
+		               쿠폰명 
+		               <input class="form-control couponName-insert" type="text" name="couponName" id="couponName">	
+		             </div>
+		             <div>
+		               할인금액 
+		               <input class="form-control couponDc-insert" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
+		             </div>
+		             <div>
+		               사용기간 
+		               <input class="form-control couponEndDate-insert" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
+		             </div>
+		             
+		                <div class="modal-footer">
+		                  <input type="submit" class="btn btn-primary coupon-insert-btn" id="coupon-insert-btn" value="등록하기">
+		                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		                </div>
+		            </form>
+		         </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>				
 			
-			<!-- Modal 쿠폰등록하기-->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">쿠폰 등록하기</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <div class="card" style="width: 28rem;">
-			        <div class="card-body">
-			           <form name="coupon-admin-insert" method="post" id="coupon-admin-insert" action="${pageContext.request.contextPath}/eventCouponInsert">
-			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-			             <div>
-			               쿠폰상태 
-			              <select name="couponStateId" id="couponStateId" class="form-select couponState-insert">
-			                <option value="0">-쿠폰상태 선택-</option>
-			                <option value="1">발급</option>
-			                <option value="2">발급중지</option>
-			              </select>	
-			             </div>
-			             <div>
-			               쿠폰명 
-			               <input class="form-control couponName-insert" type="text" name="couponName" id="couponName">	
-			             </div>
-			             <div>
-			               할인금액 
-			               <input class="form-control couponDc-insert" type="text" name="couponDc" id="couponDc" placeholder="숫자만 입력해주세요.">	
-			             </div>
-			             <div>
-			               사용기간 
-			               <input class="form-control couponEndDate-insert" type="number" name="couponEndDate" id="couponEndDate" placeholder="숫자로 입력해주세요.">	
-			             </div>
-			             
-			                <div class="modal-footer">
-			                  <input type="submit" class="btn btn-primary coupon-insert-btn" id="coupon-insert-btn" value="등록하기">
-			                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			                </div>
-			            </form>
-			         </div>
-			        </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>				
-				
-			<!-- Modal 쿠폰수정하기-->
-			<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">쿠폰 수정하기</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <div class="card" style="width: 28rem;">
-			        <div class="card-body">
-			           <form name="coupon-admin-update" method="post" id="coupon-admin-update" action="${pageContext.request.contextPath}/eventCouponUpdate">
-			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-			             <div>
-			               쿠폰ID 
-			              <input class="form-control couponId" type="text" name="couponId" id="couponId" required readonly="readonly">	
-			             </div>
-			             <div>
-			               쿠폰명 
-			               <input class="form-control couponName" type="text" name="couponName" id="couponName" value="${coupon.couponName}">	
-			             </div>
-			             <div>
-			               할인금액 
-			               <input class="form-control couponDc" type="text" name="couponDc" id="couponDc" value="${coupon.couponDc}">	
-			             </div>
-			             <div>
-			               사용기간 
-			               <input class="form-control couponEndDate" type="number" name="couponEndDate" id="couponEndDate" value="${coupon.couponEndDate}">	
-			             </div>
-			             
-			                <div class="modal-footer">
-			                  <input type="submit" class="btn btn-primary" id="coupon-update-btn" value="수정하기">
-			                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			                </div>
-			            </form>
-			         </div>
-			        </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>					
-				
-				
-	</section>
-</div>
+		<!-- Modal 쿠폰수정하기-->
+		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">쿠폰 수정하기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="card" style="width: 28rem;">
+		        <div class="card-body">
+		           <form name="coupon-admin-update" method="post" id="coupon-admin-update" action="${pageContext.request.contextPath}/eventCouponUpdate">
+		            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
+		             <div>
+		               쿠폰ID 
+		              <input class="form-control couponId" type="text" name="couponId" id="couponId" required readonly="readonly">	
+		             </div>
+		             <div>
+		               쿠폰명 
+		               <input class="form-control couponName" type="text" name="couponName" id="couponName" value="${coupon.couponName}">	
+		             </div>
+		             <div>
+		               할인금액 
+		               <input class="form-control couponDc" type="text" name="couponDc" id="couponDc" value="${coupon.couponDc}">	
+		             </div>
+		             <div>
+		               사용기간 
+		               <input class="form-control couponEndDate" type="number" name="couponEndDate" id="couponEndDate" value="${coupon.couponEndDate}">	
+		             </div>
+		             
+		                <div class="modal-footer">
+		                  <input type="submit" class="btn btn-primary" id="coupon-update-btn" value="수정하기">
+		                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		                </div>
+		            </form>
+		         </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+							
+	</section>			
+</div>				
+
 
 		
 

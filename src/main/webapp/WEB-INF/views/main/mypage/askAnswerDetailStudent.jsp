@@ -122,7 +122,7 @@
 				</td>
 			     <td colspan="2" style="text-align: center;">
 					<img id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
-					<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
+					<span style="font-size:20pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
 			     </td>
     		</tr>
 	

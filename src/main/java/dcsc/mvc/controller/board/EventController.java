@@ -35,22 +35,22 @@ public class EventController {
 	 * 이벤트 전체 조회 - 관리자
 	 * */
 	@RequestMapping("/admin/board/event/eventList")
-	public void eventAdminList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public void eventAdminList(Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//List<Event> list = eventService.selectAll();
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
-		Page<Event> eventList = eventService.selectAll(page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectAll(pageable);
 		
-		model.addAttribute("eventList", eventList);
+		model.addAttribute("list", eventList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "이벤트 관리");
 	}
 
@@ -74,7 +74,7 @@ public class EventController {
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", page);
+		model.addAttribute("page", page);
 		
 	}
 	
@@ -182,20 +182,20 @@ public class EventController {
 	 * 이벤트 키워드로 검색 - 관리자
 	 * */
 	@RequestMapping("/admin/eventSearch")
-	public String eventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int nowPage) {
+	public String eventSearch(String keyword, Model model, @RequestParam(defaultValue = "1") int page) {
 		
 		//페이징 처리
-		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "eventNo");
-		Page<Event> eventList = eventService.selectByKeyword(keyword, page);
+		Pageable pageable = PageRequest.of( (page-1) , PAGE_COUNT , Direction.DESC, "eventNo");
+		Page<Event> eventList = eventService.selectByKeyword(keyword, pageable);
 		
-		model.addAttribute("eventList", eventList);
+		model.addAttribute("list", eventList);
 		
-		int temp = (nowPage-1)%BLOCK_COUNT;
-		int startPage = nowPage - temp;
+		int temp = (page-1)%BLOCK_COUNT;
+		int startPage = page - temp;
 		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", page);
 		model.addAttribute("title", "이벤트 관리");
 		
 		return "admin/board/event/eventList";

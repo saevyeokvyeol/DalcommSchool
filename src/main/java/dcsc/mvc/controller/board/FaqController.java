@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dcsc.mvc.domain.board.Ask;
 import dcsc.mvc.domain.board.Faq;
 import dcsc.mvc.domain.board.FaqCategory;
 import dcsc.mvc.service.board.FaqService;
@@ -39,17 +40,34 @@ public class FaqController {
 		// List<Faq> faqlist = faqService.selectAllfqa();
 
 		// 페이징 처리하기
-		Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+		/*
+		 * Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC,
+		 * "faqNo"); Page<Faq> faqlist = faqService.selectAllfqa(page);
+		 * 
+		 * model.addAttribute("faqlist", faqlist);
+		 * 
+		 * int temp = (nowPage - 1) % BLOCK_COUNT; int startPage = nowPage - temp;
+		 * 
+		 * model.addAttribute("blockCount", BLOCK_COUNT);
+		 * model.addAttribute("startPage", startPage); model.addAttribute("nowPage",
+		 * nowPage);
+		 */
+		
+		
+		
+		
+		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "faqNo");
 		Page<Faq> faqlist = faqService.selectAllfqa(page);
-
+		
 		model.addAttribute("faqlist", faqlist);
-
-		int temp = (nowPage - 1) % BLOCK_COUNT;
+		
+		int temp = (nowPage-1)%BLOCK_COUNT;
 		int startPage = nowPage - temp;
-
+		
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
-		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("page", nowPage);
+ 
 
 	}
 
