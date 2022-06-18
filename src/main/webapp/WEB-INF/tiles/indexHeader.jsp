@@ -86,7 +86,10 @@
 						}
 					})
 				})
-		
+
+				if(${sessionScope.msg != null}){
+					$("#myModal").modal("show");
+				}
 			})
 		</script>
 		
