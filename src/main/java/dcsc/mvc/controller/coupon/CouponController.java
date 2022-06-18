@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,26 +75,17 @@ public class CouponController {
 	
 	
 	/**
-	 * 전체 발급 쿠폰 조회 기능 ; 선생님
-	 * */
-	/*@RequestMapping("teacher/coupon/couponAllList")
-	public void selectAllCouponByTeacherId(String teacherId, Model model) {
-		teacherId = "Tkim1234";
-		
-		List<Coupon> list = couponService.selectByTeacherId(teacherId);
-		model.addAttribute("list", list);
-	}*/
-	
-	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님-페이징처리
 	 * */
 	@RequestMapping("teacher/coupon/couponAllList")
-	public void selectAllCouponByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int page) {
-		teacherId = "Tkim1234";
+	public void selectAllCouponByTeacherId(Model model, @RequestParam(defaultValue="1") int page) {
+		//teacherId = "Tkim1234";
+		
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		//페이징 처리하기
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"couponId");
-		Page<Coupon> pageList = couponService.selectByTeacherId(teacherId, pageable);
+		Page<Coupon> pageList = couponService.selectByTeacherId(teacher.getTeacherId(), pageable);
 		
 		model.addAttribute("list", pageList);
 		
@@ -106,14 +98,6 @@ public class CouponController {
 		
 	}
 	
-	/**
-	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자
-	 * */
-	/*@RequestMapping("admin/coupon/selectAllCoupon")
-	public void selectAllCoupon(Model model) {
-		List<Coupon> list = couponService.selectAll();
-		model.addAttribute("list", list);
-	}*/
 	
 	/**
 	 * 등록한 전체 쿠폰(클래스 쿠폰 + 이벤트 쿠폰)조회 기능 ; 관리자 - 페이징처리
@@ -170,7 +154,8 @@ public class CouponController {
 	 * */
 	@RequestMapping("couponInsert")
 	public String couponInsert(Coupon coupon, Classes classes, CouponState couponState) {
-		Teacher teacher = new Teacher("Tkim1234");
+		//Teacher teacher = new Teacher("Tkim1234");
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		coupon.setClasses(classes);
 		coupon.setTeacher(teacher);

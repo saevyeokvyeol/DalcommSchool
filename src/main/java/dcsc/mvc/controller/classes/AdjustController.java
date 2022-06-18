@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +29,6 @@ public class AdjustController {
 	private final static int PAGE_COUNT=10;
 	private final static int BLOCK_COUNT=3;
 	
-	/**
-	 * 정산 내역 조회 기능
-	 * @param String teacherId(검색기준)
-	 * @return List<Adjust>
-	 * */
-	/*@RequestMapping("teacher/adjust/adjustList")
-	public void selectAllAdjustByTeacherId(String teacherId, Model model) {
-		teacherId="Tkim1234";
-		
-		List<Adjust> list = adjustService.selectByTeacherId(teacherId);
-		model.addAttribute("list", list);
-	}*/
 	
 	/**
 	 * 정산 내역 조회 기능 - 페이징처리
@@ -47,13 +36,14 @@ public class AdjustController {
 	 * @return List<Adjust>
 	 * */
 	@RequestMapping("teacher/adjust/adjustList")
-	public void selectAllAdjustByTeacherId(String teacherId, Model model, @RequestParam(defaultValue="1") int page) {
+	public void selectAllAdjustByTeacherId(Model model, @RequestParam(defaultValue="1") int page) {
 		//teacherId="Tkim1234";
 		//teacherId="Tann1234";
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		//페이징 처리하기
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"adjustNo");
-		Page<Adjust> pageList = adjustService.selectByTeacherId(teacherId, pageable);
+		Page<Adjust> pageList = adjustService.selectByTeacherId(teacher.getTeacherId(), pageable);
 		
 		model.addAttribute("list", pageList);
 		
@@ -76,18 +66,18 @@ public class AdjustController {
 	public void adjustableByTeacherId(String teacherId, Model model) {
 		//teacherId="Tkim1234";
 		int adjustable = adjustService.selectAdjust(teacherId);
-		System.out.println("adjustable = "+ adjustable);
-		model.addAttribute("adjustable", adjustable);
-		model.addAttribute("teacherId", teacherId);
+		
 	}
 	
 	/**
 	 * 정산 신청 폼
 	 * */
 	@RequestMapping("teacher/adjust/adjustForm")
-	public void couponForm(String teacherId, Model model) {
-		teacherId="Tkim1234";
-		int adjustable = adjustService.selectAdjust(teacherId);
+	public void couponForm(Model model) {
+		//teacherId="Tkim1234";
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		int adjustable = adjustService.selectAdjust(teacher.getTeacherId());
 		model.addAttribute("adjustable", adjustable);
 	}
 	
@@ -109,15 +99,6 @@ public class AdjustController {
 		return"redirect:/teacher/adjust/adjustList";
 	}
 	
-	/**
-	 * 정산 내역 전체 조회 - 관리자
-	 * @return List<Adjust>
-	 * */
-	/*@RequestMapping("admin/adjust/adjustAllList")
-	public void selectAllAdjust(Model model) {
-		List<Adjust> list = adjustService.selectAll();
-		model.addAttribute("list", list);
-	}*/
 	
 	/**
 	 * 정산 내역 전체 조회(페이징처리) - 관리자
