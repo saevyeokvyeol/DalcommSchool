@@ -186,60 +186,22 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">게시판 관리</span></li>
             <!-- Cards -->
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="${pageContext.request.contextPath}/admin/board/Notice/noticeList" class="menu-link">
                 <i class="fa-solid fa-circle-exclamation menu-icon"></i>
                 <div data-i18n="Account Settings">공지사항</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
-                    <div data-i18n="Account">새 공지사항 작성</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/board/Notice/noticeList" class="menu-link">
-                    <div data-i18n="Notifications">전체 공지사항 조회</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" class="menu-link">
                 <i class="fa-solid fa-circle-question menu-icon"></i>
                 <div data-i18n="Account Settings">자주 묻는 질문</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/board/FAQ/write" class="menu-link">
-                    <div data-i18n="Account">새 FAQ 작성</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/board/FAQ/faqList" class="menu-link">
-                    <div data-i18n="Notifications">전체 FAQ 조회</div>
-                  </a>
-                </li>
-                
-                
-              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+             <a href="${pageContext.request.contextPath}/admin/board/event/eventList" class="menu-link">
                 <i class="fa-solid fa-calendar-check menu-icon"></i>
                 <div data-i18n="Account Settings">이벤트</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/board/event/eventWrite" class="menu-link">
-                    <div data-i18n="Account">새 이벤트 작성</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/board/event/eventList" class="menu-link">
-                    <div data-i18n="Notifications">전체 이벤트 조회</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
