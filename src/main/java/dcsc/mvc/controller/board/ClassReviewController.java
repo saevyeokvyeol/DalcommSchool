@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import dcsc.mvc.domain.board.ClassReview;
 import dcsc.mvc.domain.board.ClassReviewDTO;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.board.ClassReviewService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
@@ -71,12 +73,12 @@ public class ClassReviewController {
 	 * 강사 ID로 후기 리스트 가져오기
 	 * */
 	@RequestMapping("/teacher/mypage/reviewList")
-	public String selectByTeacherId(Model model, String teacherId, @RequestParam(defaultValue="1") int page){
-		teacherId = "Tlee1234";
+	public String selectByTeacherId(Model model, @RequestParam(defaultValue="1") int page){
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
 		
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacherId, pageable);
+		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacher.getTeacherId(), pageable);
 		
 		
 		model.addAttribute("list", pageList);
@@ -173,7 +175,12 @@ public class ClassReviewController {
 	@RequestMapping("/review/insert")
 	@ResponseBody
 	public void insertReview(ClassReview review, Long classId, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 작성해주세요.");
+		}
 		
 		review.setStudent(student);
 		review.setClasses(new Classes(classId));
@@ -247,6 +254,4 @@ public class ClassReviewController {
 	public List<Classes> selectStudentClassList(String studentId){
 		return null;
 	}
-	
-
 }
