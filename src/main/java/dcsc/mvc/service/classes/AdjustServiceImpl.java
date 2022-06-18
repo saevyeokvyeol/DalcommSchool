@@ -31,8 +31,10 @@ public class AdjustServiceImpl implements AdjustService {
 	 * */
 	@Override
 	public int selectAdjust(String teacherId) {
+		System.out.println("teacherId="+ teacherId);
 		Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
 		int adjustable = teacher.getAdjustable();
+		System.out.println("adjustable="+ adjustable);
 		return adjustable;
 	}
 	

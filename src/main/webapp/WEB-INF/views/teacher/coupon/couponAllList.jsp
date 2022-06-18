@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -276,6 +277,8 @@
 			      <div class="modal-body">
 			        <div class="card" style="width: 28rem;">
 			        <div class="card-body">
+			           <sec:authorize access="isAuthenticated()">
+ 					   <sec:authentication property="principal" var="teacher"/>
 			           <form name="coupon-teacher-insert" method="post" id="coupon-teacher-insert" action="${pageContext.request.contextPath}/couponInsert"">
 			            <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
 			             <div>
@@ -312,6 +315,7 @@
 			                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			                </div>
 			            </form>
+			            </sec:authorize>
 			         </div>
 			        </div>
 			      </div>

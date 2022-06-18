@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,11 +66,13 @@
 <!--정산하기-->
 <div class="card" style="width: 25rem;">
     <div class="card-body">
+    	<sec:authorize access="isAuthenticated()">
+ 		<sec:authentication property="principal" var="teacher"/>
      	<form name="adjust-teacher-insert" method="post" id="adjust-teacher-insert" action="${pageContext.request.contextPath}/applyAdjust">
      	<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-     	<%-- <input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId"> --%>
-     	<input type=hidden name="teacherId" value="Tkim1234" id="teacherId">
-     	<input type=hidden name="adjustStateId" value="1" id="adjustStateId">
+     	<input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId">
+     	<!-- <input type=hidden name="teacherId" value="Tkim1234" id="teacherId">-->
+     	<input type=hidden name="adjustStateId" value="1" id="adjustStateId"> 
      		<h2> 정산신청하기 </h2>
      		<table>
       			<tr>
@@ -106,10 +109,10 @@
             
             <input type="submit" class="btn btn-dark mt-3" id="adjust-insert-btn" value="정산신청하기">
      	 </form>
+     	 </sec:authorize>
      </div>
+    
  </div>
-
-
 
 </div>
 

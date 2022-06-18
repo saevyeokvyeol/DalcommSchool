@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.FullCalendar;
 import dcsc.mvc.domain.user.Place;
 import dcsc.mvc.domain.user.PlaceRegion;
+import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.service.user.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -69,9 +71,10 @@ public class AjaxClassController {
 	 * */
 	@RequestMapping("/teacher/selectByTeacherId")
 	public List<Classes> selectByTeacherId(){
-		String teacherId = "Tkim1234";
+		//String teacherId = "Tkim1234";
+		Teacher teacher =(Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		List<Classes> list = classesService.selectByTeacherId(teacherId);
+		List<Classes> list = classesService.selectByTeacherId(teacher.getTeacherId());
 		
 		return list;
 	}

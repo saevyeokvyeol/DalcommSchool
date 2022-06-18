@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import dcsc.mvc.config.security.LoginFailureHandler;
+import dcsc.mvc.config.security.LoginSuccessHandler;
 import dcsc.mvc.config.security.MemberAutenticationProvider;
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final MemberAutenticationProvider authenticationProvider;
 	private final LoginFailureHandler authenticationFailHandler;
+	private final LoginSuccessHandler loginSuccessHandler;
 	
 	
 	//회원 정보 수정시 세션 변경
@@ -56,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginProcessingUrl("/login")
 			.usernameParameter("id")
 			.passwordParameter("pwd")
-			.defaultSuccessUrl("/")
+			.successHandler(loginSuccessHandler)
+			//.defaultSuccessUrl("/")
 			.failureHandler(authenticationFailHandler)
 		.and()
 		.logout()

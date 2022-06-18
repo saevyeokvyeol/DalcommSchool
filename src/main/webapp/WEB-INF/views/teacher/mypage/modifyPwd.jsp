@@ -45,7 +45,7 @@ $(function(){
 	/*
 	비밀번호 형식 체크
 	*/
-	$("#newUserPwd").focusout(function(){
+	/* $("#newUserPwd").focusout(function(){
 		isValidPwd();
 	})
 	
@@ -111,13 +111,13 @@ $(function(){
 			isSamePwd = false;
 		}
 		
-	})
+	}) */
 	
 	/*
 	 비밀번호 일치 여부 확인
 	 */
 	$("#updatePwdForm").submit(function(event){	
-		if(!isSamePwd){
+/* 		if(!isSamePwd){
 			swal("비밀번호 일치 여부를 확인해주세요.")
 			event.preventDefault();
 		}
@@ -134,7 +134,7 @@ $(function(){
 			swal("비밀번호를 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}
-		
+		 */
 		swal("비밀번호 변경 완료! \n 다시 로그인 해 주세요.");
 	})
 	
