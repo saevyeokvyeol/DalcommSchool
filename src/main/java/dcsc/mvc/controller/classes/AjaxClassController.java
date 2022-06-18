@@ -34,7 +34,7 @@ public class AjaxClassController {
 	/**
 	 * 클래스 카테고리 가져오기
 	 * */
-	@RequestMapping("/teacher/class/selectAllCategory")
+	@RequestMapping("/class/selectAllCategory")
 	public List<ClassCategory> selectAllCategory() {
 		List<ClassCategory> list = classesService.selectAllCategory();
 		return list;
