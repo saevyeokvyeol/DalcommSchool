@@ -16,48 +16,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	
 
-	<h5> 이벤트 > 이벤트 상세 </h5><br><hr>
-	
-<table align="center" class="table">
-  
+<div id="sidebarHeader">
+	<h3>이벤트</h3>
+</div>
+<table class="table" id="boardDetailTable">
 	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	제목
-	    </td>
 	    <td> <!-- 글 제목 -->
-	    	${requestScope.event.eventTitle}
-	    </td>
-	</tr>
-	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	작성자
-	    </td>
-	    <td> <!-- 글 제목 -->
-	    	관리자
-	    </td>
-	</tr>
-	<tr> 
-		 <td> <!-- 글 제목 -->
-	    	작성일
-	    </td>
-		<td>
-			<fmt:parseDate value="${event.eventInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-			<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
+	    	<h4>${requestScope.event.eventTitle}</h4>
+			<div id="date">${event.eventInsertDate.toString().substring(0, 10)}</div>
 		</td>
 	</tr>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
 	<tr>
-	     <td colspan="2" style="text-align: center;">
+	     <td>
 			<img alt="" src="${pageContext.request.contextPath}/img/event/${requestScope.event.eventImg}">
-			<span style="font-size:9pt;"><b><pre>${requestScope.event.eventContent}</pre></b></span>
+			<pre><h6>${requestScope.event.eventContent}</h6></pre>
 	     </td>
-	</tr>
-    </table>
-    	<div class=".col-6 .col-sm-4 text-center">
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/event/eventList" role="button" >목록으로</a>
-		</div>
+    </tr>
+</table>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/main/board/event/eventList">목록으로</a>
 </body>
 </html>

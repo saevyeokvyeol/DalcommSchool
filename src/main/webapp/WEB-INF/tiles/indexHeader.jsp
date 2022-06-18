@@ -124,7 +124,7 @@
 						<li><a data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_STUDENT')">
-						<li><a href="${pageContext.request.contextPath}/main/mypage/myPage"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
+						<li><a href="${pageContext.request.contextPath}/main/mypage/bookCalendar"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 						<li><a class="logout"><i class="fa-solid fa-right-to-bracket fa-xl"></i></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_TEACHER')">

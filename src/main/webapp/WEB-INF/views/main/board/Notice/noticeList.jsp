@@ -25,13 +25,13 @@ a{
 
 </head>
 <body>
-		<div id="boardHeader">
+		<div id="sidebarHeader">
 	<h3>
 		공지사항
 	</h3>
 		<form action="${pageContext.request.contextPath}/main/board/Notice/noticeSearch" method="get">
 			<div id="boardSearchBox">
-		      <input class="form-control" type="text" id="keyword" name="keyword">
+		      <input class="form-control me-2" type="text" id="keyword" name="keyword">
 		   	  <input class="btn btn-primary" type="submit" id="search" value="검색">
 		    </div>
 	    </form>

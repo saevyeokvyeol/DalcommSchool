@@ -57,20 +57,19 @@ public class FaqController {
 	 * FAQ 유저 조회
 	 */
 	@RequestMapping("/main/board/FAQ/faqList")
-	private void userselectAllfqa(Model model, @RequestParam(defaultValue = "1")int nowPage) {
+	private void userselectAllfqa(Model model, @RequestParam(defaultValue = "1")int page) {
 		
 		//페이징 처리하기
-		Pageable page = PageRequest.of((nowPage-1), PAGE_COUNT, Direction.DESC, "faqNo");
-		Page<Faq> faqlist = faqService.userselectAllfqa(page);
+		Pageable pageable = PageRequest.of((page-1), PAGE_COUNT, Direction.DESC, "faqNo");
+		Page<Faq> faqlist = faqService.userselectAllfqa(pageable);
 		
-		model.addAttribute("faqlist", faqlist);
-		System.out.println("faqlist 입니다"+ faqlist);
-		 int temp=(nowPage-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
-		 int startPage = nowPage-temp;
+		model.addAttribute("list", faqlist);
+		 int temp=(page-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
+		 int startPage = page-temp;
 		 
 		 model.addAttribute("blockCount",BLOCK_COUNT);
 		 model.addAttribute("startPage",startPage);
-		 model.addAttribute("nowPage",nowPage);
+		 model.addAttribute("page",page);
 	}
 
 	@RequestMapping("/admin/board/FAQ/faqCategoryList")
