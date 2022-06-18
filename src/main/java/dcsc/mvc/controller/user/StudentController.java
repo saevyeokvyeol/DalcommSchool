@@ -57,19 +57,6 @@ public class StudentController {
 	}
 
 //	//로그인
-	@RequestMapping("/login")
-	public String login(@RequestParam(value = "error", required = false) String error, 
-			 			@RequestParam(value = "exception", required = false) String exception,
-			 			Model model) {
-		
-		model.addAttribute("error", error);
-		model.addAttribute("exception", exception);
-		
-		return "/main/login/login";
-
-	}
-
-//	//로그인
 //	@RequestMapping("/main/login/login")
 //	public String login(String userId, String userPwd, HttpSession session) {
 //		System.out.println("userId :" + userId + "userPwd : " + userPwd);
