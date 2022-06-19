@@ -37,25 +37,6 @@ public class FaqController {
 	 */
 	@RequestMapping("/admin/board/FAQ/faqList")
 	private void faqList(Model model, @RequestParam(defaultValue = "1") int nowPage) {
-		// List<Faq> faqlist = faqService.selectAllfqa();
-
-		// 페이징 처리하기
-		/*
-		 * Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC,
-		 * "faqNo"); Page<Faq> faqlist = faqService.selectAllfqa(page);
-		 * 
-		 * model.addAttribute("faqlist", faqlist);
-		 * 
-		 * int temp = (nowPage - 1) % BLOCK_COUNT; int startPage = nowPage - temp;
-		 * 
-		 * model.addAttribute("blockCount", BLOCK_COUNT);
-		 * model.addAttribute("startPage", startPage); model.addAttribute("nowPage",
-		 * nowPage);
-		 */
-		
-		
-		
-		
 		Pageable page = PageRequest.of( (nowPage-1) , PAGE_COUNT , Direction.DESC, "faqNo");
 		Page<Faq> faqlist = faqService.selectAllfqa(page);
 		
@@ -67,8 +48,6 @@ public class FaqController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("page", nowPage);
- 
-
 	}
 
 	/**
@@ -79,7 +58,7 @@ public class FaqController {
 		
 		//페이징 처리하기
 		Pageable pageable = PageRequest.of((page-1), PAGE_COUNT, Direction.DESC, "faqNo");
-		Page<Faq> faqlist = faqService.userselectAllfqa(pageable);
+		Page<Faq> faqlist = faqService.selectAllfqa(pageable);
 		
 		model.addAttribute("list", faqlist);
 		 int temp=(page-1)%BLOCK_COUNT;//나머지 는 항상 0 1 2 왜 blckCount가 3이므로 3보다 작은값
@@ -91,10 +70,13 @@ public class FaqController {
 	}
 
 	@RequestMapping("/admin/board/FAQ/faqCategoryList")
-	private String faqCategoryList(Model model, Long faqCategoryId) {
-
-		List<Faq> faqlist = faqService.selectByfaqCategoryId(faqCategoryId);
-		model.addAttribute("faqlist", faqlist);
+		
+	 private String faqCategoryList(Model model, Long faqCategoryId, @RequestParam(defaultValue = "1") int page) {
+		
+	    Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+	    Page<Faq> faqlist = faqService.selectByfaqCategoryId(faqCategoryId, pageable);
+		
+	    model.addAttribute("faqlist", faqlist);
 		return "redirect:/admin/board/FAQ/faqList";
 	}
 
@@ -214,11 +196,19 @@ public class FaqController {
 	/**
 	 * 카테고리 별로 정렬
 	 */
-	@RequestMapping("/main/board/FAQ/faqCategoryId/{FaqCategoryId}")
-	public String selectByfaqCategoryId(@PathVariable Long FaqCategoryId, Model model) {
+	@RequestMapping("/main/board/FAQ/faqCategoryId/{faqCategoryId}")
+	public String selectByfaqCategoryId(@PathVariable Long faqCategoryId, Model model, @RequestParam(defaultValue = "1") int page) {
 
-		List<Faq> faqlist = faqService.selectByfaqCategoryId(FaqCategoryId);
+		Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+		Page<Faq> faqlist = faqService.selectByfaqCategoryId(faqCategoryId, pageable);
 		model.addAttribute("list", faqlist);
+
+		int temp = (page - 1) % BLOCK_COUNT;
+		int startPage = page - temp;
+
+		model.addAttribute("blockCount", BLOCK_COUNT);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("page", page);
 
 		return "main/board/FAQ/faqList";
 	}
@@ -232,7 +222,7 @@ public class FaqController {
 				Pageable page = PageRequest.of((nowPage - 1), PAGE_COUNT, Direction.DESC, "faqNo");
 				Page<Faq> faqlist = faqService.selectBykeyword(keyword,page);
 
-				model.addAttribute("faqlist", faqlist);
+				model.addAttribute("list", faqlist);
 
 				int temp = (nowPage - 1) % BLOCK_COUNT;
 				int startPage = nowPage - temp;

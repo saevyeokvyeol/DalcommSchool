@@ -13,7 +13,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 		<style type="text/css">
 		</style>
@@ -28,16 +27,15 @@
 				calTotalPrice();
 				
 				function requestPay() {
-					// IMP.request_pay(param, callback) 결제창 호출
 					IMP.request_pay({ // param
 						pg: "html5_inicis",
 						pay_method: "card",
-						merchant_uid: 'kim1234_'+new Date().getTime(),
+						merchant_uid: `${student.studentId}`+new Date().getTime(),
 						name: ${classes.classPrice},
 						amount: ${classes.classPrice},
 						buyer_email: "",
-						buyer_name: "김사장",
-						buyer_tel: "010-3693-6936",
+						buyer_name: `${student.studentName}`,
+						buyer_tel: `${student.studentPhone}`,
 						buyer_addr: "1600 Amphitheatre Pkwy, Mountain View, CA 94043 미국",
 						buyer_postcode: "36963"
 					}, function (rsp) { // callback
@@ -50,8 +48,8 @@
 				}
 				
 				$("#order").on("click", function() {
-					/* IMP.init("imp86665517");
-					requestPay(); */
+					IMP.init("imp86665517");
+					requestPay();
 					$("#bookForm").submit();
 				})
 			});
