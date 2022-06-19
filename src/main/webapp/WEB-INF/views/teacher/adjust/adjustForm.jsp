@@ -118,7 +118,7 @@
       			
      		</table>
             
-            <input type="submit" class="btn btn-dark mt-3" id="adjust-insert-btn" value="정산신청하기">
+            <input type="submit" class="btn btn-primary" id="adjust-insert-btn" value="정산신청하기">
      	 </form>
      	 </sec:authorize>
      </div>
