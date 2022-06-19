@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 <!DOCTYPE html>
 <html>
 	<head>
@@ -50,8 +50,8 @@
 				}
 				
 				$("#order").on("click", function() {
-					IMP.init("imp86665517");
-					requestPay();
+					/* IMP.init("imp86665517");
+					requestPay(); */
 					$("#bookForm").submit();
 				})
 			});
@@ -108,6 +108,8 @@
 					</div>
 					<div class="bookInfoBox">
 						<div>
+							<sec:authorize access="isAuthenticated()">
+							<sec:authentication var="student" property="principal" />
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							<input type="hidden" name="classId" value="${classes.classId}">
 							<input type="hidden" name="scheduleId" value="${schedule.scheduleId}">
@@ -124,7 +126,8 @@
 											수강자명
 										</td>
 										<td>
-											<input type="text" class="form-control" name="bookName" id="bookName" value="김유다" required="required">
+											<input type="text" class="form-control" name="bookName" id="bookName" value="${student.studentName}" required="required">
+											
 										</td>
 									</tr>
 									<tr>
@@ -132,7 +135,7 @@
 											수강자 연락처
 										</td>
 										<td>
-											<input type="text" class="form-control" name="bookPhone" id="bookPhone" value="01033339999" required="required">
+											<input type="text" class="form-control" name="bookPhone" id="bookPhone" value="${student.studentPhone}" required="required">
 										</td>
 									</tr>
 								</tbody>
@@ -182,6 +185,7 @@
 								</tfoot>
 							</table>
 							<button type="button" class="form-control btn btn-primary shadow-none btn-lg" id="order">결제</button>
+							</sec:authorize> 
 						</div>
 					</div>
 				</div>

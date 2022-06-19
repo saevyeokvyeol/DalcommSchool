@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +51,12 @@ public class BookController {
 	 * 클래스 예약 등록
 	 * */
 	@RequestMapping("/main/book/bookComplete")
-	public ModelAndView insertBook(Book book, Classes classes, ClassSchedule schedule, Student student, IssueCoupon issueCoupon) {
+	public ModelAndView insertBook(Book book, Classes classes, ClassSchedule schedule, IssueCoupon issueCoupon) {
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		
 		book.setClasses(classes);
 		book.setClassSchedule(schedule);
 		book.setStudent(student);
@@ -74,7 +80,11 @@ public class BookController {
 	 * */
 	@RequestMapping("/main/mypage/book/{bookId}")
 	public String selectByBookId(@PathVariable Long bookId, Model model){
-		String studentId = "kim1234";
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		
 		Book book = bookService.selectByBookId(bookId);
 		model.addAttribute("book", book);
 		return "main/mypage/bookDetail";
@@ -94,11 +104,14 @@ public class BookController {
 	 * */
 	@RequestMapping("/main/mypage/bookList")
 	public String selectByStudentId(Model model, @RequestParam(defaultValue = "1") int page){
-		String studentId = "kim1234";
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 		
 		Pageable pageable = PageRequest.of((page - 1), SIZE, Direction.DESC, "bookId");
 		
-		Page<Book> list = bookService.selectPageByStudentId(studentId, pageable);
+		Page<Book> list = bookService.selectPageByStudentId(student.getStudentId(), pageable);
 
 		int temp = (page - 1) % BLOCK_COUNT;
 		int startPage = page - temp;
@@ -117,7 +130,7 @@ public class BookController {
 	@RequestMapping("/teacher/class/bookList")
 	public String bookList(Model model, @RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Teacher teacher = new Teacher("Tkim1234");
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		Pageable pageable = PageRequest.of(page - 1, SIZE, Direction.DESC, "bookInsertDate");
 		
@@ -150,7 +163,7 @@ public class BookController {
 	@RequestMapping("/teacher/class/pastBookList")
 	public String pastBookList(Model model, @RequestParam(defaultValue = "1") int page) {
 		// 로그인 했을 경우
-		Teacher teacher = new Teacher("Tkim1234");
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		Pageable pageable = PageRequest.of(page - 1, SIZE, Direction.DESC, "bookInsertDate");
 		

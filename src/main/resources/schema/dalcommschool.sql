@@ -254,3 +254,7 @@ create table class_schedule (schedule_id number(19,0) not null, schedule_insert_
 alter table class_schedule drop column schedule_finished
 
 alter table teacher add constraint
+
+ALTER TABLE class_qna MODIFY (blind_state DEFAULT 'F');
+ALTER TABLE class_qna MODIFY (QNA_COMPLETE DEFAULT 'F');
+ALTER TABLE class_qna MODIFY (SECRET_STATE DEFAULT 'F');
