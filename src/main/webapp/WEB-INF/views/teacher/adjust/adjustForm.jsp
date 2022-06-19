@@ -76,33 +76,44 @@
      		<h2> 정산신청하기 </h2>
      		<table>
       			<tr>
-      				<th class="col-form-label">1. 정산 가능 총액</th>
-      				<td>
-      				<fmt:formatNumber type="number" maxFractionDigits="3" value="${adjustable}"/>원
-      				<input type="hidden" id="adjustable" value="${adjustable}">
+					<td>
+						<div class="form-floating">
+						  	<input type="text" class="form-control" id="adjustable" placeholder="정산 가능 총액" name="adjustable" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${adjustable}"/>원" readonly="readonly">
+						  	<label for="adjustable">정산 신청 금액</label>
+						</div>
 					</td>
       			</tr>
       			<tr>
-      				<th class="col-form-label">2. 정산 신청 금액</th>
-      				<td>
-     					<input type="number" class="form-control adjustPrice" id="adjustPrice" placeholder="0원" name="adjustPrice">
+					<td>
+						<div class="form-floating">
+							<input type="number" class="form-control" id="adjustPrice" placeholder="정산 신청 금액" name="adjustPrice">
+							<label for="adjustPrice">정산 신청 금액</label>
+						</div>
 					</td>
       			</tr>
       			<tr>
-      				<th class="col-form-label">3. 정산 받으실 은행</th>
-      				<td>
-						<input type="text" class="form-control bank" id="exampleFormControlInput1" placeholder="ex) 우리은행, 신한은행...." name="bank">
+					<td>
+						<div class="form-floating">
+							<input type="text" class="form-control" id="bank" placeholder="정산 받으실 은행" name="bank">
+							<label for="bank">정산 받으실 은행</label>
+						</div>
 					</td>
       			</tr>
       			<tr>
-      				<th class="col-form-label">4. 예금주</th>
-      				<td><input type="text" class="form-control depositor" id="exampleFormControlInput1" name="depositor"></td>
+      				<td>
+						<div class="form-floating">
+							<input type="text" class="form-control" id="depositor" placeholder="예금주" name="depositor">
+							<label for="depositor">예금주</label>
+						</div>
+					</td>
       			</tr>
       			<tr>
-      				<th class="col-form-label">5. 계좌번호</th>
       				<td>
-      					<input type="text" class="form-control account" id="exampleFormControlInput1" placeholder="ex) 1002-333-123456" name="account">
-      				</td>
+						<div class="form-floating">
+							<input type="text" class="form-control" id="account" placeholder="계좌번호" name="account">
+							<label for="account">계좌번호</label>
+						</div>
+					</td>
       			</tr>
       			
      		</table>
