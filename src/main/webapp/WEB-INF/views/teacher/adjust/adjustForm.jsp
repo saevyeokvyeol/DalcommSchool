@@ -61,11 +61,8 @@
 </head>
 <body>
 
-<div class="teacher-main-content">
-
+<div>
 <!--정산하기-->
-<div class="card" style="width: 25rem;">
-    <div class="card-body">
     	<sec:authorize access="isAuthenticated()">
  		<sec:authentication property="principal" var="teacher"/>
      	<form name="adjust-teacher-insert" method="post" id="adjust-teacher-insert" action="${pageContext.request.contextPath}/applyAdjust">
@@ -73,11 +70,10 @@
      	<input type=hidden name="teacherId" value="${teacher.teacherId}" id="teacherId">
      	<!-- <input type=hidden name="teacherId" value="Tkim1234" id="teacherId">-->
      	<input type=hidden name="adjustStateId" value="1" id="adjustStateId"> 
-     		<h2> 정산신청하기 </h2>
-     		<table>
+     		<table  id="classTable">
       			<tr>
 					<td>
-						<div class="form-floating">
+						<div class="form-floating mb-3">
 						  	<input type="text" class="form-control" id="adjustable" placeholder="정산 가능 총액" name="adjustable" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${adjustable}"/>원" readonly="readonly">
 						  	<label for="adjustable">정산 신청 금액</label>
 						</div>
@@ -85,7 +81,7 @@
       			</tr>
       			<tr>
 					<td>
-						<div class="form-floating">
+						<div class="form-floating mb-3">
 							<input type="number" class="form-control" id="adjustPrice" placeholder="정산 신청 금액" name="adjustPrice">
 							<label for="adjustPrice">정산 신청 금액</label>
 						</div>
@@ -93,7 +89,7 @@
       			</tr>
       			<tr>
 					<td>
-						<div class="form-floating">
+						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="bank" placeholder="정산 받으실 은행" name="bank">
 							<label for="bank">정산 받으실 은행</label>
 						</div>
@@ -101,7 +97,7 @@
       			</tr>
       			<tr>
       				<td>
-						<div class="form-floating">
+						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="depositor" placeholder="예금주" name="depositor">
 							<label for="depositor">예금주</label>
 						</div>
@@ -109,24 +105,25 @@
       			</tr>
       			<tr>
       				<td>
-						<div class="form-floating">
+						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="account" placeholder="계좌번호" name="account">
 							<label for="account">계좌번호</label>
 						</div>
 					</td>
       			</tr>
       			
+      			<tr>
+      				<td>
+						<div class="d-grid gap-2">
+							<input class="btn btn-primary" type="submit" id="adjust-insert-btn" value="정산 신청하기">
+						</div>
+					</td>
+      			</tr>
      		</table>
             
-            <input type="submit" class="btn btn-primary" id="adjust-insert-btn" value="정산신청하기">
+            
      	 </form>
      	 </sec:authorize>
-     </div>
-    
- </div>
-
 </div>
-
-
 </body>
 </html>

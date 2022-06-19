@@ -79,6 +79,7 @@ public class AdjustController {
 		
 		int adjustable = adjustService.selectAdjust(teacher.getTeacherId());
 		model.addAttribute("adjustable", adjustable);
+		model.addAttribute("title", "정산 신청하기");
 	}
 	
 	/**

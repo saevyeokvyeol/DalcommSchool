@@ -87,7 +87,7 @@
 								<i class="fa-regular fa-image fa-2xl"></i>
 								후기 이미지 등록
 							</button>
-							<input type="file" id="input-image" name="file">
+							<input type="file" id="input-image" name="file" required>
 						</div>
 					</td>
 				</tr>
@@ -103,7 +103,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className">
+							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className" required>
 							<label for="className">클래스명</label>
 						</div>
 					</td>
@@ -111,7 +111,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" name="classInfo" style="height: 100px"></textarea>
+							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" name="classInfo" style="height: 100px" required></textarea>
 							<label for="classInfo">클래스 소개글</label>
 						</div>
 					</td>
@@ -119,14 +119,16 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice">
+							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice" required>
 							<label for="classPrice">클래스 금액</label>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="submit" value="클래스 등록">
+						<div class="d-grid gap-2">
+							<input class="btn btn-primary" type="submit" value="클래스 등록">
+						</div>
 					</td>
 				</tr>
 			</table>
