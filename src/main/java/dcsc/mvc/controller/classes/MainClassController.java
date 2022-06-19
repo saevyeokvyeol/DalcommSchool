@@ -70,6 +70,7 @@ public class MainClassController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("page", page);
 		model.addAttribute("list", list);
+		model.addAttribute("total", list);
 	}
 	
 	/**
