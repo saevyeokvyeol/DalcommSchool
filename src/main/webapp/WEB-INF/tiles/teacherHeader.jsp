@@ -150,7 +150,7 @@
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">쿠폰 관리</span></li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList" class="menu-link">
                 <i class="fa-solid fa-table-list menu-icon"></i>
                 <div data-i18n="Basic">내 쿠폰 조회</div>
               </a>
@@ -158,7 +158,7 @@
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">문의 관리</span></li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/teacher/coupon/couponAllList" class="menu-link">
+              <a href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById" class="menu-link">
                 <i class="fa-solid fa-question menu-icon"></i>
                 <div data-i18n="Basic">1대1 문의 조회</div>
               </a>

@@ -34,7 +34,8 @@
 <script type="text/javascript">
 $(function() {
 	
-	$(".qnaTitle").click(function(){
+	//상세보기 모달
+	$(".qna-Title").click(function(){
 			//swal($(this).val());
 			
 			$.ajax({
@@ -46,28 +47,24 @@ $(function() {
 				dataType:"json",
 				success : function(result) {
 				
-					$("#qnaDetail-form #qnaId").html(`\${result.qnaId}`); //span, div 같은 태그에는 .html 속성으로 부여.
-					$("#qnaDetail-form #studentId").html(`\${result.studentId}`);
-					$("#qnaDetail-form #className").html(`\${result.className}`);
-					$("#qnaDetail-form #qnaInsertDate").html(`\${result.qnaInsertDate.toString().substring(0, 10)}`);
-					$("#qnaDetail-form #qnaTitle").html(`\${result.qnaTitle}`);
-					$("#qnaDetail-form #qnaComplete").html(`\${result.qnaComplete}`);
-					$("#qnaDetail-form #qnaContent").html(`\${result.qnaContent}`);
-					$("#deleteId").val(`\${result.qnaId}`);
+					$(".studentId").html(`\${result.studentId}`);
+					$(".className").html(`\${result.className}`);
+					$(".qnaInsertDate").html(`\${result.qnaInsertDate.toString().substring(0, 10)}`);
+					$(".qnaTitle").html(`\${result.qnaTitle}`);
+					$(".qnaContent").html(`\${result.qnaContent}`);
 					
 					let complete = result.qnaComplete;
 					if(complete == "T"){
-						
-						$("#replyId").html(`\${result.replyId}`);
-						$("#teacherNickname").html(`\${result.teacherNickname}`);
-						$("#replyInsertDate").html(`\${result.replyInsertDate.toString().substring(0, 10)}`);
-						$("#replyContent").html(`\${result.replyContent}`);
-						
-						$("#requestForm").remove();
+						$(".teacherNickname").html(`\${result.teacherNickname}`);
+						$(".replyInsertDate").html(`\${result.replyInsertDate.toString().substring(0, 10)}`);
+						$(".replyContent").html(`\${result.replyContent}`);
+
+						$(".answerModalTable").show();
 						
 					} else {
-						$("#replyDetail-form").text("")
-						$("#replyDetail-Card-body").remove();
+						
+						$(".answerModalTable").hide();
+						
 					}
 					
 				},
@@ -76,43 +73,7 @@ $(function() {
 				}
 			})//ajax 끝
 		})// $(".qnaTitle").click 끝
-		
-		
-		 $(".deleteBtn").click(function(){
-			   //swal(111);
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/main/board/qna/qnaDelete");
-			   $("#requestForm").submit();
-		   
-	   })
-	   
-	   
-	// 선택한 QnA글 가지고 수정폼으로 가기
-		$(".updateBtn").click(function() {
-			//swal($("#qnaDetail-form #qnaId").html());
-			$.ajax({
-				url : "${pageContext.request.contextPath}/qnaUpdateForm",
-				type : "post",
-				data:{
-					"${_csrf.parameterName}":"${_csrf.token}",
-					"qnaId" : $("#qnaDetail-form #qnaId").html()
-				},
-				success : function(result) {
-					$("#exampleModal").modal("hide");
-					
-					$('body').removeClass('modal-open');
-					$('.modal-backdrop').remove();
-					
-					//swal(result)
-					$("#qna-main-update .qnaId").val(`\${result.qnaId}`);
-					$("#qna-main-update .updateQnaTitle").val(`\${result.qnaTitle}`);
-					$("#qna-main-update .qnaContent").val(`\${result.qnaContent}`);
-					$("#qna-main-update .secretState").val(`\${result.secretState}`);
-				},
-				error : function(error) {
-					swal("QnA 글을 가져올 수 없습니다.");
-				}
-			}); // 아작스 종료
-		})//$(".updateBtn").click 끝
+	
 	   
 	
 }); //ready 끝
@@ -127,9 +88,8 @@ $(function() {
 
 	<section>
 	    <div>
-	    	<h1>QnA</h1>
 	    	
-<div id="allBookList">
+<div id="sidebarHeader"><h3>내가 쓴 Q&A 글</h3></div>
 	        <table class="table qnaTable">
 	            <thead>
 	                <tr>
@@ -160,7 +120,7 @@ $(function() {
 		                                        <a>이 글은 관리자의 권한으로 블라인드처리가 되었습니다.</a>
 		                                    </c:when>
 		                                    <c:otherwise>
-		                                    	<button class="btn btn-light qnaTitle" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${qna.qnaId}">${qna.qnaTitle}</button>
+		                                    	<button class="btn btn-light qna-Title" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="${qna.qnaId}">${qna.qnaTitle}</button>
 		                                    </c:otherwise>   
 	                                    </c:choose>
 	                                    <%-- <a href="${pageContext.request.contextPath}/main/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a> --%>
@@ -185,7 +145,7 @@ $(function() {
 	                </c:choose>
 	            </tbody>
 	        </table>
-       </div>
+       
 	        <!--  페이징처리  -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
@@ -215,7 +175,6 @@ $(function() {
 	    </div>
 	</section>
 
-
 <!-- QnA 상세보기 모달 -->
 <!-- Button trigger modal -->
 
@@ -228,48 +187,33 @@ $(function() {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="card" style="width: 29rem;" id="qnaDtail-Card-body">
-          <div class="card-body">
-			<form id="qnaDetail-form">
-				<div>답변완료&nbsp;&nbsp;<span id="qnaComplete"></span></div>
-			    <div>글번호&nbsp;&nbsp;<span id="qnaId"></span></div>
-			    <div>작성자&nbsp;&nbsp;<span id="studentId"></span></div>
-			    <div>클래스 이름&nbsp;&nbsp;<span id="className"></span></div>
-			    <div>작성 날짜&nbsp;&nbsp;<span id=qnaInsertDate></span></div>
-			    <div>제목&nbsp;&nbsp;<span id="qnaTitle"></span></div>
-			    <div>내용&nbsp;&nbsp;</div>
-			    <div id="qnaContent"></div>
-			</form>
-
-		  </div>
-        </div>
+        <table class="table table-borderless questionModalTable">
+			<tr>
+				<td class="className" colspan="2"></td>
+			</tr>
+			<tr>
+				<td class="studentId"></td>
+				<td class="qnaInsertDate"></td>
+			</tr>
+			<tr>
+				<td class="qnaTitle" colspan="2"></td>
+			</tr>
+			<tr>
+				<td class="qnaContent" colspan="2"></td>
+			</tr>
+		</table>
         
-		<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
-		<form name="requestForm" method="post" id="requestForm" >
-			<input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-			<input type=hidden name="qnaId" id="deleteId" value="${qna.qnaId}">
+		<hr>
 		
-			<!-- Button trigger modal -->
-			<input type="button" class="btn btn-outline-primary updateBtn" id="updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal" value="수정하기" >
-			<input class="btn btn-outline-primary deleteBtn" type="button" value="삭제하기" >
-
-		</form>
-		
-		<!-- 강사 답변글 -->
-		<div class="modal-body">
-        <div class="card" style="width: 27rem;" id="replyDetail-Card-body">
-          <div class="card-body">
-			<form id="replyDetail-form">
-			    <div>글번호&nbsp;&nbsp;<span id="replyId"></span></div>
-			    <div>작성자&nbsp;&nbsp;<span id="teacherNickname"></span></div>
-			    <div>작성 날짜&nbsp;&nbsp;<span id="replyInsertDate"></span></div>
-			    <div>내용&nbsp;&nbsp;</div>
-			    <div id="replyContent"></div>	
-			</form>
-		  </div>
-        </div>
-        
-      </div>
+		<table class="table table-borderless answerModalTable">
+			<tr>
+				<td class="teacherNickname"></td>
+				<td class="replyInsertDate"></td>
+			</tr>
+			<tr>
+				<td class="replyContent" colspan="2"></td>
+			</tr>
+		</table>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
       </div>
@@ -278,55 +222,9 @@ $(function() {
  </div>
 </div>
 
-<!-- QnA 글 수정하기 모달-->
-<!-- Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel3">Q&A글 수정하기</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      	<!--QnA 수정하기-->
-          <div class="card" style="width: 29rem;">
-            <div class="card-body">
-              <form name="qna-main-update" method="post" id="qna-main-update" action="${pageContext.request.contextPath}/main/board/qna/qnaUpdate" >
-                <input type=hidden name="${_csrf.parameterName}" value="${_csrf.token}">
-                <%-- <input type="hidden" name="classId" value="${qna.classes.classId}">
-                <input type="hidden" name="studentId" value="${qna.student.studentId}">
-                --%>
-                <input type="hidden" name="classId" value="2">
-                <input type="hidden" name="studentId" value="lee1234">
-                <div>
-				  Q&A 글번호
-				  <input class="form-control qnaId" type=text name="qnaId"  value="${qna.qnaId}" required readonly="readonly">
-				</div>
-                <div>
-				  제목
-				  <input class="form-control updateQnaTitle" type=text name="qnaTitle" size="30"  value="${qna.qnaTitle}">
-				</div>
-				<div>
-				  내용 
-				  <textarea class="form-control qnaContent" name="qnaContent" rows="10" cols="33">${qna.qnaContent}</textarea>	
-				</div>
-				<div>
-				  비밀글 체크 
-				  <!-- <input class="form-check-input" type="checkbox" id="inlineFormCheck-T" name="secretState" value="T">공개 -->
-				  <input class="form-check-input" type="checkbox" id="inlineFormCheck-F" name="secretState" value="F">비공개
-				</div>
-				<div class="modal-footer">
-			      <input type="submit" class="btn btn-primary" id="qna-update-btn" value="수정하기">
-			      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-		      	</div>
-              </form>
-            </div>
-         </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
+
+
+
 
 
 	

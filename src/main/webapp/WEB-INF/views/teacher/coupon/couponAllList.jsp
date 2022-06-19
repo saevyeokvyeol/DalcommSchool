@@ -142,7 +142,7 @@
 <div class="teacher-main-content">
 	<section>
 
-			<h1>전체쿠폰조회 </h1>
+			<h3>내 클래스쿠폰 목록</h3>
 			
 			<table class="table" id="couponTable">
 				<thead>
