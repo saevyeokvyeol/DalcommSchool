@@ -9,9 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.SimpleQuery;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -73,31 +71,9 @@ public class FaqServiceImpl implements FaqService {
 			if(faq==null)new RuntimeException("상세보기에 오류가 발생했습니다.");
 			return faq;
 	}
-
-	@Override
-	public Page<Faq> userselectAllfqa(Pageable pageable) {
-		System.out.println("pageable 입니다 "+pageable);
-		return faqRepository.findAll(pageable);
-	}
-
 	@Override
 	public Page<Faq> selectAllfqa(Pageable pageable) {
 		return faqRepository.findAll(pageable);
-	}
-
-
-	@Override
-	public Page<Faq> userselectBykeyword(String keyword, Pageable pageable) {
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-		QFaq faq = QFaq.faq;
-		booleanBuilder.and(faq.faqContent.like("%"+keyword+"%"));
-		booleanBuilder.or(faq.faqTitle.like("%"+keyword+"%"));
-		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(booleanBuilder)
-				.offset(pageable.getOffset()).limit(pageable.getPageSize());
-		
-		
-		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
-		return list;
 	}
 	
 	@Override
@@ -110,7 +86,8 @@ public class FaqServiceImpl implements FaqService {
 				.offset(pageable.getOffset()).limit(pageable.getPageSize());
 				
 		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
-
+		
+		System.out.println("list입니다123"+ list);
 		return list;
 	}
 
