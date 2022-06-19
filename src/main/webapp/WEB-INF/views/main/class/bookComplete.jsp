@@ -19,7 +19,7 @@
 			<div id="bookComplete">
 				<i class="fa-regular fa-circle-check fa-2xl text-primary"></i>
 				<h4>클래스 예약이 완료되었습니다</h4>
-				<a class="btn btn-primary bookComplete-btn btn-lg" href="${pageContext.request.contextPath}/main/mypage/book">예약 목록 보기</a>
+				<a class="btn btn-primary bookComplete-btn btn-lg" href="${pageContext.request.contextPath}/main/mypage/bookList">예약 목록 보기</a>
 				<a class="btn btn-primary bookComplete-btn btn-lg" href="${pageContext.request.contextPath}/main/class/classList">다른 클래스 둘러보기</a>
 			</div>
 		</div>
