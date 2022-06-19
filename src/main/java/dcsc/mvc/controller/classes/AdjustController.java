@@ -53,7 +53,7 @@ public class AdjustController {
 		model.addAttribute("blockCount",BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("page",page);
-		
+		model.addAttribute("title", "정산 내역 조회");
 		
 	}
 	
@@ -123,6 +123,7 @@ public class AdjustController {
 		model.addAttribute("blockCount", BLOCK_COUNT);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("page", page);
+		model.addAttribute("title", "정산 내역 조회하기");
 	}
 	
 	/**
