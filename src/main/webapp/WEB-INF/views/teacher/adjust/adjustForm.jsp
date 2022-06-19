@@ -74,7 +74,8 @@
       			<tr>
 					<td>
 						<div class="form-floating mb-3">
-						  	<input type="text" class="form-control" id="adjustable" placeholder="정산 가능 총액" name="adjustable" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${adjustable}"/>원" readonly="readonly">
+						  	<input type="text" class="form-control" placeholder="정산 가능 총액" name="adjustable" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${adjustable}"/>원" readonly="readonly">
+						  	<input type="hidden" class="form-control" id="adjustable" value="${adjustable}" readonly="readonly">
 						  	<label for="adjustable">정산 신청 금액</label>
 						</div>
 					</td>

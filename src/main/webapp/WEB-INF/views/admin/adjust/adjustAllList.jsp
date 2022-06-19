@@ -64,12 +64,10 @@
 </head>
 <body>
 
-<div class="main-content">
+<div>
 
 	<section>
 		<form>
-
-			<h1>정산 내역 조회 </h1>
 			
 			<table class="table" id="adjustTable">
 				<thead>
