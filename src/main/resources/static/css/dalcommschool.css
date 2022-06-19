@@ -860,6 +860,10 @@ i.fa-star{
 	margin: 0; max-width: 890px; white-space: pre-wrap; line-height: 30px;
 }
 
+#boardDetailTable img {
+	width: 100%; margin-bottom: 20px;
+}
+
 #askTable img{
 	max-width: 810px; margin: 0 auto 20px;
 }
