@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.BookDTO;
 import dcsc.mvc.domain.classes.FullCalendar;
+import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.classes.BookService;
 import lombok.RequiredArgsConstructor;
 
@@ -59,7 +61,11 @@ public class AjaxBookController {
 	 * */
 	@RequestMapping("/book/selectCalendarByStudentId")
 	public List<FullCalendar> selectCalendarByStudentId() {
-		List<Book> list = bookService.selectByStudentId("kim1234");
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		List<Book> list = bookService.selectByStudentId(student.getStudentId());
 		List<FullCalendar> calList = new ArrayList<FullCalendar>();
 		
 		for(Book b : list) {
