@@ -9,9 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.SimpleQuery;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -73,32 +71,9 @@ public class FaqServiceImpl implements FaqService {
 			if(faq==null)new RuntimeException("상세보기에 오류가 발생했습니다.");
 			return faq;
 	}
-
-	@Override
-	public Page<Faq> userselectAllfqa(Pageable pageable) {
-		System.out.println("pageable 입니다 "+pageable);
-		return faqRepository.findAll(pageable);
-	}
-
 	@Override
 	public Page<Faq> selectAllfqa(Pageable pageable) {
 		return faqRepository.findAll(pageable);
-	}
-
-
-	@Override
-	public List<Faq> userselectBykeyword(String keyword) {
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-		QFaq faq = QFaq.faq;
-		booleanBuilder.and(faq.faqContent.like("%"+keyword+"%"));
-		booleanBuilder.or(faq.faqTitle.like("%"+keyword+"%"));
-		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(booleanBuilder);
-//				.offset(pageable.getOffset()).limit(pageable.getPageSize);
-		
-//		Page<Event> list = new PageImpl<Event>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
-		
-		List<Faq> list = jpqlQuery.fetch();
-		return list;
 	}
 	
 	@Override
@@ -112,9 +87,7 @@ public class FaqServiceImpl implements FaqService {
 				
 		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
-		//List<Faq> list = jpqlQuery.fetch();
-
-		
+		System.out.println("list입니다123"+ list);
 		return list;
 	}
 
@@ -127,15 +100,16 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public List<Faq> selectByfaqCategoryId(Long FaqCategoryId) {
+	public Page<Faq> selectByfaqCategoryId(Long FaqCategoryId, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QFaq faq = QFaq.faq;
 		
 		builder.and(faq.faqCategory.faqCategoryId.eq(FaqCategoryId));
-	
-		Iterable<Faq> result=faqRepository.findAll(builder);
+
+		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(builder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize());
 		
-		List<Faq> list = Lists.newArrayList(result);
+		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	}

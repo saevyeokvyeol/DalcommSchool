@@ -24,19 +24,29 @@
 
 
 
-<div>
-    <a href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
 
-          <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">예약</a>
-
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">결제</a>
-</div>
       <form action="${pageContext.request.contextPath}/main/board/FAQ/userfaqSearch" method="get">
         <div id="boardSearchBox">
       		<input type="text" class="form-control me-2" id="keyword" name="keyword">
 			<input type="submit" class="btn btn-primary" id="search" value="검색">
         </div>
       </form>
+      
+      <div>
+    <a href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
+
+          <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">수강</a>
+
+           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">취소 및 환불</a>
+           
+           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">계정</a>
+           
+           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 등록</a>
+           
+           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 운영</a>
+           
+           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">정산 및 수수료</a>
+</div>
 </div>
 
 <div class="accordion" id="faq-accordion">
