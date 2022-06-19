@@ -17,7 +17,6 @@
 
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
@@ -95,17 +94,31 @@ $(function(){
 //					alert(result);
 				text=""
 				$.each(result, function(index,item){
-					$.each(${place.placeInfra}, function(index, infra) {
-
-						console.log(infra.infraId)
-						if(item.infraId==infra.infraId){
-							text += `<input type="checkbox" name='infraId' value='\${item.infraId}' checked>&nbsp\${item.infraName}&nbsp`;
-						}
-					})
-					text += `<input type="checkbox" name='infraId' value='\${item.infraId}'>&nbsp\${item.infraName}&nbsp`;
+					text += `<span><input type="checkbox" name='infraId' id='\${item.infraId}' value='\${item.infraId}'>&nbsp\${item.infraName}</span>`;
 				})
 				text += ""
 				$("#placeInfra").html(text);
+
+				selectMyInfra();
+			},
+			error: function(err){
+				alert("인프라 정보를 가져올 수 없습니다.")
+			}
+		})
+	}
+	
+	function selectMyInfra() {
+		$.ajax({
+			url:"${pageContext.request.contextPath}/teacher/teacherMypage/place/selectInfra",
+			type: "post",
+			data : {"${_csrf.parameterName}": "${_csrf.token}", "placeId": ${place.placeId}},
+			dataType: "json",
+			success: function(result){
+				if(result != null){
+					$.each(result, function(index,item){
+						$("#" + item.infraId).prop("checked", true);
+					})
+				}
 			},
 			error: function(err){
 				alert("인프라 정보를 가져올 수 없습니다.")
@@ -121,7 +134,7 @@ $(function(){
 $(function(){
 	function selectPlaceRegion(){
 		$.ajax({
-			url: "/place/selectPlaceRegion",
+			url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
 			type: "post",
 			data: {"${_csrf.parameterName}": "${_csrf.token}"},
 			dataType: "json",
@@ -129,7 +142,11 @@ $(function(){
 //					alert(result);
 				text = ""
 				$.each(result, function(index, item){
-					text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;
+					if(item.regionId == ${place.placeRegion.regionId}){
+						text += `<option selected value='\${item.regionId}'>\${item.regionName}</option>`;
+					} else {
+						text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;
+					}
 				})
 				text += ""
 				$("select[name = placeRegion]").append(text);
@@ -238,7 +255,7 @@ $(function(){
       <tr>
 <!--       공방 편의 시설 -->
       	<td>
-      		<fieldset>*공방 편의 시설*
+      		<fieldset>
       			<div class="form-floating mb-3" id="placeInfra">
 <!--         		<label for="placeInfra">*공방 편의 시설*</label> -->
             	</div>
