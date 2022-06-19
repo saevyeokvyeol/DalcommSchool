@@ -96,7 +96,6 @@ $(function(){
 				$.each(result, function(index,item){
 					text += `<span><input type="checkbox" name='infraId' id='\${item.infraId}' value='\${item.infraId}'>&nbsp\${item.infraName}</span>`;
 				})
-				text += ""
 				$("#placeInfra").html(text);
 
 				selectMyInfra();
@@ -111,7 +110,7 @@ $(function(){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/teacher/teacherMypage/place/selectInfra",
 			type: "post",
-			data : {"${_csrf.parameterName}": "${_csrf.token}", "placeId": ${place.placeId}},
+			data : {"${_csrf.parameterName}": "${_csrf.token}", "placeId": ${place.placeId != null?place.placeId:0}},
 			dataType: "json",
 			success: function(result){
 				if(result != null){
@@ -139,10 +138,9 @@ $(function(){
 			data: {"${_csrf.parameterName}": "${_csrf.token}"},
 			dataType: "json",
 			success: function(result){
-//					alert(result);
 				text = ""
 				$.each(result, function(index, item){
-					if(item.regionId == ${place.placeRegion.regionId}){
+					if(item.regionId == ${place.placeRegion.regionId!= null?place.placeRegion.regionId:0}){
 						text += `<option selected value='\${item.regionId}'>\${item.regionName}</option>`;
 					} else {
 						text += `<option value='\${item.regionId}'>\${item.regionName}</option>`;

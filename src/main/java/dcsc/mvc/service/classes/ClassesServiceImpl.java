@@ -212,7 +212,7 @@ public class ClassesServiceImpl implements ClassesService {
 			jpqlQuery.orderBy(classes.classId.desc());
 		}
 		
-		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	}
@@ -238,7 +238,7 @@ public class ClassesServiceImpl implements ClassesService {
 				.limit(pageable.getPageSize())
 				.orderBy(classes.classOpenDate.desc());
 		
-		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		Page<Classes> list = new PageImpl<Classes>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	}
@@ -264,7 +264,7 @@ public class ClassesServiceImpl implements ClassesService {
 				.distinct()
 				.where(booleanBuilder);
 		
-		Page<ClassSchedule> list = new PageImpl<ClassSchedule>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
+		Page<ClassSchedule> list = new PageImpl<ClassSchedule>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	}

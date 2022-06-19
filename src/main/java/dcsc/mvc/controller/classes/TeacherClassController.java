@@ -18,6 +18,7 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
 import dcsc.mvc.service.classes.ClassesService;
+import dcsc.mvc.service.user.TeacherService;
 import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/teacher/class")
 public class TeacherClassController {
 	private final ClassesService classesService;
+	private final TeacherService teacherService;
 	
 	private final int SIZE = 9;
 	private final int BLOCK_COUNT = 5;
@@ -59,7 +61,9 @@ public class TeacherClassController {
 	@RequestMapping("/createClass")
 	public void createClass(Model model) {
 		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(teacher.getPlace() == null) {
+		
+		Teacher dbTeacher = teacherService.selectById(teacher.getTeacherId());
+		if(dbTeacher.getPlace() == null) {
 			throw new RuntimeException("공방 정보 등록 후 클래스를 개설할 수 있습니다");
 		}
 		
@@ -75,6 +79,11 @@ public class TeacherClassController {
 
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
+		
+		String text = classes.getClassInfo();
+		text.replaceAll("\r\n", "<br>");
+		System.out.println(text);
+		classes.setClassInfo(text);
 		
 		if(file.getSize() > 0) {
 			File img = new File(ImageLink.CLASS_IMG + file.getOriginalFilename());
