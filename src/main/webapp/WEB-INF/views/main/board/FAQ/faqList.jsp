@@ -40,13 +40,13 @@
 
            <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">취소 및 환불</a>
            
-           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">계정</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/3">계정</a>
            
-           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 등록</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/4">클래스 등록</a>
            
-           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 운영</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/5">클래스 운영</a>
            
-           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">정산 및 수수료</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/6">정산 및 수수료</a>
 </div>
 
 <div class="accordion" id="faq-accordion">

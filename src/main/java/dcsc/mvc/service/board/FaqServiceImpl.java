@@ -100,11 +100,11 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public Page<Faq> selectByfaqCategoryId(Long FaqCategoryId, Pageable pageable) {
+	public Page<Faq> selectByfaqCategoryId(Long faqCategoryId, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QFaq faq = QFaq.faq;
 		
-		builder.and(faq.faqCategory.faqCategoryId.eq(FaqCategoryId));
+		builder.and(faq.faqCategory.faqCategoryId.eq(faqCategoryId));
 
 		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(builder)
 				.offset(pageable.getOffset()).limit(pageable.getPageSize());
