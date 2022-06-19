@@ -91,9 +91,9 @@ public class FaqController {
 	}
 
 	@RequestMapping("/admin/board/FAQ/faqCategoryList")
-	private String faqCategoryList(Model model, Long faqCategoryId) {
-
-		List<Faq> faqlist = faqService.selectByfaqCategoryId(faqCategoryId);
+	private String faqCategoryList(Model model, Long faqCategoryId, @RequestParam(defaultValue = "1") int page) {
+		Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+		Page<Faq> faqlist = faqService.selectByfaqCategoryId(faqCategoryId, pageable);
 		model.addAttribute("faqlist", faqlist);
 		return "redirect:/admin/board/FAQ/faqList";
 	}
@@ -215,9 +215,10 @@ public class FaqController {
 	 * 카테고리 별로 정렬
 	 */
 	@RequestMapping("/main/board/FAQ/faqCategoryId/{FaqCategoryId}")
-	public String selectByfaqCategoryId(@PathVariable Long FaqCategoryId, Model model) {
+	public String selectByfaqCategoryId(@PathVariable Long FaqCategoryId, Model model, @RequestParam(defaultValue = "1") int page) {
 
-		List<Faq> faqlist = faqService.selectByfaqCategoryId(FaqCategoryId);
+		Pageable pageable = PageRequest.of((page - 1), PAGE_COUNT, Direction.DESC, "faqNo");
+		Page<Faq> faqlist = faqService.selectByfaqCategoryId(FaqCategoryId, pageable);
 		model.addAttribute("list", faqlist);
 
 		return "main/board/FAQ/faqList";

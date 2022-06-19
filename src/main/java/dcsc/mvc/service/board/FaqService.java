@@ -62,7 +62,7 @@ public interface FaqService {
 	 * @param String keyword
 	 * @return List<FAQ>
 	 * */
-	List<Faq> userselectBykeyword(String keyword);
+	Page<Faq> userselectBykeyword(String keyword,Pageable pageable);
 	
 	/**
 	 * FAQ 게시판 검색 기능 - 관리자
@@ -75,7 +75,7 @@ public interface FaqService {
 	/**
 	 * 카테고리 리스트
 	 * */
-	List<Faq> selectByfaqCategoryId(Long FaqCategoryId);
+	Page<Faq> selectByfaqCategoryId(Long FaqCategoryId,Pageable pageable);
 	
 	
 	

@@ -87,17 +87,16 @@ public class FaqServiceImpl implements FaqService {
 
 
 	@Override
-	public List<Faq> userselectBykeyword(String keyword) {
+	public Page<Faq> userselectBykeyword(String keyword, Pageable pageable) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 		QFaq faq = QFaq.faq;
 		booleanBuilder.and(faq.faqContent.like("%"+keyword+"%"));
 		booleanBuilder.or(faq.faqTitle.like("%"+keyword+"%"));
-		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(booleanBuilder);
-//				.offset(pageable.getOffset()).limit(pageable.getPageSize);
+		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(booleanBuilder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize());
 		
-//		Page<Event> list = new PageImpl<Event>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		
-		List<Faq> list = jpqlQuery.fetch();
+		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
 		return list;
 	}
 	
@@ -111,10 +110,7 @@ public class FaqServiceImpl implements FaqService {
 				.offset(pageable.getOffset()).limit(pageable.getPageSize());
 				
 		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetch().size());
-		
-		//List<Faq> list = jpqlQuery.fetch();
 
-		
 		return list;
 	}
 
@@ -127,15 +123,16 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public List<Faq> selectByfaqCategoryId(Long FaqCategoryId) {
+	public Page<Faq> selectByfaqCategoryId(Long FaqCategoryId, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QFaq faq = QFaq.faq;
 		
 		builder.and(faq.faqCategory.faqCategoryId.eq(FaqCategoryId));
-	
-		Iterable<Faq> result=faqRepository.findAll(builder);
+
+		JPQLQuery<Faq> jpqlQuery = factory.selectFrom(faq).where(builder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize());
 		
-		List<Faq> list = Lists.newArrayList(result);
+		Page<Faq> list = new PageImpl<Faq>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
 		return list;
 	}
