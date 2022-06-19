@@ -147,40 +147,16 @@
               </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon" class="menu-link">
                 <i class="fa-solid fa-ticket menu-icon"></i>
                 <div data-i18n="Account Settings">쿠폰 관리</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/bookList" class="menu-link">
-                    <div data-i18n="Account">새 쿠폰 만들기</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/coupon/selectAllCoupon" class="menu-link">
-                    <div data-i18n="Notifications">전체 쿠폰 조회</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="${pageContext.request.contextPath}/admin/adjust/adjustAllList" class="menu-link">
                 <i class="fa-solid fa-coins menu-icon"></i>
                 <div data-i18n="Account Settings">정산 관리</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/admin/adjust/adjustAllList" class="menu-link">
-                    <div data-i18n="Account">전체 정산 조회</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/scheduleBookList" class="menu-link">
-                    <div data-i18n="Notifications">정산 신청 수락</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">게시판 관리</span></li>

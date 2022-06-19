@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,8 @@
 
 
     <!-- include summernote css/js -->
-
+ <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
    
 
 <style type="text/css">
@@ -31,6 +33,13 @@
 	.mainImgCon,#input-image {
 			display: none;
 		}
+	#preview-image{
+		width: 350px;
+		height: 350px;
+		/* object-fit:cover; */
+		background-size: contain;
+	
+	}
 
 	
 </style>
@@ -91,8 +100,8 @@
    </script>
 </head>
 <body>
-
-	<div class="main-content">
+<div id="sidebarHeader"><h3>1대1 문의 작성</h3></div>
+	<sec:authentication property="principal" var="student"/>
 				<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insertStudent?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
@@ -120,7 +129,7 @@
 			    		문의 ID
 			    	</td>
 			        <td>
-			            <input type="text" name="studentId">
+			            <input type="text" name="studentId" value="${student.studentId}" readonly/>
 			        </td>
 			    </tr>
 			    <tr>
@@ -154,7 +163,7 @@
 								<i class="fa-regular fa-image fa-2xl"></i>
 								첨부 이미지 추가
 							</button>
-							<input type="file" id="input-image" name="file">
+							<input  type="file" id="input-image" name="file" width="350px">
 						</div>
 					</td>
 				</tr>
@@ -169,7 +178,6 @@
 				</div>
 			</form>
 		
-	</div>
 	 
 </body>
 </html>

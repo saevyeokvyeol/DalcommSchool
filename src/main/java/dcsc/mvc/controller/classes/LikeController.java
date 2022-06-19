@@ -3,6 +3,7 @@ package dcsc.mvc.controller.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,13 @@ public class LikeController {
 	@RequestMapping("/like/insert")
 	@ResponseBody
 	public Likes insert(Classes classes) {
-		Student student = new Student("kim1234", null, null, null, null, null, null, null, null);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용 가능합니다.");
+		}
+		
 		Likes likes = new Likes(null, classes, student);
 		
 		return likeService.insert(likes);
@@ -36,6 +43,13 @@ public class LikeController {
 	@RequestMapping("/like/deleteByLikeId")
 	@ResponseBody
 	public Long deleteByLikeId(Long likeId) {
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용 가능합니다.");
+		}
+		
 		Likes likes = likeService.deleteByLikeId(likeId);
 		return likes.getClasses().getClassId();
 	}
@@ -46,16 +60,14 @@ public class LikeController {
 	@RequestMapping("/like/deleteByStudentId")
 	@ResponseBody
 	public void deleteByStudentId() {
-		String studentId = "kim1234";
-		likeService.deleteByStudentId(studentId);
-	}
-	
-	/**
-	 * 찜 페이지로 이동
-	 * */
-	@RequestMapping("/main/mypage/myList")
-	public String myList() {
-		return "/main/mypage/myList";
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용 가능합니다.");
+		}
+		
+		likeService.deleteByStudentId(student.getStudentId());
 	}
 	
 	/**
@@ -64,8 +76,14 @@ public class LikeController {
 	@RequestMapping("/like/selectByStudentId")
 	@ResponseBody
 	public List<ClassDTO> selectByStudentId() {
-		String studentId = "kim1234";
-		List<Likes> list = likeService.selectByStudentId(studentId);
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용 가능합니다.");
+		}
+		
+		List<Likes> list = likeService.selectByStudentId(student.getStudentId());
 		List<ClassDTO> dtoList = new ArrayList<ClassDTO>();
 		
 		for(Likes l : list) {

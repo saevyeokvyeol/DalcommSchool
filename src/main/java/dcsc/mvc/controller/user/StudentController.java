@@ -1,30 +1,18 @@
 package dcsc.mvc.controller.user;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.service.user.StudentService;
 import dcsc.mvc.service.user.TeacherService;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping
@@ -56,44 +44,10 @@ public class StudentController {
 		System.out.println("login 호출...");
 	}
 
-//	//로그인
-//	@RequestMapping("/main/login/login")
-//	public String login(String userId, String userPwd, HttpSession session) {
-//		System.out.println("userId :" + userId + "userPwd : " + userPwd);
-//		System.out.println("login 호출...");
-//		
-//		Student stu = studentService.login(userId, userPwd);
-//		if(stu!=null) {
-//			session.setAttribute("loginUser", stu);
-//		} else if(stu==null) {
-//			Teacher tch = teacherService.login(userId, userPwd);
-//			if(tch!=null) {
-//				session.setAttribute("loginUser", tch);
-//			}
-//		}
-//		return "redirect:/";
-//	}
-
 	//회원 목록 상세보기 - 관리자
 	@RequestMapping("/admin/user/studentDetail")
 	public void studentDetail(String studentId) {
 		System.out.println("studentDetail 호출...");
-	}
-	
-	
-	//마이페이지
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping("/main/mypage/myPage")
-	public void myPage(HttpServletRequest request) {
-		System.out.println("myPage 호출...");
-		
-		//Student student = (Student)authentication.getPrincipal(); 
-		
-		//Student student = (Student)principal.getName();
-		//System.out.println("studentId : " + studentId);
-		//Student student = studentService.selectStudent(studentId);
-		//model.addAttribute("student",student);
-		
 	}
 	
 	

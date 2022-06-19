@@ -95,7 +95,8 @@
 	</head>
 	<body>
 		
-		<h3>예약 목록</h3>
+		
+<div id="sidebarHeader"><h3>예약 목록</h3></div>
 		<div id="bookListBox">
 				
 			<div>

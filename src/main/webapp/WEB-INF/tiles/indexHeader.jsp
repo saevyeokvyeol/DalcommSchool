@@ -39,7 +39,7 @@
 						success: function(result){
 							text = ""
 							if(result.length == 0) {
-								text += "<h2>찜한 클래스가 없습니다</h2>"
+								text += "<h4>찜한 클래스가 없습니다</h4>"
 							} else {
 								text += '<div class="likeBox">'
 								$.each(result, function(index, item) {
@@ -65,9 +65,14 @@
 								text += `</div>`
 							}
 							$(".offcanvas-body").html(text);
+							
+							var myOffcanvas = document.getElementById('offcanvasRight')
+							var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
+							bsOffcanvas.show()
 						},
-						error:function(request, status, error){
-							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.message);
 						}
 					})
 				})
@@ -81,13 +86,14 @@
 						success: function(result){
 							$(this).parent().parent().remove();
 						},
-						error: function(err){
-							alert(123)
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.message);
 						}
 					})
 				})
 
-				if(${sessionScope.msg != null}){
+				if(${message != null}){
 					$("#myModal").modal("show");
 				}
 			})
@@ -99,7 +105,7 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body onunload="">
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasRightLabel">찜 목록</h5>
@@ -122,7 +128,7 @@
 				</div>
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/main/class/classSearch"><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
-					<li><a class="like" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
+					<li><a class="like"><i class="fa-solid fa-heart fa-xl"></i></a></li>
 					<sec:authorize access="isAnonymous()">
 						<li><a data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 					</sec:authorize>

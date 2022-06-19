@@ -217,10 +217,9 @@ public class FaqController {
 	 */
 	@RequestMapping("/main/board/FAQ/faqCategoryId/{FaqCategoryId}")
 	public String selectByfaqCategoryId(@PathVariable Long FaqCategoryId, Model model) {
-		System.out.println("FaqCategoryId Controller....... = " + FaqCategoryId);
 
 		List<Faq> faqlist = faqService.selectByfaqCategoryId(FaqCategoryId);
-		model.addAttribute("faqlist", faqlist);
+		model.addAttribute("list", faqlist);
 
 		return "main/board/FAQ/faqList";
 	}

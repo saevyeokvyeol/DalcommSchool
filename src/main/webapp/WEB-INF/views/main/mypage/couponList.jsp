@@ -33,9 +33,8 @@
 </head>
 <body>
 
-<div class="main-content">
+<div id="sidebarHeader"><h3>쿠폰</h3></div>
 	<section>
-			<div><h1>쿠폰조회</h1></div>
 			<table class="table">
 		
 			<div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -131,8 +130,6 @@
 			</nav>			
 			
 		</section>
-
-</div>
 		
 </body>
 </html>

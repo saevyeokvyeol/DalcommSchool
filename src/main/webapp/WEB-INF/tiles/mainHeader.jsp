@@ -51,9 +51,14 @@
 								text += `</div>`
 							}
 							$(".offcanvas-body").html(text);
+							
+							var myOffcanvas = document.getElementById('offcanvasRight')
+							var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
+							bsOffcanvas.show()
 						},
-						error:function(request, status, error){
-							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.message);
 						}
 					})
 				})
@@ -76,6 +81,7 @@
 			
 			if(${sessionScope.msg != null}){
 				$("#myModal").modal("show");
+				<%session.removeAttribute("msg");%>
 			}
 		</script>
 		
@@ -130,7 +136,7 @@
 				</div>
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/main/class/classSearch"><i class="fa-solid fa-magnifying-glass fa-xl"></i></a></li>
-					<li><a class="like" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-heart fa-xl"></i></a></li>
+					<li><a class="like"><i class="fa-solid fa-heart fa-xl"></i></a></li>
 					<sec:authorize access="isAnonymous()">
 						<li><a data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-circle-user fa-xl"></i></a></li>
 					</sec:authorize>

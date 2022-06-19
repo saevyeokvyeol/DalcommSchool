@@ -140,10 +140,15 @@ public class ClassQnaController {
 	@RequestMapping("board/qna/qnaInsert")
 	@ResponseBody
 	public void qnaInsert(ClassQna classQna, Classes classes) {
-		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 작성해주세요.");
+		}
 		
 		classQna.setClasses(classes);
-		classQna.setStudent(new Student(student.getStudentId(), null, null, null, null, null, null, null, null));
+		classQna.setStudent(student);
 		classQnaService.insertQuestion(classQna);
 	}
 	

@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -65,10 +67,15 @@ a{
 								${notice.noticeNo}
 							</td>
 							<td>
-							<a href="${pageContext.request.contextPath}/main/board/Notice/noticeRead/${notice.noticeNo}">
-							   ${notice.noticeTitle}
-							</a>
-							</td>
+								<a href="${pageContext.request.contextPath}/main/board/Notice/noticeRead/${notice.noticeNo}">
+										${notice.noticeTitle} <c:set var="today"
+											value="<%=LocalDateTime.now().minusDays(1)%>" /> <c:if
+											test="${notice.noticeInsertDate >= today}">
+											<span class="badge rounded-pill bg-primary">new</span>
+										</c:if> <c:if test="${notice.noticeImg != null}">
+											<i class="fa fa-file-image-o" aria-hidden="true"></i>
+										</c:if>
+								</a></td>
 							<td>
 								<fmt:parseDate value="${notice.noticeInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 								<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>

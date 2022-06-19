@@ -2,22 +2,23 @@ package dcsc.mvc.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import dcsc.mvc.domain.classes.Book;
-import dcsc.mvc.domain.classes.ClassCategory;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Likes;
 import dcsc.mvc.domain.classes.Search;
 import dcsc.mvc.domain.user.Student;
 import dcsc.mvc.domain.user.Teacher;
-import dcsc.mvc.repository.user.StudentRepository;
 import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
 import dcsc.mvc.service.classes.LikeService;
@@ -35,7 +36,7 @@ public class HomeController {
 	private final StudentService studentService;
 	
 	@RequestMapping("/") 
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		// 로그인 했을 경우
 		Student student = null;
 		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
@@ -73,6 +74,11 @@ public class HomeController {
 					}
 				}
 			}
+		}
+		
+		if(session.getAttribute("msg") != null) {
+			model.addAttribute("message", session.getAttribute("msg"));
+			session.removeAttribute("msg");
 		}
 
 		model.addAttribute("popularList", popularList);

@@ -58,6 +58,11 @@ public class TeacherClassController {
 	 * */
 	@RequestMapping("/createClass")
 	public void createClass(Model model) {
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(teacher.getPlace() == null) {
+			throw new RuntimeException("공방 정보 등록 후 클래스를 개설할 수 있습니다");
+		}
+		
 		model.addAttribute("title", "새 클래스 만들기");
 	}
 	

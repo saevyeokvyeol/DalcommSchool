@@ -69,16 +69,9 @@
 		event.preventDefault();
 		document.login.submit();
 	}
-
 </script>
-
-
-
-
 </head>
 <body>
-
-
 		<br>
           <div class="loginbox-social">
 			<div class="logo">
@@ -98,9 +91,9 @@
          		       <label for="pwd">비밀번호</label>
 	               </div>
                <span>
-				<c:if test="${sessionScope.msg != null}">
+				<c:if test="${message != null}">
 					<div class="alert alert-danger" role="alert">
-						${sessionScope.msg}
+						${message}
 					</div>	 
 				</c:if>
                </span>

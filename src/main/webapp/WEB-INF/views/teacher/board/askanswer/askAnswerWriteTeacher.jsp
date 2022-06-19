@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,6 +101,7 @@
 
 
 	<div class="main-content">
+	<sec:authentication property="principal" var="teacher"/>
 	<form name="writeForm" method="post" action="${pageContext.request.contextPath}/teacher/board/askanswer/insertTeacher?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
@@ -131,7 +133,7 @@
 			    		문의 ID
 			    	</td>
 			        <td>
-			            <input type="text" name="teacherId">
+			            <input type="text" name="teacherId" value="${teacher.teacherId}" readonly="readonly"/>
 			        </td>
 			    </tr>
 			    <tr>

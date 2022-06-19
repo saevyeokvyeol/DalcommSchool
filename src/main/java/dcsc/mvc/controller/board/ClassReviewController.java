@@ -74,14 +74,11 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/teacher/mypage/reviewList")
 	public String selectByTeacherId(Model model, @RequestParam(defaultValue="1") int page){
-//		teacherId = "Tlee1234";
-//		List<ClassReview> list = reviewService.selectByTeacherId(teacherId);
-		
-		Teacher dbTeacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
-		Page<ClassReview> pageList = reviewService.selectByTeacherId(dbTeacher.getTeacherId(), pageable);
-		
-		
+		Page<ClassReview> pageList = reviewService.selectByTeacherId(teacher.getTeacherId(), pageable);
+
 		model.addAttribute("list", pageList);
 		
 		int temp=(page-1)%BLOCK_COUNT;
@@ -176,9 +173,13 @@ public class ClassReviewController {
 	@RequestMapping("/review/insert")
 	@ResponseBody
 	public void insertReview(ClassReview review, Long classId, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
-		Student dbStudent = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Student student = new Student(dbStudent.getStudentId(), null, null, null, null, null, null, null, null);
-		
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 작성해주세요.");
+		}
+
 		review.setStudent(student);
 		review.setClasses(new Classes(classId));
 		
@@ -251,6 +252,4 @@ public class ClassReviewController {
 	public List<Classes> selectStudentClassList(String studentId){
 		return null;
 	}
-	
-
 }
