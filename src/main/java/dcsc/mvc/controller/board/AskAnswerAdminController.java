@@ -33,8 +33,8 @@ public class AskAnswerAdminController {
 	 
 	private final AskAnswerService askAnswerService;
 	
-	private final static int PAGE_COUNT=8;
-	private final static int BLOCK_COUNT=4;
+	private final static int PAGE_COUNT=10;
+	private final static int BLOCK_COUNT=5;
 	
 	   
 	/**

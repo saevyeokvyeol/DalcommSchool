@@ -174,7 +174,6 @@ public class FaqController {
 		faq.setFaqCategory(faqCategory);
 		
 		Faq newFaq = faqService.updateFAQ(faq);
-		System.out.println("faq + 카테코리 :"+faq+" = "+faqCategory.getFaqCategoryId());
 
 		return "redirect:/admin/board/FAQ/faqRead/" + newFaq.getFaqNo();
 

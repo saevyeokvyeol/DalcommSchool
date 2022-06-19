@@ -840,20 +840,12 @@ i.fa-star{
 	width: 80px;
 }
 
-#boardListBox .table span {
-	padding: 30px;
-}
-
 .accordion-body img {
 	max-width: 914px; border-radius: 5px; margin-bottom: 20px;
 }
 
 #boardDetailTable tr:first-child td {
-	padding: 0 30px 30px;
-}
-
-#boardDetailTable tr:nth-child(2) td {
-	padding: 30px;
+	padding: 0 30px 20px;
 }
 
 #boardDetailTable h4 {
@@ -865,7 +857,39 @@ i.fa-star{
 }
 
 #boardDetailTable p, #boardDetailTable pre, #boardDetailTable h6 {
-	margin: 0; max-width: 970px; white-space: pre-wrap; line-height: 30px;
+	margin: 0; max-width: 890px; white-space: pre-wrap; line-height: 30px;
+}
+
+#askTable img{
+	max-width: 810px; margin: 0 auto 20px;
+}
+
+#askTable tr td {
+	padding: 30px;
+}
+
+#askTable tr td:first-child {
+	width: 100px;
+}
+
+#askTable tr td:nth-child(2) {
+	width: 870px;
+}
+
+#askTable tr:first-child td {
+	padding: 0 30px 30px; width: 100%;
+}
+
+#askTable h4 {
+	font-weight: 600;
+}
+
+#askTable #date {
+	color: #999;
+}
+
+#askTable p, #askTable pre, #askTable h6 {
+	margin: 0; max-width: 890px; white-space: pre-wrap; line-height: 30px;
 }
 
 p, pre {
