@@ -895,3 +895,7 @@ i.fa-star{
 p, pre {
 	margin: 0; max-width: 970px; white-space: pre-wrap; 
 }
+
+#placeInfra {
+	display: flex; justify-content: space-between; padding: 10px 0;
+}

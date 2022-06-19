@@ -128,9 +128,10 @@ public class PlaceController {
 		List<PlaceInfraDTO> dtolist = new ArrayList<PlaceInfraDTO>();
 		
 		for(PlaceInfra p : list) {
-			PlaceInfraDTO placeInfraDTO = new PlaceInfraDTO(p.getPlaceInfraId(),p.getInfra().getInfraId(),
-															p.getPlace().getPlaceId(), p.getInfra().getInfraName());
-		dtolist.add(placeInfraDTO);
+			PlaceInfraDTO placeInfraDTO = new PlaceInfraDTO(p.getPlaceInfraId(),p.getPlace().getPlaceId(), 
+															p.getInfra().getInfraId(), p.getInfra().getInfraName());
+			dtolist.add(placeInfraDTO);
+			System.out.println(placeInfraDTO);
 		}
 		return dtolist;
 	}
