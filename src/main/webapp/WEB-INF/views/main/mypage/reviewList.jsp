@@ -78,7 +78,7 @@ $(function(){
 
 </head>
 <body>
-<h3>내가 쓴 후기</h3>
+<div id="sidebarHeader"><h3>내가 쓴 후기</h3></div>
 <div id="allBookList">
 	<table class="table reviewTable">
 		  <thead>

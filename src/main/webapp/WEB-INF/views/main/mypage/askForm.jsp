@@ -100,8 +100,7 @@
    </script>
 </head>
 <body>
-
-	<div class="main-content">
+<div id="sidebarHeader"><h3>1대1 문의 작성</h3></div>
 	<sec:authentication property="principal" var="student"/>
 				<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insertStudent?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
@@ -179,7 +178,6 @@
 				</div>
 			</form>
 		
-	</div>
 	 
 </body>
 </html>

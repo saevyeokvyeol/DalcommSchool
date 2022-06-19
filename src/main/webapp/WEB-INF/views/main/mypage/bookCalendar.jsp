@@ -223,7 +223,7 @@
 			</div>
 		</div>
 		
-		<h3>예약 캘린더</h3>
+<div id="sidebarHeader"><h3>예약 캘린더</h3></div>
 		
 		<div id='calendar'></div>
 		

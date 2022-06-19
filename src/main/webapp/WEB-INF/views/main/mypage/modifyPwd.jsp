@@ -149,9 +149,7 @@ $(function(){
 </head>
 <body>
 		
-<div id="sidebar-content">
-
-<h3> 회원 비밀번호 수정</h3>
+<div id="sidebarHeader"><h3>비밀번호 수정</h3></div>
 <h6>*기존 비밀번호와 새로운 비밀번호는 달라야합니다.</h6><br><br><hr>
 	<form method="post" id="updatePwdForm" action="${pageContext.request.contextPath}/main/login/updatePwd">
 	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

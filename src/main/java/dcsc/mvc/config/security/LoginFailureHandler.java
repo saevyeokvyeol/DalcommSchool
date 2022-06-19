@@ -69,6 +69,4 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 		//request.setAttribute("errorMessage", errorMessage);
 		//request.getRequestDispatcher("/WEB-INF/views/main/login/login.jsp").forward(request, response);
 	}
-
-
 }

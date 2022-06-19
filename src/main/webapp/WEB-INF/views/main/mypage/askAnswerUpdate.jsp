@@ -89,7 +89,7 @@
 
 </head>
 <body>
-<div class="main-content">
+<div id="sidebarHeader"><h3>1대1 문의 수정</h3></div>
 		<form name=updateForm method=post action="${pageContext.request.contextPath}/main/board/askanswer/updateStudent?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		    																							
@@ -152,6 +152,5 @@
 		</form>													
 	<hr>
 	
-</div>
 </body>
 </html>

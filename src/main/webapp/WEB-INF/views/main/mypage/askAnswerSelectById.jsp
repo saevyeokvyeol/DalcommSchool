@@ -33,14 +33,7 @@
 
 </head>
 <body>
-
-<div class="main-content">
-	<div class="alert alert-dark" role="alert">
-		     <span>
-				<h1>1대1 문의목록</h1>
-			</span> 
-	</div>
-					
+<div id="sidebarHeader"><h3>1대1 문의 목록</h3></div>	
 	 
 				<table class="table">
 		        <thead>
@@ -147,7 +140,6 @@
 			</div>
 		<!-- </div>	
 	</section>	 -->   		
-</div>
 	
 		
 	
