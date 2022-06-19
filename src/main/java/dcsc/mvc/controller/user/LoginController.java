@@ -1,5 +1,8 @@
 package dcsc.mvc.controller.user;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,18 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
-@RestController
+@Controller
 @AllArgsConstructor
-@RequestMapping("/oauth")
-public class OAuthController {
+@RequestMapping("/main/login")
+public class LoginController {
 
-	/**
-	 * 카카오 로그인 - Query String으로 넘어오는 코드추출
-	 * */
-	@ResponseBody
-	@GetMapping("/kakaoLogin")
-	public void kakaologin(@RequestParam String code) {
-		System.out.println(code);
+	@RequestMapping("/loginForm")
+	public String autoError(HttpSession session) {
+		session.setAttribute("msg", "로그인 후 이용 가능합니다");
+		return "redirect:/";
 	}
 	
 	
