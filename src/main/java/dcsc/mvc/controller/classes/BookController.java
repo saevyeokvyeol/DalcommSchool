@@ -38,10 +38,18 @@ public class BookController {
 	@RequestMapping("/main/book/bookForm")
 	public ModelAndView bookForm(Book book, Long classId, Long scheduleId) {
 		ModelAndView modelAndView = new ModelAndView("main/class/bookForm");
+
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용해주세요");
+		}
 		
 		Classes classes = classesService.selectByClassId(classId);
 		ClassSchedule schedule = classesService.selectScheduleByscheduleId(scheduleId);
-		
+
+		modelAndView.addObject("student", student);
 		modelAndView.addObject("classes", classes);
 		modelAndView.addObject("schedule", schedule);
 		return modelAndView;
@@ -107,6 +115,8 @@ public class BookController {
 		Student student = null;
 		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
 			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용해주세요");
 		}
 		
 		Pageable pageable = PageRequest.of((page - 1), SIZE, Direction.DESC, "bookId");

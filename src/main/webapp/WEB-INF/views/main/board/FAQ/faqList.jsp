@@ -24,19 +24,29 @@
 
 
 
-<div>
-    <a href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
 
-          <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">예약</a>
-
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">결제</a>
-</div>
       <form action="${pageContext.request.contextPath}/main/board/FAQ/userfaqSearch" method="get">
         <div id="boardSearchBox">
       		<input type="text" class="form-control me-2" id="keyword" name="keyword">
 			<input type="submit" class="btn btn-primary" id="search" value="검색">
         </div>
       </form>
+      </div>
+      
+<div class="btn-group faqCategory" role="group" aria-label="Basic outlined example">
+	    <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
+
+          <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">수강</a>
+
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">취소 및 환불</a>
+           
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/3">계정</a>
+           
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/4">클래스 등록</a>
+           
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/5">클래스 운영</a>
+           
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/6">정산 및 수수료</a>
 </div>
 
 <div class="accordion" id="faq-accordion">

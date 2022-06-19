@@ -39,12 +39,6 @@ public interface FaqService {
 	
 	/**
 	 * FAQ 게시판 전체 조회 기능
-	 * @return List<FAQ> - 유저
-	 * */
-	Page<Faq> userselectAllfqa(Pageable pageable);
-	
-	/**
-	 * FAQ 게시판 전체 조회 기능
 	 * @return List<FAQ>
 	 * */
 	Page<Faq> selectAllfqa(Pageable pageable);
@@ -54,15 +48,6 @@ public interface FaqService {
 	 * 카테고리 조회하기 
 	 * */
 	List<FaqCategory> selectfaqCategory();
-	
-	
-	/**
-	 * FAQ 게시판 검색 기능
-	 * 1개 이상 나올수 있어서 List로 했다 제목또는 내용으로 검색하는 거여서 keyword로 받는다.
-	 * @param String keyword
-	 * @return List<FAQ>
-	 * */
-	List<Faq> userselectBykeyword(String keyword);
 	
 	/**
 	 * FAQ 게시판 검색 기능 - 관리자
@@ -75,7 +60,7 @@ public interface FaqService {
 	/**
 	 * 카테고리 리스트
 	 * */
-	List<Faq> selectByfaqCategoryId(Long FaqCategoryId);
+	Page<Faq> selectByfaqCategoryId(Long FaqCategoryId,Pageable pageable);
 	
 	
 	

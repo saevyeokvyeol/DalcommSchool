@@ -121,7 +121,7 @@ public class BookServiceImpl implements BookService {
 		ClassSchedule schedule = classScheduleRepository.findById(book.getClassSchedule().getScheduleId()).orElse(null);
 		schedule.setLeftSeat(schedule.getLeftSeat() + book.getBookSeat());
 
-		book.setBookState(new BookState(3L, null));
+		book.setBookState(new BookState(4L, null));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class BookServiceImpl implements BookService {
 		
 		if(book == null) throw new RuntimeException("예약 내역이 존재하지 않습니다.");
 
-		book.setBookState(new BookState(4L, null));
+		book.setBookState(new BookState(3L, null));
 	}
 	
 	/**
