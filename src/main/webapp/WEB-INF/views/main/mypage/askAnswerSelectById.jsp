@@ -34,7 +34,7 @@
 	        <thead>
 	            <tr>
 	             <th>카테고리</th>
-	             <th>문의 ID</th>
+	             <th>문의 제목</th>
 	             <th>문의일자</th>
 	             <th>답변유무</th>
 	            </tr>

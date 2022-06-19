@@ -116,7 +116,7 @@
 
 <div class="main-content">
 	<h5> 관리자 > 1대1 문의 LIST </h5><br><hr>
-<table align="center" class="table">	
+ <table align="center" class="table">	
 		
 		<tr> 
 			 <td> <!-- 글 제목 -->
@@ -132,6 +132,17 @@
 		    </td>
 		    <td> <!-- 글 제목 -->
 		    	${askAnswerDetail.student.studentId}
+		    	
+		    	<c:choose>
+			    	<c:when test="${empty askList.student.studentId}">
+						<span>${askAnswerDetail.teacher.teacherId} ${askList.teacher.teacherId}</span>
+			    	
+			    	</c:when>
+			    	
+			    	<c:when test="${empty askList.teacher.teacherId}">
+			    			<span>${askAnswerDetail.student.studentId} ${askList.student.studentId}</span>
+			    	</c:when>
+		    	</c:choose>
 		    </td>
 		</tr>
 		 <tr> 
@@ -164,20 +175,18 @@
 		
 
 
-</table>
-			
-				
-				
+</table> 
+
 
 				
 	<div align="center">
 		<div id="answerView">
 			<c:if test="${not empty askAnswerDetail.answer}">
-				 답변 번호 : ${askAnswerDetail.answer.answerNo}<p>
+				 답변 번호 : ${askAnswerDetail.answer.answerNo}<br>
 				 
 				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
 				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/><p>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/><br>
 			
 				답변 내용 : ${askAnswerDetail.answer.answerContent}
 			</c:if>		
