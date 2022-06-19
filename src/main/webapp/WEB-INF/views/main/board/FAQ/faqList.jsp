@@ -31,22 +31,22 @@
 			<input type="submit" class="btn btn-primary" id="search" value="검색">
         </div>
       </form>
+      </div>
       
-      <div>
-    <a href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
+<div class="btn-group faqCategory" role="group" aria-label="Basic outlined example">
+	    <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqList">전체보기</a>
 
-          <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">수강</a>
+          <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/1">수강</a>
 
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">취소 및 환불</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">취소 및 환불</a>
            
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">계정</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">계정</a>
            
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 등록</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 등록</a>
            
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 운영</a>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">클래스 운영</a>
            
-           <a href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">정산 및 수수료</a>
-</div>
+           <a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/main/board/FAQ/faqCategoryId/2">정산 및 수수료</a>
 </div>
 
 <div class="accordion" id="faq-accordion">

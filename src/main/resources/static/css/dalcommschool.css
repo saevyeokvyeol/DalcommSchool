@@ -903,3 +903,7 @@ p, pre {
 #placeInfra {
 	display: flex; justify-content: space-between; padding: 10px 0;
 }
+
+.faqCategory {
+	width: 100%; margin-bottom: 30px;
+}
