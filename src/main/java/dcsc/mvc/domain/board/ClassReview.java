@@ -51,7 +51,7 @@ public class ClassReview {
 	
 	private int reviewRate;
 	
-	private String reviewBlindState;
+	private String reviewBlindState = "F";
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
