@@ -93,10 +93,10 @@
 							var now = new Date();
 							var constraint = new Date(now.setDate(now.getDate() + 7));
 							
-							/* if(constraint >= arg.start){
+							if(constraint >= arg.start){
 								alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
-								return;
-							} */
+								return false;
+							}
 							
 							$(".startTime").val("");
 							$(".endTime").val("");

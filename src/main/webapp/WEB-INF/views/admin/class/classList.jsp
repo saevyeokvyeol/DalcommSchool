@@ -23,7 +23,7 @@
 			$(function() {
 				function selectPlaceRegion(){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/teacher/teacherMypage/place/selectPlaceRegion",
+						url: "${pageContext.request.contextPath}/place/selectPlaceRegion",
 						type: "post",
 						data: {"${_csrf.parameterName}": "${_csrf.token}"},
 						dataType: "json",
@@ -44,7 +44,7 @@
 				
 				function selectClassCategory(){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
+						url: "${pageContext.request.contextPath}/class/selectAllCategory",
 						type: "post",
 						data: {"${_csrf.parameterName}" : "${_csrf.token}"},
 						dataType: "json",

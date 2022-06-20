@@ -19,7 +19,7 @@
 			$(function() {
 				function selectAllCategory() {
 					$.ajax({
-						url : "${pageContext.request.contextPath}/teacher/class/selectAllCategory",
+						url : "${pageContext.request.contextPath}/class/selectAllCategory",
 						type : "post",
 						data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 		    			dataType: "json",

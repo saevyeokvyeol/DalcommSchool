@@ -33,6 +33,7 @@
 								text += `<input type="radio" class="btn-check shadow-none placeRegion" name="placeRegion" id="\${item.regionName}" value="\${item.regionId}"><label class="btn btn-outline-primary shadow-none" for="\${item.regionName}">\${item.regionName}</label>`;
 							})
 							$("#placeRegion").append(text);
+							search()
 						},
 						error:function(request, status, error){
 

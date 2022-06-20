@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class TeacherClassController {
 		// 로그인 했을 경우
 		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		Pageable pageable = PageRequest.of(page - 1, SIZE);
+		Pageable pageable = PageRequest.of(page - 1, SIZE, Direction.DESC, "classInsertDate");
 		
 		// ID에 해당하는 클래스 가져오기
 		Page<Classes> list = classesService.selectByTeacherId(teacher.getTeacherId(), pageable);
