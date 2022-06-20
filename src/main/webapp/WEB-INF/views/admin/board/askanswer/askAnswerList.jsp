@@ -59,11 +59,11 @@
 		
 					<select name="askCategoryId" id="askCategoryId" class="form-select" aria-label="Default select example">
 						  <option value="">카테고리 종류</option>
-						  <option value="1">클래스</option>
-						  <option value="2">결제</option>
-						  <option value="3">환불</option>
-						  <option value="4">후기</option>
-						  <option value="5">탈퇴</option>
+						  <option value="1">로그인/회원정보</option>
+						  <option value="2">클래스</option>
+						  <option value="3">결제/환불</option>
+						  <option value="4">이벤트/쿠폰</option>
+						  <option value="5">오류</option>
 					</select>
 	
 		  <nav class="navbar navbar-expand-lg navbar-light bg-light">

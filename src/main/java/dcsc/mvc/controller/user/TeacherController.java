@@ -54,7 +54,6 @@ public class TeacherController {
 	 * */
 	@RequestMapping("/teacher/mypage/updateForm")
 	public ModelAndView updateTeacherForm() {
-//		teacherId = "Tpark1234";
 		
 		//강사 정보와 sns 정보를 db에서 꺼내서 넣어주기
 		Teacher dbteacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -62,10 +61,9 @@ public class TeacherController {
 		System.out.println("dbteacher.getTeacherId() 출력 : " + dbteacher.getTeacherId());
 		
 		Teacher teacher = teacherService.selectById(dbteacher.getTeacherId());
-		//teacher.setTeacherSns(teacherSnsRep.findByTeacherId(teacher.getTeacherId()));
 		
 		return new ModelAndView("teacher/mypage/updateForm","teacher", teacher);
-		//return "teacher/mypage/updateForm";
+
 	}
 	
 	/**
@@ -114,7 +112,6 @@ public class TeacherController {
 		
 	}
 
-	
 	/**
 	 * 아이디 찾기 폼
 	 * */
@@ -239,17 +236,6 @@ public class TeacherController {
 		Teacher teacher = teacherService.selectById(teacherId);
 		
 		return teacher;
-	}
-	
-	/**
-	 * 강사 상세 보기
-	 * */
-	@RequestMapping("/main/teacher/teacherId")
-	public ModelAndView readTeacherUser(HttpServletRequest request) {
-//		teacherId="Tpark1234";
-		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		return new ModelAndView("/teacher/mypage/teacherDetail", "teacher", teacher);
 	}
 	
 	/**

@@ -97,7 +97,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/admin/review/list")
 	public String selectAllAdmin(Model model, @RequestParam(defaultValue="1") int page){
-//		List<ClassReview> list = reviewService.selectAll();
+
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectAll(pageable);
 		
@@ -118,9 +118,7 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/main/mypage/reviewList")
 	public String classReviewSearch(Model model, @RequestParam(defaultValue="1") int page){
-//		List<ClassReview> list = reviewService.selectByStudentId(studentId);
-		
-//		studentId="kim1234";
+
 		Student dbStudent = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Pageable pageable = PageRequest.of((page-1),PAGE_COUNT, Direction.DESC,"reviewId");
 		Page<ClassReview> pageList = reviewService.selectByStudentId(dbStudent.getStudentId(), pageable);
@@ -154,18 +152,6 @@ public class ClassReviewController {
 			
 		return reviewDTO;
 	}
-	
-	/**
-	 * 클래스 후기 등록 폼
-	 * */
-//	@RequestMapping("/main/mypage/review/writeForm")
-//	public String insertForm(Long classId, Model model) {
-//		
-//		classId=2L;
-//		model.addAttribute("classId", classId);
-//		
-//		return "main/mypage/review/insertReview";
-//	}
 	
 	/**
 	 * 클래스 후기 등록
@@ -238,18 +224,10 @@ public class ClassReviewController {
 	 * */
 	@RequestMapping("/review/blind")
 	@ResponseBody
-	public String reviewBlind(Long reviewId, String reviewBlindState) {
+	public void reviewBlind(Long reviewId, String reviewBlindState) {
 		
 		reviewService.updateBlind(reviewId, reviewBlindState);
 		
-		return "redirect:/";
 	}
-	
-	/**
-	 * 학생 아이디로 수강한 클래스 목록 가져오기
-	 * */
-	@RequestMapping("/main/mypage/classList")
-	public List<Classes> selectStudentClassList(String studentId){
-		return null;
-	}
+
 }

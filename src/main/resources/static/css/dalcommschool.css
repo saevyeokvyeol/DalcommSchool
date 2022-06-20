@@ -105,6 +105,10 @@ li {
 	margin: 100px auto; max-width: 1200px; min-height: 537px; position: relative;
 }
 
+.main-content img {
+	width: 100%; padding: 20px;
+}
+
 #sidebar-layout {
 	margin: 150px auto 80px; max-width: 1200px; min-height: 507px; position: relative;
 	display: flex; justify-content: space-between;

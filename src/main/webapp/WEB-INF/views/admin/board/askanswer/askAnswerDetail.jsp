@@ -134,6 +134,7 @@
 			<h6>${askAnswerDetail.answer.answerContent}</h6>
 				 			<span id="date"><fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
 							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
+
 			
 				 
 			</c:if>		

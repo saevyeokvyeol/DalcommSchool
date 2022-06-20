@@ -46,7 +46,7 @@
 <script type="text/javascript">
 	
 	function clickDel(askInfo) {
-	 	askInfo.action = "${pageContext.request.contextPath}/main/board/askanswer/deleteStudent";
+	 	askInfo.action = "${pageContext.request.contextPath}/teacher/board/askanswer/deleteTeacher";
 	 	askInfo.method = "post";
 	 	askInfo.submit();
 	}
@@ -58,7 +58,7 @@
 		
 
 <div class="main-content">
-	<table align="center" class="table">
+	<%-- <table align="center" class="table">
 			
 			<tr> 
 				<td> 
@@ -120,7 +120,7 @@
 	
 											
 			    <hr>
-	</table>
+	</table> --%>
 	
 	<%-- <div class="card" style="width: 18rem;">
   		<div class="card-body">
@@ -142,7 +142,7 @@
 	     --%>
 	    
 	    
-	    
+	   <%--  
 	   <div class="main-content">
 		<table align="center" class="table">
 			
@@ -182,7 +182,7 @@
 			</tr>
 			
 		</table>
-	</div> 
+	</div>  --%>
 	    
 	    
 	    
@@ -190,7 +190,7 @@
 	    
 	
 	
-		<div class="row">
+	<%-- 	<div class="row">
 			<div  class="col text-center">
 					
 					<c:choose>
@@ -206,6 +206,60 @@
 			</div>
 		</div>
 		<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a>
+		 --%>
+		
+		<div id="sidebarHeader"><h3>1대1 문의</h3></div>
+	<table class="table" id="askTable">
+			<tr>
+			    <td colspan="2"> 
+			    	<h4><span class="badge bg-secondary">${askAnswerDetail.askCategory.askCategoryName}</span> ${askAnswerDetail.askTitle}</h4>
+			    	
+			    	${askAnswerDetail.teacher.teacherId}<br>
+					<span id="date">${askAnswerDetail.askInsertDate.toString().substring(0, 10)}</span>
+			    </td>
+			</tr>
+			<tr>
+				<td><i class="fa-solid fa-q fa-2xl"></i></td>
+			     <td>
+			     	<c:if test="${askAnswerDetail.askImg != null}">
+						<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+			     	</c:if>
+					<pre><h6>${askAnswerDetail.askContent}</h6></pre>
+			     </td>
+    		</tr>	
+			<tr>
+			<td><i class="fa-solid fa-a fa-2xl"></i></td>
+				<td>
+					 <c:choose>
+					    	<c:when test="${empty askAnswerDetail.answer}">
+							<span>답변 내용이 없습니다.</span>			    	
+					    	</c:when>
+					    	<c:otherwise>
+							  ${askAnswerDetail.answer.answerContent}<br><br>
+					    	<span id="date">${askAnswerDetail.answer.answerInsertDate.toString().substring(0, 10)}</span>
+							 </c:otherwise>
+					 </c:choose>
+				</td>
+			</tr>
+			
+		</table>
+	<div class="row">
+		<div  class="col text-center"> 
+			<c:choose>
+				<c:when test="${askAnswerDetail.askComplete eq 'T'}">
+					
+				</c:when>
+				<c:when test="${askAnswerDetail.askComplete eq 'F'}">
+					<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/updateFormTeacher?askNo=${askAnswerDetail.askNo}">수정하기</a>
+				</c:when>
+			</c:choose>
+			
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
+		</div>
+	</div>
+	<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a>
+	
+		
 		
 					
 	<form name="askInfo" method="post">

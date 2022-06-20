@@ -6,6 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- include libraries(jQuery, bootstrap) -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -15,9 +16,48 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<style type="text/css">
+
+	#input-image {
+		display: none;
+	}
+	
+</style>
+
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
+       <script type="text/javascript">
+			$(function() {
+				$("#preview-image").click(function() {
+					$("#input-image").click()
+				})
+				
+				function readImage(input) {
+				    // 인풋 태그에 파일이 있는 경우
+				    if(input.files && input.files[0]) {
+				        // FileReader 인스턴스 생성
+				        var reader = new FileReader()
+				        // 이미지가 로드가 된 경우
+				        reader.onload = e => {
+				        	var previewImage = document.getElementById("preview-image")
+				            previewImage.src = e.target.result
+				        }
+				        // reader가 이미지 읽도록 하기
+				        reader.readAsDataURL(input.files[0])
+				    }
+				}
+				// input file에 change 이벤트 부여
+				var inputImage = document.getElementById("input-image")
+				inputImage.addEventListener("change", e => {
+				    readImage(e.target)
+				})
+			})
+
+		</script>
+    
+    
     
     <script type="text/javascript">
     	$(document).ready(function() {
@@ -47,7 +87,7 @@
 	$(function() {
 		
   		$("#writeForm").submit(function(event){
-  				alert("이벤트 게시글이 등록되었습니다.")
+  			swal("이벤트 게시글이 등록되었습니다.")
   			})
   		});
 
@@ -70,20 +110,20 @@ enctype="multipart/form-data">
 			<input type=text name="eventTitle" >
 		</td>
     </tr>
+   <tr>
+        <td>
+          첨부 파일
+        </td>
+        <td>
+			<input type="file" name="file" size="30">
+		</td>
+    </tr>
     <tr>
         <td>
            내용
         </td>
         <td>
 			<textarea name="eventContent" id="summernote"></textarea>
-		</td>
-    </tr>
-   <tr>
-        <td>
-          파일 첨부
-        </td>
-        <td>
-			<input type="file" name="file" size="30">
 		</td>
     </tr>
 </table>
