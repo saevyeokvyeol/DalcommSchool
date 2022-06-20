@@ -258,3 +258,6 @@ alter table teacher add constraint
 ALTER TABLE class_qna MODIFY (blind_state DEFAULT 'F');
 ALTER TABLE class_qna MODIFY (QNA_COMPLETE DEFAULT 'F');
 ALTER TABLE class_qna MODIFY (SECRET_STATE DEFAULT 'F');
+
+ALTER TABLE classes ADD region_id number(19,0);
+ALTER TABLE classes ADD CONSTRAINT fk_region_id foreign KEY(region_id) references place_region(region_id);

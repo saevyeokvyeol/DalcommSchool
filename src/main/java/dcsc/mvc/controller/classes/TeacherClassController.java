@@ -79,6 +79,7 @@ public class TeacherClassController {
 
 		classes.setTeacher(teacher);
 		classes.setClassCategory(category);
+		classes.setPlaceRegion(teacher.getPlace().getPlaceRegion());
 		
 		String text = classes.getClassInfo();
 		text.replaceAll("\r\n", "<br>");

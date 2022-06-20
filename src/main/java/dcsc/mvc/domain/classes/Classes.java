@@ -20,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dcsc.mvc.domain.board.ClassQna;
 import dcsc.mvc.domain.board.ClassReview;
+import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.domain.user.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -71,6 +72,11 @@ public class Classes {
 	@JoinColumn(name = "state_id")
 	@JsonIgnore
 	private ClassState classState;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "region_id")
+	@JsonIgnore
+	private PlaceRegion placeRegion;
 	
 	@OneToMany(mappedBy = "classes")
 	@JsonIgnore

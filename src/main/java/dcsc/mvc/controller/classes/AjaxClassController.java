@@ -173,7 +173,8 @@ public class AjaxClassController {
 	@RequestMapping("/teacher/classStatistics")
 	@ResponseBody
 	public List<ClassStatistics> classStatistics(){
-		List<Classes> classList = classesService.selectByTeacherId("Tkim1234");
+		Teacher teacher = (Teacher)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Classes> classList = classesService.selectByTeacherId(teacher.getTeacherId());
 		List<ClassStatistics> list = new ArrayList<ClassStatistics>();
 		
 		for (Classes c : classList) {
