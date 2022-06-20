@@ -126,9 +126,9 @@
 											</c:when>
 											<c:when test="${adjust.adjustState.adjustStateId == '3'}">
 												<option name="adjustStateId" value="3">${adjust.adjustState.adjustStateName}</option>
-												<option name="adjustStateId" value="1">정산신청</option>
+												<!-- <option name="adjustStateId" value="1">정산신청</option>
 												<option name="adjustStateId" value="2">정산진행중</option>
-												<option name="adjustStateId" value="4">정산반려</option> 
+												<option name="adjustStateId" value="4">정산반려</option> --> 
 											</c:when>
 											<c:when test="${adjust.adjustState.adjustStateId == '4'}">
 												<option name="adjustStateId" value="4">${adjust.adjustState.adjustStateName}</option>
