@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -71,7 +72,7 @@
 	<tr>
 	     <td colspan="2" style="text-align: center;">
 			<img alt="" src="${pageContext.request.contextPath}/img/event/${requestScope.event.eventImg}">
-			<span style="font-size:9pt;"><b><pre>${requestScope.event.eventContent}</pre></b></span>
+			${requestScope.event.eventContent}
 	     </td>
     </tr>
     </table>
