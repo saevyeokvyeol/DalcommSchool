@@ -26,16 +26,13 @@
    
 
 <style type="text/css">
-	#askCategory{
-		width: 150px;
-		height: 40px;
-	}
 	.mainImgCon,#input-image {
 			display: none;
 		}
-	#preview-image{
-		width: 350px;
-		height: 350px;
+	#preview-image, .mainFileBtn, .mainImgCon, .mb-3 {
+		max-width: 350px;
+		max-height: 350px;
+		margin: auto;
 		/* object-fit:cover; */
 		background-size: contain;
 	
@@ -105,14 +102,12 @@
 				<form name="writeForm" method="post" action="${pageContext.request.contextPath}/main/board/askanswer/insertStudent?${_csrf.parameterName}=${_csrf.token}" 
 				enctype="multipart/form-data">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
-			<div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById" role="button">목록으로</a></span></div>
+			<div align=right><a class="btn btn-primary"  href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById" role="button">목록으로</a></div>
+		 <input type="hidden" name="studentId" value="${student.studentId}" readonly/>
 		<table align="center" class="table">
 				
 			  	
 				<tr>
-					<td>
-						카테고리
-					</td>
 					<td>
 						 <select name="askCategoryId" id="askCategory" class="form-select" aria-label="Default select example">
 							  <option value="">카테고리 종류</option>
@@ -124,26 +119,13 @@
 						</select>
 					</td>
 				</tr> 	
+			           
 			    <tr>
-			    	<td>
-			    		문의 ID
-			    	</td>
 			        <td>
-			            <input type="text" name="studentId" value="${student.studentId}" readonly/>
+			        	<input type="text" name="askTitle" class="form-control" >
 			        </td>
 			    </tr>
 			    <tr>
-			        <td>
-			           	문의 제목
-			        </td>
-			        <td>
-			        	<input type="text" name="askTitle">
-			        </td>
-			    </tr>
-			    <tr>
-			    	<td>
-			    		문의 내용
-			    	</td>
 			    	<td>
 			    		 <textarea name="askContent" id="summernote"></textarea>
 			    	</td>
@@ -151,9 +133,6 @@
 			 
 			  	
 				<tr> 
-					<td>
-						첨부 파일
-					</td>
 					<td>
 				 		<div class="mb-3">
 							<div class="image-container mainImgCon">
@@ -163,7 +142,7 @@
 								<i class="fa-regular fa-image fa-2xl"></i>
 								첨부 이미지 추가
 							</button>
-							<input  type="file" id="input-image" name="file" width="350px">
+							<input  type="file" id="input-image" name="file">
 						</div>
 					</td>
 				</tr>

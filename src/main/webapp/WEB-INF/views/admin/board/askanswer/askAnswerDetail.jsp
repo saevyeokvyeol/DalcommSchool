@@ -30,12 +30,6 @@
 	    width: 100%;
 	}
 
-	#answerArea{
-	    margin-bottom: 10px; 
-	    height: 150px;
-	    width: 500px;
-	    
-	}
 	
 	#preview-image{
 		width: 350px;
@@ -113,73 +107,35 @@
 </script>
 </head>
 <body>
-
-<div class="main-content">
-	<h5> 관리자 > 1대1 문의 LIST </h5><br><hr>
-<table align="center" class="table">	
-		
-		<tr> 
-			 <td> <!-- 글 제목 -->
-		    	문의제목
-		    </td>
-		    <td> <!-- 글 제목 -->
-		    	${askAnswerDetail.askTitle}
-		    </td>
-	    </tr>
-		<tr> 
-			 <td> <!-- 글 제목 -->
-		    	문의 ID
-		    </td>
-		    <td> <!-- 글 제목 -->
-		    	${askAnswerDetail.student.studentId}
-		    </td>
-		</tr>
-		 <tr> 
-			 <td> <!-- 글 제목 -->
-		    	작성일
-		    </td>
-			<td>
-				<fmt:parseDate value="${askAnswerDetail.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-				<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-			</td>
-		 </tr>
-		 <tr> 
-			 <td> <!-- 글 제목 -->
-		    	카테고리명
-		    </td>
-			<td>
-				${askAnswerDetail.askCategory.askCategoryName}
-			</td>
-		 </tr>
-		 	<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
-		<tr>
-			<td>
-				첨부 파일
-			</td>
-		     <td colspan="2" style="text-align: center;">
-				<img  id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
-				<span style="font-size:9pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
-		     </td>
-	    </tr>
-		
-
-
-</table>
-			
-				
-				
-
-				
-	<div align="center">
+	<table class="table" id="askTable">
+			<tr>
+			    <td colspan="2"> 
+			    	<h4><span class="badge bg-secondary">${askAnswerDetail.askCategory.askCategoryName}</span> ${askAnswerDetail.askTitle}</h4>
+			    	
+			    	${askAnswerDetail.student.studentId}<br>
+					<span id="date">${askAnswerDetail.askInsertDate.toString().substring(0, 10)}</span>
+			    </td>
+			</tr>
+			<tr>
+				<td><i class="fa-solid fa-q fa-2xl"></i></td>
+			     <td>
+			     	<c:if test="${askAnswerDetail.askImg != null}">
+						<img alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
+			     	</c:if>
+					<pre><h6>${askAnswerDetail.askContent}</h6></pre>
+			     </td>
+    		</tr>	
+			<tr>
+			<td><i class="fa-solid fa-a fa-2xl"></i></td>
+				<td>
+					 	<div>
 		<div id="answerView">
 			<c:if test="${not empty askAnswerDetail.answer}">
-				 답변 번호 : ${askAnswerDetail.answer.answerNo}<p>
-				 
-				 답변 일자 : <%-- ${askAnswerDetail.answer.answerInsertDate} --%>
-				 			<fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/><p>
+			<h6>${askAnswerDetail.answer.answerContent}</h6>
+				 			<span id="date"><fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
+							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/></span>
 			
-				답변 내용 : ${askAnswerDetail.answer.answerContent}
+				 
 			</c:if>		
 		</div>
 				
@@ -188,7 +144,7 @@
 				<c:remove var="span"/>
 				
 			<span id="span">	
-				<textarea rows="10" cols="10" id="answerArea" placeholder="답변을 입력해 주세요."></textarea>
+				<textarea class="form-control" rows="10" cols="10" id="answerArea" placeholder="답변을 입력해 주세요."></textarea>
 				<!-- <input type="button" id="answerBtn" value="답변하기">  -->
 				
 				 <button type="button" id="answerBtn"  class="btn btn-secondary">답변하기</button>
@@ -197,9 +153,18 @@
 			</span>
 			</c:if>
 	</div>
+				</td>
+			</tr>
+			
+		</table>
+				
+				
+
+				
+
 	
 					<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
-</div>
+
 
 </body>
 </html>

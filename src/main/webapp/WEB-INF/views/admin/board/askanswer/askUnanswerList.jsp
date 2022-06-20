@@ -1,8 +1,8 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 
@@ -27,44 +27,36 @@
 	a{
 		text-decoration: none;
 	}
-	table,th,td{
-		text-align: center;
+	th,td{
+		text-align: center; height: 55px;
 	}
-
+	
+	td:nth-child(3){
+	text-align: left;
+	}
+	.askSearch{
+		width: 150px;
+		height: 40px;
+	}
+	#askCategoryId{
+		width: 150px;
+		height: 40px;
+	}
 
 </style>
 
 </head>
 <body>
 	
-
-	<div class="main-content">
-			
-	        
-	        
-	      <div class="alert alert-dark" role="alert">
-		     <span>
-				<h1>미답변 1대1 문의목록</h1>
-			</span> 
-		</div>   
 		<table class="table"> 
 			<thead>
 			
-			<tr>
-				<td>
-					<div align="right">
-						<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
-					</div>
-				</td>
-			</tr>
 			
 	            <tr>
 	             <th>글번호</th>
 	             <th>문의 USER</th>
 	             <th>글 제목</th>
 	             <th>카테고리</th>
-	             <th>문의 내용</th>
-	             <th>첨부 파일명</th>
 	             <th>문의 일자</th>
 	            </tr>
 	        </thead>
@@ -86,34 +78,29 @@
 					        </td>
 					        <td>
 					        	
-					        	<c:choose>
-							    	<c:when test="${empty askList.student.studentId}">
-										<span>(선생님) <%-- ${askList.teacher.teacherId} --%></span>
-							    	
-							    	</c:when>
-							    	
-							    	<c:when test="${empty askList.teacher.teacherId}">
-							    			<span>(학생 ) <%-- ${askList.student.studentId} --%></span>
-							    	</c:when>
-			    				</c:choose>
+				        	<c:choose>
+						    	<c:when test="${empty askList.student.studentId}">
+									<span>${askList.teacher.teacherId}</span>
+						    	
+						    	</c:when>
+						    	
+						    	<c:when test="${empty askList.teacher.teacherId}">
+						    			<span>${askList.student.studentId}</span>
+						    	</c:when>
+		    				</c:choose>
 					        	
 					        </td>
 					        <td>
 					        	 <a href="${pageContext.request.contextPath}/admin/board/askAnswerDetail/${askList.askNo}">
-					        	     ${askList.askTitle}<p>
+					        	     ${askList.askTitle}
+				        	     <c:set var="today" value="<%=LocalDateTime.now().minusDays(1)%>"/>
+								  <c:if test="${askList.askInsertDate >= today}">
+								  	<span class="badge rounded-pill bg-primary">new</span>
+								  </c:if>
 					        	</a>
 					        </td>
 					        <td>
-							   	${askList.askCategory.askCategoryName}<p>
-					        </td>
-					        <td>
-						        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-						            ${askList.askContent}<p>
-						        </span>
-						        
-					        </td>
-					        <td>
-					         	${askList.askImg}<p>
+							   	${askList.askCategory.askCategoryName}
 					        </td>
 					        <td>
 					        	<fmt:parseDate value="${askList.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
@@ -125,48 +112,47 @@
 			    </c:forEach>
 			</c:otherwise>
 	    </c:choose>
+	    
+			<tr>
+				<td colspan="5">
+					<div align="right">
+						<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/board/askAnswerList" role="button" >목록으로</a>
+					</div>
+				</td>
+			</tr>
 	   </tbody>
 		</table>
 		
-		<hr>
-			
-			 <div style="text-align: center">
-				<!--  블럭당  -->
-		 <nav class="pagination-container">
-			<div class="pagination justify-content-center">
-			<c:set var="doneLoop" value="false"/>
+			 <div>
+		
+		<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+	<c:set var="doneLoop" value="false"/>
+		  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
+	      	<li class="page-item">
+		      <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage-1}">이전</a>
+		  	</li>
+		  </c:if>
+		
+	  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
+		    <c:if test="${(i-1)>=askList.getTotalPages()}">
+		       <c:set var="doneLoop" value="true"/>
+		    </c:if> 
+			  <c:if test="${not doneLoop}" >
+			  <li class="page-item">
+			         <a class="page-link ${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${i}">${i}</a> 
+			  </li>
+			  </c:if>
+		</c:forEach>
 				
-				  <c:if test="${(startPage-blockCount) > 0}"> <!-- (-2) > 0  -->
-				      <li class="page-item">
-				      	<a class="pagination-newer" href="${pageContext.request.contextPath}/admin/board/askUnanswerList?nowPage=${startPage-1}">PREV</a>
-				  	  </li>
-				  </c:if>
-				  
-				<span class="pagination-inner"> 
-				  <c:forEach var='i' begin='${startPage}' end='${(startPage-1)+blockCount}'> 
-				  
-					    <c:if test="${(i-1)>=askList.getTotalPages()}">
-					       <c:set var="doneLoop" value="true"/>
-					    </c:if> 
-				    
-				  <c:if test="${not doneLoop}" >
-				         <a class="${i==nowPage?'pagination-active':page}" href="${pageContext.request.contextPath}/admin/board/askUnanswerList?nowPage=${i}">${i}</a> 
-				  </c:if>
-				   
-				</c:forEach>
-				</span> 
-						
-				 <c:if test="${(startPage+blockCount)<=askList.getTotalPages()}">
-				     <li class="page-item">
-				     	<a class="pagination-older" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">NEXT</a>
-				 	 </li>
-				 </c:if>
-				</div>
-			</nav>  
-		</div>	 
-
-				
-	</div>	
+		 <c:if test="${(startPage+blockCount)<=askList.getTotalPages()}">
+	     <li class="page-item">
+		     <a class="page-link" href="${pageContext.request.contextPath}/admin/board/askAnswerList?nowPage=${startPage+blockCount}">다음</a>
+		 </li>
+		 </c:if>
+		</ul>
+	</nav> 		
+		
 
 </body>
 </html>

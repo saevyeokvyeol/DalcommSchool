@@ -25,6 +25,7 @@ import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.QClassSchedule;
 import dcsc.mvc.domain.classes.QClasses;
 import dcsc.mvc.domain.classes.Search;
+import dcsc.mvc.domain.user.PlaceRegion;
 import dcsc.mvc.repository.classes.BookRepository;
 import dcsc.mvc.repository.classes.ClassCategoryRepository;
 import dcsc.mvc.repository.classes.ClassScheduleRepository;
@@ -174,7 +175,7 @@ public class ClassesServiceImpl implements ClassesService {
 			// 지역으로 검색
 			if(search.getPlaceRegion() != null) {
 				System.out.println(search.getPlaceRegion());
-				booleanBuilder.and(classes.teacher.place.placeRegion.regionId.eq(search.getPlaceRegion()));
+				booleanBuilder.and(classes.placeRegion.regionId.eq(search.getPlaceRegion()));
 			}
 			
 			// 카테고리로 검색

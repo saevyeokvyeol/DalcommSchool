@@ -70,7 +70,7 @@ public class AskAnswerAdminController {
 		
 		Ask askAnswerDetail = askAnswerService.selectByAskNo(askNo);
 		System.out.println("********************askNo : "+askNo);
-		return new ModelAndView("/admin/board/askanswer/askAnswerDetail","askAnswerDetail",askAnswerDetail); 
+		return new ModelAndView("admin/board/askanswer/askAnswerDetail","askAnswerDetail",askAnswerDetail); 
 	}
 	 
 	     
