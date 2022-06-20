@@ -212,7 +212,6 @@ $(function(){
 </head>
 <body>
 <div id="main-content">
-<h3> 강사 정보 수정 페이지 </h3>
 <br>
 <section>
 <%--   <sec:authorize access="isAuthenticated()"> --%>

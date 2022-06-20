@@ -31,7 +31,7 @@
 							bookData.push(item.bookCount);
 							profitData.push(item.classTotalProfit);
 						})
-						/
+						
 						new Chart($("#classBooker"), {
 							type: 'doughnut',
 							options: {

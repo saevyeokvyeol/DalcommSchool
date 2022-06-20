@@ -15,9 +15,13 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-	#preview-image{
-		width: 350px;
-		height: 350px;
+	.mainImgCon,#input-image {
+			display: none;
+		}
+	#preview-image, .mainFileBtn, .mainImgCon, .mb-3 {
+		max-width: 350px;
+		max-height: 350px;
+		margin: auto;
 		/* object-fit:cover; */
 		background-size: contain;
 	
@@ -97,60 +101,41 @@
 		    <div align=right><span style="font-size:9pt;"><a class="btn btn-primary"  href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById" role="button">목록으로</a></span></div>
 		    
 			<table class="table">
-			    <tr>
-			        <td>
-			            ${askSelectByIdList.askNo} 번 게시물 수정하기
-			        </td>
 			    </tr>
 			    <tr>
 			        <td>
-			            문의 ID : ${askSelectByIdList.student.studentId}
-			        </td>
-			    </tr>
-			    <tr>
-			        <td>
-			            문의 제목 
-			        </td>
-			        <td>
-						<input type=text name="askTitle" size="20" value="${askSelectByIdList.askTitle}">
+						<input type=text name="askTitle" class="form-control" value="${askSelectByIdList.askTitle}">
 					</td>
 			    </tr>
 			   
-			    <tr>
-			    	<td>
-			    		첨부파일
-			    	</td>
-					<td>
-						 <div class="mb-3" align="center"> 
-							<div class="image-container mainImgCon">
-							    <a><img id="preview-image" src="${pageContext.request.contextPath}/img/ask/${askSelectByIdList.askImg}"></a>
-							</div>
-							<!-- <button type="button" class="fileBtn mainFileBtn">
-								<i class="fa-regular fa-image fa-2xl"></i>
-								파일 첨부
-							</button> -->
-							<input type="file" id="input-image" name="file">
-						 </div>
-					</td>
-				</tr>
 			    
 			    <tr>
-			      	<td>
-			      		문의 내용
-			      	</td>
 			        <td>
 						<textarea name="askContent" id="summernote">${askSelectByIdList.askContent}</textarea>
 					</td>
 			    </tr>
 			 
+			    <tr>
+					<td>
+						 <div class="mb-3" align="center"> 
+							<div class="image-container mainImgCon">
+							    <a><img id="preview-image" src="${pageContext.request.contextPath}/img/ask/${askSelectByIdList.askImg}"></a>
+							</div>
+							<button type="button" class="fileBtn mainFileBtn">
+								<i class="fa-regular fa-image fa-2xl"></i>
+								첨부 파일 첨부
+							</button>
+							<input type="file" id="input-image" name="file">
+						 </div>
+					</td>
+				</tr>
 			</table>
 			<div class="col text-center">
 							
 				<input type="submit" class="btn btn-primary" value="수정하기"> 
 				<input type="reset" class="btn btn-primary" value="다시쓰기">
 			</div>
-		</form>													
-	<hr>
+		</form>			
 	
 </body>
 </html>
