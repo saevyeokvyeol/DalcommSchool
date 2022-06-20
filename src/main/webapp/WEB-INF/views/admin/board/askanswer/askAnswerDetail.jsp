@@ -64,23 +64,10 @@
 				 
 				  
 				   data+="<table align='center' class='table'>";	
-				   		data+="<tr>";
-					 	data+="<td>답변 번호</td>";
-						data+="<td>"+result.answerNo+"</td>";
-						data+="</tr>";
+						data+="<h6>"+result.answerContent+"</h6>";
+									
+						data+="<span id='date'>"+result.answerInsertDate.toString().substring(0,10)+"</span>";
 						
-						data+="<tr>";
-						data+="<td>답변 일자</td>";					
-						data+="<td>"+result.answerInsertDate.toString().substring(0,10)+"</td>";
-						
-						data+="</tr>";
-						
-						data+="<tr>";
-						data+="<td>답변 내용</td>";
-						data+="<td>"+result.answerContent+"</td>";
-						data+="</tr>";
-						
-				data+="</table>";
 					
 					
 				   $("#answerView").html(data);

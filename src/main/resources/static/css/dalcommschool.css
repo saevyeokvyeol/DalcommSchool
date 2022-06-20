@@ -911,3 +911,11 @@ p, pre {
 .faqCategory {
 	width: 100%; margin-bottom: 30px;
 }
+
+#snsBox {
+	display: flex; justify-content: flex-start; margin: 50px 150px 0;
+}
+
+#snsBox a {
+	margin-right: 30px;
+}

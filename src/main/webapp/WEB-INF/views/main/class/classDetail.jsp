@@ -986,6 +986,16 @@
 								<div>${classes.teacher.teacherInfo}</div>
 							</div>
 						</div>
+						<div id="snsBox">
+							<c:forEach items="${classes.teacher.teacherSns}" var="sns">
+								<c:choose>
+									<c:when test="${sns.sns.snsId == 1 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-youtube fa-2xl"></i> 유튜브</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 2 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-instagram fa-2xl"></i> 인스타그램</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 3 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-twitter fa-2xl"></i> 트위터</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 4 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-facebook fa-2xl"></i> 페이스북</h6></a></c:when>
+								</c:choose>
+							</c:forEach>
+						</div>
 					</div>
 					<!-- 여기부터 지도 -->
 					<div class="classInfoBox" id="review">

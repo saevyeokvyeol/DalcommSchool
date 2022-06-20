@@ -17,7 +17,6 @@
 
 <style type="text/css">
 
-
 	#span{
 	    width: 100%;
 	}
@@ -29,186 +28,21 @@
 	    
 	}
 
-	.mainImgCon,#input-image {
-				display: none;
-			}
-			
-		#preview-image{
-			width: 350px;
-			height: 350px;
-			/* object-fit:cover; */
-			background-size: contain;
-		
-		}
+	#preview-image{
+		width: 350px;
+		height: 350px;
+		/* object-fit:cover; */
+		background-size: contain;
+	
+	}
 
 </style>
 
-<script type="text/javascript">
-	
-	function clickDel(askInfo) {
-	 	askInfo.action = "${pageContext.request.contextPath}/teacher/board/askanswer/deleteTeacher";
-	 	askInfo.method = "post";
-	 	askInfo.submit();
-	}
 
-</script>
 
 </head>
 <body>
-		
-
-<div class="main-content">
-	<%-- <table align="center" class="table">
-			
-			<tr> 
-				<td> 
-			    	문의 제목
-			    </td>
-			    <td> 
-			    	${askAnswerDetail.askTitle}
-			    </td>
-			</tr>
-			<tr> 
-				 <td> 
-			    	문의 ID
-			    </td>
-			    <td> 
-			    	${askAnswerDetail.teacher.teacherId}
-			    </td>
-			</tr>
-			<tr> 
-				 <td> 
-			    	카테고리명
-			    </td>
-			    <td> 
-			    	${askAnswerDetail.askCategory.askCategoryName}
-			    </td>
-			</tr>
-			<tr> 
-				 <td> 
-			    	답변 유무
-			    </td>
-			    <td> 
-			    	
-			    	<c:choose>
-                       	<c:when test="${askAnswerDetail.askComplete == 'F'}">
-                       		<span class="badge bg-secondary">미답변</span>
-                       	</c:when>
-                       	<c:when test="${askAnswerDetail.askComplete == 'T'}">
-                       		<span class="badge bg-primary">답변 완료</span>
-                       	</c:when>
-                     </c:choose>
-			    	
-			    </td>
-			</tr>
-			<tr> 
-				 <td> 
-			    	문의 일자
-			    </td>
-				<td>
-					<fmt:parseDate value="${askAnswerDetail.askInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-					<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-				</td>
-			</tr>
-			<tr>
-				
-			     <td colspan="2" style="text-align: center;" align="left">
-					<img id="preview-image" alt="" src="${pageContext.request.contextPath}/img/ask/${askAnswerDetail.askImg}">
-					<span style="font-size:20pt;"><b><pre>${askAnswerDetail.askContent}</pre></b></span>
-			     </td>
-    		</tr>
-	
-											
-			    <hr>
-	</table> --%>
-	
-	<%-- <div class="card" style="width: 18rem;">
-  		<div class="card-body">
-			    <c:choose>
-			    	<c:when test="${empty askAnswerDetail.answer}">
-					<span>답변 내용이 없습니다.</span>
-			    	
-			    	</c:when>
-			    	<c:otherwise>
-					 답변 내용 : ${askAnswerDetail.answer.answerContent}<p>
-					 답변 일자 : 
-						 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-						<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-					
-					 </c:otherwise>
-			    </c:choose>
-	    	</div>
-	    </div>
-	     --%>
-	    
-	    
-	   <%--  
-	   <div class="main-content">
-		<table align="center" class="table">
-			
-			<tr>
-				<td>
-					답변 일자
-				</td>
-				<td>
-					 <c:choose>
-					    	<c:when test="${empty askAnswerDetail.answer}">
-							<span>답변 내용이 없습니다.</span>			    	
-					    	</c:when>
-					    	<c:otherwise> 
-							 <fmt:parseDate value="${askAnswerDetail.answer.answerInsertDate}" pattern="yyyy-mm-dd" var="parseDate" scope="page"/>
-							<fmt:formatDate value="${parseDate}" pattern="yyyy-mm-dd"/>
-							 </c:otherwise>
-					 </c:choose>
-				</td>
-			</tr>
-			
-			
-			<tr>
-				<td>
-					답변 내용
-				</td>
-				<td>
-					 <c:choose>
-					    	<c:when test="${empty askAnswerDetail.answer}">
-							<span>답변 내용이 없습니다.</span>
-		
-					    	</c:when>
-					    	<c:otherwise>
-							  ${askAnswerDetail.answer.answerContent}
-							 </c:otherwise>
-					    </c:choose>
-				</td>
-			</tr>
-			
-		</table>
-	</div>  --%>
-	    
-	    
-	    
-	    
-	    
-	
-	
-	<%-- 	<div class="row">
-			<div  class="col text-center">
-					
-					<c:choose>
-					<c:when test="${askAnswerDetail.askComplete eq 'T'}">
-						
-					</c:when>
-					<c:when test="${askAnswerDetail.askComplete eq 'F'}">
-						<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/updateFormTeacher?askNo=${askAnswerDetail.askNo}">수정하기</a>
-					</c:when>
-				</c:choose>
-			
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
-			</div>
-		</div>
-		<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a>
-		 --%>
-		
-		<div id="sidebarHeader"><h3>1대1 문의</h3></div>
+<div id="sidebarHeader"><h3>1대1 문의</h3></div>
 	<table class="table" id="askTable">
 			<tr>
 			    <td colspan="2"> 
@@ -250,18 +84,14 @@
 					
 				</c:when>
 				<c:when test="${askAnswerDetail.askComplete eq 'F'}">
-					<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/updateFormTeacher?askNo=${askAnswerDetail.askNo}">수정하기</a>
+					<a class="btn btn-secondary" role="button" href="${pageContext.request.contextPath}/main/board/askanswer/updateFormStudent?askNo=${askAnswerDetail.askNo}">수정하기</a>
 				</c:when>
 			</c:choose>
 			
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제하기</button>
 		</div>
 	</div>
-	<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/teacher/board/askanswer/askAnswerSelectById">뒤로가기</a>
-	
-		
-		
-					
+	<a class="btn btn-primary btn-sm" role="button" href="${pageContext.request.contextPath}/main/mypage/askAnswerSelectById">뒤로가기</a>
 	<form name="askInfo" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- csrf token 전송 -->
 		<input type=hidden name="askNo" value="${askAnswerDetail.askNo}">
@@ -285,13 +115,5 @@
 	  </div>
 	</div>
 	
-</div>
-
-
-
-
-
-
-
 </body>
 </html>
