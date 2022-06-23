@@ -8,6 +8,7 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -40,7 +41,7 @@
 						},
 						error:function(request, status, error){
 
-							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							swal("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 
 						}
 					})
@@ -62,7 +63,7 @@
 							search();
 						},
 						error: function(err){
-							alert("클래스 카테고리를 가져올 수 없습니다.")
+							swal("클래스 카테고리를 가져올 수 없습니다.")
 						}
 					})
 				}
@@ -104,7 +105,7 @@
 							$(this).attr("value", `\${result}`);
 						},
 						error: function(err){
-							alert(123)
+							swal(123)
 						}
 					})
 				})

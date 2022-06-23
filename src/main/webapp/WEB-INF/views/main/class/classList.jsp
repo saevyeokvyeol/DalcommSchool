@@ -8,6 +8,7 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -37,7 +38,7 @@
 						},
 						error:function(request, status, error){
 
-							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							swal("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 
 						}
 					})
@@ -59,7 +60,7 @@
 							search();
 						},
 						error: function(err){
-							alert("클래스 카테고리를 가져올 수 없습니다.")
+							swal("클래스 카테고리를 가져올 수 없습니다.")
 						}
 					})
 				}
@@ -101,7 +102,7 @@
 							$(this).attr("value", `\${result}`);
 						},
 						error: function(err){
-							alert(123)
+							swal(123)
 						}
 					})
 				})

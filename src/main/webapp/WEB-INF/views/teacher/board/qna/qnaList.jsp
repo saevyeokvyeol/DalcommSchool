@@ -10,6 +10,7 @@
 <title>선생님 : QnA 전체보기</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet"
@@ -39,7 +40,7 @@ table {
 $(function() {
 	
 	$(".qnaDetail").click(function(){
-		//alert($(this).val());
+		//swal($(this).val());
 		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
@@ -83,7 +84,7 @@ $(function() {
 				}
 			},
 			error: function(err){
-				alert(err + "에러 발생");
+				swal(err + "에러 발생");
 			}
 		})//ajax 끝
 	})// $(".qnaTitle").click 끝
@@ -98,12 +99,12 @@ $(".replyUpdateForm").click(function() {
 		"replyId" : $(this).val()
 	},
 	success : function(result) {
-		//alert(result)
+		//swal(result)
 		$("#reply-teacher-update #replyId").html(`\${result.replyId}`);
 		$("#reply-teacher-update .replyContent").val(`\${result.replyContent}`);
 	},
 	error : function(error) {
-		alert("QnA의 답변 글을 가져올 수 없습니다.");
+		swal("QnA의 답변 글을 가져올 수 없습니다.");
 	}
 	}); // 아작스 종료
 })//$(".updateForm").click 끝

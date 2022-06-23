@@ -9,6 +9,7 @@
 		<title>Insert title here</title>
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -27,7 +28,7 @@
 						},
 						error: function(xhr, status, error) {
 							var err = eval("(" + xhr.responseText + ")");
-							alert(err.message);
+							swal(err.message);
 						}
 					});
 				})

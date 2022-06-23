@@ -8,6 +8,7 @@
 		<title>Insert title here</title>
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -83,7 +84,7 @@
 									}
 								},
 								error : function(error) {
-									alert("일정을 가져올 수 없습니다.");
+									swal("일정을 가져올 수 없습니다.");
 								}
 							}); // 아작스 종료
 							
@@ -94,7 +95,7 @@
 							var constraint = new Date(now.setDate(now.getDate() + 7));
 							
 							if(constraint >= arg.start){
-								alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
+								swal("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
 								return false;
 							}
 							
@@ -159,12 +160,12 @@
 				$("#insertSchedule").click(function() {
 					
 					if($("#scheduleInsertForm .startTime").val() == "" || $("#scheduleInsertForm .endTime").val() == ""){
-						alert("수강 체험 가능 시간을 입력해주세요.");
+						swal("수강 체험 가능 시간을 입력해주세요.");
 						return false;
 					}
 					
 					if($("#scheduleInsertForm .startTime").val() >= $("#scheduleInsertForm .endTime").val()){
-						alert("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
+						swal("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
 						return false;
 					}
 					
@@ -187,7 +188,7 @@
 							$("#insertModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 등록할 수 없습니다.");
+							swal("일정을 등록할 수 없습니다.");
 						}
 					}); // 아작스 종료
 				})
@@ -209,7 +210,7 @@
 				$("#updateSchedule").click(function() {
 					
 					if($("#scheduleUpdateForm .startTime").val() >= $("#scheduleUpdateForm .endTime").val()){
-						alert("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
+						swal("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
 						return false;
 					}
 					
@@ -231,7 +232,7 @@
 							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 수정할 수 없습니다.");
+							swal("일정을 수정할 수 없습니다.");
 						}
 					}); // 아작스 종료
 				})
@@ -242,7 +243,7 @@
 						return
 					}
 					if(difference > 0){
-						alert("수강 신청자가 있을 경우 일정을 삭제할 수 없습니다.")
+						swal("수강 신청자가 있을 경우 일정을 삭제할 수 없습니다.")
 						return false
 					}
 					
@@ -259,7 +260,7 @@
 							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 삭제할 수 없습니다.");
+							swal("일정을 삭제할 수 없습니다.");
 						}
 					})
 				})

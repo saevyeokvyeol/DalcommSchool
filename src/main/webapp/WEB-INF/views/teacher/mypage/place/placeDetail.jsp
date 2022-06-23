@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공방 상세 보기</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -44,7 +45,7 @@ body{margin: auto; width: 1200px;}
 						placeId: ${place.placeId}
 				},
 				success: function(result){
-// 					alert(result);
+// 					swal(result);
 					let text="";
 					$.each(result, function(index, item){
 						
@@ -54,7 +55,7 @@ body{margin: auto; width: 1200px;}
 					$("#placeInfra").after(text);
 				},
 				error: function(err){
-					alert(err + "에러 발생")
+					swal(err + "에러 발생")
 				}
 			})
 		}selectPlaceInfra();
@@ -83,7 +84,7 @@ body{margin: auto; width: 1200px;}
 // 	        }
 // 	        map = new google.maps.Map(document.getElementById('map'), mapOptions);
 // 	      } else {
-// 	        alert('Geocode was not successful for the following reason: ' + status);
+// 	        swal('Geocode was not successful for the following reason: ' + status);
 // 	      }
 // 	  });
 // 	}
@@ -119,7 +120,7 @@ body{margin: auto; width: 1200px;}
 	        });
 	        
 	      } else {
-	        alert('Geocode was not successful for the following reason: ' + status);
+	        swal('Geocode was not successful for the following reason: ' + status);
 	      }
 	    });
 	}

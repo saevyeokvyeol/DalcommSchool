@@ -6,6 +6,8 @@
 <head> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- include libraries(jQuery, bootstrap) -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -47,7 +49,7 @@
     
 	$(function() {
 		$("#updateForm").submit(function(event){
-				alert("게시글이 수정되었습니다.");
+				swal("게시글이 수정되었습니다.");
 			}
 		)
 	});
