@@ -16,6 +16,8 @@
 <meta charset="UTF-8">
 <title>관리자용 리뷰 리스트</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -62,7 +64,7 @@ $(function(){
 				$("#reviewDetail-form .reviewContent").html(`\${result.reviewContent}`);
 			},
 			error: function(err){
-				alert(err + "에러 발생. - 상세보기");
+				swal(err + "에러 발생. - 상세보기");
 			}
 		})
 	})
@@ -83,11 +85,11 @@ $(function(){
         	reviewBlindState: 'T'
         } , //서버에게 보낼 데이터정보(parameter정보)
         success: function(result){
-            alert("블라인드 처리되었습니다.")
+            swal("블라인드 처리되었습니다.")
             location.reload()
         },
         error: function(err){//실패했을 때 콜백함수
-            alert(err+"오류가 발생했습니다.")
+            swal(err+"오류가 발생했습니다.")
         } 
 
         })

@@ -8,6 +8,7 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -251,7 +252,7 @@
 							$(this).attr("value", `\${result}`);
 						},
 						error: function(err){
-							alert(123)
+							swal(123)
 						}
 					})
 				})
@@ -353,7 +354,7 @@
 							$(".reviewPaging").html(pageText)
 						},
 						error: function(err){
-							alert("Q&A를 조회할 수 없습니다.")
+							swal("Q&A를 조회할 수 없습니다.")
 						}
 					})
 				} // 클래스 후기 아작스 함수 종료
@@ -388,7 +389,7 @@
 							$(this).parent().parent().after(text);
 						},
 						error: function(err){
-							alert("후기를 조회할 수 없습니다.");
+							swal("후기를 조회할 수 없습니다.");
 						}
 					})
 				})
@@ -415,7 +416,7 @@
 							classReview(1);
 						},
 						error:function(xhr, status, error){
-							alert(eval("(" + xhr.responseText + ")").message);
+							swal(eval("(" + xhr.responseText + ")").message);
 						}
 					}).submit();
 				})
@@ -435,7 +436,7 @@
 							classReview($(".nowReview").val())
 						},
 						error: function(err){
-							alert("후기를 삭제할 수 없습니다");
+							swal("후기를 삭제할 수 없습니다");
 						}
 					})
 				})
@@ -466,7 +467,7 @@
 							$("#reviewUpdateModal").modal("show")
 						},
 						error: function(err){
-							alert("Q&A를 삭제할 수 없습니다");
+							swal("Q&A를 삭제할 수 없습니다");
 						}
 					})
 				})
@@ -483,7 +484,7 @@
 							classReview($(".nowReview").val())
 						},
 						error:function(xhr, status, error){
-							alert(eval("(" + xhr.responseText + ")").message);
+							swal(eval("(" + xhr.responseText + ")").message);
 						}
 					}).submit();
 				})
@@ -587,7 +588,7 @@
 							$(".qnaPaging").html(pageText)
 						},
 						error: function(err){
-							alert("Q&A를 조회할 수 없습니다.")
+							swal("Q&A를 조회할 수 없습니다.")
 						}
 					})
 				} // 클래스 문의글 아작스 함수 종료
@@ -615,7 +616,7 @@
 							classQna(1)
 						},
 						error: function(err){
-							alert("Q&A를 등록할 수 없습니다.")
+							swal("Q&A를 등록할 수 없습니다.")
 						}
 					})
 				})
@@ -662,7 +663,7 @@
 							$(this).parent().parent().after(text);
 						},
 						error: function(err){
-							alert("Q&A를 조회할 수 없습니다.");
+							swal("Q&A를 조회할 수 없습니다.");
 						}
 					})
 				})
@@ -681,7 +682,7 @@
 							classQna($(".nowQna").val())
 						},
 						error: function(err){
-							alert("Q&A를 삭제할 수 없습니다");
+							swal("Q&A를 삭제할 수 없습니다");
 						}
 					})
 				})
@@ -706,7 +707,7 @@
 							$("#qnaUpdateForm").modal("show")
 						},
 						error: function(err){
-							alert("Q&A를 삭제할 수 없습니다");
+							swal("Q&A를 삭제할 수 없습니다");
 						}
 					})
 				})
@@ -722,7 +723,7 @@
 							classQna($(".nowQna").val())
 						},
 						error: function(err){
-							alert("Q&A를 수정할 수 없습니다.")
+							swal("Q&A를 수정할 수 없습니다.")
 						}
 					})
 				})
@@ -732,7 +733,7 @@
 				
 				$("#bookForm").submit(function() {
 					if($("#bookSeat").val() == 0){
-						alert("남은 수강 인원이 부족해 예약할 수 없습니다.")
+						swal("남은 수강 인원이 부족해 예약할 수 없습니다.")
 						return false;
 					}
 				})
@@ -766,7 +767,7 @@
 			        });
 			        
 			      } else {
-			        alert('Geocode was not successful for the following reason: ' + status);
+			        swal('Geocode was not successful for the following reason: ' + status);
 			      }
 			    });
 			}

@@ -117,7 +117,7 @@ $(function(){
 	*/
 	$("#phoneCheck").click(function(){
 		if(!isValidPhone()){
-			alert("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
+			swal("먼저 조건에 맞는 핸드폰 번호를 입력해주세요.")
 			return;
 		}
 		$.ajax({
@@ -126,16 +126,16 @@ $(function(){
 			dataType: "text",
 			success: function(data){
 				if(data=="true"){
-					alert("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
+					swal("가입한 이력이 있는 번호입니다. 아이디 및 비밀번호 찾기를 이용해주세요.");
 					return;
 				}else{
-					alert("사용 가능한 번호입니다.");
+					swal("사용 가능한 번호입니다.");
 					isPhoneChecked = true;
 					return;
 				}
 			}, //success 끝
 			error: function(err){
-				alert(err + "에러 발생");
+				swal(err + "에러 발생");
 			}
 		})
 	})
@@ -147,7 +147,7 @@ $(function(){
 		
 		
 		if($("#teacherNick").val()==""){
-			alert("닉네임을 입력해주세요.");
+			swal("닉네임을 입력해주세요.");
 			return;
 		}
 		$.ajax({
@@ -158,16 +158,16 @@ $(function(){
 			dataType: "text",
 			success: function(data){
 				if(data=="true"){
-					alert("사용 중인 닉네임입니다.");
+					swal("사용 중인 닉네임입니다.");
 					return;
 				}else{
-					alert("사용 가능한 닉네임입니다.");
+					swal("사용 가능한 닉네임입니다.");
 					isNickChecked = true;
 					return;
 				}
 			}, //success 끝
 			error: function(err){
-				alert(err + "에러 발생");
+				swal(err + "에러 발생");
 			}
 		})			
 	})
@@ -190,19 +190,19 @@ $(function(){
 		중복체크 여부
 		*/
 		if(!isNickChecked){
-			alert("닉네임 중복체크를 진행해주세요")
+			swal("닉네임 중복체크를 진행해주세요")
 			event.preventDefault();
 		}else if(!isPhoneChecked){
-			alert("핸드폰 번호 중복체크를 진행해주세요")
+			swal("핸드폰 번호 중복체크를 진행해주세요")
 			event.preventDefault();
 		}else if(!isValidPhone()){
-			alert("핸드폰 번호를 형식에 맞게 입력해주세요.");
+			swal("핸드폰 번호를 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}else if(!isValidEmail()){
-			alert("이메일을 형식에 맞게 입력해주세요.");
+			swal("이메일을 형식에 맞게 입력해주세요.");
 			event.preventDefault();
 		}else{
-			alert("회원정보가 수정되었습니다.")
+			swal("회원정보가 수정되었습니다.")
 		}
 	})
 })

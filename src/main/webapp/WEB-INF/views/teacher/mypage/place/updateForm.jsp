@@ -16,6 +16,7 @@
 	.textbox{resize:none;}
 
 </style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -91,7 +92,7 @@ $(function(){
 			data : {"${_csrf.parameterName}": "${_csrf.token}"},
 			dataType: "json",
 			success: function(result){
-//					alert(result);
+//					swal(result);
 				text=""
 				$.each(result, function(index,item){
 					text += `<span><input type="checkbox" name='infraId' id='\${item.infraId}' value='\${item.infraId}'>&nbsp\${item.infraName}</span>`;
@@ -101,7 +102,7 @@ $(function(){
 				selectMyInfra();
 			},
 			error: function(err){
-				alert("인프라 정보를 가져올 수 없습니다.")
+				swal("인프라 정보를 가져올 수 없습니다.")
 			}
 		})
 	}
@@ -120,7 +121,7 @@ $(function(){
 				}
 			},
 			error: function(err){
-				alert("인프라 정보를 가져올 수 없습니다.")
+				swal("인프라 정보를 가져올 수 없습니다.")
 			}
 		})
 	}
@@ -151,7 +152,7 @@ $(function(){
 			},
 			error: function(err){
 				
-				alert("지역정보를 가져올 수 없습니다.")
+				swal("지역정보를 가져올 수 없습니다.")
 			}
 		})
 	}
@@ -188,7 +189,7 @@ $(function(){
 			            position: results[0].geometry.location
 			        });
 			      } else {
-			        alert('Geocode was not successful for the following reason: ' + status);
+			        swal('Geocode was not successful for the following reason: ' + status);
 			      }
 			    });
 	  }

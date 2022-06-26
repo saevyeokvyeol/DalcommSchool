@@ -11,6 +11,7 @@
 <title>정산하기 폼</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -18,19 +19,19 @@
 
 <script type="text/javascript">
 	$(function() {
-		//alert(1);
+		//swal(1);
 		$("#adjustPrice").keyup(function(){
 			let adjustPrice = parseInt($(this).val())
 			let adjustable = parseInt($("#adjustable").val())
 			
 			 if(adjustPrice  >  adjustable){
-				alert("정산 가능 총액보다 금액이 큽니다.");
+				swal("정산 가능 총액보다 금액이 큽니다.");
 				$(this).val(adjustable);
 				return false;
 			}
 		})
 		
-		//정산신청시 값 비워져있으면 alert 창 띄우기
+		//정산신청시 값 비워져있으면 swal 창 띄우기
 		$("#adjust-insert-btn").click(function() {
 			let adjustPrice = $(".adjustPrice").val();
 			let bank = $(".bank").val();
@@ -38,16 +39,16 @@
 			let account = $(".account").val();
 			
 			if(adjustPrice==""){
-				alert("정산 신청 금액을 적어주세요");
+				swal("정산 신청 금액을 적어주세요");
 				return false;
 			}else if(bank==""){
-				alert("은행을 적어주세요");
+				swal("은행을 적어주세요");
 				return false;
 			}else if(depositor==""){
-				alert("예금주 이름을 적어주세요");
+				swal("예금주 이름을 적어주세요");
 				return false;
 			}else if(account==""){
-				alert("계좌번호를 적어주세요");
+				swal("계좌번호를 적어주세요");
 				return false;
 			}
 				

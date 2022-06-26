@@ -17,6 +17,8 @@
 	
 	textarea{width:100%; height:6.25em; resize:none;}
 </style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -24,7 +26,7 @@
 
 <script type="text/javascript">
 $(function(){
-// 	alert($("#reviewId").val());
+// 	swal($("#reviewId").val());
 
 	/*
 	블라인드 처리
@@ -38,12 +40,12 @@ $(function(){
 	        data: {"${_csrf.parameterName}": "${_csrf.token}", reviewId: target, reviewBlindState: 'true'} , //서버에게 보낼 데이터정보(parameter정보)
 	        
 	        success: function(result){
-	            alert("블라인드 처리되었습니다.")
+	            swal("블라인드 처리되었습니다.")
 	            location.reload()
 	        },
 	
 	        error: function(err){//실패했을 때 콜백함수
-	            alert(err+"오류가 발생했습니다.")
+	            swal(err+"오류가 발생했습니다.")
 	        } 
 	
 	        })
@@ -60,10 +62,10 @@ $(function(){
 				},
 				type:"post",
 				success: function(){
-					 alert("삭제되었습니다.")
+					 swal("삭제되었습니다.")
 				},
 				error: function(err){
-					alert(err + "에러 발생")
+					swal(err + "에러 발생")
 				}
 			})
 		}else{
@@ -77,7 +79,7 @@ $(function(){
 	})
 	
 // 	$("#updateBtn").on("click",function(){
-// 		alert(${review.reviewId} + "번 게시물 수정 페이지로 이동합니다.")
+// 		swal(${review.reviewId} + "번 게시물 수정 페이지로 이동합니다.")
 		
 // 		$.ajax({
 // 			url:"/main/board/review/updateForm",
@@ -86,10 +88,10 @@ $(function(){
 // 			},
 // 			type:"post",
 // 			success: function(){
-// 				alert("수정페이지로 이동하는 데 성공하였습니다.")
+// 				swal("수정페이지로 이동하는 데 성공하였습니다.")
 // 			},
 // 			error: function(err){
-// 				alert(err + "에러 발생")
+// 				swal(err + "에러 발생")
 // 			}
 // 		})
 // 	})

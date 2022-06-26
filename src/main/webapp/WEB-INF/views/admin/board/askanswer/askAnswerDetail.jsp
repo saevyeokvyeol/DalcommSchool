@@ -7,6 +7,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -45,7 +46,7 @@
 	
 
 	$(function getAnswerList(){
-		//alert(1);
+		//swal(1);
 		$("#answerBtn").click(function(){
 		   
 		    $.ajax({
@@ -56,7 +57,7 @@
 			   success: function(result) {
 				  
 
-				   alert("답변을 등록하였습니다.");
+				   swal("답변을 등록하였습니다.");
 				   
 					
 					
@@ -76,7 +77,7 @@
 			   },
 				error: function(err) {
 					
-					alert("답변을 실패 하였습니다.")
+					swal("답변을 실패 하였습니다.")
 				}
 			  
 		   }) 
