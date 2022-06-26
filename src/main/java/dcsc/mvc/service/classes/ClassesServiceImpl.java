@@ -109,7 +109,7 @@ public class ClassesServiceImpl implements ClassesService {
 	@Override
 	public void updateState(Long classId, Long stateId) {
 		Classes dbClass = classesRepository.findById(classId).orElse(null);
-		
+		System.out.println("마마마마마마마");
 		if(stateId == 1 && dbClass.getClassState().getStateId() != 2) throw new RuntimeException("공개 신청된 클래스가 아닙니다.");
 		else if(stateId == 2 && dbClass.getClassState().getStateId() != 1) throw new RuntimeException("공개 신청할 수 있는 클래스가 아닙니다.");
 		else if(stateId == 3 && dbClass.getClassState().getStateId() != 4) throw new RuntimeException("비공개된 클래스가 아닙니다.");
@@ -263,7 +263,9 @@ public class ClassesServiceImpl implements ClassesService {
 		
 		JPQLQuery<ClassSchedule> jpqlQuery = jpaQueryFactory.selectFrom(schedule)
 				.distinct()
-				.where(booleanBuilder);
+				.where(booleanBuilder)
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
 		
 		Page<ClassSchedule> list = new PageImpl<ClassSchedule>(jpqlQuery.fetch(), pageable, jpqlQuery.fetchCount());
 		
@@ -316,7 +318,7 @@ public class ClassesServiceImpl implements ClassesService {
 
 		dbSchedule.setScheduleDate(schedule.getScheduleDate());
 		
-		if(schedule.getTotalSeat() - dbSchedule.getLeftSeat() == 0) {
+		if(dbSchedule.getTotalSeat() - dbSchedule.getLeftSeat() == 0) {
 			dbSchedule.setStartTime(schedule.getStartTime());
 			dbSchedule.setEndTime(schedule.getEndTime());
 		}

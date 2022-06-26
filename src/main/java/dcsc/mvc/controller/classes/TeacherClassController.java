@@ -30,7 +30,7 @@ public class TeacherClassController {
 	private final ClassesService classesService;
 	private final TeacherService teacherService;
 	
-	private final int SIZE = 9;
+	private final int SIZE = 8;
 	private final int BLOCK_COUNT = 5;
 	
 	/**

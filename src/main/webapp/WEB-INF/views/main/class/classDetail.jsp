@@ -663,7 +663,7 @@
 							$(this).parent().parent().after(text);
 						},
 						error: function(err){
-							swal("Q&A를 조회할 수 없습니다.");
+							swal("타인이 쓴 비밀글은 조회할 수 없습니다");
 						}
 					})
 				})
