@@ -31,6 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/static/css/**
+src/main/resources/static/js/**
 src/main/resources/Wallet_dalcommschool/**
 src/main/resources/application-oauth.properties
 src/test/java/dcsc/mvc/DalcommSchoolApplicationTests.java

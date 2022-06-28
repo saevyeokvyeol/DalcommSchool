@@ -203,8 +203,8 @@ public class StudentServiceImpl implements StudentService {
 		
 		QStudent student = QStudent.student;
 		
-		LocalDateTime to = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
-		LocalDateTime from = to.minusDays(1);
+		LocalDateTime from = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+		LocalDateTime to = from.plusDays(1);
 		booleanBuilder.and(student.studentInsertDate.between(from, to));
 		
 		JPQLQuery<Student> query = jpqlQueryFactory.selectFrom(student)

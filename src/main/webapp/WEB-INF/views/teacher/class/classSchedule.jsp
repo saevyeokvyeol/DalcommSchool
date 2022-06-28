@@ -8,6 +8,7 @@
 		<title>Insert title here</title>
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -56,7 +57,13 @@
 						eventDisplay: 'block',
 						displayEventTime: 'true',
 						eventClick: function(obj) {
-							
+							var now = new Date();
+							if(now > obj.event.start){
+
+								swal({text:"이미 완료된 일정은 수정할 수 없습니다",
+									icon: "error"})
+								return false;
+							}
 							$.ajax({
 								url : "${pageContext.request.contextPath}/selectScheduleByScheduleId",
 								type : "post",
@@ -83,7 +90,7 @@
 									}
 								},
 								error : function(error) {
-									alert("일정을 가져올 수 없습니다.");
+									swal("일정을 가져올 수 없습니다.");
 								}
 							}); // 아작스 종료
 							
@@ -92,12 +99,12 @@
 						select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 							var now = new Date();
 							var constraint = new Date(now.setDate(now.getDate() + 7));
-							
-							/* if(constraint >= arg.start){
-								alert("오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다.")
-								return;
-							} */
-							
+							if(constraint >= arg.start){
+								swal({text:"오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다",
+									icon: "error"})
+								return false;
+							}
+						
 							$(".startTime").val("");
 							$(".endTime").val("");
 							$(".totalSeat").val("");
@@ -159,12 +166,14 @@
 				$("#insertSchedule").click(function() {
 					
 					if($("#scheduleInsertForm .startTime").val() == "" || $("#scheduleInsertForm .endTime").val() == ""){
-						alert("수강 체험 가능 시간을 입력해주세요.");
+						swal({text:"수강 체험 가능 시간을 입력해주세요",
+							icon: "error"})
 						return false;
 					}
 					
 					if($("#scheduleInsertForm .startTime").val() >= $("#scheduleInsertForm .endTime").val()){
-						alert("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
+						swal({text:"종료 시간은 시작 시간보다 작거나 같을 수 없습니다",
+							icon: "error"})
 						return false;
 					}
 					
@@ -187,7 +196,7 @@
 							$("#insertModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 등록할 수 없습니다.");
+							swal("일정을 등록할 수 없습니다");
 						}
 					}); // 아작스 종료
 				})
@@ -209,7 +218,8 @@
 				$("#updateSchedule").click(function() {
 					
 					if($("#scheduleUpdateForm .startTime").val() >= $("#scheduleUpdateForm .endTime").val()){
-						alert("종료 시간은 시작 시간보다 작거나 같을 수 없습니다.");
+						swal({text:"종료 시간은 시작 시간보다 작거나 같을 수 없습니다",
+							icon: "error"})
 						return false;
 					}
 					
@@ -231,18 +241,17 @@
 							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 수정할 수 없습니다.");
+							swal({text:"일정을 수정할 수 없습니다",
+								icon: "error"})
 						}
 					}); // 아작스 종료
 				})
 				
 				// 일정 삭제
 				$("#deleteSchedule").click(function() {
-					if(!confirm("삭제한 일정은 복구할 수 없습니다.\n정말 삭제하시겠습니까?")){
-						return
-					}
 					if(difference > 0){
-						alert("수강 신청자가 있을 경우 일정을 삭제할 수 없습니다.")
+						swal({text:"수강 신청자가 있을 경우 일정을 삭제할 수 없습니다",
+							icon: "error"})
 						return false
 					}
 					
@@ -259,7 +268,7 @@
 							$("#updateModal").modal("hide");
 						},
 						error : function(error) {
-							alert("일정을 삭제할 수 없습니다.");
+							swal("일정을 삭제할 수 없습니다");
 						}
 					})
 				})

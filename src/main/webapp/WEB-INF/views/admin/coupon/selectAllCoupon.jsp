@@ -10,6 +10,8 @@
 <title>관리자 : 전체 쿠폰 조회(클래스 쿠폰+이벤트쿠폰)</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -33,7 +35,7 @@
 		$(document).on("change", "#select_couponStateName", function() {
 			//var idValue = $(this).parent().siblings().eq(1).text(); //couponId
 			//var idValue = $(this).val(); //couponStateId
-			//alert(idValue);
+			//swal(idValue);
 			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/admin/coupon/changeEventCouponState",
@@ -41,10 +43,10 @@
 				dataType : "text",
 				data: {"${_csrf.parameterName}": "${_csrf.token}", couponId: $(this).parent().siblings().eq(1).text(), couponStateId: $(this).val()},
 				success: function(result) {
-					alert("수정되었습니다.");
+					swal("수정되었습니다.");
 				},
 				error: function(err) {
-					alert(err + "\n에러발생");
+					swal(err + "\n에러발생");
 				}
 			}) // ajax 종료	
 			
@@ -63,14 +65,14 @@
 					"couponId" : $(this).parent().siblings().eq(1).text()
 				},
 				success : function(result) {
-					//alert(result)
+					//swal(result)
 					$("#coupon-admin-update .couponId").val(`\${result.couponId}`);
 					$("#coupon-admin-update .couponName").val(`\${result.couponName}`);
 					$("#coupon-admin-update .couponDc").val(`\${result.couponDc}`);
 					$("#coupon-admin-update .couponEndDate").val(`\${result.couponEndDate}`);
 				},
 				error : function(error) {
-					alert("쿠폰번호를 가져올 수 없습니다.");
+					swal("쿠폰번호를 가져올 수 없습니다.");
 				}
 			}); // 아작스 종료
 		})//$(".updateForm").click 끝
@@ -81,7 +83,7 @@
 			}
 		});
 		
-		//쿠폰등록시 값 비워져있으면 alert 창 띄우기
+		//쿠폰등록시 값 비워져있으면 swal 창 띄우기
 		$(".coupon-insert-btn").click(function() {
 			let couponState = $(".couponState-insert").val();
 			let couponName = $(".couponName-insert").val();
@@ -89,16 +91,16 @@
 			let couponEndDate = $(".couponEndDate-insert").val();
 			
 			if(couponState==0){
-				alert("쿠폰상태를 선택해주세요");
+				swal("쿠폰상태를 선택해주세요");
 				return false;
 			}else if(couponName==""){
-				alert("쿠폰이름을 적어주세요");
+				swal("쿠폰이름을 적어주세요");
 				return false;
 			}else if(couponDc==""){
-				alert("할인금액을 적어주세요");
+				swal("할인금액을 적어주세요");
 				return false;
 			}else if(couponEndDate==""){
-				alert("사용기간을 적어주세요");
+				swal("사용기간을 적어주세요");
 				return false;
 			}
 				

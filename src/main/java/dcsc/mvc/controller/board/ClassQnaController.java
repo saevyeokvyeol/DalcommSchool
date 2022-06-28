@@ -44,12 +44,27 @@ public class ClassQnaController {
 	private final static int BLOCK_COUNT = 5;
 	
 	/**
-	 * Q&A 상세조회(메인) - 포워드
+	 * Q&A 상세조회(메인)
 	 * */
 	@RequestMapping("board/qna/selectByQnaId")
 	@ResponseBody
 	public ClassQnaReplyDTO selectByQnaId(Long qnaId, Model model) {
 		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
+		
+		Student student = null;
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		System.out.println("빠바밤");
+		System.out.println(classQna.getSecretState());
+		if(classQna.getSecretState().equals("T")) {
+			if(student == null) {
+				throw new RuntimeException("비밀글입니다");
+			}
+			if(!student.getStudentId().equals(classQna.getStudent().getStudentId())) {
+				throw new RuntimeException("비밀글입니다");
+			}
+		}
 		
 		ClassQnaReplyDTO qna = new ClassQnaReplyDTO(qnaId, classQna.getStudent().getStudentId(),
 				null, classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
@@ -58,42 +73,12 @@ public class ClassQnaController {
 		
 		if(classQna.getClassReply() != null) {
 			ClassReply reply = classQna.getClassReply();
-			System.out.println(reply.getReplyId());
 			qna.setReplyId(reply.getReplyId());
 			qna.setTeacherNickname(reply.getTeacher().getTeacherNickname());
 			qna.setReplyContent(reply.getReplyContent());
 			qna.setReplyInsertDate(reply.getReplyInsertDate());
 		}
-		System.out.println(qna.getReplyContent());
 		return qna;
-	}
-	
-	/**
-	 * Q&A 상세조회(메인) -모달 - 아작스(학생 마이페이지)
-	 * */
-	@RequestMapping("main/board/qna/qnaRead")
-	@ResponseBody
-	public ClassQnaReplyDTO qnaRead(Long qnaId) {
-		ClassQna classQna = classQnaService.selectByQnaId(qnaId);
-		ClassReply classReply = classQnaService.selectByReplyQnaId(qnaId);
-		
-		ClassQnaReplyDTO qnaReplyDTO = new ClassQnaReplyDTO();
-		
-		if(classReply!=null) {
-			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
-											classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
-											classQna.getQnaContent(), classQna.getBlindState(), classQna.getSecretState(), classReply.getReplyId(), classReply.getTeacher().getTeacherNickname(), 
-											classReply.getReplyInsertDate(), classReply.getReplyContent());
-			
-		}else if(classReply==null) {
-			qnaReplyDTO = new ClassQnaReplyDTO(classQna.getQnaId(), classQna.getStudent().getStudentId(), classQna.getClasses().getClassName(),
-					classQna.getQnaInsertDate(), classQna.getQnaTitle(), classQna.getQnaComplete(),
-					classQna.getQnaContent(), classQna.getBlindState(), classQna.getSecretState(), null, null, 
-					null, null);
-		}
-		
-		
-		return qnaReplyDTO;
 	}
 	
 	/**

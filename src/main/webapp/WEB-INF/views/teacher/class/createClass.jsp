@@ -7,9 +7,11 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<style type="text/css">
 			.mainImgCon {
 				display: none;
@@ -31,7 +33,7 @@
 							$("#categoryId").append(text);
 						},
 						error : function(error) {
-							alert("카테고리 정보를 가져올 수 없습니다.");
+							swal("카테고리 정보를 가져올 수 없습니다.");
 						}
 					}); // 아작스 종료
 				} // 카테고리 가져오기 종료
@@ -69,6 +71,31 @@
 				    $(".mainFileBtn").css("display", "none")
 				})
 				
+				$("form").submit(function() {
+					if($("#input-image").val() == ""){
+						swal({text: "클래스 이미지를 등록해주세요", icon: "error"})
+						return false
+					}
+					if($("#categoryId").val() == '0'){
+						swal({text: "클래스 카테고리를 선택해주세요", icon: "error"})
+						return false
+					}
+					if($("#className").val() == ""){
+						swal({text: "클래스명을 입력해주세요", icon: "error"})
+						return false
+					}
+					if($("#classInfo").val() == ""){
+						swal({text: "클래스 소개글을 작성해주세요", icon: "error"})
+						return false
+					}
+					if($("#classPrice").val() == ""){
+						swal({text: "클래스 금액을 입력해주세요", icon: "error"})
+						return false
+					}
+				})
+				
+				
+				
 				selectAllCategory();
 			})
 		</script>
@@ -87,7 +114,7 @@
 								<i class="fa-regular fa-image fa-2xl"></i>
 								클래스 이미지 등록
 							</button>
-							<input type="file" id="input-image" name="file" required>
+							<input type="file" id="input-image" name="file">
 						</div>
 					</td>
 				</tr>
@@ -103,7 +130,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className" required>
+							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className">
 							<label for="className">클래스명</label>
 						</div>
 					</td>
@@ -111,7 +138,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" name="classInfo" style="height: 100px" required></textarea>
+							<textarea class="form-control" placeholder="클래스 소개글" id="classInfo" name="classInfo" style="height: 100px"></textarea>
 							<label for="classInfo">클래스 소개글</label>
 						</div>
 					</td>
@@ -119,7 +146,7 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice" required>
+							<input type="number" class="form-control" id="classPrice" placeholder="클래스 금액" name="classPrice">
 							<label for="classPrice">클래스 금액</label>
 						</div>
 					</td>

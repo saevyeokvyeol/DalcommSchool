@@ -10,6 +10,7 @@
 <title>관리자 : 정산 내역 전체조회</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -37,8 +38,8 @@
 				$(document).on("change", "#select_adjustStateName", function() {
 					//var idValue1 = $(this).parent().siblings().eq(0).text(); //adjustNo
 					//var idValue2 = $(this).val(); //adjustStateId
-					//alert(idValue1);
-					//alert(idValue2);
+					//swal(idValue1);
+					//swal(idValue2);
 					
 					$.ajax({
 						url: "${pageContext.request.contextPath}/admin/adjust/changeAdjustState",
@@ -46,10 +47,12 @@
 						dataType : "text",
 						data: {"${_csrf.parameterName}": "${_csrf.token}", adjustNo: $(this).parent().siblings().eq(0).text(), adjustStateId: $(this).val()},
 						success: function(result) {
-							alert("수정되었습니다.");
+							swal("수정되었습니다.");
+							location.reload();
 						},
 						error: function(err) {
-							alert(err + "\n에러발생");
+							swal(err + "\n에러발생");
+
 						}
 					}) // ajax 종료	
 					
