@@ -47,8 +47,10 @@
 						data: {"${_csrf.parameterName}": "${_csrf.token}", adjustNo: $(this).parent().siblings().eq(0).text(), adjustStateId: $(this).val()},
 						success: function(result) {
 							alert("수정되었습니다.");
+							location.reload()
+							
 						},
-						error: function(err) {
+						error: function(err) { 
 							alert(err + "\n에러발생");
 						}
 					}) // ajax 종료	
