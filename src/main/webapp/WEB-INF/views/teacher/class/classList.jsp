@@ -7,15 +7,17 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				
 				// 클래스 삭제
 				$(".delete").on("click", function() {
-					alert($(this).val());
+					swal($(this).val());
 					$.ajax({
 						url : "${pageContext.request.contextPath}/teacher/class/delete",
 						type : "post",
@@ -25,26 +27,10 @@
 						},
 						error: function(xhr, status, error) {
 							var err = eval("(" + xhr.responseText + ")");
-							alert(err.message);
+							swal({text: err.message, icon: "error"})
 						}
 					}); // 아작스 종료
 				}) // delete 버튼 클릭
-				
-				// 클래스 공개 수락
-				$(".class_open").on("click", function() {
-					$.ajax({
-						url : "${pageContext.request.contextPath}/admin/class/updateStateOpen",
-						type : "post",
-						data : {"classId" : $(this).attr("name"), "${_csrf.parameterName}" : "${_csrf.token}"},
-						success : function() {
-							location.reload();
-						},
-						error: function(xhr, status, error) {
-							var err = eval("(" + xhr.responseText + ")");
-							alert(err.message);
-						}
-					}); // 아작스 종료 */
-				}) // classOpen 버튼 클릭
 				
 				// 클래스 상태 변경
 				$(".state_update").on("click", function() {
@@ -57,7 +43,7 @@
 						},
 						error: function(xhr, status, error) {
 							var err = eval("(" + xhr.responseText + ")");
-							alert(err.message);
+							swal({text: err.message, icon: "error"})
 						}
 					}); // 아작스 종료
 				}) // update 버튼 클릭

@@ -10,6 +10,8 @@
 <title>QnA: 전체보기 - 관리자</title>
 <!--Bootstrap CSS-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/dalcommschool.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -47,12 +49,12 @@ $(function(){
         data: {"${_csrf.parameterName}": "${_csrf.token}", qnaId: target, blindState: 'T'} , //서버에게 보낼 데이터정보(parameter정보)
         
         success: function(result){
-            alert("블라인드 처리되었습니다.")
+            swal("블라인드 처리되었습니다.")
             location.reload()
         },
 
         error: function(err){//실패했을 때 콜백함수
-            alert(err+"오류가 발생했습니다.")
+            swal(err+"오류가 발생했습니다.")
         } 
 
         })
@@ -60,7 +62,7 @@ $(function(){
 	
 	//글 상세보기
 	$(".qnaTitle").click(function(){
-			//alert($(this).val());
+			//swal($(this).val());
 			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
@@ -97,7 +99,7 @@ $(function(){
 					
 				},
 				error: function(err){
-					alert(err + "에러 발생");
+					swal(err + "에러 발생");
 				}
 			})//ajax 끝
 		})// $(".qnaTitle").click 끝
