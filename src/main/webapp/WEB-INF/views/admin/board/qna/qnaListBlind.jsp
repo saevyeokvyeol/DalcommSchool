@@ -140,7 +140,7 @@ $(function(){
                         <c:forEach items="${requestScope.list.content}" var="qna">
                             <tr>
                                 <td><span>${qna.qnaId}</span></td>
-                                <td><span>${qna.classes.classId}</span></td>
+                                <td><span>${qna.classes.className}</span></td>
                                 <td><span>${qna.student.studentId}</span></td>
                                 <td>
                                     <%-- <a href="${pageContext.request.contextPath}/admin/board/qna/qnaRead/${qna.qnaId}">${qna.qnaTitle}</a> --%>
@@ -160,7 +160,16 @@ $(function(){
 			                        	</c:when>
 			                        </c:choose>
 		                        </td>
-                                <td><span>${qna.blindState}</span></td>
+                                <td>
+                                	<c:choose>
+			                        	<c:when test="${qna.blindState == 'F'}">
+			                        		<span class="badge bg-secondary"></span>
+			                        	</c:when>
+			                        	<c:when test="${qna.blindState == 'T'}">
+			                        		<span class="badge bg-primary">블라인드</span>
+			                        	</c:when>
+			                        </c:choose>
+                                </td>
                                 <td>
                                 	<c:choose>
                                         <c:when test="${qna.blindState eq 'F'}">
