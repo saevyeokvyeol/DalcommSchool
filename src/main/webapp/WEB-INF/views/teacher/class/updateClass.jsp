@@ -110,14 +110,6 @@
 				<tr>
 					<td>
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="teacherId" name="teacherId" value="Tkim1234" placeholder="선생님ID">
-							<label for="teacherId">선생님ID</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="className" placeholder="클래스명" name="className" value="${classes.className}">
 							<label for="className">클래스명</label>
 						</div>

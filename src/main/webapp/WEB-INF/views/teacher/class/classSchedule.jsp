@@ -99,11 +99,11 @@
 						select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 							var now = new Date();
 							var constraint = new Date(now.setDate(now.getDate() + 7));
-							if(constraint >= arg.start){
+							/* if(constraint >= arg.start){
 								swal({text:"오늘로부터 일주일 이내에는 일정을 등록할 수 없습니다",
 									icon: "error"})
 								return false;
-							}
+							} */
 						
 							$(".startTime").val("");
 							$(".endTime").val("");
