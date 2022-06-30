@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.4/jquery.timepicker.min.js"></script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=codeAddress&v=weekly&region=KR" defer></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
 		<style type="text/css">
 			.bootstrap-timepicker-widget.dropdown-menu {
@@ -742,18 +742,24 @@
 			var geocoder;
 			var map;
 			
-			function initialize() {
-			  geocoder = new google.maps.Geocoder();
-			  var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
-			  var mapOptions = {
-			    zoom: 16,
-			    center: latlng
-			  }
-			  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-			}
+// 			function initialize() {
+
+// 			  geocoder = new google.maps.Geocoder();
+// 			  var latlng = new google.maps.LatLng(lat, lng);
+// 			  var mapOptions = {
+// 			    zoom: 16,
+// 			    center: latlng
+// 			  }
+// 			  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+// 			}
 				  
 			function codeAddress() {
 			    var address = document.getElementById('placeAddr').value;
+			    geocoder = new google.maps.Geocoder();
+			    var mapOptions = {
+	 			    zoom: 16
+	 			  }
+			    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 			    geocoder.geocode( { 'address': address}, function(results, status) {
 			      if (status == 'OK') {
 			    	  
@@ -771,8 +777,8 @@
 			      }
 			    });
 			}
-				  
-			$(function(){	
+			
+			$(function(){
 				codeAddress();
 			})
 		</script>
