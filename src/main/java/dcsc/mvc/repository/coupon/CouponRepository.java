@@ -23,7 +23,7 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, QuerydslP
 	 * @param classId (검색 기준)
 	 * @return List<Coupon>
 	 * */
-	Page<Coupon> findByClassesClassId(Long classId, Pageable pagealbe);
+	Page<Coupon> findByClassesClassId(Long classId, Pageable pageable);
 	
 	/**
 	 * 전체 발급 쿠폰 조회 기능 ; 선생님
@@ -37,7 +37,12 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, QuerydslP
 	 * @param teacherId (검색 기준)
 	 * @return List<Coupon>
 	 * */
-	Page<Coupon> findByTeacherTeacherId(String teacherId, Pageable pagealbe);
+	Page<Coupon> findByTeacherTeacherId(String teacherId, Pageable pageable);
 	
-	
+	/**
+	 * 발급 중인 클래스 쿠폰 검색
+	 * @param classId, state
+	 * @return Coupon
+	 * */
+	Coupon findByClassesClassIdAndCouponStateCouponStateName(Long classId, String State);
 }

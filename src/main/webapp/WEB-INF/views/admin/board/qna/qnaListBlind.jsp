@@ -65,7 +65,7 @@ $(function(){
 			//swal($(this).val());
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/main/board/qna/qnaRead",
+				url:"${pageContext.request.contextPath}/board/qna/selectByQnaId",
 				type: "post",
 				data:{"${_csrf.parameterName}": "${_csrf.token}",
 					  "qnaId" : $(this).val()	

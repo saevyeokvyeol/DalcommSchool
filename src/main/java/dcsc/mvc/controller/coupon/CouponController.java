@@ -292,18 +292,5 @@ public class CouponController {
 		
 	}
 	
-	/**
-	 * 학생이 쿠폰 다운로드 하는 기능
-	 * */
-	@RequestMapping("main/class/insertIssueCoupon")
-	public String insertIssueCoupon(Coupon coupon) {
-		Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		IssueCoupon issueCoupon = new IssueCoupon(null, student, coupon, null, null, null);
-		couponService.insertIssueCoupon(issueCoupon);
-		
-		return "redirect:/main/mypage/couponList";
-	}
-	
 	
 }

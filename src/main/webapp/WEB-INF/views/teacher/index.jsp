@@ -21,7 +21,7 @@
 				let profitData = [];
 				
 				$.ajax({
-					url : "${pageContext.request.contextPath}/teacher/classStatistics",
+					url : "${pageContext.request.contextPath}/teacher/classStatistic",
 					type : "post",
 					data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 					dataType: "json",
@@ -109,7 +109,7 @@
 					error: function(xhr, status, error) {
 						var err = eval("(" + xhr.responseText + ")");
 						alert(err.message);
-					} 
+					}
 				}); // 아작스 종료
 				
 				

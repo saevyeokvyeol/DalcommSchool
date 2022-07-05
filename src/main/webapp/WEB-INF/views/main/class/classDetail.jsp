@@ -354,7 +354,7 @@
 							$(".reviewPaging").html(pageText)
 						},
 						error: function(err){
-							swal("Q&A를 조회할 수 없습니다.")
+							/* swal("Q&A를 조회할 수 없습니다.") */
 						}
 					})
 				} // 클래스 후기 아작스 함수 종료
@@ -588,7 +588,7 @@
 							$(".qnaPaging").html(pageText)
 						},
 						error: function(err){
-							swal("Q&A를 조회할 수 없습니다.")
+							/* swal("Q&A를 조회할 수 없습니다.") */
 						}
 					})
 				} // 클래스 문의글 아작스 함수 종료
@@ -736,6 +736,32 @@
 						swal("남은 수강 인원이 부족해 예약할 수 없습니다.")
 						return false;
 					}
+				})
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/main/class/selectByClassIdAndState",
+					type: "post",
+					data: {"${_csrf.parameterName}" : "${_csrf.token}", "classId" : ${classes.classId}},
+					success: function(result){
+						text = `<h6>이 클래스에 <button class="btn btn-outline-primary" id="couponBtn" value="\${result.couponId}">5000원</button>쿠폰이 있어요!</h6>`
+						$("#classCoupon").html(text);
+					}
+				})
+				
+				$(document).on("click", "#couponBtn", function() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/main/class/insertIssueCoupon",
+						type: "post",
+						data: {"${_csrf.parameterName}" : "${_csrf.token}", "couponId" : $("#couponBtn").val()},
+						success: function(result){
+							swal({text: result, icon: "success"});
+						},
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							swal({text: err.message, icon: "error"});
+						}
+							
+					})
 				})
 			})
 			
@@ -942,6 +968,8 @@
 						<img alt="${classes.className} 이미지" src="${pageContext.request.contextPath}/img/class/${classes.classImage}">
 					</div>
 					
+					<div id="classCoupon"></div>
+					
 					<div id="classBox">
 						<h4 class="className">
 							<span>${classes.className}</span>
@@ -990,10 +1018,10 @@
 						<div id="snsBox">
 							<c:forEach items="${classes.teacher.teacherSns}" var="sns">
 								<c:choose>
-									<c:when test="${sns.sns.snsId == 1 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-youtube fa-2xl"></i> 유튜브</h6></a></c:when>
-									<c:when test="${sns.sns.snsId == 2 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-instagram fa-2xl"></i> 인스타그램</h6></a></c:when>
-									<c:when test="${sns.sns.snsId == 3 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-twitter fa-2xl"></i> 트위터</h6></a></c:when>
-									<c:when test="${sns.sns.snsId == 4 and sns.teacherSnsId != null}"><a href="https://${sns.teacherSnsId}"><h6><i class="fa-brands fa-facebook fa-2xl"></i> 페이스북</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 1 and sns.teacherSnsId != null}"><a href="${sns.teacherSnsId}"><h6><i class="fa-brands fa-youtube fa-2xl"></i> 유튜브</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 2 and sns.teacherSnsId != null}"><a href="${sns.teacherSnsId}"><h6><i class="fa-brands fa-instagram fa-2xl"></i> 인스타그램</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 3 and sns.teacherSnsId != null}"><a href="${sns.teacherSnsId}"><h6><i class="fa-brands fa-twitter fa-2xl"></i> 트위터</h6></a></c:when>
+									<c:when test="${sns.sns.snsId == 4 and sns.teacherSnsId != null}"><a href="${sns.teacherSnsId}"><h6><i class="fa-brands fa-facebook fa-2xl"></i> 페이스북</h6></a></c:when>
 								</c:choose>
 							</c:forEach>
 						</div>

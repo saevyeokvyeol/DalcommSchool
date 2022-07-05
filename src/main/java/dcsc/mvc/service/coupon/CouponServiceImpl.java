@@ -120,7 +120,7 @@ public class CouponServiceImpl implements CouponService {
 		Coupon coupon = couponRep.findById(couponId).orElse(null);
 		
 		if(coupon==null) {
-			new RuntimeException("발급쿠폰 상세보기에 오류가 발생습니다.");
+			throw new RuntimeException("발급쿠폰 상세보기에 오류가 발생습니다.");
 		}
 		return coupon;
 	}
@@ -228,8 +228,18 @@ public class CouponServiceImpl implements CouponService {
 		List<IssueCoupon> list = issueCouponRep.findByStudentStudentIdEquals(studentId);
 		return list;
 	}
-
 	
+
+	/**
+	 * 학생 아이디과 클래스 아이디로 발급받은 쿠폰 검색
+	 * @param String studentId, Long classId
+	 * @return List<IssueCoupon>
+	 * */
+	@Override
+	public IssueCoupon selectIssueCouponByStudentIdAndClassId(String studentId, Long classId) {
+		IssueCoupon coupon = issueCouponRep.findByStudentStudentIdEqualsAndCouponClassesClassId(studentId, classId);
+		return coupon;
+	}	
 	
 	/**
 	 * 해당 클래스에 사용할 수 있는 쿠폰조회
@@ -256,14 +266,18 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public void insertIssueCoupon(IssueCoupon issueCoupon) {
 		Long couponId = issueCoupon.getCoupon().getCouponId();
+		Coupon dbCoupon = couponRep.findById(couponId).orElse(null);
+		
+		Long classId = dbCoupon.getClasses().getClassId();
 		String studentId = issueCoupon.getStudent().getStudentId();
 		
-		Coupon dbCoupon = couponRep.findById(couponId).orElse(null);
-		Integer endDate = dbCoupon.getCouponEndDate(); //Integer
+		IssueCoupon coupon = selectIssueCouponByStudentIdAndClassId(studentId, classId);
 		
-		System.out.println("couponId ="+ couponId);
-		System.out.println("studentId ="+ studentId);
-		System.out.println("endDate ="+ endDate);
+		if(coupon != null) {
+			throw new RuntimeException("이미 발급받은 쿠폰입니다");
+		}
+		
+		Integer endDate = dbCoupon.getCouponEndDate(); //Integer
 		
 		LocalDateTime now = LocalDateTime.now();
 		
@@ -275,7 +289,6 @@ public class CouponServiceImpl implements CouponService {
 		
 	}
 
-	
 	/**
 	 * 클래스 쿠폰 상태 변경 기능 ; 관리자
 	 * */
@@ -289,11 +302,13 @@ public class CouponServiceImpl implements CouponService {
 		
 	}
 
-	
-
-	
-
-	
-	
-	
+	/**
+	 * 클래스 아이디로 클래스 쿠폰 검색
+	 * */
+	@Override
+	public Coupon selectByClassIdAndState(Long classId) {
+		Coupon coupon = couponRep.findByClassesClassIdAndCouponStateCouponStateName(classId, "발급");
+		
+		return coupon;
+	}
 }

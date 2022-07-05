@@ -119,4 +119,16 @@ public interface CouponService {
 	 * */
 	void insertIssueCoupon(IssueCoupon issueCoupon);
 
+	/**
+	 * 클래스 아이디로 클래스 쿠폰 검색
+	 * */
+	Coupon selectByClassIdAndState(Long classId);
+
+	/**
+	 * 학생 아이디과 클래스 아이디로 발급받은 쿠폰 검색
+	 * @param String studentId, Long classId
+	 * @return List<IssueCoupon>
+	 * */
+	IssueCoupon selectIssueCouponByStudentIdAndClassId(String studentId, Long classId);
+
 }

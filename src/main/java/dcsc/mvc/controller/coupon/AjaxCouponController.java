@@ -2,10 +2,10 @@ package dcsc.mvc.controller.coupon;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import dcsc.mvc.domain.coupon.Coupon;
 import dcsc.mvc.domain.coupon.IssueCoupon;
@@ -19,10 +19,11 @@ import lombok.RequiredArgsConstructor;
 public class AjaxCouponController {
 	
 	private final CouponService couponService;
+	private final StudentService studentService;
 	
-	public final StudentService studentService;
-	
-	//전체학생리스트 조회
+	/**
+	 * 전체 학생 리스트 조회
+	 * */
 	/*@RequestMapping("/userList")
 	public List<Student> adminStudent() {
 		
@@ -78,4 +79,35 @@ public class AjaxCouponController {
 		return coupon;
 	}
 	
-}
+	/**
+	 * 클래스 쿠폰 가져오기
+	 * */
+	@RequestMapping("main/class/selectByClassIdAndState")
+	public Coupon selectByClassId(Long classId) {
+		Coupon coupon = couponService.selectByClassIdAndState(classId);
+		
+		if (coupon == null) {
+			throw new RuntimeException();
+		}
+		
+		return coupon;
+	}
+	
+	/**
+	 * 학생이 쿠폰 다운로드 하는 기능
+	 * */
+	@RequestMapping("main/class/insertIssueCoupon")
+	public void insertIssueCoupon(Coupon coupon) {
+		Student student = null;
+
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Student) {
+			student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} else {
+			throw new RuntimeException("로그인 후 이용해주세요");
+		}
+		
+		IssueCoupon issueCoupon = new IssueCoupon(null, student, coupon, null, null, null);
+		couponService.insertIssueCoupon(issueCoupon);
+	}
+	
+} 
