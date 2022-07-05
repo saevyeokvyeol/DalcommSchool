@@ -753,8 +753,8 @@
 						url: "${pageContext.request.contextPath}/main/class/insertIssueCoupon",
 						type: "post",
 						data: {"${_csrf.parameterName}" : "${_csrf.token}", "couponId" : $("#couponBtn").val()},
-						success: function(result){
-							swal({text: result, icon: "success"});
+						success: function(){
+							swal({text: "쿠폰을 발급받았습니다", icon: "success"});
 						},
 						error: function(xhr, status, error) {
 							var err = eval("(" + xhr.responseText + ")");
