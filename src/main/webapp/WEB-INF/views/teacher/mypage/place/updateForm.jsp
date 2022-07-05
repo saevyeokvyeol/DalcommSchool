@@ -174,10 +174,9 @@ $(function(){
 	  }
 	  
 	$(function(){
-		  $("#sample6_detailAddress").focusout(function(){
+		  $("#sample6_detailAddress").focus(function(){
 			  codeAddress();
 		  })
-		  
 	})	  
 	  function codeAddress() {
 			    var address = document.getElementById('sample6_address').value;
