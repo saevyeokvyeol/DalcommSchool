@@ -21,7 +21,7 @@
 				let profitData = [];
 				
 				$.ajax({
-					url : "${pageContext.request.contextPath}/teacher/classStatistic",
+					url : "${pageContext.request.contextPath}/teacher/classStatistics",
 					type : "post",
 					data : {"${_csrf.parameterName}" : "${_csrf.token}"},
 					dataType: "json",

@@ -1048,25 +1048,25 @@
 					    			<li>
 						    			<c:choose>
 						    				<c:when test="${placeInfra.infra.infraId == 1}">
-						    					<i class="fa-solid fa-square-parking fa-xl"></i>
-						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 2}">
 						    					<i class="fa-solid fa-wifi fa-xl"></i>
 						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 3}">
+						    				<c:when test="${placeInfra.infra.infraId == 2}">
 						    					<i class="fa-solid fa-elevator fa-xl"></i>
 						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 4}">
+						    				<c:when test="${placeInfra.infra.infraId == 3}">
 						    					<i class="fa-solid fa-restroom fa-xl"></i>
 						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 5}">
+						    				<c:when test="${placeInfra.infra.infraId == 4}">
 						    					<i class="fa-solid fa-baby-carriage fa-xl"></i>
 						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 6}">
+						    				<c:when test="${placeInfra.infra.infraId == 5}">
 						    					<i class="fa-solid fa-paw fa-2xl"></i>
 						    				</c:when>
-						    				<c:when test="${placeInfra.infra.infraId == 7}">
+						    				<c:when test="${placeInfra.infra.infraId == 6}">
 						    					<i class="fa-brands fa-accessible-icon fa-xl"></i>
+						    				</c:when>
+						    				<c:when test="${placeInfra.infra.infraId == 7}">
+						    					<i class="fa-solid fa-square-parking fa-xl"></i>
 						    				</c:when>
 						    			</c:choose>
 						    			<div>${placeInfra.infra.infraName}</div>
