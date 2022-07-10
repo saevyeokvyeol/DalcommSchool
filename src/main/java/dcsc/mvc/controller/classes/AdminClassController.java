@@ -1,24 +1,18 @@
 package dcsc.mvc.controller.classes;
 
-import java.io.File;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import dcsc.mvc.domain.classes.ClassCategory;
+import dcsc.mvc.domain.classes.Book;
 import dcsc.mvc.domain.classes.Classes;
 import dcsc.mvc.domain.classes.Search;
-import dcsc.mvc.domain.user.Teacher;
+import dcsc.mvc.service.classes.BookService;
 import dcsc.mvc.service.classes.ClassesService;
-import dcsc.mvc.util.ImageLink;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin/class")
 public class AdminClassController {
 	private final ClassesService classesService;
+	private final BookService bookService;
 	
 	private final int SIZE = 10;
 	private final int BLOCK_COUNT = 5;
@@ -35,7 +30,6 @@ public class AdminClassController {
 	 * */
 	@RequestMapping("/classList")
 	public void selectAllClass(Model model, @RequestParam(defaultValue = "1") int page) {
-		// 로그인 했을 경우
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// ID에 해당하는 클래스 가져오기
@@ -56,7 +50,6 @@ public class AdminClassController {
 	 * */
 	@RequestMapping("/classSearch")
 	public String selectByFilter(Model model, Search search, @RequestParam(defaultValue = "1") int page) {
-		// 로그인 했을 경우
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// ID에 해당하는 클래스 가져오기
@@ -75,11 +68,10 @@ public class AdminClassController {
 	}
 	
 	/**
-	 * 클래스 검색
+	 * 공개 신청 클래스 조회
 	 * */
 	@RequestMapping("/openSubscriptList")
 	public String selectBySubsctipt(Model model, @RequestParam(defaultValue = "1") int page) {
-		// 로그인 했을 경우
 		Pageable pageable = PageRequest.of(page - 1, SIZE);
 		
 		// ID에 해당하는 클래스 가져오기
@@ -93,6 +85,28 @@ public class AdminClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("list", list);
 		model.addAttribute("title", "공개 신청 클래스 조회");
+		
+		return "admin/class/openSubscriptList";
+	}
+	
+	/**
+	 * 전체 예약 조회
+	 * */
+	@RequestMapping("/booklist")
+	public String selectAllBooks(Model model, @RequestParam(defaultValue = "1") int page) {
+		Pageable pageable = PageRequest.of(page - 1, SIZE);
+		
+		// 클래스 가져오기
+//		Page<Book> list = bookService.sele(null, pageable, 2L);
+//		
+//		int temp = (page - 1) % BLOCK_COUNT;
+//		int startPage = page - temp;
+//
+//		model.addAttribute("blockCount", BLOCK_COUNT);
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("page", page);
+//		model.addAttribute("list", list);
+//		model.addAttribute("title", "공개 신청 클래스 조회");
 		
 		return "admin/class/openSubscriptList";
 	}

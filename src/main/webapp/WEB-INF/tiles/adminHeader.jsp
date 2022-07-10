@@ -117,7 +117,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath}/teacher/class/pastBookList" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/class/booklist" class="menu-link">
                     <div data-i18n="Notifications">전체 예약 조회</div>
                   </a>
                 </li>
