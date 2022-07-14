@@ -20,9 +20,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script>
-
-
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script> -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/googlemap-api.js"></script>
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 
