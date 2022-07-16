@@ -789,8 +789,8 @@
 			    geocoder.geocode( { 'address': address}, function(results, status) {
 			      if (status == 'OK') {
 			    	  
-			    	  var lat = results[0].geometry.location.lat();
-			 	      var lng = results[0].geometry.location.lng(); 
+// 			    	  var lat = results[0].geometry.location.lat();
+// 			 	      var lng = results[0].geometry.location.lng(); 
 			    	  
 			        map.setCenter(results[0].geometry.location);
 			        var marker = new google.maps.Marker({

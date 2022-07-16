@@ -20,8 +20,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=initialize&v=weekly&region=KR" defer></script> -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/googlemap-api.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmfiqODEsD_SffBbyZp3twBsE-p_brpTE&callback=codeAddress&v=weekly&region=KR" defer></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/googlemap-api.js"></script> --%>
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 
@@ -162,15 +162,15 @@ $(function(){
 	
 	var geocoder;
 	  var map;
-	  function initialize() {
-	    geocoder = new google.maps.Geocoder();
-	    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
-	    var mapOptions = {
-	      zoom: 14,
-	      center: latlng
-	    }
-	    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-	  }
+// 	  function initialize() {
+// 	    geocoder = new google.maps.Geocoder();
+// 	    var latlng = new google.maps.LatLng(37.534089572097, 127.1450466624);
+// 	    var mapOptions = {
+// 	      zoom: 14,
+// 	      center: latlng
+// 	    }
+// 	    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+// 	  }
 	  
 	$(function(){
 		  $("#sample6_detailAddress").focus(function(){
@@ -178,9 +178,20 @@ $(function(){
 		  })
 	})	  
 	  function codeAddress() {
-			    var address = document.getElementById('sample6_address').value;
+				if(document.getElementById('sample6_address').value != ""){
+			    	var address = document.getElementById('sample6_address').value;
+				}else{
+					var address = '1600 Amphitheatre Parkway, Mountain View, CA 94043, USA';
+				}
+			    geocoder = new google.maps.Geocoder();
+			    var mapOptions = {
+	 			  zoom: 16
+	 			}
+			    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
 			    geocoder.geocode( { 'address': address}, function(results, status) {
 			      if (status == 'OK') {
+			    	 
 			        map.setCenter(results[0].geometry.location);
 			        var marker = new google.maps.Marker({
 			            map: map,
@@ -191,10 +202,6 @@ $(function(){
 			      }
 			    });
 	  }
-	
-// 	function checkInfra(){
-// 		if()
-// 	}
 	
 </script>
 </head>
